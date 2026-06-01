@@ -1,0 +1,27 @@
+name: Clipping Biochar Diário
+
+# Roda todo dia às 10:00 UTC = 07:00 no horário de Brasília.
+# (O GitHub às vezes atrasa alguns minutos — é normal.)
+on:
+  schedule:
+    - cron: "0 10 * * *"
+  workflow_dispatch:   # permite rodar manualmente pelo botão "Run workflow"
+
+jobs:
+  clipping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Rodar clipping
+        env:
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_SENHA: ${{ secrets.EMAIL_SENHA }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+        run: python clipping_biochar.py
