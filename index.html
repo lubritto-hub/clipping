@@ -3,375 +3,470 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Cadeira Beni — mobiliário reparável para pets</title>
-<meta name="description" content="Cadeira Beni: uma cadeira de descanso para pets em madeira reaproveitada, pernas de bambu substituíveis e estofado lavável. Projeto de Design Thinking e Prototipagem — mobiliário que se repara por componente." />
+<title>Cadeira Beni — móvel pet em madeira reaproveitada</title>
+<meta name="description" content="Cadeira Beni: identidade e protótipo de um móvel de descanso para pets em madeira reaproveitada, pernas de bambu substituíveis e estofado lavável. Projeto de Design Thinking e Prototipagem." />
 
 <!--
-  ART DIRECTION v3 — "oficina editorial"
-  Referências: Apple (foco no produto) · Bottega (materialidade/contenção) ·
-  The News (manchete seca) · Guday (cotidiano) · Mangue Tech (oficina/reaproveitamento).
-  Mudanças de sistema:
-  - Paleta nova: ink/paper/wood/clay(ferrugem=erro)/moss(verde profundo=decisão)/bamboo.
-  - Radius máx 4px, bordas secas, grids de prancha, sem cards flutuantes, sem sombras template.
-  - Contraste de escala: títulos enormes, texto curto (ritmo The News).
-  - Materialidade real: crops de madeira/bambu/bancada das fotos do protótipo.
-  - Ritmo alternado com momentos de impacto (escuro/imagem), não seções empilhadas iguais.
-  - Robustez: legível 100% em CSS; GSAP é só enriquecimento (degrada sem JS — iPad).
+  BRAND SYSTEM v4 — "madeira como identidade"
+  - LOGO: símbolo modular = "B" de ripas de madeira com duas pernas (cadeira+módulo).
+    Lockup horizontal (nav), símbolo grande (hero), selo técnico (brand board/footer).
+  - TIPOGRAFIA: League Gothic (display/cartaz + logo) · Instrument Serif (frases
+    emocionais, itálico) · IBM Plex Sans (corpo) · IBM Plex Mono (técnico/status).
+    Tokens: --font-display / --font-serif / --font-body / --font-mono.
+  - PALETA: madeira como base (ink/paper/wood-dark/wood-mid/clay/sun/bamboo),
+    moss com parcimônia, blue-haze só no protótipo digital.
+  - SISTEMA GRÁFICO DE MADEIRA: wood-bars (ripas), wood-streak (verniz), grão real,
+    labels técnicos sobre madeira — usados em hero, poster grid, separadores,
+    prancha e brand board.
+  - Poster grid modular, moodboard com callouts, prancha wireframe, protótipo
+    digital, V1/V2 cartaz, circularidade em módulos, brand board GLUP-style.
+  - Robustez: legível 100% em CSS; GSAP só enriquece (degrada sem JS — iPad).
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
 :root{
-  --ink:#100D09; --graphite:#2C2A25;
-  --paper:#EEE5D2; --paper-2:#E5D9C1;
-  --wood:#6B4423; --clay:#B94A2E; --moss:#163B2F; --moss-2:#26543F; --bamboo:#C2A05A;
-  --muted:#7C6E58; --muted-d:rgba(238,229,210,.6);
-  --line:rgba(16,13,9,.22); --line-d:rgba(238,229,210,.2);
-  --maxw:1280px;
+  /* paleta madeira */
+  --ink:#11100D; --paper:#EFE7D6; --paper-2:#E6DAC2;
+  --wood-dark:#4B2A17; --wood-mid:#8A4A22; --clay:#D65A2B; --sun:#F26A1B;
+  --bamboo:#C89B48; --moss:#243D2C; --blue-haze:#9FB4BD;
+  --muted:#8A7B60; --muted-d:rgba(239,231,214,.6);
+  --line:rgba(17,16,13,.2); --line-d:rgba(239,231,214,.2);
+  /* fontes */
+  --font-display:'League Gothic', 'Archivo', sans-serif;
+  --font-serif:'Instrument Serif', Georgia, serif;
+  --font-body:'IBM Plex Sans', system-ui, sans-serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, monospace;
+  --maxw:1320px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);
-  line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:var(--font-body);background:var(--paper);color:var(--ink);line-height:1.5;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--clay);color:var(--paper)}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(20px,5vw,64px)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(18px,4vw,54px)}
 
-/* TYPE ROLES */
-.serif{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-.025em;line-height:1}
-.mono{font-family:'DM Mono',ui-monospace,monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase}
-.kicker{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--wood)}
-.dark .kicker,.graphite .kicker{color:var(--bamboo)}
-.big{font-family:'Fraunces',serif;font-weight:380;letter-spacing:-.035em;line-height:.94}
-/* Contraste de escala: manchetes enormes */
-.hl{font-family:'Fraunces',serif;font-weight:400;letter-spacing:-.03em;line-height:1;
-  font-size:clamp(38px,7vw,96px)}
-.hl-sm{font-size:clamp(30px,5vw,60px)}
-.body{font-size:clamp(15px,1.4vw,18px);color:var(--muted);max-width:46ch;line-height:1.55}
-.dark .body,.graphite .body{color:var(--muted-d)}
-
-section{position:relative;padding:clamp(80px,13vh,150px) 0}
+/* ---- type roles ---- */
+.display{font-family:var(--font-display);text-transform:uppercase;line-height:.82;letter-spacing:-.01em}
+.mono{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+.kick{font-family:var(--font-mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--wood-mid)}
+.dark .kick{color:var(--bamboo)}
+.emo{font-family:var(--font-serif);font-style:italic;line-height:1.1}
+.body{font-size:clamp(14.5px,1.2vw,17px);color:var(--muted);max-width:52ch;line-height:1.6}
+.dark .body{color:var(--muted-d)}
+h2.title{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(40px,8vw,110px);
+  line-height:.82;letter-spacing:-.01em}
+section{position:relative;padding:clamp(70px,11vh,140px) 0}
 .dark{background:var(--ink);color:var(--paper)}
-.graphite{background:var(--graphite);color:var(--paper)}
-.tint{background:var(--paper-2)}
-.tick{display:inline-block;padding-bottom:12px;margin-bottom:22px;border-bottom:1px solid var(--line)}
-.dark .tick,.graphite .tick{border-color:var(--line-d)}
 
-/* NAV */
-nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
-  padding:14px clamp(20px,5vw,64px);background:rgba(238,229,210,.92);
+/* ================= WOOD GRAPHIC SYSTEM ================= */
+/* ripas horizontais */
+.wood-bars{background:
+  repeating-linear-gradient(180deg,
+    var(--wood-mid) 0 9px, var(--wood-dark) 9px 12px)}
+/* faixa de verniz/reflexo */
+.wood-streak{background:linear-gradient(95deg,
+  var(--wood-dark) 0%, var(--wood-mid) 26%, var(--clay) 52%, var(--sun) 63%, var(--wood-mid) 82%, var(--wood-dark) 100%)}
+/* grão sutil (usa foto real via ::after nos blocos que quiserem) */
+
+/* ================= LOGO ================= */
+.mark{display:block}
+.brandlock{display:flex;align-items:center;gap:12px}
+.wm{font-family:var(--font-display);text-transform:uppercase;line-height:.78;letter-spacing:.005em;color:var(--ink)}
+.dark .wm,.brandlock.on-dark .wm{color:var(--paper)}
+.wm b{display:block;font-weight:400}
+
+/* ================= NAV ================= */
+nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-content:space-between;
+  padding:11px clamp(18px,4vw,54px);background:rgba(239,231,214,.93);
   backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
-.brand{font-family:'Fraunces',serif;font-size:18px}.brand b{font-weight:500}
-.navlinks{display:flex;gap:24px}
-.navlinks a{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.navlinks{display:flex;gap:22px}
+.navlinks a{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .navlinks a:hover{color:var(--ink)}
-.navcta{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
-  border:1px solid var(--ink);padding:8px 14px}
-.navcta:hover{background:var(--ink);color:var(--paper)}
-@media(max-width:820px){.navlinks{display:none}}
+.status-pill{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--clay);border:1px solid var(--clay);border-radius:2px;padding:5px 10px}
+@media(max-width:860px){.navlinks{display:none}}
 
-/* ============ 1 · HERO (Apple, silencioso, produto enorme) ============ */
-.hero{min-height:calc(100vh - 50px);display:flex;flex-direction:column;justify-content:space-between;
-  padding:clamp(28px,6vh,70px) 0 0;overflow:hidden}
-.hero-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
-.hero h1{font-family:'Fraunces',serif;font-weight:360;font-size:clamp(60px,15vw,220px);
-  letter-spacing:-.045em;line-height:.86}
-.hero .say{font-family:'Fraunces',serif;font-style:italic;font-weight:300;
-  font-size:clamp(18px,2.1vw,27px);color:var(--wood);max-width:16ch;text-align:right;padding-top:10px}
-.hero-obj{flex:1;display:flex;align-items:flex-end;justify-content:center;margin-top:-2vh}
-.hero-obj img{width:min(1180px,96vw);margin-bottom:-3%}
-.hero-cue{position:absolute;left:clamp(20px,5vw,64px);bottom:22px;color:var(--muted)}
-@media(max-width:820px){.hero .say{text-align:left}.hero-obj img{width:112vw}}
+/* ================= HERO (campanha) ================= */
+.hero{background:var(--ink);color:var(--paper);overflow:hidden;padding:0;position:relative}
+.hero .streak{height:8px}
+.hero-inner{position:relative;padding:clamp(26px,5vh,54px) 0 0}
+.hero-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.hero .sym{width:clamp(70px,9vw,120px);height:auto}
+.hero .meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--bamboo);text-align:right;line-height:1.7}
+.hero h1{font-family:var(--font-display);text-transform:uppercase;color:var(--paper);
+  font-size:clamp(84px,21vw,300px);line-height:.8;letter-spacing:-.01em;margin:clamp(10px,2vh,26px) 0 0}
+.hero h1 span{display:block}
+.hero h1 .l2{color:var(--clay)}
+.hero-obj{position:relative;margin-top:-4%;display:flex;justify-content:center}
+.hero-obj img{width:min(1120px,98vw);margin-bottom:-2%}
+.hero-tagline{position:absolute;left:clamp(18px,4vw,54px);bottom:clamp(18px,4vh,40px);z-index:3;
+  font-family:var(--font-serif);font-style:italic;font-size:clamp(16px,1.8vw,24px);color:var(--paper);max-width:16ch}
+@media(max-width:640px){.hero-obj img{width:130vw}.hero-tagline{position:static;margin:8px 0 24px;padding:0 18px}}
 
-/* ============ 2 · EDITORIAL BREAK (impacto, só manchete) ============ */
-.break{background:var(--ink);color:var(--paper);padding:clamp(120px,22vh,240px) 0}
-.break h2{font-family:'Fraunces',serif;font-weight:380;letter-spacing:-.035em;line-height:.98;
-  font-size:clamp(40px,8.5vw,128px);max-width:15ch}
-.break h2 em{font-style:normal;color:var(--clay)}
+/* ================= POSTER GRID ================= */
+.poster{padding:0}
+.pgrid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(150px,20vw);gap:0}
+.tile{position:relative;overflow:hidden;border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:flex;padding:22px}
+.tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.tile .ov{position:relative;z-index:2}
+.tile.phrase{align-items:flex-end}
+.tile .big{font-family:var(--font-display);text-transform:uppercase;line-height:.86;letter-spacing:-.01em;
+  font-size:clamp(24px,2.7vw,40px)}
+.tile.c-ink{background:var(--ink);color:var(--paper)}
+.tile.c-clay{background:var(--clay);color:var(--ink)}
+.tile.c-sun{background:var(--sun);color:var(--ink)}
+.tile.c-bamboo{background:var(--bamboo);color:var(--ink)}
+.tile.c-moss{background:var(--moss);color:var(--paper)}
+.tile .tl{position:absolute;top:14px;left:16px;z-index:2;color:inherit;opacity:.7}
+/* spans */
+.s2c{grid-column:span 2}.s3c{grid-column:span 3}.s2r{grid-row:span 2}
+/* mini palette tile */
+.swatches{display:flex;width:100%;height:100%;position:absolute;inset:0}
+.swatches i{flex:1}
+/* symbol tile */
+.tile.sym-tile{align-items:center;justify-content:center;background:var(--paper)}
+.tile.sym-tile .mark{width:56%}
+@media(max-width:860px){.pgrid{grid-template-columns:repeat(2,1fr);grid-auto-rows:minmax(150px,42vw)}
+  .s3c,.s2c{grid-column:span 2}.s2r{grid-row:span 1}}
 
-/* ============ 3 · MATERIAL BOARD (Bottega, assimétrico, crops grandes) ============ */
-.board .head{max-width:40ch;margin-bottom:52px}
-.board .head h2{margin-top:16px}
-.mgrid{display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:auto auto;
-  gap:14px}
-.mtile{position:relative;overflow:hidden;border:1px solid var(--line);background:var(--ink)}
-.mtile img{width:100%;height:100%;object-fit:cover;display:block}
-.mtile.big{grid-row:1 / span 2;aspect-ratio:auto}
-.mtile.big img{height:100%;min-height:340px}
-.mtile.sm img{height:100%;min-height:200px}
-.mtile .lbl{position:absolute;left:0;bottom:0;padding:10px 14px;background:var(--ink);
-  color:var(--paper);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
-.mtile .lbl b{color:var(--bamboo);font-weight:400}
-@media(max-width:720px){.mgrid{grid-template-columns:1fr}.mtile.big{grid-row:auto}.mtile img{min-height:220px}}
+/* ================= MANIFESTO break ================= */
+.manifesto{background:var(--paper-2)}
+.manifesto p{font-family:var(--font-serif);font-size:clamp(26px,4.4vw,58px);line-height:1.08;
+  letter-spacing:-.01em;max-width:20ch}
+.manifesto p em{font-style:italic;color:var(--clay)}
 
-/* ============ 4 · PRANCHA TÉCNICA (Apple/blueprint, callouts + status) ============ */
-.prancha .head{margin-bottom:44px}
-.prancha .head h2{margin-top:16px}
-.plan{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:0;align-items:center}
-.plan .obj{padding:0 10px}
+/* ================= MOODBOARD (material) ================= */
+.mood .head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:40px}
+.mood .head h2{max-width:12ch}
+.mb{display:grid;grid-template-columns:1.4fr .8fr 1fr;gap:18px;align-items:start}
+.frame{position:relative;border:1px solid var(--line);background:var(--ink)}
+.frame img{width:100%;display:block}
+.frame .note{position:absolute;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;
+  text-transform:uppercase;background:var(--paper);color:var(--ink);padding:4px 7px;border:1px solid var(--line)}
+.frame .note.tl{top:-1px;left:-1px}.frame .note.br{bottom:-1px;right:-1px;background:var(--ink);color:var(--paper)}
+.mb-col{display:flex;flex-direction:column;gap:18px}
+.mb-note{font-family:var(--font-serif);font-style:italic;font-size:clamp(17px,1.7vw,22px);line-height:1.2}
+.mb-pal{display:flex;flex-direction:column;border:1px solid var(--line)}
+.mb-pal i{height:34px;display:flex;align-items:center;padding:0 12px;font-family:var(--font-mono);
+  font-size:9.5px;letter-spacing:.06em;color:rgba(255,255,255,.85)}
+@media(max-width:820px){.mb{grid-template-columns:1fr 1fr}.mb-col.last{grid-column:span 2}}
+
+/* ================= PRANCHA (wireframe + callouts) ================= */
+.prancha{background:var(--paper);position:relative}
+.grid-bg{position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:44px 44px;mask-image:linear-gradient(180deg,transparent,#000 15%,#000 85%,transparent)}
+.prancha .wrap{position:relative}
+.prancha .head{margin-bottom:36px}
+.prancha .head h2{margin-top:12px}
+.plan{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:0;align-items:center}
+.plan .obj{padding:0 8px;position:relative}
 .plan .obj img{width:100%}
-.callcol{display:flex;flex-direction:column;gap:2px}
-.call{padding:20px 0;border-top:1px solid var(--line)}
+.plan .obj .ring{position:absolute;width:14px;height:14px;border:1.5px solid var(--clay);border-radius:50%;transform:translate(-50%,-50%)}
+.callcol .call{padding:18px 0;border-top:1px solid var(--line)}
 .callcol.r .call{text-align:right}
-.call .k{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--wood);display:block;margin-bottom:7px}
-.call .v{font-family:'Fraunces',serif;font-size:clamp(17px,1.9vw,22px);letter-spacing:-.01em}
-.call .st{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  display:inline-block;margin-top:8px;padding:2px 7px;border:1px solid var(--line)}
-.call .st.ok{color:var(--moss);border-color:var(--moss)}
-.call .st.v2{color:var(--clay);border-color:var(--clay)}
-.call .st.todo{color:var(--muted)}
-@media(max-width:860px){.plan{grid-template-columns:1fr}.plan .obj{order:-1;max-width:520px;margin:0 auto 20px}
-  .callcol.r .call{text-align:left}}
+.call .k{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--wood-mid);display:block;margin-bottom:6px}
+.call .v{font-family:var(--font-body);font-weight:600;font-size:clamp(15px,1.4vw,18px)}
+.call .n{font-family:var(--font-mono);font-size:10px;color:var(--muted);display:block;margin-top:5px}
+.st{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;
+  display:inline-block;margin-top:8px;padding:2px 7px;border:1px solid var(--line);border-radius:2px}
+.st.ok{color:var(--moss);border-color:var(--moss)} .st.v2{color:var(--clay);border-color:var(--clay)}
+.st.medir{color:var(--muted)} .st.evo{color:var(--blue-haze);border-color:var(--blue-haze)}
+@media(max-width:880px){.plan{grid-template-columns:1fr}.plan .obj{order:-1;max-width:520px;margin:0 auto 18px}
+  .callcol.r .call{text-align:left}.plan .obj .ring{display:none}}
 
-/* ============ 5 · SPLIT V1/V2 (carimbos) ============ */
-.split{background:var(--graphite);color:var(--paper);padding:0}
-.split .head{padding:clamp(70px,11vh,120px) 0 46px}
-.split .head h2{margin-top:16px;color:var(--paper)}
-.split .head .body{margin-top:18px}
+/* ================= PROTÓTIPO DIGITAL (wireframe) ================= */
+.digital{background:var(--ink);color:var(--paper);overflow:hidden}
+.digital .head{max-width:40ch;margin-bottom:44px}
+.digital .head h2{color:var(--paper)}
+.digital .body{color:var(--muted-d)}
+.wireframe{position:relative;border:1px solid var(--line-d)}
+.wireframe img{width:100%;display:block;filter:grayscale(.6) brightness(.7) contrast(1.05)}
+.wireframe .mesh{position:absolute;inset:0;
+  background-image:linear-gradient(var(--blue-haze) 1px,transparent 1px),linear-gradient(90deg,var(--blue-haze) 1px,transparent 1px);
+  background-size:38px 38px;opacity:.28;mix-blend-mode:screen}
+.wireframe .scan{position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(159,180,189,.14),transparent);opacity:.6}
+.dig-tags{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:26px;border-top:1px solid var(--line-d)}
+.dig-tags div{padding:18px 14px;border-right:1px solid var(--line-d)}
+.dig-tags div:last-child{border-right:none}
+.dig-tags .k{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;color:var(--blue-haze);display:block;margin-bottom:8px}
+.dig-tags .v{font-family:var(--font-body);font-size:14px;color:var(--paper)}
+@media(max-width:700px){.dig-tags{grid-template-columns:1fr 1fr}}
+
+/* ================= V1 / V2 (cartaz) ================= */
+.versions{background:var(--paper-2);padding:0}
+.versions .head{padding:clamp(60px,9vh,110px) 0 40px}
 .duo{display:grid;grid-template-columns:1fr 1fr}
-.pane{position:relative;padding:clamp(28px,4vw,54px);border-top:1px solid var(--line-d)}
-.pane+.pane{border-left:1px solid var(--line-d)}
-.pane figure{position:relative;overflow:hidden;border:1px solid var(--line-d);margin-bottom:24px}
-.pane img{width:100%;aspect-ratio:4/3;object-fit:cover}
-.pane.v1 img{filter:grayscale(1) contrast(1.08)}
-/* carimbo */
-.stamp{position:absolute;top:16px;right:16px;font-family:'DM Mono',monospace;font-size:12px;
-  letter-spacing:.14em;text-transform:uppercase;padding:8px 12px;border:1.5px solid;transform:rotate(-7deg);
-  background:rgba(16,13,9,.35)}
-.stamp.no{color:var(--clay);border-color:var(--clay)}
-.stamp.yes{color:var(--bamboo);border-color:var(--moss-2)}
-.pane .tag{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--bamboo);display:block;margin-bottom:10px}
-.pane h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(21px,2.5vw,28px);margin-bottom:10px}
-.pane p{color:var(--muted-d);font-size:14.5px;max-width:40ch}
+.pane{position:relative;padding:clamp(24px,3.4vw,46px);border-top:1px solid var(--line)}
+.pane+.pane{border-left:1px solid var(--line)}
+.pane figure{position:relative;overflow:hidden;margin-bottom:22px;border:1px solid var(--line)}
+.pane img{width:100%;aspect-ratio:5/4;object-fit:cover}
+.pane.v1 img{filter:grayscale(1) contrast(1.12)}
+.pane.v1 figure::after{content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(-24deg,transparent 0 26px,rgba(214,90,43,.16) 26px 27px)}
+.bigstamp{position:absolute;z-index:3;font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(30px,4.5vw,60px);line-height:.82;transform:rotate(-8deg);padding:6px 12px;border:3px solid}
+.bigstamp.no{top:14%;left:8%;color:var(--clay);border-color:var(--clay);background:rgba(17,16,13,.28)}
+.bigstamp.yes{top:12%;right:7%;color:var(--moss);border-color:var(--moss);background:rgba(239,231,214,.5)}
+.pane .vk{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:12px}
+.pane .vline{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(24px,3vw,40px);line-height:.86;letter-spacing:-.01em;margin-bottom:12px}
+.pane p{color:var(--muted);font-size:14.5px;max-width:38ch}
 @media(max-width:700px){.duo{grid-template-columns:1fr}.pane+.pane{border-left:none}}
 
-/* ============ 6 · USO REAL (Guday, imagem cheia) ============ */
-.uso{background:var(--ink);color:var(--paper);padding:0}
-.uso-media{position:relative;height:min(80vh,760px)}
-.uso-media img{width:100%;height:100%;object-fit:cover;object-position:center 42%}
-.uso-media::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(0deg, rgba(16,13,9,.9) 0%, rgba(16,13,9,.2) 45%, rgba(16,13,9,.35) 100%)}
-.uso-copy{position:absolute;inset:0;display:flex;align-items:flex-end;z-index:2}
-.uso-copy .wrap{width:100%;padding-bottom:clamp(40px,8vh,90px)}
-.uso h2{color:var(--paper);max-width:16ch;margin:14px 0 22px}
-.uso .lines{display:flex;flex-wrap:wrap;gap:0 44px}
-.uso .lines p{font-family:'Fraunces',serif;font-style:italic;font-weight:300;
-  font-size:clamp(16px,1.9vw,23px);color:var(--paper);max-width:24ch;padding:10px 0;
-  border-top:1px solid var(--line-d);flex:1 1 240px}
+/* ================= CIRCULARIDADE (módulos) ================= */
+.circ{background:var(--ink);color:var(--paper)}
+.circ .head{max-width:26ch;margin-bottom:14px}
+.circ .head h2{color:var(--paper)}
+.circ .sub{color:var(--muted-d);max-width:52ch;margin-bottom:44px}
+.cmods{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.cmod{border:1px solid var(--line-d);padding:22px 18px 24px;min-height:170px;display:flex;flex-direction:column;justify-content:space-between}
+.cmod .from{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(22px,2.4vw,34px);color:var(--clay);line-height:.9}
+.cmod .to{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(22px,2.4vw,34px);color:var(--bamboo);line-height:.9}
+.cmod .arrow{font-family:var(--font-mono);color:var(--muted-d);font-size:12px;margin:6px 0}
+.cmod .tag{font-family:var(--font-mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted-d);margin-top:12px}
+.cmod.evo{border-style:dashed}
+.cmod.evo .tag{color:var(--blue-haze)}
+@media(max-width:900px){.cmods{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.cmods{grid-template-columns:1fr}}
 
-/* ============ 7 · BAIXO-TECH / ALTO RACIOCÍNIO ============ */
-.lowtech .head{max-width:46ch;margin-bottom:52px}
-.lowtech .head h2{margin-top:16px}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
-.g4{padding:30px 22px 34px;border-bottom:1px solid var(--ink);border-right:1px solid var(--line)}
-.g4:last-child{border-right:none}
-.g4 .k{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);display:block;margin-bottom:16px}
-.g4 h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(19px,2vw,25px);margin-bottom:8px;letter-spacing:-.01em}
-.g4 p{font-size:14px;color:var(--muted);max-width:26ch}
-@media(max-width:860px){.grid4{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.grid4{grid-template-columns:1fr}.g4{border-right:none}}
-
-/* ============ 8 · MATRIZ DE VIABILIDADE ============ */
-.matriz .head{margin-bottom:44px;max-width:44ch}
-.matriz .head h2{margin-top:16px}
+/* ================= VIABILIDADE ================= */
+.viab .head{margin-bottom:36px}
 .mat{border:1px solid var(--ink)}
-.mat .r{display:grid;grid-template-columns:minmax(150px,240px) 1fr;border-bottom:1px solid var(--line)}
+.mat .r{display:grid;grid-template-columns:minmax(140px,220px) 1fr;border-bottom:1px solid var(--line)}
 .mat .r:last-child{border-bottom:none}
-.mat .r .k{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
-  color:var(--paper);background:var(--moss);padding:22px 20px;display:flex;align-items:center}
-.mat .r .v{padding:22px 24px;font-family:'Fraunces',serif;font-size:clamp(17px,1.9vw,23px);
-  letter-spacing:-.01em;border-left:1px solid var(--line)}
+.mat .r .k{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--paper);background:var(--wood-mid);padding:20px 18px;display:flex;align-items:center}
+.mat .r .v{padding:20px 22px;font-size:clamp(15px,1.4vw,18px);border-left:1px solid var(--line)}
 @media(max-width:620px){.mat .r{grid-template-columns:1fr}.mat .r .v{border-left:none;border-top:1px solid var(--line)}}
 
-/* ============ 9 · MAPA DE FALHAS / CIRCULARIDADE (impacto) ============ */
-.circ{background:var(--ink);color:var(--paper)}
-.circ .head{max-width:22ch;margin-bottom:20px}
-.circ .head h2{color:var(--paper)}
-.circ .sub{color:var(--muted-d);max-width:52ch;margin-bottom:56px;font-size:clamp(15px,1.5vw,18px)}
-.faults{border-top:1px solid var(--line-d)}
-.fault{display:grid;grid-template-columns:1.1fr auto 1.1fr auto;gap:clamp(14px,3vw,40px);
-  align-items:center;padding:24px 0;border-bottom:1px solid var(--line-d)}
-.fault .cond{font-family:'Fraunces',serif;font-size:clamp(18px,2.3vw,28px);letter-spacing:-.01em}
-.fault .cond em{font-style:normal;color:var(--clay)}
-.fault .arw{font-family:'DM Mono',monospace;color:var(--muted-d)}
-.fault .act{font-family:'Fraunces',serif;font-size:clamp(18px,2.3vw,28px);letter-spacing:-.01em;color:var(--paper)}
-.fault .act em{font-style:normal;color:var(--moss-2);color:#7FB79A}
-.fault .st{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-  padding:3px 8px;border:1px solid var(--line-d);white-space:nowrap;justify-self:end}
-.fault .st.now{color:#7FB79A;border-color:rgba(127,183,154,.5)}
-.fault .st.next{color:var(--muted-d)}
-@media(max-width:760px){.fault{grid-template-columns:1fr;gap:4px;padding:20px 0}
-  .fault .arw{display:none}.fault .st{justify-self:start;margin-top:8px}}
+/* ================= BRAND BOARD ================= */
+.brand-board{background:var(--paper-2)}
+.bb-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;grid-auto-rows:auto}
+.bb{border:1px solid var(--line);padding:22px;background:var(--paper)}
+.bb .bk{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:16px}
+.bb.logo{grid-column:span 5;display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--ink);gap:18px}
+.bb.manifesto-bb{grid-column:span 7}
+.bb.manifesto-bb p{font-family:var(--font-serif);font-size:clamp(18px,1.9vw,26px);line-height:1.25}
+.bb.pal{grid-column:span 4}
+.bb.type{grid-column:span 4}
+.bb.voice{grid-column:span 4}
+.bb.photo{grid-column:span 6;padding:0;overflow:hidden}
+.bb.photo img{width:100%;height:100%;object-fit:cover;min-height:200px}
+.bb.apps{grid-column:span 6}
+.pal-row{display:flex;gap:6px;flex-wrap:wrap}
+.pal-row i{width:44px;height:44px;border-radius:2px;position:relative}
+.type-row{margin-bottom:14px}
+.type-row .lab{font-family:var(--font-mono);font-size:9.5px;color:var(--muted);letter-spacing:.06em}
+.voice-list li{list-style:none;font-family:var(--font-serif);font-style:italic;font-size:17px;padding:6px 0;border-bottom:1px solid var(--line)}
+.apps-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.apps-list div{border:1px solid var(--line);padding:12px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+@media(max-width:900px){.bb.logo,.bb.manifesto-bb,.bb.pal,.bb.type,.bb.voice,.bb.photo,.bb.apps{grid-column:span 12}}
 
-/* ============ FOOTER ============ */
-footer{background:var(--ink);color:var(--paper);padding:clamp(70px,10vh,120px) 0 46px;border-top:1px solid var(--line-d)}
-.foot-top{display:grid;grid-template-columns:1.4fr 1fr;gap:36px;align-items:end;margin-bottom:56px}
-footer .fbig{font-family:'Fraunces',serif;font-weight:380;font-size:clamp(44px,9vw,120px);letter-spacing:-.04em;line-height:.9}
-footer .fsay{font-family:'Fraunces',serif;font-style:italic;font-weight:300;color:var(--muted-d);
-  font-size:clamp(16px,2vw,23px);margin-top:16px;max-width:24ch}
-.foot-cta{justify-self:end;align-self:end}
-.foot-cta a{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+/* ================= FOOTER ================= */
+footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 40px}
+.foot-top{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:44px}
+.foot-meta{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:var(--font-mono);
+  font-size:10.5px;letter-spacing:.05em;color:var(--muted-d);padding-top:22px;border-top:1px solid var(--line-d)}
+.foot-cta a{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--paper);border-bottom:1px solid var(--bamboo);padding-bottom:4px}
-.foot-meta{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;
-  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--muted-d);
-  padding-top:24px;border-top:1px solid var(--line-d)}
-@media(max-width:760px){.foot-top{grid-template-columns:1fr}.foot-cta{justify-self:start}}
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
+<!-- ===== NAV ===== -->
 <nav>
-  <a class="brand" href="#topo">Cadeira <b>Beni</b></a>
+  <a class="brandlock" href="#topo" aria-label="Cadeira Beni">
+    <svg class="mark" width="30" height="34" viewBox="0 0 66 72" aria-hidden="true">
+      <g fill="#8A4A22"><rect x="6" y="4" width="8" height="52" rx="2"/><rect x="14" y="4" width="30" height="7" rx="3.5"/><rect x="14" y="14" width="40" height="7" rx="3.5"/><rect x="14" y="24" width="28" height="7" rx="3.5"/></g>
+      <g fill="#D65A2B"><rect x="14" y="30" width="28" height="7" rx="3.5"/><rect x="14" y="40" width="42" height="7" rx="3.5"/><rect x="14" y="50" width="32" height="7" rx="3.5"/></g>
+      <g fill="#4B2A17"><rect x="10" y="58" width="7" height="12" rx="2"/><rect x="42" y="58" width="7" height="12" rx="2"/></g>
+    </svg>
+    <span class="wm" style="font-size:17px">Cadeira<b>Beni</b></span>
+  </a>
   <div class="navlinks">
+    <a href="#poster">Manifesto</a>
     <a href="#material">Material</a>
     <a href="#prancha">Prancha</a>
-    <a href="#processo">Processo</a>
-    <a href="#viabilidade">Viabilidade</a>
-    <a href="#circularidade">Circularidade</a>
+    <a href="#digital">Protótipo</a>
+    <a href="#marca">Marca</a>
   </div>
-  <a class="navcta" href="#prancha">Ver o protótipo</a>
+  <span class="status-pill">Protótipo v2</span>
 </nav>
 
-<!-- 1 · HERO — produto domina, texto mínimo -->
+<!-- ===== HERO ===== -->
 <header class="hero" id="topo">
-  <div class="wrap hero-top">
-    <h1 data-r>Cadeira Beni</h1>
-    <p class="say" data-r>O móvel do pet também pode permanecer.</p>
+  <div class="wood-streak streak"></div>
+  <div class="wrap hero-inner">
+    <div class="hero-head">
+      <svg class="sym" viewBox="0 0 66 72" aria-hidden="true">
+        <g fill="#8A4A22"><rect x="6" y="4" width="8" height="52" rx="2"/><rect x="14" y="4" width="30" height="7" rx="3.5"/><rect x="14" y="14" width="40" height="7" rx="3.5"/><rect x="14" y="24" width="28" height="7" rx="3.5"/></g>
+        <g fill="#D65A2B"><rect x="14" y="30" width="28" height="7" rx="3.5"/><rect x="14" y="40" width="42" height="7" rx="3.5"/><rect x="14" y="50" width="32" height="7" rx="3.5"/></g>
+        <g fill="#C89B48"><rect x="10" y="58" width="7" height="12" rx="2"/><rect x="42" y="58" width="7" height="12" rx="2"/></g>
+      </svg>
+      <div class="meta" data-r>móvel pet<br>madeira reaproveitada<br><span style="color:var(--clay)">protótipo v2</span></div>
+    </div>
+    <h1 data-r><span>Cadeira</span><span class="l2">Beni</span></h1>
   </div>
   <div class="hero-obj" data-parallax>
-    <img src="assets/product-cutout.png" alt="Cadeira Beni — plataforma em madeira reaproveitada sobre quatro pernas de bambu" />
+    <img src="assets/product-cutout.png" alt="Cadeira Beni — plataforma em madeira reaproveitada sobre pernas de bambu" />
+    <p class="hero-tagline">O móvel do pet também pode permanecer.</p>
   </div>
 </header>
 
-<!-- 2 · EDITORIAL BREAK -->
-<section class="break">
-  <div class="wrap">
-    <h2 data-r>O pet ficou definitivo.<br>O produto pet, <em>não</em>.</h2>
+<!-- ===== POSTER GRID ===== -->
+<section class="poster" id="poster">
+  <div class="pgrid">
+    <div class="tile phrase c-ink s3c s2r" data-r>
+      <span class="mono tl">manifesto / 01</span>
+      <div class="ov"><div class="big">Madeira<br>que já<br>teve vida.</div></div>
+    </div>
+    <div class="tile s2r" data-r><img src="assets/mat-wood.jpg" alt="Veio da madeira reaproveitada"><span class="mono tl" style="color:#fff">madeira</span></div>
+    <div class="tile phrase c-clay" data-r><div class="ov"><div class="big">V1 não<br>fechou.</div></div></div>
+    <div class="tile sym-tile" data-r>
+      <svg class="mark" viewBox="0 0 66 72" aria-hidden="true"><g fill="#8A4A22"><rect x="6" y="4" width="8" height="52" rx="2"/><rect x="14" y="4" width="30" height="7" rx="3.5"/><rect x="14" y="14" width="40" height="7" rx="3.5"/><rect x="14" y="24" width="28" height="7" rx="3.5"/></g><g fill="#D65A2B"><rect x="14" y="30" width="28" height="7" rx="3.5"/><rect x="14" y="40" width="42" height="7" rx="3.5"/><rect x="14" y="50" width="32" height="7" rx="3.5"/></g><g fill="#4B2A17"><rect x="10" y="58" width="7" height="12" rx="2"/><rect x="42" y="58" width="7" height="12" rx="2"/></g></svg>
+    </div>
+    <div class="tile phrase c-bamboo s2c" data-r><div class="ov"><div class="big">O tecido sai.<br>A cadeira fica.</div></div></div>
+    <div class="tile" data-r><img src="assets/mat-bamboo.jpg" alt="Perna de bambu"><span class="mono tl" style="color:#fff">bambu</span></div>
+    <div class="tile wood-bars" data-r><span class="mono tl" style="color:#EFE7D6">ripas · sistema</span></div>
+    <div class="tile phrase c-sun s2c" data-r><div class="ov"><div class="big">A peça cansa.<br>O todo não.</div></div></div>
+    <div class="tile" data-r><img src="assets/mat-fabric.jpg" alt="Estofado lavável"><span class="mono tl" style="color:#fff">tecido</span></div>
+    <div class="tile" data-r>
+      <div class="swatches"><i style="background:var(--wood-dark)"></i><i style="background:var(--wood-mid)"></i><i style="background:var(--clay)"></i><i style="background:var(--sun)"></i><i style="background:var(--bamboo)"></i><i style="background:var(--moss)"></i></div>
+      <span class="mono tl" style="color:#fff">paleta</span>
+    </div>
+    <div class="tile phrase c-moss s2c" data-r><div class="ov"><div class="big">Reparo por<br>componente.</div></div></div>
+    <div class="tile phrase c-ink" data-r><div class="ov"><div class="big">O pet ficou<br>definitivo.</div></div></div>
   </div>
 </section>
 
-<!-- 3 · MATERIAL BOARD -->
-<section class="board" id="material">
+<!-- ===== MANIFESTO ===== -->
+<section class="manifesto">
+  <div class="wrap">
+    <p data-r>A Cadeira Beni nasce de madeira que já teve outra vida — e é feita para <em>durar, reparar e voltar</em>, peça por peça.</p>
+  </div>
+</section>
+
+<!-- ===== MOODBOARD (material) ===== -->
+<section class="mood" id="material">
   <div class="wrap">
     <div class="head">
-      <span class="kicker tick" data-r>Material</span>
-      <h2 class="hl hl-sm" data-r>A caminha estraga.<br>A cadeira permanece.</h2>
+      <div><span class="kick" data-r>Brand board · material</span><h2 class="title" data-r style="margin-top:12px">Madeira<br>como sistema.</h2></div>
+      <p class="body" data-r>Não é tema: é o material que define forma, cor, logo e reparo. Cada parte tem seu ciclo.</p>
     </div>
-    <div class="mgrid">
-      <div class="mtile big" data-r>
-        <img src="assets/mat-wood.jpg" alt="Veio da madeira maciça reaproveitada" />
-        <span class="lbl">Estrutura — <b>madeira reaproveitada</b></span>
+    <div class="mb">
+      <div class="frame" data-r>
+        <img src="assets/mat-wood.jpg" alt="Veio da madeira maciça reaproveitada">
+        <span class="note tl">01 · estrutura</span><span class="note br">madeira reaproveitada</span>
       </div>
-      <div class="mtile sm" data-r>
-        <img src="assets/mat-bamboo.jpg" alt="Perna de bambu" />
-        <span class="lbl">Perna — <b>bambu seco</b></span>
+      <div class="mb-col">
+        <div class="frame" data-r><img src="assets/mat-bamboo.jpg" alt="Perna de bambu"><span class="note tl">02 · perna</span></div>
+        <p class="mb-note" data-r>“O material não foi detalhe. Foi ponto de partida.”</p>
       </div>
-      <div class="mtile sm" data-r>
-        <img src="assets/mat-fabric.jpg" alt="Estofado de algodão, removível e lavável" />
-        <span class="lbl">Assento — <b>estofado lavável</b></span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4 · PRANCHA TÉCNICA -->
-<section class="prancha" id="prancha">
-  <div class="wrap">
-    <div class="head">
-      <span class="kicker tick" data-r>Prancha técnica</span>
-      <h2 class="hl hl-sm" data-r>A cadeira, por partes.</h2>
-    </div>
-    <div class="plan">
-      <div class="callcol r">
-        <div class="call" data-r><span class="k">Estrutura</span><span class="v">Madeira maciça reaproveitada</span><br><span class="st ok">prototipado</span></div>
-        <div class="call" data-r><span class="k">Assento</span><span class="v">Estofado removível e lavável</span><br><span class="st ok">prototipado</span></div>
-        <div class="call" data-r><span class="k">Acabamento</span><span class="v">Verniz + vinil — resiste a unha, xixi e mordida</span><br><span class="st ok">prototipado</span></div>
-      </div>
-      <figure class="obj" data-parallax>
-        <img src="assets/product-cutout.png" alt="Cadeira Beni de frente, com callouts técnicos" />
-      </figure>
-      <div class="callcol">
-        <div class="call" data-r><span class="k">Pernas</span><span class="v">Bambu substituível — 4 estacas</span><br><span class="st v2">versão 2</span></div>
-        <div class="call" data-r><span class="k">Fixação</span><span class="v">Encaixe desmontável, sem cola estrutural</span><br><span class="st ok">prototipado</span></div>
-        <div class="call" data-r><span class="k">Manutenção</span><span class="v">Troca por componente</span><br><span class="st ok">prototipado</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 5 · PROCESSO V1/V2 (split + carimbos) -->
-<section class="split" id="processo">
-  <div class="wrap head">
-    <span class="kicker tick" data-r>Processo</span>
-    <h2 class="hl hl-sm" data-r>A primeira versão não fechou.</h2>
-    <p class="body" data-r>A V1 falhou onde parecia mais bonita: nos pés. A marchetaria valorizava a madeira, mas dificultava repetição, encaixe e manutenção. A V2 troca complexidade por componente substituível.</p>
-  </div>
-  <div class="duo">
-    <div class="pane v1" data-r>
-      <figure>
-        <img src="assets/v1-real.jpg" alt="V1 — pés de marchetaria com encaixe cavilhado, na bancada" />
-        <span class="stamp no">não fechou</span>
-      </figure>
-      <span class="tag">V1 · pés e braços em marchetaria</span>
-      <h3>Bonita, difícil de repetir.</h3>
-      <p>Densidade variável, baixa precisão e encaixe trabalhoso. O acabamento pedia arte; o uso pedia sistema.</p>
-    </div>
-    <div class="pane v2" data-r>
-      <figure>
-        <img src="assets/product-cutout.png" alt="V2 — pernas de bambu substituíveis" />
-        <span class="stamp yes">mais reparável</span>
-      </figure>
-      <span class="tag">V2 · estacas de bambu</span>
-      <h3>Feia de trocar. Fácil de manter.</h3>
-      <p>Perna padronizada: sai uma, entra outra. Menos virtuosismo, mais manutenção possível — e circularidade real na peça que mais desgasta.</p>
-    </div>
-  </div>
-</section>
-
-<!-- 6 · USO REAL (Guday) -->
-<section class="uso">
-  <div class="uso-media">
-    <img src="assets/uso-home.jpg" alt="Cachorro dormindo na almofada da Cadeira Beni, em casa" />
-    <div class="uso-copy">
-      <div class="wrap">
-        <span class="kicker" data-r style="color:var(--bamboo)">Uso real</span>
-        <h2 class="hl hl-sm" data-r>Uso real não é delicado.</h2>
-        <div class="lines">
-          <p data-r>O tecido sai porque pet suja.</p>
-          <p data-r>A perna troca porque é ela que bate, arranha e cansa primeiro.</p>
-          <p data-r>Pelo, pata molhada, peso sempre no mesmo ponto.</p>
+      <div class="mb-col last">
+        <div class="frame" data-r><img src="assets/mat-fabric.jpg" alt="Estofado lavável"><span class="note tl">03 · assento</span><span class="note br">estofado lavável</span></div>
+        <div class="mb-pal" data-r>
+          <i style="background:var(--wood-dark)">wood-dark · #4B2A17</i>
+          <i style="background:var(--wood-mid)">wood-mid · #8A4A22</i>
+          <i style="background:var(--clay)">clay · #D65A2B</i>
+          <i style="background:var(--sun)">sun · #F26A1B</i>
+          <i style="background:var(--bamboo);color:#11100D">bamboo · #C89B48</i>
+          <i style="background:var(--moss)">moss · #243D2C</i>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- 7 · BAIXO-TECH / ALTO RACIOCÍNIO -->
-<section class="lowtech tint">
+<!-- ===== PRANCHA TÉCNICA ===== -->
+<section class="prancha" id="prancha">
+  <div class="grid-bg"></div>
   <div class="wrap">
-    <div class="head">
-      <span class="kicker tick" data-r>Baixo-tech · alto raciocínio</span>
-      <h2 class="hl hl-sm" data-r>A inovação está em deixar a manutenção possível.</h2>
-    </div>
-    <div class="grid4">
-      <div class="g4" data-r><span class="k">Encaixe</span><h3>Desmonta</h3><p>Estrutura que existe sem depender de cola pra se manter de pé.</p></div>
-      <div class="g4" data-r><span class="k">Troca</span><h3>Repõe</h3><p>Perna de bambu padronizada: substituição simples, sem oficina.</p></div>
-      <div class="g4" data-r><span class="k">Lavagem</span><h3>Limpa</h3><p>Estofado que sai — higiene sem comprometer a madeira.</p></div>
-      <div class="g4" data-r><span class="k">Reparo</span><h3>Volta</h3><p>Madeira que se lixa e retorna, em vez de ir pro descarte.</p></div>
+    <div class="head"><span class="kick" data-r>Prancha técnica</span><h2 class="title" data-r>A cadeira,<br>por partes.</h2></div>
+    <div class="plan">
+      <div class="callcol r">
+        <div class="call" data-r><span class="k">Estrutura · material</span><span class="v">Madeira maciça reaproveitada</span><span class="n">função: base e assento elevado</span><br><span class="st ok">prototipado</span></div>
+        <div class="call" data-r><span class="k">Assento · manutenção</span><span class="v">Estofado removível e lavável</span><span class="n">função: conforto e higiene</span><br><span class="st ok">prototipado</span></div>
+        <div class="call" data-r><span class="k">Dimensão</span><span class="v">— a medir</span><span class="n">altura / vão / base</span><br><span class="st medir">a medir</span></div>
+      </div>
+      <div class="obj" data-parallax>
+        <img src="assets/product-cutout.png" alt="Cadeira Beni de frente com callouts técnicos">
+        <span class="ring" style="left:26%;top:32%"></span>
+        <span class="ring" style="left:74%;top:34%"></span>
+        <span class="ring" style="left:50%;top:60%"></span>
+      </div>
+      <div class="callcol">
+        <div class="call" data-r><span class="k">Pernas · componente</span><span class="v">Bambu substituível — 4 estacas</span><span class="n">função: elevar e trocar fácil</span><br><span class="st v2">versão 2</span></div>
+        <div class="call" data-r><span class="k">Fixação</span><span class="v">Encaixe desmontável, sem cola estrutural</span><span class="n">função: reparo por componente</span><br><span class="st ok">prototipado</span></div>
+        <div class="call" data-r><span class="k">Acabamento</span><span class="v">Verniz + vinil</span><span class="n">resiste a unha, xixi e mordida</span><br><span class="st ok">prototipado</span></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 8 · MATRIZ DE VIABILIDADE -->
-<section class="matriz" id="viabilidade">
+<!-- ===== PROTÓTIPO DIGITAL ===== -->
+<section class="digital" id="digital">
   <div class="wrap">
-    <div class="head">
-      <span class="kicker tick" data-r>Viabilidade sistêmica</span>
-      <h2 class="hl hl-sm" data-r>Onde a cadeira precisa fazer sentido.</h2>
+    <div class="head"><span class="kick" data-r>Protótipo digital</span><h2 class="title" data-r>Do objeto<br>ao sistema.</h2></div>
+    <div class="wireframe" data-r>
+      <img src="assets/product-cutout.png" alt="Malha wireframe sobre a Cadeira Beni">
+      <div class="mesh"></div><div class="scan"></div>
     </div>
+    <div class="dig-tags">
+      <div data-r><span class="k">Problema</span><span class="v">O produto pet não acompanhou o pet.</span></div>
+      <div data-r><span class="k">Anatomia</span><span class="v">Estrutura, pernas e assento com ciclos próprios.</span></div>
+      <div data-r><span class="k">Ciclo</span><span class="v">Reparo por componente antes do descarte.</span></div>
+      <div data-r><span class="k">Viabilidade</span><span class="v">Cliente, pet, produção, ecossistema e negócio.</span></div>
+    </div>
+    <p class="body" data-r style="margin-top:26px">O modelo digital não é enfeite: organiza o raciocínio — mapeia o problema, decompõe a anatomia, desenha o ciclo de reparo e testa a viabilidade antes da próxima peça de madeira ser cortada.</p>
+  </div>
+</section>
+
+<!-- ===== V1 / V2 ===== -->
+<section class="versions" id="processo">
+  <div class="wrap head"><span class="kick" data-r>Processo</span><h2 class="title" data-r>A perna decidiu o design.</h2></div>
+  <div class="duo">
+    <div class="pane v1" data-r>
+      <figure><img src="assets/v1-real.jpg" alt="V1 — pés de marchetaria"><span class="bigstamp no">Não<br>fechou</span></figure>
+      <span class="vk">V1 · pés e braços em marchetaria</span>
+      <div class="vline">Bonita demais<br>para repetir.</div>
+      <p>Densidade variável, baixa precisão e encaixe trabalhoso. O acabamento pedia arte; o uso pedia sistema.</p>
+    </div>
+    <div class="pane v2" data-r>
+      <figure><img src="assets/product-cutout.png" alt="V2 — pernas de bambu"><span class="bigstamp yes">Mais<br>reparável</span></figure>
+      <span class="vk">V2 · estacas de bambu</span>
+      <div class="vline">Simples o bastante<br>para reparar.</div>
+      <p>Perna padronizada: sai uma, entra outra. Menos virtuosismo, mais manutenção possível — circularidade real na peça que mais desgasta.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CIRCULARIDADE ===== -->
+<section class="circ" id="circularidade">
+  <div class="wrap">
+    <span class="kick" data-r>Circularidade</span>
+    <div class="head"><h2 class="title" data-r>Começa quando algo desgasta.</h2></div>
+    <p class="sub" data-r>Estrutura, tecido e pernas têm ciclos separados. O que desgasta primeiro sai primeiro — sem levar o resto junto.</p>
+    <div class="cmods">
+      <div class="cmod" data-r><div><div class="from">Suja</div><div class="arrow">↓</div><div class="to">Lava</div></div><span class="tag">protótipo</span></div>
+      <div class="cmod" data-r><div><div class="from">Lasca</div><div class="arrow">↓</div><div class="to">Troca</div></div><span class="tag">protótipo</span></div>
+      <div class="cmod" data-r><div><div class="from">Marca</div><div class="arrow">↓</div><div class="to">Lixa</div></div><span class="tag">protótipo</span></div>
+      <div class="cmod evo" data-r><div><div class="from">Acaba</div><div class="arrow">↓</div><div class="to">Separa</div></div><span class="tag">evolução</span></div>
+      <div class="cmod evo" data-r><div><div class="from">Sobra</div><div class="arrow">↓</div><div class="to">Volta</div></div><span class="tag">evolução</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VIABILIDADE ===== -->
+<section class="viab" id="viabilidade">
+  <div class="wrap">
+    <div class="head"><span class="kick" data-r>Viabilidade sistêmica</span><h2 class="title" data-r>Onde precisa fazer sentido.</h2></div>
     <div class="mat">
       <div class="r" data-r><div class="k">Cliente</div><div class="v">Um móvel que fica na sala — não um objeto pet que se esconde.</div></div>
       <div class="r" data-r><div class="k">Pet</div><div class="v">Descanso elevado, ventilado e higiênico, com acesso fácil.</div></div>
@@ -382,37 +477,68 @@ footer .fsay{font-family:'Fraunces',serif;font-style:italic;font-weight:300;colo
   </div>
 </section>
 
-<!-- 9 · MAPA DE FALHAS / CIRCULARIDADE -->
-<section class="circ" id="circularidade">
+<!-- ===== BRAND BOARD ===== -->
+<section class="brand-board" id="marca">
   <div class="wrap">
-    <span class="kicker tick" data-r>Circularidade</span>
-    <div class="head"><h2 class="hl hl-sm" data-r>Circularidade começa quando algo desgasta.</h2></div>
-    <p class="sub" data-r>A estrutura, o tecido e as pernas têm ciclos separados. O que desgasta primeiro precisa sair primeiro — sem levar o resto junto.</p>
-    <div class="faults">
-      <div class="fault" data-r><div class="cond">Se o tecido <em>suja</em></div><div class="arw">→</div><div class="act">remove e <em>lava</em></div><div class="st now">protótipo</div></div>
-      <div class="fault" data-r><div class="cond">Se a perna <em>lasca</em></div><div class="arw">→</div><div class="act">troca a <em>estaca de bambu</em></div><div class="st now">protótipo</div></div>
-      <div class="fault" data-r><div class="cond">Se a estrutura <em>marca</em></div><div class="arw">→</div><div class="act">lixa e <em>repara a madeira</em></div><div class="st now">protótipo</div></div>
-      <div class="fault" data-r><div class="cond">Se o uso <em>termina</em></div><div class="arw">→</div><div class="act">desmonta e <em>separa por material</em></div><div class="st next">evolução</div></div>
-      <div class="fault" data-r><div class="cond">Madeira que <em>sobra</em></div><div class="arw">→</div><div class="act">volta ao ciclo por <em>logística reversa</em></div><div class="st next">evolução</div></div>
+    <div class="head" style="margin-bottom:34px"><span class="kick" data-r>Identidade</span><h2 class="title" data-r>Brand board.</h2></div>
+    <div class="bb-grid">
+      <div class="bb logo brandlock on-dark" data-r>
+        <svg class="mark" width="88" height="96" viewBox="0 0 66 72" aria-hidden="true"><g fill="#8A4A22"><rect x="6" y="4" width="8" height="52" rx="2"/><rect x="14" y="4" width="30" height="7" rx="3.5"/><rect x="14" y="14" width="40" height="7" rx="3.5"/><rect x="14" y="24" width="28" height="7" rx="3.5"/></g><g fill="#D65A2B"><rect x="14" y="30" width="28" height="7" rx="3.5"/><rect x="14" y="40" width="42" height="7" rx="3.5"/><rect x="14" y="50" width="32" height="7" rx="3.5"/></g><g fill="#C89B48"><rect x="10" y="58" width="7" height="12" rx="2"/><rect x="42" y="58" width="7" height="12" rx="2"/></g></svg>
+        <span class="wm" style="font-size:34px;text-align:center">Cadeira<b>Beni</b></span>
+        <span class="mono" style="color:var(--muted-d)">símbolo · ripas + pernas</span>
+      </div>
+      <div class="bb manifesto-bb" data-r>
+        <span class="bk">Manifesto</span>
+        <p>Móvel pet não precisa ser descartável. A Cadeira Beni pega madeira que já teve vida, levanta o descanso do chão e desmonta a lógica do lixo: quando uma parte cansa, ela sai — a cadeira fica. Design que se repara é design que permanece.</p>
+      </div>
+      <div class="bb pal" data-r>
+        <span class="bk">Paleta</span>
+        <div class="pal-row">
+          <i style="background:var(--wood-dark)" title="#4B2A17"></i><i style="background:var(--wood-mid)" title="#8A4A22"></i>
+          <i style="background:var(--clay)" title="#D65A2B"></i><i style="background:var(--sun)" title="#F26A1B"></i>
+          <i style="background:var(--bamboo)" title="#C89B48"></i><i style="background:var(--moss)" title="#243D2C"></i>
+          <i style="background:var(--blue-haze)" title="#9FB4BD"></i><i style="background:var(--paper);border:1px solid var(--line)" title="#EFE7D6"></i>
+        </div>
+      </div>
+      <div class="bb type" data-r>
+        <span class="bk">Tipografia</span>
+        <div class="type-row"><span class="lab">display · League Gothic</span><div class="display" style="font-size:30px">CADEIRA BENI</div></div>
+        <div class="type-row"><span class="lab">serif · Instrument Serif</span><div class="emo" style="font-size:20px">durar, reparar, voltar</div></div>
+        <div class="type-row"><span class="lab">corpo · IBM Plex Sans</span><div style="font-size:14px">Móvel pet reparável.</div></div>
+        <div class="type-row"><span class="lab">mono · IBM Plex Mono</span><div class="mono">status · prototipado</div></div>
+      </div>
+      <div class="bb voice" data-r>
+        <span class="bk">Tom de voz</span>
+        <ul class="voice-list">
+          <li>seco, direto, de bancada</li>
+          <li>honesto sobre o que é protótipo</li>
+          <li>calor de madeira, não de marketing</li>
+        </ul>
+      </div>
+      <div class="bb photo" data-r><img src="assets/uso-home.jpg" alt="Cachorro na almofada da Cadeira Beni"></div>
+      <div class="bb apps" data-r>
+        <span class="bk">Aplicações</span>
+        <div class="apps-list">
+          <div>Etiqueta de origem</div><div>Manual de manutenção</div>
+          <div>Poster de campanha</div><div>Site / brand board</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- ===== FOOTER ===== -->
 <footer id="fim">
   <div class="wrap">
     <div class="foot-top">
-      <div>
-        <div class="fbig" data-r>Cadeira Beni</div>
-        <p class="fsay" data-r>A caminha estraga. A cadeira permanece.</p>
-      </div>
-      <div class="foot-cta" data-r>
-        <a href="mailto:luizambritto@gmail.com?subject=Cadeira%20Beni%20—%20projeto">Falar sobre o projeto</a>
-      </div>
+      <a class="brandlock on-dark" href="#topo">
+        <svg class="mark" width="40" height="46" viewBox="0 0 66 72" aria-hidden="true"><g fill="#8A4A22"><rect x="6" y="4" width="8" height="52" rx="2"/><rect x="14" y="4" width="30" height="7" rx="3.5"/><rect x="14" y="14" width="40" height="7" rx="3.5"/><rect x="14" y="24" width="28" height="7" rx="3.5"/></g><g fill="#D65A2B"><rect x="14" y="30" width="28" height="7" rx="3.5"/><rect x="14" y="40" width="42" height="7" rx="3.5"/><rect x="14" y="50" width="32" height="7" rx="3.5"/></g><g fill="#C89B48"><rect x="10" y="58" width="7" height="12" rx="2"/><rect x="42" y="58" width="7" height="12" rx="2"/></g></svg>
+        <span class="wm" style="font-size:26px;color:var(--paper)">Cadeira<b>Beni</b></span>
+      </a>
+      <div class="foot-cta"><a href="mailto:luizambritto@gmail.com?subject=Cadeira%20Beni">Falar sobre o projeto</a></div>
     </div>
     <div class="foot-meta">
-      <span>Luiza Britto</span>
-      <span>Design Thinking e Prototipagem · Insper · 2026</span>
-      <span>Mobiliário reparável para pets</span>
+      <span>Luiza Britto</span><span>Design Thinking e Prototipagem · Insper · 2026</span><span>Móvel pet em madeira reaproveitada</span>
     </div>
   </div>
 </footer>
@@ -422,30 +548,22 @@ footer .fsay{font-family:'Fraunces',serif;font-style:italic;font-weight:300;colo
 <script>
 (function(){
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!(window.gsap && window.ScrollTrigger) || reduce) return; // sem JS/animação: conteúdo já visível
+  if(!(window.gsap && window.ScrollTrigger) || reduce) return;
   gsap.registerPlugin(ScrollTrigger);
-
-  // Hero: entrada lenta do nome
-  gsap.from('.hero-top [data-r]', {y:24, opacity:0, duration:1.1, ease:'power3.out', stagger:.14});
-  gsap.from('.hero-obj', {y:40, opacity:0, duration:1.3, ease:'power3.out', delay:.15});
-
-  // Parallax discreto do objeto
+  // hero: nome entra pesado
+  gsap.from('.hero h1 span',{yPercent:16,opacity:0,duration:1.1,ease:'power3.out',stagger:.12});
+  gsap.from('.hero .meta',{opacity:0,duration:1,ease:'power2.out',delay:.3});
+  // parallax da cadeira
   gsap.utils.toArray('[data-parallax]').forEach(function(el){
     gsap.to(el,{yPercent:-5,ease:'none',scrollTrigger:{trigger:el,start:'top bottom',end:'bottom top',scrub:true}});
   });
-
-  // Reveals editoriais (sobem em bloco, ritmo seco)
+  // reveals gerais
   gsap.utils.toArray('[data-r]').forEach(function(el){
-    if(el.closest('.hero-top')) return;
-    gsap.from(el,{y:20,opacity:0,duration:.85,ease:'power2.out',
-      scrollTrigger:{trigger:el,start:'top 90%'}});
+    if(el.closest('.hero')) return;
+    gsap.from(el,{y:18,opacity:0,duration:.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 92%'}});
   });
-
-  // Carimbos: entram batendo (leve)
-  gsap.utils.toArray('.stamp').forEach(function(el){
-    gsap.from(el,{scale:1.4,opacity:0,rotate:-18,duration:.4,ease:'back.out(2)',
-      scrollTrigger:{trigger:el,start:'top 85%'}});
-  });
+  // scanline do protótipo digital
+  gsap.to('.wireframe .scan',{backgroundPositionY:'100%',duration:3,repeat:-1,ease:'none',yoyo:true});
 })();
 </script>
 </body>
