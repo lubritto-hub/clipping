@@ -107,6 +107,18 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
   font-family:var(--font-serif);font-style:italic;font-size:clamp(16px,1.8vw,24px);color:var(--paper);max-width:16ch}
 @media(max-width:640px){.hero-obj img{width:130vw}.hero-tagline{position:static;margin:8px 0 24px;padding:0 18px}}
 
+/* ================= PRODUTO (proposta de valor) ================= */
+.produto .prod-top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,60px);align-items:end;margin-bottom:44px}
+.produto .prod-top .body{margin-bottom:6px}
+.values{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
+.val{padding:26px 20px 30px;border-bottom:1px solid var(--ink);border-right:1px solid var(--line)}
+.val:last-child{border-right:none}
+.val .k{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);display:block;margin-bottom:14px}
+.val .v{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(20px,2.2vw,28px);line-height:.9;display:block;margin-bottom:8px}
+.val .n{font-family:var(--font-body);font-size:13px;color:var(--muted);display:block;max-width:24ch}
+@media(max-width:820px){.produto .prod-top{grid-template-columns:1fr}.values{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.values{grid-template-columns:1fr}.val{border-right:none}}
+
 /* ================= POSTER GRID ================= */
 .poster{padding:0}
 .pgrid{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:minmax(150px,20vw);gap:0}
@@ -285,7 +297,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
     <span class="wm" style="font-size:17px">Cadeira<b>Beni</b></span>
   </a>
   <div class="navlinks">
-    <a href="#poster">Campanha</a>
+    <a href="#produto">Produto</a>
     <a href="#material">Material</a>
     <a href="#prancha">Prancha</a>
     <a href="#digital">Protótipo</a>
@@ -304,7 +316,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
         <g fill="#D65A2B"><rect x="14" y="30" width="28" height="7" rx="3.5"/><rect x="14" y="40" width="42" height="7" rx="3.5"/><rect x="14" y="50" width="32" height="7" rx="3.5"/></g>
         <g fill="#C89B48"><rect x="10" y="58" width="7" height="12" rx="2"/><rect x="42" y="58" width="7" height="12" rx="2"/></g>
       </svg>
-      <div class="meta" data-r>móvel pet<br>madeira reaproveitada<br><span style="color:var(--clay)">protótipo v2</span></div>
+      <div class="meta" data-r>móvel pet · modular<br>madeira de reuso<br><span style="color:var(--clay)">protótipo v2</span></div>
     </div>
     <h1 data-r><span>Cadeira</span><span class="l2">Beni</span></h1>
   </div>
@@ -314,29 +326,22 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
   </div>
 </header>
 
-<!-- ===== POSTER GRID ===== -->
-<section class="poster" id="poster">
-  <div class="pgrid">
-    <div class="tile phrase c-ink s3c s2r" data-r>
-      <span class="mono tl">campanha / 01</span>
-      <div class="ov"><div class="big">Madeira<br>que já<br>teve vida.</div></div>
+<!-- ===== PRODUTO (proposta de valor) ===== -->
+<section class="produto" id="produto">
+  <div class="wrap">
+    <div class="prod-top">
+      <div>
+        <span class="kick" data-r>O produto</span>
+        <h2 class="title" data-r>Móvel pet<br>em madeira<br>de reuso.</h2>
+      </div>
+      <p class="body" data-r>Modular e feito de madeira que já teve outra vida — para deixar a casa bonita e continuar bonita. Quando uma parte cansa, você troca só ela; a cadeira permanece.</p>
     </div>
-    <div class="tile s2r" data-r><img src="assets/mat-wood.jpg" alt="Veio da madeira reaproveitada"><span class="mono tl" style="color:#fff">madeira</span></div>
-    <div class="tile phrase c-clay" data-r><div class="ov"><div class="big">V1 não<br>fechou.</div></div></div>
-    <div class="tile sym-tile" data-r>
-      <svg class="mark" viewBox="0 0 66 72" aria-hidden="true"><g fill="#8A4A22"><rect x="6" y="4" width="8" height="52" rx="2"/><rect x="14" y="4" width="30" height="7" rx="3.5"/><rect x="14" y="14" width="40" height="7" rx="3.5"/><rect x="14" y="24" width="28" height="7" rx="3.5"/></g><g fill="#D65A2B"><rect x="14" y="30" width="28" height="7" rx="3.5"/><rect x="14" y="40" width="42" height="7" rx="3.5"/><rect x="14" y="50" width="32" height="7" rx="3.5"/></g><g fill="#4B2A17"><rect x="10" y="58" width="7" height="12" rx="2"/><rect x="42" y="58" width="7" height="12" rx="2"/></g></svg>
+    <div class="values">
+      <div class="val" data-r><span class="k">Sustentável</span><span class="v">Madeira de reuso</span><span class="n">Menos descarte, mais história em cada peça.</span></div>
+      <div class="val" data-r><span class="k">Modular</span><span class="v">Troca por peça</span><span class="n">Perna, tecido e estrutura com ciclos separados.</span></div>
+      <div class="val" data-r><span class="k">Bonito na casa</span><span class="v">Linguagem de móvel</span><span class="n">Fica na sala — não é caixa pet que se esconde.</span></div>
+      <div class="val" data-r><span class="k">Durável</span><span class="v">Feito pra ficar</span><span class="n">Repara em vez de descartar. Bonito por muito tempo.</span></div>
     </div>
-    <div class="tile phrase c-bamboo s2c" data-r><div class="ov"><div class="big">O tecido sai.<br>A cadeira fica.</div></div></div>
-    <div class="tile" data-r><img src="assets/mat-bamboo.jpg" alt="Perna de bambu"><span class="mono tl" style="color:#fff">bambu</span></div>
-    <div class="tile wood-bars" data-r><span class="mono tl" style="color:#EFE7D6">ripas · sistema</span></div>
-    <div class="tile phrase c-sun s2c" data-r><div class="ov"><div class="big">A peça cansa.<br>O todo não.</div></div></div>
-    <div class="tile" data-r><img src="assets/mat-fabric.jpg" alt="Estofado lavável"><span class="mono tl" style="color:#fff">tecido</span></div>
-    <div class="tile" data-r>
-      <div class="swatches"><i style="background:var(--wood-dark)"></i><i style="background:var(--wood-mid)"></i><i style="background:var(--clay)"></i><i style="background:var(--sun)"></i><i style="background:var(--bamboo)"></i><i style="background:var(--moss)"></i></div>
-      <span class="mono tl" style="color:#fff">paleta</span>
-    </div>
-    <div class="tile phrase c-moss s2c" data-r><div class="ov"><div class="big">Reparo por<br>componente.</div></div></div>
-    <div class="tile phrase c-ink" data-r><div class="ov"><div class="big">O pet ficou<br>definitivo.</div></div></div>
   </div>
 </section>
 
