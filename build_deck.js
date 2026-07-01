@@ -6,20 +6,20 @@ const path = require('path');
 const prs = new PptxGenJS();
 prs.defineLayout({ name: 'default', width: 10, height: 5.625 });
 
-// Premium Color Palette - Tim Cook aesthetic
+// Premium Brand Palette - Craft + Luxury Modern
 const colors = {
-  espresso: '#0F0C0A',           // Deep luxury black
-  off_white: '#FAFAF8',          // Refined white
-  gold: '#D4AF37',               // Premium gold (bamboo legs reference)
-  gold_light: '#E8C547',         // Light gold accent
-  caramelo: '#8B6F47',           // Warm wood tone
-  caramelo_claro: '#C4A06A',     // Light warm wood
-  caramelo_escuro: '#6B5635',    // Deep wood
-  oliva: '#3E4A35',              // Elegant olive
-  bege_pedra: '#E7DED1',         // Stone beige
-  cinza_quente: '#7A7570',       // Warm gray
-  tinta: '#1A1512',              // Deep ink black
-  claro_base: '#FCFBF9',         // Ultra light
+  charcoal: '#2A2620',           // Deep neutral base (was espresso)
+  linen: '#E8E0D5',              // Warm cream/linen (was off_white)
+  bronze: '#B8860B',             // Sophisticated bronze accent
+  rose_gold: '#C9A961',          // Warm rose gold (premium accent)
+  terra: '#A0714F',              // Earthy terra tone
+  taupe: '#9B8B7E',              // Soft taupe
+  clay: '#B89968',               // Warm clay tone
+  sand: '#D4C4B0',               // Soft sand
+  charcoal_light: '#5A5550',     // Lighter charcoal
+  cream: '#F5F1E8',              // Cream base for light slides
+  text_dark: '#3D3835',          // Dark text on light
+  text_light: '#F5F1E8',         // Light text on dark
 };
 
 // Helper to create a slide with background
@@ -40,8 +40,8 @@ function addTitle(slide, text, options = {}) {
     h: options.h || 1.2,
     fontSize: options.fontSize || 54,
     bold: true,
-    fontFace: 'Cambria',
-    color: options.color || colors.off_white,
+    fontFace: 'Playfair Display',
+    color: options.color || colors.linen,
     align: 'left',
     valign: 'top',
     wrap: true,
@@ -55,10 +55,10 @@ function addKicker(slide, text, options = {}) {
     y: options.y || 0.3,
     w: options.w || 9,
     h: options.h || 0.4,
-    fontSize: 12,
+    fontSize: 11,
     bold: true,
-    fontFace: 'Calibri',
-    color: options.color || colors.caramelo,
+    fontFace: 'Inter',
+    color: options.color || colors.bronze,
     align: 'left',
     valign: 'top',
     wrap: false,
@@ -73,22 +73,22 @@ function addBody(slide, text, options = {}) {
     w: options.w || 9,
     h: options.h || 3.5,
     fontSize: options.fontSize || 18,
-    fontFace: 'Calibri',
-    color: options.color || colors.tinta,
+    fontFace: 'Inter',
+    color: options.color || colors.text_dark,
     align: options.align || 'left',
     valign: options.valign || 'top',
     ...options
   });
 }
 
-function addFooter(slide, text, color = colors.off_white) {
+function addFooter(slide, text, color = colors.linen) {
   slide.addText(text, {
     x: 0.5,
     y: 5.1,
     w: 9,
     h: 0.4,
     fontSize: 10,
-    fontFace: 'Calibri',
+    fontFace: 'Inter',
     color: color,
     align: 'left',
     valign: 'bottom',
@@ -101,21 +101,21 @@ function addFooter(slide, text, color = colors.off_white) {
 function slide1() {
   const slide = createSlide('output/backgrounds/dark_cover.png');
 
-  // Premium subtitle (kicker)
-  slide.addText('DESIGN CONSCIOUS PET LIVING', {
+  // Kicker - Bronze craft narrative
+  slide.addText('SUSTAINABLE LUXURY FOR PETS', {
     x: 0.5,
     y: 0.4,
     w: 5,
     h: 0.3,
     fontSize: 11,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.gold,
+    fontFace: 'Inter',
+    color: colors.bronze,
     align: 'left',
-    charSpacing: 2
+    charSpacing: 1.5
   });
 
-  // Hero Title - VERY LARGE
+  // Hero Title - Playfair Display
   slide.addText('Cadeira Beni', {
     x: 0.5,
     y: 0.85,
@@ -123,60 +123,60 @@ function slide1() {
     h: 1.3,
     fontSize: 76,
     bold: true,
-    fontFace: 'Cambria',
-    color: colors.off_white,
+    fontFace: 'Playfair Display',
+    color: colors.linen,
     align: 'left',
     valign: 'top',
     wrap: false
   });
 
-  // Gold accent line
+  // Rose gold accent line
   slide.addShape(prs.ShapeType.rect, {
     x: 0.5,
     y: 2.2,
     w: 2.0,
     h: 0.03,
-    fill: { color: colors.gold },
+    fill: { color: colors.rose_gold },
     line: { type: 'none' }
   });
 
-  // Premium tagline
-  slide.addText('Furniture crafted for the discerning pet owner.', {
+  // Premium tagline - craft narrative
+  slide.addText('Objects of desire, designed to return.', {
     x: 0.5,
     y: 2.4,
     w: 4.5,
     h: 0.5,
-    fontSize: 16,
+    fontSize: 15,
     italic: true,
-    fontFace: 'Cambria',
-    color: colors.caramelo_claro,
+    fontFace: 'Playfair Display',
+    color: colors.terra,
     align: 'left'
   });
 
   // Core values (refined)
   const values = [
-    'Reclaimed Wood — Circular Design',
-    'Replaceable Bamboo Legs — Sustainable',
-    'Removable Linen — Washable Care'
+    'Reclaimed wood with story',
+    'Replaceable bamboo, modular design',
+    'Washable linen, built to last'
   ];
 
   let y = 3.1;
   values.forEach(val => {
-    slide.addText('• ' + val, {
+    slide.addText('◆ ' + val, {
       x: 0.5,
       y: y,
       w: 4.5,
       h: 0.25,
       fontSize: 11,
-      fontFace: 'Calibri',
-      color: colors.caramelo_claro,
+      fontFace: 'Inter',
+      color: colors.sand,
       align: 'left'
     });
     y += 0.35;
   });
 
   // Footer
-  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026', colors.gold);
+  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026', colors.rose_gold);
 
   // Hero photo - LARGE
   if (fs.existsSync('fotos/cachorro.jpg')) {
@@ -195,7 +195,7 @@ function slide1() {
       y: 0.3,
       w: 4.2,
       h: 2.0,
-      fill: { color: colors.espresso, transparency: 70 },
+      fill: { color: colors.charcoal, transparency: 70 },
       line: { type: 'none' }
     });
   }
@@ -207,13 +207,13 @@ function slide1() {
 function slide2() {
   const slide = createSlide('output/backgrounds/light_base.png');
 
-  addKicker(slide, '01 — PROBLEMA SISTÊMICO', { color: colors.caramelo });
+  addKicker(slide, '01 — PROBLEMA SISTÊMICO', { color: colors.bronze });
   addTitle(slide, 'O problema não é estético. É sistêmico.', {
     y: 0.7,
     w: 9,
     h: 1.3,
     fontSize: 44,
-    color: colors.tinta
+    color: colors.charcoal
   });
 
   slide.addText('Três óticas que se conectam — desejo, uso diário e descarte urbano de material.', {
@@ -222,8 +222,8 @@ function slide2() {
     w: 9,
     h: 0.7,
     fontSize: 13,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left',
     wrap: true
   });
@@ -247,8 +247,8 @@ function slide2() {
       h: 0.35,
       fontSize: 13,
       bold: true,
-      fontFace: 'Calibri',
-      color: colors.tinta,
+      fontFace: 'Inter',
+      color: colors.text_dark,
       align: 'left'
     });
 
@@ -258,7 +258,7 @@ function slide2() {
       y: 3.22,
       w: 2.8,
       h: 0.02,
-      fill: { color: colors.caramelo },
+      fill: { color: colors.bronze },
       line: { type: 'none' }
     });
 
@@ -269,8 +269,8 @@ function slide2() {
       w: 2.8,
       h: 1.3,
       fontSize: 11,
-      fontFace: 'Calibri',
-      color: colors.tinta,
+      fontFace: 'Inter',
+      color: colors.text_dark,
       align: 'left',
       valign: 'top'
     });
@@ -283,8 +283,8 @@ function slide2() {
       h: 0.4,
       fontSize: 10,
       italic: true,
-      fontFace: 'Calibri',
-      color: colors.cinza_quente,
+      fontFace: 'Inter',
+      color: colors.taupe,
       align: 'left'
     });
   });
@@ -295,7 +295,7 @@ function slide2() {
     y: 5.15,
     w: 9,
     h: 0.5,
-    fill: { color: colors.oliva },
+    fill: { color: colors.charcoal },
     line: { type: 'none' }
   });
 
@@ -306,8 +306,8 @@ function slide2() {
     h: 0.4,
     fontSize: 11,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.off_white,
+    fontFace: 'Inter',
+    color: colors.linen,
     align: 'left',
     valign: 'middle'
   });
@@ -319,11 +319,11 @@ function slide2() {
 function slide3() {
   const slide = createSlide('output/backgrounds/light_base.png');
 
-  addKicker(slide, '02 — PÚBLICO-ALVO', { color: colors.caramelo });
+  addKicker(slide, '02 — PÚBLICO-ALVO', { color: colors.bronze });
   addTitle(slide, 'Para casas onde o pet também habita o design.', {
     y: 0.8,
     fontSize: 44,
-    color: colors.tinta
+    color: colors.text_dark
   });
 
   // Left: Persona primária
@@ -334,7 +334,7 @@ function slide3() {
     h: 0.5,
     fontSize: 11,
     bold: true,
-    color: colors.caramelo,
+    color: colors.bronze,
     charSpacing: 2
   });
 
@@ -344,7 +344,7 @@ function slide3() {
     y: 1.55,
     w: 0.04,
     h: 3.3,
-    fill: { color: colors.caramelo },
+    fill: { color: colors.bronze },
     line: { type: 'none' }
   });
 
@@ -355,8 +355,8 @@ function slide3() {
     h: 0.4,
     fontSize: 18,
     bold: true,
-    fontFace: 'Cambria',
-    color: colors.tinta,
+    fontFace: 'Playfair Display',
+    color: colors.text_dark,
     align: 'left'
   });
 
@@ -367,8 +367,8 @@ function slide3() {
     h: 0.4,
     fontSize: 12,
     italic: true,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 
@@ -386,8 +386,8 @@ function slide3() {
       w: 3.5,
       h: 0.8,
       fontSize: 11,
-      fontFace: 'Calibri',
-      color: colors.tinta,
+      fontFace: 'Inter',
+      color: colors.text_dark,
       align: 'left',
       valign: 'top'
     });
@@ -402,7 +402,7 @@ function slide3() {
     h: 0.3,
     fontSize: 12,
     bold: true,
-    color: colors.caramelo,
+    color: colors.bronze,
     charSpacing: 2
   });
 
@@ -421,8 +421,8 @@ function slide3() {
       h: 0.25,
       fontSize: 12,
       bold: true,
-      fontFace: 'Calibri',
-      color: colors.tinta,
+      fontFace: 'Inter',
+      color: colors.text_dark,
       align: 'left'
     });
 
@@ -432,8 +432,8 @@ function slide3() {
       w: 4.3,
       h: 0.4,
       fontSize: 11,
-      fontFace: 'Calibri',
-      color: colors.cinza_quente,
+      fontFace: 'Inter',
+      color: colors.taupe,
       align: 'left'
     });
 
@@ -447,11 +447,11 @@ function slide3() {
 function slide4() {
   const slide = createSlide('output/backgrounds/light_base.png');
 
-  addKicker(slide, '03 — VALIDAÇÃO EM CAMPO', { color: colors.caramelo });
+  addKicker(slide, '03 — VALIDAÇÃO EM CAMPO', { color: colors.bronze });
   addTitle(slide, 'O que ouvimos em campo.', {
     y: 0.8,
     fontSize: 44,
-    color: colors.tinta
+    color: colors.text_dark
   });
 
   slide.addText('6 entrevistas com público-alvo e especialistas — tutores, catadores, marceneiros, veterinários e lojistas.', {
@@ -460,8 +460,8 @@ function slide4() {
     w: 9,
     h: 0.4,
     fontSize: 14,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 
@@ -480,7 +480,7 @@ function slide4() {
         y: y - 0.15,
         w: 9,
         h: 0.02,
-        fill: { color: colors.caramelo },
+        fill: { color: colors.bronze },
         line: { type: 'none' }
       });
       y += 0.15;
@@ -494,8 +494,8 @@ function slide4() {
       h: 0.6,
       fontSize: 18,
       italic: true,
-      fontFace: 'Cambria',
-      color: colors.caramelo,
+      fontFace: 'Playfair Display',
+      color: colors.bronze,
       align: 'left',
       valign: 'top'
     });
@@ -508,8 +508,8 @@ function slide4() {
       h: 0.25,
       fontSize: 11,
       bold: true,
-      fontFace: 'Calibri',
-      color: colors.cinza_quente,
+      fontFace: 'Inter',
+      color: colors.taupe,
       align: 'left',
       charSpacing: 1
     });
@@ -532,8 +532,8 @@ function slide5() {
     h: 0.3,
     fontSize: 11,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.gold,
+    fontFace: 'Inter',
+    color: colors.rose_gold,
     align: 'left',
     charSpacing: 2
   });
@@ -546,8 +546,8 @@ function slide5() {
     h: 1.2,
     fontSize: 52,
     bold: true,
-    fontFace: 'Cambria',
-    color: colors.off_white,
+    fontFace: 'Playfair Display',
+    color: colors.linen,
     align: 'left',
     valign: 'top',
     wrap: false
@@ -559,7 +559,7 @@ function slide5() {
     y: 2.15,
     w: 1.8,
     h: 0.03,
-    fill: { color: colors.gold },
+    fill: { color: colors.rose_gold },
     line: { type: 'none' }
   });
 
@@ -571,8 +571,8 @@ function slide5() {
     h: 0.5,
     fontSize: 14,
     italic: true,
-    fontFace: 'Cambria',
-    color: colors.caramelo_claro,
+    fontFace: 'Playfair Display',
+    color: colors.sand,
     align: 'left'
   });
 
@@ -594,8 +594,8 @@ function slide5() {
       w: 4.5,
       h: 0.3,
       fontSize: 12,
-      fontFace: 'Calibri',
-      color: colors.off_white,
+      fontFace: 'Inter',
+      color: colors.linen,
       align: 'left'
     });
     y += 0.38;
@@ -609,7 +609,7 @@ function slide5() {
       y: 0.35,
       w: 4.35,
       h: 5.15,
-      fill: { color: colors.gold },
+      fill: { color: colors.rose_gold },
       line: { type: 'none' }
     });
 
@@ -631,11 +631,11 @@ function slide5() {
 function slide6() {
   const slide = createSlide('output/backgrounds/light_base.png');
 
-  addKicker(slide, '05 — PROTÓTIPO FÍSICO', { color: colors.caramelo });
+  addKicker(slide, '05 — PROTÓTIPO FÍSICO', { color: colors.bronze });
   addTitle(slide, 'Do laboratório ao uso real.', {
     y: 0.8,
     fontSize: 44,
-    color: colors.tinta
+    color: colors.text_dark
   });
 
   // Left: three points
@@ -653,8 +653,8 @@ function slide6() {
       w: 3.8,
       h: 0.65,
       fontSize: 12,
-      fontFace: 'Calibri',
-      color: colors.tinta,
+      fontFace: 'Inter',
+      color: colors.text_dark,
       align: 'left',
       valign: 'top'
     });
@@ -667,7 +667,7 @@ function slide6() {
     y: 4.0,
     w: 3.8,
     h: 0.02,
-    fill: { color: colors.oliva },
+    fill: { color: colors.charcoal },
     line: { type: 'none' }
   });
 
@@ -676,7 +676,7 @@ function slide6() {
     y: 4.0,
     w: 3.8,
     h: 1.0,
-    fill: { color: colors.bege_pedra },
+    fill: { color: colors.sand },
     line: { type: 'none' }
   });
 
@@ -687,7 +687,7 @@ function slide6() {
     h: 0.25,
     fontSize: 11,
     bold: true,
-    color: colors.oliva,
+    color: colors.charcoal,
     charSpacing: 1
   });
 
@@ -697,8 +697,8 @@ function slide6() {
     w: 3.4,
     h: 0.55,
     fontSize: 11,
-    fontFace: 'Calibri',
-    color: colors.tinta,
+    fontFace: 'Inter',
+    color: colors.text_dark,
     align: 'left',
     valign: 'top'
   });
@@ -734,8 +734,8 @@ function slide6() {
     h: 0.25,
     fontSize: 9,
     italic: true,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 
@@ -746,8 +746,8 @@ function slide6() {
     h: 0.2,
     fontSize: 9,
     italic: true,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 }
@@ -766,8 +766,8 @@ function slide7() {
     h: 0.3,
     fontSize: 11,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.gold,
+    fontFace: 'Inter',
+    color: colors.rose_gold,
     align: 'left',
     charSpacing: 2
   });
@@ -777,7 +777,7 @@ function slide7() {
     y: 1.15,
     w: 4.3,
     fontSize: 40,
-    color: colors.off_white
+    color: colors.linen
   });
 
   // Intro
@@ -787,8 +787,8 @@ function slide7() {
     w: 4.3,
     h: 0.4,
     fontSize: 13,
-    fontFace: 'Calibri',
-    color: colors.off_white,
+    fontFace: 'Inter',
+    color: colors.linen,
     align: 'left'
   });
 
@@ -807,8 +807,8 @@ function slide7() {
       w: 4.3,
       h: 0.6,
       fontSize: 11,
-      fontFace: 'Calibri',
-      color: colors.caramelo_claro,
+      fontFace: 'Inter',
+      color: colors.sand,
       align: 'left',
       valign: 'top'
     });
@@ -823,8 +823,8 @@ function slide7() {
     h: 0.4,
     fontSize: 12,
     italic: true,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 
@@ -842,16 +842,16 @@ function drawExplodedView(slide) {
     y: cy - 1.8,
     w: 0,
     h: 3.6,
-    line: { color: colors.cinza_quente, dashType: 'dash' }
+    line: { color: colors.taupe, dashType: 'dash' }
   });
 
   // Parts (simplified as rectangles with labels)
   const parts = [
-    { label: '1. Almofada removível e lavável', y: cy - 1.5, color: colors.bege_pedra },
-    { label: '2. Proteção lateral (grades)', y: cy - 0.8, color: colors.caramelo },
-    { label: '3. Plataforma — madeira reaproveitada', y: cy + 0.0, color: colors.caramelo_escuro },
-    { label: '4. Encaixes', y: cy + 0.8, color: colors.cinza_quente },
-    { label: '5. 4 pernas de bambu — substituíveis', y: cy + 1.5, color: colors.caramelo_claro }
+    { label: '1. Almofada removível e lavável', y: cy - 1.5, color: colors.sand },
+    { label: '2. Proteção lateral (grades)', y: cy - 0.8, color: colors.bronze },
+    { label: '3. Plataforma — madeira reaproveitada', y: cy + 0.0, color: colors.clay },
+    { label: '4. Encaixes', y: cy + 0.8, color: colors.taupe },
+    { label: '5. 4 pernas de bambu — substituíveis', y: cy + 1.5, color: colors.sand }
   ];
 
   parts.forEach((part, i) => {
@@ -871,7 +871,7 @@ function drawExplodedView(slide) {
       y: part.y,
       w: 0.5,
       h: 0,
-      line: { color: colors.cinza_quente }
+      line: { color: colors.taupe }
     });
 
     // Label
@@ -881,8 +881,8 @@ function drawExplodedView(slide) {
       w: 2.3,
       h: 0.3,
       fontSize: 10,
-      fontFace: 'Calibri',
-      color: colors.off_white,
+      fontFace: 'Inter',
+      color: colors.linen,
       align: 'left',
       valign: 'middle'
     });
@@ -895,11 +895,11 @@ function drawExplodedView(slide) {
 function slide8() {
   const slide = createSlide('output/backgrounds/light_base.png');
 
-  addKicker(slide, '07 — ECONOMIA CIRCULAR · CICLO DE VIDA', { color: colors.caramelo });
+  addKicker(slide, '07 — ECONOMIA CIRCULAR · CICLO DE VIDA', { color: colors.bronze });
   addTitle(slide, 'Desenhada para voltar ao ciclo.', {
     y: 0.8,
     fontSize: 44,
-    color: colors.tinta
+    color: colors.text_dark
   });
 
   slide.addText('Da madeira recuperada ao retorno ao ciclo produtivo — um circuito fechado urbano.', {
@@ -908,8 +908,8 @@ function slide8() {
     w: 9,
     h: 0.4,
     fontSize: 13,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 
@@ -930,7 +930,7 @@ function slide8() {
 
   // Draw nodes and connections
   nodeX.forEach((x, i) => {
-    const color = i === 2 ? colors.oliva : colors.caramelo; // Sanitization highlighted
+    const color = i === 2 ? colors.charcoal : colors.bronze; // Sanitization highlighted
 
     // Circle node
     slide.addShape(prs.ShapeType.ellipse, {
@@ -950,8 +950,8 @@ function slide8() {
       h: 0.3,
       fontSize: 10,
       bold: i === 2,
-      fontFace: 'Calibri',
-      color: i === 2 ? colors.oliva : colors.tinta,
+      fontFace: 'Inter',
+      color: i === 2 ? colors.charcoal : colors.text_dark,
       align: 'center'
     });
 
@@ -962,7 +962,7 @@ function slide8() {
         y: nodeY,
         w: nodeX[i + 1] - x - nodeRadius / 2,
         h: 0,
-        line: { color: colors.cinza_quente }
+        line: { color: colors.taupe }
       });
     }
   });
@@ -975,8 +975,8 @@ function slide8() {
     h: 0.25,
     fontSize: 9,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.oliva,
+    fontFace: 'Inter',
+    color: colors.charcoal,
     align: 'center'
   });
 
@@ -986,7 +986,7 @@ function slide8() {
     y: 3.1,
     w: 0,
     h: 0.5,
-    line: { color: colors.caramelo }
+    line: { color: colors.bronze }
   });
 
   // Arrow marker
@@ -996,7 +996,7 @@ function slide8() {
     w: 0.4,
     h: 0.3,
     fontSize: 24,
-    color: colors.caramelo,
+    color: colors.bronze,
     align: 'center'
   });
 
@@ -1006,8 +1006,8 @@ function slide8() {
     w: 3.0,
     h: 0.5,
     fontSize: 11,
-    fontFace: 'Calibri',
-    color: colors.tinta,
+    fontFace: 'Inter',
+    color: colors.text_dark,
     align: 'left'
   });
 
@@ -1017,7 +1017,7 @@ function slide8() {
     y: 4.5,
     w: 0.6,
     h: 0.02,
-    fill: { color: colors.caramelo },
+    fill: { color: colors.bronze },
     line: { type: 'none' }
   });
 
@@ -1028,8 +1028,8 @@ function slide8() {
     h: 0.6,
     fontSize: 12,
     italic: true,
-    fontFace: 'Calibri',
-    color: colors.tinta,
+    fontFace: 'Inter',
+    color: colors.text_dark,
     align: 'left'
   });
 }
@@ -1040,11 +1040,11 @@ function slide8() {
 function slide9() {
   const slide = createSlide('output/backgrounds/light_base.png');
 
-  addKicker(slide, '08 — PROCESSO PRODUTIVO', { color: colors.caramelo });
+  addKicker(slide, '08 — PROCESSO PRODUTIVO', { color: colors.bronze });
   addTitle(slide, 'O material decidiu o design.', {
     y: 0.8,
     fontSize: 44,
-    color: colors.tinta
+    color: colors.text_dark
   });
 
   slide.addText('A tensão entre usuário (durável, reparável), material (densidade variável) e tempo de laboratório.', {
@@ -1053,8 +1053,8 @@ function slide9() {
     w: 9,
     h: 0.4,
     fontSize: 13,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 
@@ -1070,7 +1070,7 @@ function slide9() {
     y: photo_y - 0.25,
     w: 0.6,
     h: 0.25,
-    fill: { color: colors.caramelo },
+    fill: { color: colors.bronze },
     line: { type: 'none' }
   });
 
@@ -1081,8 +1081,8 @@ function slide9() {
     h: 0.25,
     fontSize: 11,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.off_white,
+    fontFace: 'Inter',
+    color: colors.linen,
     align: 'center',
     valign: 'middle'
   });
@@ -1107,8 +1107,8 @@ function slide9() {
     h: 0.3,
     fontSize: 13,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.tinta,
+    fontFace: 'Inter',
+    color: colors.text_dark,
     align: 'left'
   });
 
@@ -1118,8 +1118,8 @@ function slide9() {
     w: 3.0,
     h: 0.5,
     fontSize: 11,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 
@@ -1130,7 +1130,7 @@ function slide9() {
     w: 0.5,
     h: 0.3,
     fontSize: 20,
-    color: colors.caramelo,
+    color: colors.bronze,
     align: 'center'
   });
 
@@ -1141,7 +1141,7 @@ function slide9() {
     y: photo_y - 0.25,
     w: 0.6,
     h: 0.25,
-    fill: { color: colors.oliva },
+    fill: { color: colors.charcoal },
     line: { type: 'none' }
   });
 
@@ -1152,8 +1152,8 @@ function slide9() {
     h: 0.25,
     fontSize: 11,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.off_white,
+    fontFace: 'Inter',
+    color: colors.linen,
     align: 'center',
     valign: 'middle'
   });
@@ -1178,8 +1178,8 @@ function slide9() {
     h: 0.3,
     fontSize: 13,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.tinta,
+    fontFace: 'Inter',
+    color: colors.text_dark,
     align: 'left'
   });
 
@@ -1189,8 +1189,8 @@ function slide9() {
     w: 3.0,
     h: 0.5,
     fontSize: 11,
-    fontFace: 'Calibri',
-    color: colors.cinza_quente,
+    fontFace: 'Inter',
+    color: colors.taupe,
     align: 'left'
   });
 }
@@ -1209,8 +1209,8 @@ function slide10() {
     h: 0.3,
     fontSize: 11,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.gold,
+    fontFace: 'Inter',
+    color: colors.rose_gold,
     align: 'left',
     charSpacing: 2
   });
@@ -1223,8 +1223,8 @@ function slide10() {
     h: 1.0,
     fontSize: 76,
     bold: true,
-    fontFace: 'Cambria',
-    color: colors.off_white,
+    fontFace: 'Playfair Display',
+    color: colors.linen,
     align: 'left',
     valign: 'top',
     wrap: false
@@ -1236,7 +1236,7 @@ function slide10() {
     y: 2.0,
     w: 2.0,
     h: 0.03,
-    fill: { color: colors.gold },
+    fill: { color: colors.rose_gold },
     line: { type: 'none' }
   });
 
@@ -1248,8 +1248,8 @@ function slide10() {
     h: 0.5,
     fontSize: 16,
     italic: true,
-    fontFace: 'Cambria',
-    color: colors.caramelo_claro,
+    fontFace: 'Playfair Display',
+    color: colors.sand,
     align: 'left'
   });
 
@@ -1268,8 +1268,8 @@ function slide10() {
       w: 4.5,
       h: 0.3,
       fontSize: 12,
-      fontFace: 'Calibri',
-      color: colors.off_white,
+      fontFace: 'Inter',
+      color: colors.linen,
       align: 'left'
     });
     y += 0.42;
@@ -1283,13 +1283,13 @@ function slide10() {
     h: 0.4,
     fontSize: 13,
     bold: true,
-    fontFace: 'Calibri',
-    color: colors.gold,
+    fontFace: 'Inter',
+    color: colors.rose_gold,
     align: 'left'
   });
 
   // Footer
-  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026', colors.gold);
+  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026', colors.rose_gold);
 
   // Right: Photo with gold frame
   if (fs.existsSync('fotos/produto.jpg')) {
@@ -1299,7 +1299,7 @@ function slide10() {
       y: 0.35,
       w: 4.35,
       h: 5.15,
-      fill: { color: colors.gold },
+      fill: { color: colors.rose_gold },
       line: { type: 'none' }
     });
 
