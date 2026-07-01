@@ -3,649 +3,453 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- NAME FIX: título e descrição sempre "Cadeira Beni", nunca "beni" isolado -->
 <title>Cadeira Beni — Mobiliário circular para pets</title>
-<meta name="description" content="Cadeira Beni: móvel de descanso para pets em madeira maciça reaproveitada, com pernas de bambu substituíveis e estofado lavável. Objeto de desejo, desenhado para voltar ao ciclo." />
-<script>document.documentElement.classList.add('js')</script>
+<meta name="description" content="Cadeira Beni: uma cadeira de descanso para pets em madeira reaproveitada, com pernas de bambu substituíveis e estofado lavável. Projeto acadêmico de Design Thinking e Prototipagem — feita para durar, reparar e voltar ao ciclo." />
+
+<!--
+  DESIGN SYSTEM (refatorado)
+  - Nome: "Cadeira Beni" é a marca. "beni" nunca aparece isolado como identidade.
+  - Menos efeito, mais matéria: removidos loader, cursor custom, grain, marquee,
+    glows, gradientes radiais, sombras pesadas, hover-lift e cantos muito arredondados.
+  - Paleta: off-white cru + marrom-preto profundo + madeira; acento proprietário
+    = verde musgo, usado só em sinais de ciclo/decisão. Dourado quase eliminado.
+  - Tipografia disciplinada: Fraunces (títulos curtos), Inter (texto),
+    DM Mono SÓ para dados técnicos (materiais, etapas, medidas, labels).
+  - Robustez: o site é legível 100% em CSS. JS (GSAP) é só enriquecimento
+    e degrada para conteúdo visível quando não roda (ex.: visualizador do iPad).
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&family=Inter:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
+/* ============ TOKENS ============ */
 :root{
-  --bg:#15110D;
-  --bg2:#1D1812;
-  --paper:#F3ECDF;
-  --cream:#EAE1D2;
-  --bone:#EBE2D3;
-  --ink:#2A241D;
-  --ink-soft:#5A5044;
-  --taupe:#8E8072;
-  --bronze:#B0895A;
-  --bronze-2:#CBA96A;
-  --line-d:rgba(235,226,211,.13);
-  --line-l:rgba(42,36,29,.14);
-  --ease:cubic-bezier(.22,.61,.28,1);
-  --maxw:1280px;
+  --ink:#17120D;            /* marrom-preto profundo */
+  --ink-2:#221A12;
+  --paper:#EFE8D9;          /* off-white cru */
+  --paper-2:#E7DDCA;
+  --paper-3:#E1D6C0;
+  --muted:#786A56;          /* texto secundário sobre claro */
+  --muted-d:rgba(239,232,217,.58); /* texto secundário sobre escuro */
+  --line:rgba(23,18,13,.16);
+  --line-d:rgba(239,232,217,.16);
+  --wood:#7A5A32;           /* marrom madeira, hairlines/labels */
+  --moss:#4B562F;           /* ACENTO proprietário: verde musgo (ciclo/decisão) */
+  --moss-soft:#5E6B3C;
+  --maxw:1240px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-body{
-  font-family:'Inter',system-ui,sans-serif;
-  background:var(--bg);color:var(--ink);
-  line-height:1.55;overflow-x:hidden;
-}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--paper);color:var(--ink);
+  line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(24px,5vw,72px)}
-.serif{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:1}
-.mono{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.16em;text-transform:uppercase}
-::selection{background:var(--bronze);color:var(--bg)}
+::selection{background:var(--moss);color:var(--paper)}
 
-/* hide-until-animated only when JS is on */
-.js .anim,.js .word-in,.js .line-in{will-change:transform,opacity}
-.js .anim{opacity:0}
-.js .loader{display:flex}
-.js .hero-eyebrow,.js .hero-tag,.js .hero-scroll,.js .sc-label{opacity:0}
-.js .hero-title .line-in,.js .word-in{transform:translateY(110%)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 clamp(22px,5vw,64px)}
 
-/* ---------- GRAIN ---------- */
-.grain{position:fixed;inset:-50%;z-index:9990;pointer-events:none;opacity:.045;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  animation:grain 6s steps(6) infinite;mix-blend-mode:overlay}
-@keyframes grain{
-  0%{transform:translate(0,0)}10%{transform:translate(-4%,-2%)}30%{transform:translate(3%,-4%)}
-  50%{transform:translate(-2%,3%)}70%{transform:translate(4%,2%)}90%{transform:translate(-3%,1%)}100%{transform:translate(0,0)}}
+/* Type roles */
+.serif{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-.02em;line-height:1.02}
+.mono{font-family:'DM Mono',ui-monospace,monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.lead{font-size:clamp(16px,1.5vw,19px);color:var(--muted);max-width:56ch;line-height:1.6}
 
-/* ---------- SCROLL PROGRESS ---------- */
-.progress{position:fixed;top:0;left:0;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);
-  background:linear-gradient(90deg,var(--bronze),var(--bronze-2));z-index:9995}
+/* Section rhythm — muito respiro, cortes secos */
+section{padding:clamp(80px,13vh,150px) 0;position:relative}
+.eyebrow{color:var(--wood);display:inline-block;padding-bottom:14px;margin-bottom:26px;
+  border-bottom:1px solid var(--line)}
+.dark .eyebrow{color:var(--paper-2);border-color:var(--line-d)}
+h2.title{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(30px,5vw,60px);
+  line-height:1.03;letter-spacing:-.025em;max-width:16ch}
+.dark{background:var(--ink);color:var(--paper)}
 
-/* ---------- CURSOR ---------- */
-.cursor{position:fixed;top:0;left:0;width:9px;height:9px;border-radius:50%;background:var(--bronze-2);
-  pointer-events:none;z-index:9999;transform:translate(-50%,-50%);mix-blend-mode:difference;
-  transition:width .3s var(--ease),height .3s var(--ease),background .3s}
-.cursor.big{width:64px;height:64px;background:rgba(203,169,106,.18)}
-@media(hover:none),(max-width:820px){.cursor{display:none}}
+/* Hairline divider between quiet sections */
+.rule{height:1px;background:var(--line);border:0}
 
-/* ---------- LOADER ---------- */
-.loader{position:fixed;inset:0;z-index:10000;background:var(--bg);display:none;align-items:center;justify-content:center}
-.loader-word{font-family:'Fraunces',serif;font-size:clamp(48px,9vw,110px);color:var(--bone);overflow:hidden}
-.loader-word span{display:inline-block;transform:translateY(110%)}
-.loader-bar{position:absolute;bottom:0;left:0;height:2px;width:0;background:var(--bronze)}
+/* ============ NAV ============ */
+nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  padding:16px clamp(22px,5vw,64px);background:rgba(239,232,217,.9);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+/* MARCA: nome completo "Cadeira Beni" */
+.brand{font-family:'Fraunces',serif;font-size:19px;letter-spacing:-.01em}
+.brand b{font-weight:500}
+.navlinks{display:flex;gap:28px}
+.navlinks a{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);padding-bottom:3px;border-bottom:1px solid transparent;transition:border-color .2s,color .2s}
+.navlinks a:hover{color:var(--ink);border-color:var(--wood)}
+.navcta{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink);border:1px solid var(--ink);padding:9px 16px;transition:background .2s,color .2s}
+.navcta:hover{background:var(--ink);color:var(--paper)}
+@media(max-width:760px){.navlinks{display:none}}
 
-/* ---------- NAV ---------- */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;
-  padding:22px clamp(24px,5vw,72px);transition:padding .5s var(--ease),background .5s var(--ease),box-shadow .5s var(--ease)}
-nav.solid{background:rgba(21,17,13,.6);backdrop-filter:blur(18px) saturate(160%);padding:14px clamp(24px,5vw,72px);box-shadow:0 1px 0 var(--line-d)}
-.brand{display:flex;align-items:center;gap:11px;font-family:'Fraunces',serif;font-size:23px;color:var(--bone);letter-spacing:-.01em}
-.brand svg{width:24px;height:24px}
-.navlinks{display:flex;gap:34px}
-.navlinks a{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--bone);opacity:.7;transition:opacity .3s;position:relative}
-.navlinks a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:1px;background:var(--bronze-2);transition:width .35s var(--ease)}
-.navlinks a:hover{opacity:1}.navlinks a:hover::after{width:100%}
-.navcta{font-family:'DM Mono',monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--bg);
-  background:var(--bone);border-radius:100px;padding:10px 20px;transition:transform .4s var(--ease),background .3s}
-.navcta:hover{background:var(--bronze-2)}
-@media(max-width:820px){.navlinks{display:none}}
+/* ============ HERO — a cadeira é protagonista ============ */
+.hero{padding:clamp(40px,7vh,90px) 0 clamp(60px,9vh,120px)}
+.hero-grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(20px,4vw,56px);align-items:center}
+.hero h1{font-family:'Fraunces',serif;font-weight:380;font-size:clamp(56px,10.5vw,150px);
+  line-height:.92;letter-spacing:-.035em;margin:20px 0 22px}
+.hero .sub{font-family:'Fraunces',serif;font-style:italic;font-weight:300;
+  font-size:clamp(19px,2.3vw,30px);color:var(--wood);line-height:1.15;margin-bottom:26px;max-width:20ch}
+.hero .support{max-width:44ch;color:var(--muted);font-size:clamp(14.5px,1.4vw,17px);line-height:1.62}
+.hero .foot-note{margin-top:30px;color:var(--muted)}
+.hero-obj{position:relative}
+.hero-obj img{width:100%}
+/* sombra de contato ÚNICA e sutil — materialidade, não decoração */
+.hero-obj::after{content:"";position:absolute;left:50%;bottom:2%;width:66%;height:26px;
+  transform:translateX(-50%);background:radial-gradient(ellipse at center, rgba(23,18,13,.28), rgba(23,18,13,0) 70%);
+  filter:blur(6px);z-index:-1}
+@media(max-width:820px){.hero-grid{grid-template-columns:1fr;gap:8px}
+  .hero-obj{order:-1;max-width:460px;margin:0 auto}}
 
-/* ---------- HERO ---------- */
-.hero{position:relative;height:100vh;min-height:640px;overflow:hidden;background:var(--bg)}
-.hero-media{position:absolute;inset:0;overflow:hidden}
-.hero-img{width:100%;height:120%;object-fit:cover;object-position:center 32%;will-change:transform}
-.hero-media::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(15,12,9,.5) 0%,rgba(15,12,9,.05) 26%,rgba(15,12,9,.1) 52%,rgba(15,12,9,.92) 100%),
-             linear-gradient(78deg,rgba(15,12,9,.6) 0%,rgba(15,12,9,0) 60%)}
-.hero-content{position:absolute;left:0;right:0;bottom:clamp(52px,8vh,96px);z-index:3}
-.hero-eyebrow{color:var(--bronze-2);margin-bottom:26px}
-.hero-title{font-family:'Fraunces',serif;font-weight:380;color:#fff;font-size:clamp(64px,13vw,190px);line-height:.9;letter-spacing:-.035em}
-.hero-title .line{display:block;overflow:hidden;padding-bottom:.04em}
-.hero-title .line-in{display:block}
-.hero-tag{margin-top:28px;font-family:'Fraunces',serif;font-style:italic;font-weight:300;
-  font-size:clamp(19px,2.4vw,30px);color:var(--cream)}
-.hero-scroll{position:absolute;bottom:30px;right:clamp(24px,5vw,72px);z-index:3;color:rgba(235,226,211,.55);
-  display:flex;align-items:center;gap:10px}
-.hero-scroll b{display:inline-block;width:34px;height:1px;background:var(--bronze-2);animation:cue 2.4s var(--ease) infinite}
-@keyframes cue{0%,100%{transform:scaleX(.3);opacity:.4;transform-origin:left}50%{transform:scaleX(1);opacity:1;transform-origin:left}}
+/* ============ PROBLEMA — momento de impacto (escuro, imagem grande) ============ */
+.problema{background:var(--ink);color:var(--paper);padding:0}
+.problema-media{position:relative;height:min(78vh,720px)}
+.problema-media img{width:100%;height:100%;object-fit:cover;object-position:center 32%;
+  filter:saturate(.96) contrast(1.02)}
+/* leve escurecimento só pra leitura do texto — sem glow */
+.problema-media::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg, rgba(15,11,7,.82) 0%, rgba(15,11,7,.35) 46%, rgba(15,11,7,0) 72%)}
+.problema-copy{position:absolute;inset:0;display:flex;align-items:center;z-index:2}
+.problema-copy .wrap{width:100%}
+.problema h2{color:var(--paper);max-width:15ch}
+.problema .lead{color:var(--muted-d);margin-top:22px}
+.problema .data{margin-top:30px;color:var(--paper-2);border-color:var(--line-d)}
+@media(max-width:640px){.problema-media{height:88vh}
+  .problema-media::after{background:linear-gradient(180deg, rgba(15,11,7,.3) 0%, rgba(15,11,7,.55) 40%, rgba(15,11,7,.92) 100%)}
+  .problema-copy{align-items:flex-end;padding-bottom:8vh}}
 
-/* ---------- SECTION BASE ---------- */
-section{position:relative}
-.pad{padding:clamp(100px,15vh,190px) 0}
-.eyebrow{color:var(--bronze);display:block;margin-bottom:26px}
-.dark{background:var(--bg);color:var(--bone)}
-.dark .eyebrow{color:var(--bronze-2)}
-.light{background:var(--paper);color:var(--ink)}
-.head h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(34px,5.4vw,72px);line-height:1.02;letter-spacing:-.025em;max-width:14ch}
-.head p{margin-top:24px;max-width:52ch;font-size:clamp(15px,1.4vw,18px);color:var(--taupe)}
-.dark .head p{color:rgba(235,226,211,.6)}
+/* ============ SOLUÇÃO ============ */
+.sol-head{max-width:60ch;margin-bottom:52px}
+.sol-head .title{margin:18px 0 20px}
+.sol-media{position:relative}
+.sol-media img{width:100%;max-width:820px;margin:0 auto}
+.sol-media::after{content:"";position:absolute;left:50%;bottom:1%;width:60%;height:26px;
+  transform:translateX(-50%);background:radial-gradient(ellipse at center, rgba(23,18,13,.24), rgba(23,18,13,0) 70%);
+  filter:blur(6px);z-index:-1}
+/* faixa de materiais — mono técnico, cru, sem cards */
+.materials{display:flex;flex-wrap:wrap;gap:0;margin-top:44px;border-top:1px solid var(--line)}
+.materials .m{flex:1 1 200px;padding:22px 0;border-bottom:1px solid var(--line);
+  border-right:1px solid var(--line);padding-right:22px}
+.materials .m:last-child{border-right:none}
+.materials .m .k{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--wood);display:block;margin-bottom:8px}
+.materials .m .v{font-family:'Fraunces',serif;font-size:clamp(18px,2vw,24px)}
+@media(max-width:720px){.materials .m{flex:1 1 100%;border-right:none}}
 
-/* word/line reveal units */
-.word{display:inline-block;overflow:hidden;vertical-align:top}
-.word-in{display:inline-block}
-.word-in.accent{color:var(--bronze)}
-.dark .word-in.accent{color:var(--bronze-2);font-style:italic;font-family:'Fraunces',serif}
+/* ============ PROCESSO — V1 dá lugar a V2 ============ */
+.processo{background:var(--paper-2)}
+.proc-top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,64px);align-items:end;margin-bottom:56px}
+.proc-top .lead{margin-top:20px}
+.proc-body{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,56px);align-items:center}
+.proc-media img{width:100%}
+.proc-media figcaption{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--muted);margin-top:12px}
+.vsteps{display:flex;flex-direction:column;gap:0}
+.vstep{padding:26px 0;border-top:1px solid var(--line)}
+.vstep:last-child{border-bottom:1px solid var(--line)}
+.vstep .tag{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);display:block;margin-bottom:12px}
+.vstep.v2 .tag{color:var(--moss)}
+.vstep h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.6vw,30px);letter-spacing:-.01em;margin-bottom:8px}
+.vstep p{color:var(--muted);font-size:15px;max-width:46ch}
+.vstep .arrow{font-family:'Fraunces',serif;color:var(--moss);font-size:18px}
+@media(max-width:820px){.proc-top,.proc-body{grid-template-columns:1fr}}
 
-/* ---------- STATEMENT ---------- */
-.statement{padding:clamp(120px,22vh,260px) 0}
-.statement .big{font-family:'Fraunces',serif;font-weight:360;font-size:clamp(30px,5.2vw,72px);
-  line-height:1.08;letter-spacing:-.025em;max-width:20ch}
+/* ============ ANATOMIA — ficha técnica editorial (sem cards) ============ */
+.spec{border-top:1px solid var(--ink)}
+.spec .row{display:grid;grid-template-columns:minmax(140px,220px) 1fr;gap:clamp(16px,4vw,48px);
+  padding:26px 4px;border-bottom:1px solid var(--line);align-items:baseline}
+.spec .row .k{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--wood)}
+.spec .row .v{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(20px,2.4vw,30px);letter-spacing:-.01em}
+.spec .row .n{font-family:'Fraunces',serif;font-size:15px;color:var(--muted);display:block;margin-top:6px;font-style:italic}
+@media(max-width:560px){.spec .row{grid-template-columns:1fr;gap:6px;padding:22px 4px}}
 
-/* ---------- SHOWCASE (pinned scale) ---------- */
-.showcase{height:100vh;overflow:hidden;background:var(--bg)}
-.sc-stage{position:relative;height:100vh;display:flex;align-items:center;justify-content:center}
-.sc-frame{width:min(82vw,780px);aspect-ratio:11/10;overflow:visible;will-change:transform;filter:drop-shadow(0 50px 60px rgba(0,0,0,.55))}
-.sc-frame img{width:100%;height:100%;object-fit:contain}
-.sc-label{position:absolute;z-index:4;color:var(--bone);text-align:center}
-.sc-label .mono{color:var(--bronze-2);display:block;margin-bottom:16px}
-.sc-label h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,6.5vw,92px);line-height:.98;letter-spacing:-.03em;text-shadow:0 4px 40px rgba(0,0,0,.5)}
-.showcase-vignette{position:absolute;inset:0;pointer-events:none;opacity:0;
-  background:radial-gradient(circle at 50% 50%,transparent 30%,rgba(15,12,9,.55) 100%)}
+/* ============ VALIDAÇÃO — fala → insight → decisão ============ */
+.validacao{background:var(--paper-2)}
+.val-head{max-width:56ch;margin-bottom:56px}
+.val-head .lead{margin-top:18px}
+.vitem{display:grid;grid-template-columns:1.1fr 1fr;gap:clamp(20px,4vw,56px);
+  padding:40px 0;border-top:1px solid var(--line);align-items:start}
+.vitem:last-child{border-bottom:1px solid var(--line)}
+.vitem blockquote{font-family:'Fraunces',serif;font-weight:400;font-style:italic;
+  font-size:clamp(24px,3.4vw,42px);line-height:1.12;letter-spacing:-.02em}
+.vitem .id{display:flex;flex-direction:column;gap:22px;padding-top:8px}
+.vitem .id .k{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--wood);display:block;margin-bottom:6px}
+.vitem .id .decisao .k{color:var(--moss)}
+.vitem .id p{font-size:15.5px;color:var(--ink);max-width:40ch;line-height:1.5}
+@media(max-width:760px){.vitem{grid-template-columns:1fr;gap:22px;padding:32px 0}}
 
-/* ---------- FEATURES ---------- */
-.features{background:var(--bg);color:var(--bone)}
-.feat-lead{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:clamp(22px,3vw,38px);
-  color:var(--cream);max-width:22ch;line-height:1.15;margin-bottom:70px}
-.feat-row{display:grid;grid-template-columns:56px 1fr;gap:26px;padding:34px 0;border-top:1px solid var(--line-d);align-items:start}
-.feat-row:last-child{border-bottom:1px solid var(--line-d)}
-.feat-row .num{font-family:'DM Mono',monospace;font-size:13px;color:var(--bronze-2);padding-top:6px}
-.feat-row h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.01em;margin-bottom:6px}
-.feat-row p{color:rgba(235,226,211,.6);font-size:15px;max-width:46ch}
+/* ============ CIRCULARIDADE — momento de impacto (escuro) ============ */
+.circ{background:var(--ink);color:var(--paper)}
+.circ .title{color:var(--paper)}
+.circ .lead{color:var(--muted-d);margin-top:22px;max-width:54ch}
+.cycle{margin-top:66px}
+.cycle svg{width:100%;height:auto;overflow:visible}
+.cycle .clabel{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;fill:var(--paper);text-transform:uppercase}
+.cycle .cnote{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.04em;fill:var(--muted-d)}
+.legend{display:flex;gap:28px;flex-wrap:wrap;margin-top:40px;font-family:'DM Mono',monospace;
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted-d)}
+.legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.legend .p{background:var(--moss-soft)}
+.legend .h{background:transparent;border:1px solid var(--muted-d)}
 
-/* ---------- ANATOMY ---------- */
-.parts{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:70px;border-top:1px solid var(--line-l)}
-.part{padding:34px 26px 40px;border-right:1px solid var(--line-l)}
-.part:last-child{border-right:none}
-.part .n{font-family:'Fraunces',serif;font-size:clamp(34px,4vw,52px);color:var(--bronze);line-height:1}
-.part h3{font-size:16px;font-weight:500;margin:20px 0 8px;color:var(--ink)}
-.part p{font-size:13.5px;color:var(--taupe)}
-@media(max-width:900px){.parts{grid-template-columns:1fr 1fr}.part{border-bottom:1px solid var(--line-l)}}
-@media(max-width:560px){.parts{grid-template-columns:1fr}}
+/* ============ FOOTER ============ */
+footer{background:var(--ink);color:var(--paper);padding:clamp(70px,10vh,120px) 0 50px;border-top:1px solid var(--line-d)}
+.foot-top{display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:end;margin-bottom:60px}
+footer .big{font-family:'Fraunces',serif;font-weight:380;font-size:clamp(40px,8vw,104px);line-height:.94;letter-spacing:-.035em}
+footer .say{font-family:'Fraunces',serif;font-style:italic;font-weight:300;color:var(--muted-d);
+  font-size:clamp(17px,2vw,24px);max-width:26ch;margin-top:16px}
+.foot-cta{align-self:end;justify-self:end;text-align:right}
+.foot-cta a{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--paper);border-bottom:1px solid var(--moss-soft);padding-bottom:4px}
+.foot-meta{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--muted-d);
+  padding-top:26px;border-top:1px solid var(--line-d)}
+@media(max-width:760px){.foot-top{grid-template-columns:1fr}.foot-cta{justify-self:start;text-align:left}}
 
-/* ---------- PROCESS ---------- */
-.proc-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,5vw,80px);align-items:center;margin-top:20px}
-.proc-media{overflow:hidden;border-radius:20px}
-.proc-media img{width:100%;aspect-ratio:4/5;object-fit:cover;height:118%;will-change:transform}
-.proc-steps{display:flex;flex-direction:column;gap:34px}
-.pstep .tag{font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.12em;color:var(--bronze);display:block;margin-bottom:12px}
-.pstep h3{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(26px,3.2vw,40px);letter-spacing:-.02em;color:var(--ink);margin-bottom:10px}
-.pstep p{color:var(--ink-soft);font-size:15.5px;max-width:42ch}
-.pstep.v2 .tag{color:var(--ink);background:var(--bronze-2);padding:3px 9px;border-radius:4px}
-.proc-divider{height:1px;background:var(--line-l);position:relative}
-.proc-divider::before{content:"↓";position:absolute;left:50%;top:-11px;transform:translateX(-50%);color:var(--bronze);font-family:'Fraunces',serif}
-@media(max-width:840px){.proc-grid{grid-template-columns:1fr;gap:44px}.proc-media img{aspect-ratio:4/3}}
-
-/* ---------- MARQUEE ---------- */
-.marquee{background:var(--bg);color:var(--bone);padding:38px 0;border-top:1px solid var(--line-d);border-bottom:1px solid var(--line-d);overflow:hidden}
-.mq-track{display:flex;white-space:nowrap;will-change:transform}
-.mq-track span{font-family:'Fraunces',serif;font-size:clamp(30px,5vw,64px);font-weight:360;letter-spacing:-.02em;padding-right:.6em;display:inline-flex;align-items:center}
-.mq-track .dot{color:var(--bronze-2);margin:0 .5em;font-size:.5em}
-
-/* ---------- CIRCULAR ---------- */
-.loop{display:flex;align-items:flex-start;justify-content:space-between;gap:6px;margin-top:80px;flex-wrap:wrap}
-.node{flex:1;min-width:112px;text-align:center;position:relative}
-.node .dot{width:15px;height:15px;border-radius:50%;background:var(--bronze);margin:0 auto 18px;position:relative;box-shadow:0 0 0 5px rgba(176,137,90,.16)}
-.node.key .dot{background:var(--bronze-2);box-shadow:0 0 0 8px rgba(203,169,106,.22)}
-.node h3{font-family:'Fraunces',serif;font-weight:400;font-size:17px;color:var(--bone)}
-.node.key h3{color:var(--bronze-2)}
-.node small{display:block;margin-top:5px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.08em;color:var(--taupe);text-transform:uppercase}
-.node .link{position:absolute;top:7px;left:50%;width:100%;height:1px;background:var(--line-d);transform-origin:left;transform:scaleX(0)}
-.node:last-child .link{display:none}
-.loopnote{margin-top:70px;font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:clamp(20px,2.6vw,32px);color:var(--cream);max-width:24ch;line-height:1.2}
-@media(max-width:760px){.node{min-width:44%;margin-bottom:34px}.node .link{display:none}}
-
-/* ---------- QUOTES ---------- */
-.quotes .q{padding:clamp(50px,9vh,100px) 0;border-top:1px solid var(--line-l);display:grid;grid-template-columns:.3fr 1fr;gap:30px}
-.quotes .q:last-child{border-bottom:1px solid var(--line-l)}
-.quotes .q .mono{color:var(--bronze);padding-top:14px}
-.quotes blockquote{font-family:'Fraunces',serif;font-weight:360;font-size:clamp(26px,4vw,54px);line-height:1.08;letter-spacing:-.02em;color:var(--ink)}
-.quotes cite{display:block;margin-top:22px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe);font-style:normal}
-@media(max-width:720px){.quotes .q{grid-template-columns:1fr;gap:14px}}
-
-/* ---------- CTA ---------- */
-.cta{background:var(--bg);color:var(--bone);text-align:center;overflow:hidden;position:relative}
-.cta .glow{position:absolute;width:900px;height:900px;border-radius:50%;top:-40%;left:50%;transform:translateX(-50%);
-  background:radial-gradient(circle,rgba(203,169,106,.16),transparent 62%);pointer-events:none}
-.cta h2{font-family:'Fraunces',serif;font-weight:380;font-size:clamp(52px,11vw,150px);line-height:.92;letter-spacing:-.035em;color:#fff}
-.cta .tag{font-family:'Fraunces',serif;font-style:italic;font-weight:300;font-size:clamp(19px,2.4vw,30px);color:var(--cream);margin-top:22px}
-.magnet{display:inline-flex;margin-top:52px;will-change:transform}
-.magnet a{font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.12em;text-transform:uppercase;
-  background:var(--bone);color:var(--bg);padding:19px 42px;border-radius:100px;transition:background .35s}
-.magnet a:hover{background:var(--bronze-2)}
-
-/* ---------- FOOTER ---------- */
-footer{background:#100D0A;color:var(--taupe);padding:70px 0 46px}
-.foot{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap}
-.foot .brand{color:var(--bone)}
-.foot .fcol .mono{color:var(--taupe);display:block;margin-bottom:10px}
-.foot a:hover{color:var(--bronze-2)}
-.foot .fright{text-align:right;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.06em;line-height:1.9}
-@media(max-width:640px){.foot .fright{text-align:left}}
-
-@media(prefers-reduced-motion:reduce){
-  *{animation-duration:.01ms!important;animation-iteration-count:1!important}
-  .js .anim,.js .word-in,.js .line-in{opacity:1!important;transform:none!important}
-}
-
-/* ============================================================
-   DEPTH · SHADES · SHADOWS  — crafted material pass
-   ============================================================ */
-:root{
-  --sh-sm:0 2px 8px rgba(20,15,10,.16);
-  --sh-md:0 14px 34px -10px rgba(22,16,10,.34);
-  --sh-lg:0 44px 90px -26px rgba(15,11,7,.6);
-  --sh-inset-d:inset 0 1px 0 rgba(255,246,230,.05), inset 0 -20px 40px -30px rgba(0,0,0,.6);
-  --edge-d:1px solid rgba(255,246,230,.06);
-}
-
-/* Dark sections: tonal radial shades instead of flat charcoal */
-.dark, .statement, .showcase, .features, .cta{
-  background:
-    radial-gradient(115% 85% at 80% 6%, #251e16 0%, rgba(37,30,22,0) 52%),
-    radial-gradient(95% 80% at 10% 102%, #1b160f 0%, rgba(27,22,15,0) 58%),
-    var(--bg);
-}
-/* soft seam so section changes don't read as hard "coded" cuts */
-.dark::before, .statement::before, .features::before, .circular::before, .cta::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:120px;pointer-events:none;
-  background:linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,0));
-}
-.light{
-  background:
-    radial-gradient(105% 75% at 50% -5%, #FBF7ED 0%, rgba(251,247,237,0) 62%),
-    linear-gradient(180deg, #F6F1E6 0%, #EEE7D8 100%);
-}
-.light::before{
-  content:"";position:absolute;top:0;left:0;right:0;height:100px;pointer-events:none;
-  background:linear-gradient(180deg, rgba(42,36,29,.05), rgba(42,36,29,0));
-}
-section{isolation:isolate}
-section > .wrap{position:relative;z-index:1}
-
-/* Floating product: real layered drop shadow + contact ground shadow */
-.sc-frame{filter:drop-shadow(0 60px 55px rgba(0,0,0,.55)) drop-shadow(0 26px 30px rgba(0,0,0,.4)) drop-shadow(0 8px 10px rgba(0,0,0,.35))}
-.sc-ground{position:absolute;left:50%;bottom:15%;width:48%;max-width:560px;height:54px;
-  transform:translateX(-50%);border-radius:50%;z-index:0;pointer-events:none;
-  background:radial-gradient(ellipse at center, rgba(0,0,0,.62) 0%, rgba(0,0,0,.28) 42%, rgba(0,0,0,0) 72%);
-  filter:blur(10px);opacity:.85}
-
-/* Feature rows: raised warm slats with hover depth */
-.feat-row{border-radius:14px;padding:26px 20px;margin:2px 0;
-  background:linear-gradient(180deg, rgba(255,247,233,.035), rgba(255,247,233,0));
-  box-shadow:var(--sh-inset-d);transition:background .4s var(--ease), transform .4s var(--ease)}
-.feat-row:hover{transform:translateX(6px);
-  background:linear-gradient(180deg, rgba(203,169,106,.09), rgba(255,247,233,0))}
-
-/* Anatomy: real cards with elevation instead of flat grid cells */
-.parts{border:none;gap:16px;background:transparent}
-.part{border:1px solid rgba(42,36,29,.09);border-right:1px solid rgba(42,36,29,.09);border-radius:18px;
-  background:linear-gradient(180deg, #FDFAF3 0%, #F0E9DA 100%);
-  box-shadow:var(--sh-md);transition:transform .5s var(--ease), box-shadow .5s var(--ease)}
-.part:last-child{border-right:1px solid rgba(42,36,29,.09)}
-.part:hover{transform:translateY(-8px);box-shadow:var(--sh-lg)}
-.part .n{color:var(--bronze)}
-
-/* Process: deeper elevation + inset framing on media */
-.proc-media{box-shadow:var(--sh-lg)}
-.proc-media::after{content:"";position:absolute;inset:0;border-radius:20px;pointer-events:none;
-  box-shadow:inset 0 0 0 1px rgba(255,255,255,.12), inset 0 -60px 80px -50px rgba(0,0,0,.55)}
-.proc-media{position:relative}
-.pstep{border:1px solid rgba(42,36,29,.07);box-shadow:var(--sh-md)}
-
-/* Quotes: tinted card with left accent + depth */
-.quotes .q{position:relative;padding:clamp(40px,7vh,80px) 34px;border-top:none;margin-bottom:22px;
-  background:linear-gradient(180deg,#FCF9F2,#F1EBDD);border-radius:18px;box-shadow:var(--sh-md);border:1px solid rgba(42,36,29,.06)}
-.quotes .q:last-child{border-bottom:none}
-.quotes .q::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;border-radius:3px;
-  background:linear-gradient(180deg,var(--bronze),var(--bronze-2))}
-
-/* Marquee: inner shadows to seat it as an embossed band */
-.marquee{box-shadow:inset 0 18px 30px -22px rgba(0,0,0,.7), inset 0 -18px 30px -22px rgba(0,0,0,.7)}
-
-/* Circular nodes: give the dots dimensional glow */
-.node .dot{background:radial-gradient(circle at 35% 30%, #d8b877, var(--bronze));
-  box-shadow:0 0 0 5px rgba(176,137,90,.16), 0 6px 12px rgba(0,0,0,.45)}
-.node.key .dot{background:radial-gradient(circle at 35% 30%, #e7cf90, var(--bronze-2));
-  box-shadow:0 0 0 8px rgba(203,169,106,.22), 0 6px 14px rgba(0,0,0,.5)}
-
-/* Buttons & nav: tactile depth */
-.navcta{box-shadow:var(--sh-sm)}
-.magnet a{box-shadow:0 16px 34px -10px rgba(203,169,106,.55), inset 0 1px 0 rgba(255,255,255,.5)}
-.cta .glow{filter:blur(10px)}
-
-/* Hero: deepen the cinematic grade */
-.hero-media::after{background:
-  linear-gradient(180deg, rgba(15,12,9,.55) 0%, rgba(15,12,9,.05) 24%, rgba(15,12,9,.12) 50%, rgba(15,12,9,.94) 100%),
-  radial-gradient(120% 100% at 30% 40%, rgba(15,12,9,.6) 0%, rgba(15,12,9,0) 62%),
-  radial-gradient(90% 70% at 85% 15%, rgba(60,42,20,.25), rgba(0,0,0,0) 55%)}
+/* ============ REVEAL (só quando JS roda; sem JS já está visível) ============ */
+/* usamos gsap.from — nada é escondido por CSS, então sem JS o conteúdo aparece */
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 
-<div class="grain"></div>
-<div class="progress"></div>
-<div class="cursor"></div>
-
-<!-- LOADER -->
-<div class="loader" id="loader">
-  <div class="loader-word"><span>beni</span></div>
-  <div class="loader-bar"></div>
-</div>
-
-<!-- NAV -->
-<nav id="nav">
-  <a class="brand" href="#top" data-hover>
-    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.8">
-      <circle cx="20" cy="20" r="15"/><path d="M11 22 h18"/><path d="M14 22 v6 M26 22 v6"/>
-    </svg>beni
-  </a>
+<!-- NAV: marca com nome completo, CTA de projeto (não e-commerce) -->
+<nav>
+  <a class="brand" href="#topo">Cadeira <b>Beni</b></a>
   <div class="navlinks">
-    <a href="#produto" data-hover>Produto</a>
-    <a href="#processo" data-hover>Processo</a>
-    <a href="#circular" data-hover>Circularidade</a>
-    <a href="#vozes" data-hover>Vozes</a>
+    <a href="#problema">Problema</a>
+    <a href="#processo">Processo</a>
+    <a href="#anatomia">Ficha técnica</a>
+    <a href="#circularidade">Circularidade</a>
   </div>
-  <a class="navcta" href="#cta" data-hover>Quero uma Beni</a>
+  <a class="navcta" href="#solucao">Explorar o protótipo</a>
 </nav>
 
-<!-- HERO -->
-<header class="hero" id="top">
-  <div class="hero-media"><img class="hero-img" src="assets/hero-dog.jpg" alt="Pet descansando na Cadeira Beni" /></div>
-  <div class="wrap hero-content">
-    <span class="mono hero-eyebrow">Mobiliário circular para pets</span>
-    <h1 class="hero-title">
-      <span class="line"><span class="line-in">Cadeira</span></span>
-      <span class="line"><span class="line-in">Beni</span></span>
-    </h1>
-    <div class="hero-tag">Objects of desire, designed to return.</div>
+<!-- ===================== HERO ===================== -->
+<header class="hero" id="topo">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="mono" data-r>Mobiliário circular para pets</span>
+      <h1 data-r>Cadeira Beni</h1>
+      <p class="sub" data-r>Uma cadeira de descanso para pets feita para não virar lixo.</p>
+      <p class="support" data-r>Madeira maciça reaproveitada, pernas de bambu substituíveis e estofado lavável. Quando uma parte desgasta, a cadeira não acaba — repara-se por componente.</p>
+      <p class="mono foot-note" data-r>Projeto de Design Thinking e Prototipagem · 2026</p>
+    </div>
+    <!-- A CADEIRA como objeto protagonista -->
+    <figure class="hero-obj" data-parallax>
+      <img src="assets/product-cutout.png" alt="Cadeira Beni — plataforma em madeira reaproveitada com pernas de bambu" />
+    </figure>
   </div>
-  <div class="mono hero-scroll"><b></b>scroll</div>
 </header>
 
-<!-- STATEMENT -->
-<section class="statement dark">
-  <div class="wrap">
-    <span class="mono eyebrow anim">01 — O problema</span>
-    <p class="big" data-split>O problema não é estético. É <em>sistêmico</em> — o pet virou família, mas o móvel dele ainda é descartável.</p>
-  </div>
-</section>
-
-<!-- SHOWCASE (pinned scale) -->
-<section class="showcase" id="produto">
-  <div class="sc-stage">
-    <div class="showcase-vignette"></div>
-    <div class="sc-ground"></div>
-    <div class="sc-frame"><img src="assets/product-cutout.png" alt="Cadeira Beni — produto final, madeira reaproveitada e pernas de bambu" /></div>
-    <div class="sc-label">
-      <span class="mono">02 — O produto</span>
-      <h2>Uma cadeira.<br>Um sistema.</h2>
+<!-- ===================== PROBLEMA (impacto) ===================== -->
+<section class="problema" id="problema">
+  <div class="problema-media">
+    <img src="assets/hero-dog.jpg" alt="Pet descansando na Cadeira Beni, dentro de casa" />
+    <div class="problema-copy">
+      <div class="wrap">
+        <span class="mono eyebrow" data-r>O problema</span>
+        <h2 class="title" data-r>O pet entrou na sala. O móvel dele ainda não.</h2>
+        <p class="lead" data-r>O pet virou parte da casa, mas boa parte do que existe pra ele ainda é caminha de espuma: deforma em meses, não conversa com a sala e não aguenta lavagem. O desafio não é só estética — é durabilidade, higiene e reparo ao mesmo tempo.</p>
+        <span class="mono eyebrow data" data-r>12–16 h/dia de uso · lavagem semanal · descarte precoce</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- FEATURES -->
-<section class="features pad">
+<!-- ===================== SOLUÇÃO ===================== -->
+<section id="solucao">
   <div class="wrap">
-    <p class="feat-lead anim">Design que dura. Mobiliário que evolui com a sua vida.</p>
-    <div class="feat-row anim"><span class="num">01</span><div><h3>Madeira maciça reaproveitada</h3><p>Zero material novo. Cada peça carrega uma história e uma pátina única.</p></div></div>
-    <div class="feat-row anim"><span class="num">02</span><div><h3>Pernas de bambu substituíveis</h3><p>Modularidade por design — troca simples, sem descartar a peça inteira.</p></div></div>
-    <div class="feat-row anim"><span class="num">03</span><div><h3>Estofado de linho removível</h3><p>Lavável toda semana. Higiene sem comprometer o material.</p></div></div>
-    <div class="feat-row anim"><span class="num">04</span><div><h3>Estrutura desmontável</h3><p>Feita para reparar, nunca para descartar.</p></div></div>
-  </div>
-</section>
-
-<!-- ANATOMY -->
-<section class="light pad" id="anatomia">
-  <div class="wrap">
-    <div class="head">
-      <span class="mono eyebrow anim">03 — Anatomia</span>
-      <h2 data-split>Um conjunto de partes, não uma peça única.</h2>
+    <div class="sol-head">
+      <span class="mono eyebrow" data-r>A solução</span>
+      <h2 class="title" data-r>Não é caminha descartável. É mobiliário reparável.</h2>
+      <p class="lead" data-r>Uma cadeira de descanso com linguagem de móvel — não de objeto pet escondido. Madeira que já teve outra vida, pernas de bambu que se trocam e estofado que sai para lavar.</p>
     </div>
-    <div class="parts">
-      <div class="part anim"><div class="n">01</div><h3>Almofada</h3><p>Removível e lavável, em linho.</p></div>
-      <div class="part anim"><div class="n">02</div><h3>Proteção lateral</h3><p>Grades de segurança e apoio.</p></div>
-      <div class="part anim"><div class="n">03</div><h3>Plataforma</h3><p>Madeira maciça reaproveitada.</p></div>
-      <div class="part anim"><div class="n">04</div><h3>Encaixes</h3><p>Estrutura desmontável sem cola.</p></div>
-      <div class="part anim"><div class="n">05</div><h3>Pernas de bambu</h3><p>Quatro estacas substituíveis.</p></div>
+    <figure class="sol-media" data-parallax>
+      <img src="assets/product-cutout.png" alt="Cadeira Beni vista de frente — assento, laterais e quatro pernas de bambu" />
+    </figure>
+    <!-- Materiais em ficha, mono técnico -->
+    <div class="materials">
+      <div class="m" data-r><span class="k">Estrutura</span><span class="v">Madeira reaproveitada</span></div>
+      <div class="m" data-r><span class="k">Pernas</span><span class="v">Bambu substituível</span></div>
+      <div class="m" data-r><span class="k">Assento</span><span class="v">Estofado lavável</span></div>
+      <div class="m" data-r><span class="k">Montagem</span><span class="v">Estrutura reparável</span></div>
     </div>
   </div>
 </section>
 
-<!-- PROCESS -->
-<section class="light pad" id="processo" style="padding-top:0">
+<!-- ===================== PROCESSO (V1 → V2) ===================== -->
+<section class="processo" id="processo">
   <div class="wrap">
-    <div class="head" style="margin-bottom:56px">
-      <span class="mono eyebrow anim">04 — Processo</span>
-      <h2 data-split>O material decidiu o design.</h2>
+    <div class="proc-top">
+      <div>
+        <span class="mono eyebrow" data-r>O processo</span>
+        <h2 class="title" data-r>O material não foi detalhe. Foi ponto de partida.</h2>
+      </div>
+      <p class="lead" data-r>A forma final veio de tentativa e erro com o que a madeira reaproveitada permitia. A perna mudou quando o material impôs seus limites.</p>
     </div>
-    <div class="proc-grid">
-      <div class="proc-media anim"><img src="assets/lab.jpg" alt="Protótipos da Cadeira Beni no laboratório" /></div>
-      <div class="proc-steps">
-        <div class="pstep anim">
-          <span class="tag">V1</span>
-          <h3>Pés em marchetaria</h3>
-          <p>Baixa precisão, densidades variáveis e difícil padronização. O material bruto impôs seus limites.</p>
+    <div class="proc-body">
+      <figure class="proc-media" data-r>
+        <img src="assets/lab.jpg" alt="Protótipos da Cadeira Beni em bancada de laboratório" />
+        <figcaption>Bancada — testes de encaixe, densidade e acabamento</figcaption>
+      </figure>
+      <div class="vsteps">
+        <div class="vstep v1" data-r>
+          <span class="tag">V1 · pés em marchetaria</span>
+          <h3>Boa intenção, difícil de padronizar.</h3>
+          <p>Densidade variável da madeira, baixa precisão e reprodução trabalhosa. Bonito, mas frágil como sistema.</p>
         </div>
-        <div class="proc-divider anim"></div>
-        <div class="pstep v2 anim">
-          <span class="tag">V2</span>
-          <h3>Estacas de bambu</h3>
-          <p>Pernas substituíveis, modulares e fáceis de reproduzir. O design respondeu ao material — e ganhou circularidade.</p>
+        <div class="vstep v2" data-r>
+          <span class="tag">V2 · estacas de bambu <span class="arrow">→</span></span>
+          <h3>Pernas que se trocam.</h3>
+          <p>Modulares e fáceis de repor: troca simples por componente, reprodução direta e circularidade real na peça que mais desgasta.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- MARQUEE -->
-<section class="marquee">
-  <div class="mq-track" id="mq">
-    <span>Madeira reaproveitada<i class="dot">◆</i>Bambu substituível<i class="dot">◆</i>Linho lavável<i class="dot">◆</i>Desmontável<i class="dot">◆</i>Feita para voltar<i class="dot">◆</i></span>
-    <span>Madeira reaproveitada<i class="dot">◆</i>Bambu substituível<i class="dot">◆</i>Linho lavável<i class="dot">◆</i>Desmontável<i class="dot">◆</i>Feita para voltar<i class="dot">◆</i></span>
-  </div>
-</section>
-
-<!-- CIRCULAR -->
-<section class="dark pad" id="circular">
+<!-- ===================== ANATOMIA (ficha técnica) ===================== -->
+<section id="anatomia">
   <div class="wrap">
-    <div class="head">
-      <span class="mono eyebrow anim">05 — Economia circular</span>
-      <h2 data-split>Desenhada para voltar ao ciclo.</h2>
+    <div class="sol-head">
+      <span class="mono eyebrow" data-r>Ficha técnica</span>
+      <h2 class="title" data-r>A cadeira, por partes.</h2>
     </div>
-    <div class="loop" id="loop">
-      <div class="node anim"><span class="link"></span><div class="dot"></div><h3>Coleta</h3><small>madeira urbana</small></div>
-      <div class="node anim"><span class="link"></span><div class="dot"></div><h3>Triagem</h3><small>seleção</small></div>
-      <div class="node key anim"><span class="link"></span><div class="dot"></div><h3>Sanitização</h3><small>etapa-chave</small></div>
-      <div class="node anim"><span class="link"></span><div class="dot"></div><h3>Produção</h3><small>marcenaria</small></div>
-      <div class="node anim"><span class="link"></span><div class="dot"></div><h3>Uso</h3><small>anos de vida</small></div>
-      <div class="node anim"><span class="link"></span><div class="dot"></div><h3>Reparo</h3><small>troca de partes</small></div>
-      <div class="node anim"><div class="dot"></div><h3>Retorno</h3><small>take-back</small></div>
+    <div class="spec">
+      <div class="row" data-r><span class="k">Estrutura</span><span class="v">Madeira maciça reaproveitada<span class="n">Triada e selecionada peça a peça.</span></span></div>
+      <div class="row" data-r><span class="k">Pernas</span><span class="v">Bambu substituível — 4 estacas<span class="n">Trocáveis sem desmontar o resto.</span></span></div>
+      <div class="row" data-r><span class="k">Assento</span><span class="v">Estofado removível e lavável<span class="n">Higiene tratada como requisito, não extra.</span></span></div>
+      <div class="row" data-r><span class="k">Montagem</span><span class="v">Desmontável, sem cola estrutural<span class="n">Para reparar, não para descartar.</span></span></div>
+      <div class="row" data-r><span class="k">Manutenção</span><span class="v">Troca por componente<span class="n">A parte que gasta sai; a cadeira fica.</span></span></div>
+      <div class="row" data-r><span class="k">Ciclo</span><span class="v">Reparo antes do descarte<span class="n">Fim de vida planejado como retorno.</span></span></div>
     </div>
-    <p class="loopnote anim">Uma nova Beni nasce da anterior.</p>
   </div>
 </section>
 
-<!-- QUOTES -->
-<section class="light pad quotes" id="vozes">
+<!-- ===================== VALIDAÇÃO (fala → insight → decisão) ===================== -->
+<section class="validacao" id="validacao">
   <div class="wrap">
-    <div class="head" style="margin-bottom:70px">
-      <span class="mono eyebrow anim">06 — Validação em campo</span>
-      <h2 data-split>O que ouvimos.</h2>
+    <div class="val-head">
+      <span class="mono eyebrow" data-r>Validação em campo</span>
+      <h2 class="title" data-r>O que ouvimos virou decisão de projeto.</h2>
+      <p class="lead" data-r>Seis conversas com tutores, marceneiros, veterinários e catadores. Cada fala moveu uma escolha concreta.</p>
     </div>
-    <div class="q"><span class="mono anim">Tutor</span><div><blockquote data-split>“Se parecer móvel, eu deixo na sala.”</blockquote><cite class="anim">Entrevista com público-alvo</cite></div></div>
-    <div class="q"><span class="mono anim">Síntese</span><div><blockquote data-split>“Lavável não é diferencial. É requisito.”</blockquote><cite class="anim">6 entrevistas</cite></div></div>
-    <div class="q"><span class="mono anim">Especialista</span><div><blockquote data-split>“Madeira reaproveitada precisa vir com protocolo.”</blockquote><cite class="anim">Marceneiro · Veterinário</cite></div></div>
+
+    <div class="vitem" data-r>
+      <blockquote>“Se parecer móvel, eu deixo na sala.”</blockquote>
+      <div class="id">
+        <div class="insight"><span class="k">Insight</span><p>Integração estética com a casa é requisito, não vaidade.</p></div>
+        <div class="decisao"><span class="k">Decisão</span><p>Linguagem de cadeira, não de caminha pet convencional.</p></div>
+      </div>
+    </div>
+
+    <div class="vitem" data-r>
+      <blockquote>“Lavável não é diferencial. É requisito.”</blockquote>
+      <div class="id">
+        <div class="insight"><span class="k">Insight</span><p>Higiene define se a peça é usada de verdade no dia a dia.</p></div>
+        <div class="decisao"><span class="k">Decisão</span><p>Almofada removível e lavável, encaixe pensado para isso.</p></div>
+      </div>
+    </div>
+
+    <div class="vitem" data-r>
+      <blockquote>“Madeira reaproveitada precisa vir com cuidado.”</blockquote>
+      <div class="id">
+        <div class="insight"><span class="k">Insight</span><p>Sustentabilidade só convence se transmitir segurança.</p></div>
+        <div class="decisao"><span class="k">Decisão</span><p>Triagem, sanitização e seleção do material como etapa.</p></div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta pad" id="cta">
-  <div class="glow"></div>
+<!-- ===================== CIRCULARIDADE (impacto) ===================== -->
+<section class="circ" id="circularidade">
   <div class="wrap">
-    <span class="mono eyebrow anim" style="color:var(--bronze-2)">Junte-se ao movimento</span>
-    <h2 class="anim">Cadeira Beni</h2>
-    <div class="tag anim">Feita para durar, reparar e voltar ao ciclo.</div>
-    <div class="magnet anim" data-magnetic><a href="mailto:luizambritto@gmail.com?subject=Quero%20uma%20Cadeira%20Beni" data-hover>Quero uma Beni</a></div>
+    <span class="mono eyebrow" data-r>Circularidade</span>
+    <h2 class="title" data-r>Quando uma parte desgasta, a cadeira não acaba.</h2>
+    <p class="lead" data-r>A madeira que vira Cadeira Beni já teve outra vida. No fim do uso, ela volta para o ciclo — reparada por componente, não descartada inteira. Parte disso já é protótipo; parte é hipótese de evolução.</p>
+
+    <!-- Ciclo desenhado (SVG). Sem JS aparece completo; com JS "desenha" no scroll. -->
+    <div class="cycle" data-r>
+      <svg viewBox="0 0 1100 150" role="img" aria-label="Ciclo: coleta, triagem, sanitização, produção, uso, reparo, retorno">
+        <path id="cyclePath" d="M40 92 H1060" fill="none" stroke="#5E6B3C" stroke-width="1.5"/>
+        <!-- nós -->
+        <g font-family="'DM Mono',monospace">
+          <!-- gera-se manualmente 7 etapas -->
+          <g><circle cx="40" cy="92" r="5" fill="#EFE8D9"/><text class="clabel" x="40" y="118" text-anchor="middle">Coleta</text><text class="cnote" x="40" y="134" text-anchor="middle">madeira urbana</text></g>
+          <g><circle cx="210" cy="92" r="5" fill="#EFE8D9"/><text class="clabel" x="210" y="118" text-anchor="middle">Triagem</text><text class="cnote" x="210" y="134" text-anchor="middle">seleção</text></g>
+          <g><circle cx="380" cy="92" r="6" fill="#5E6B3C"/><text class="clabel" x="380" y="118" text-anchor="middle">Sanitização</text><text class="cnote" x="380" y="134" text-anchor="middle">hipótese</text></g>
+          <g><circle cx="550" cy="92" r="5" fill="#EFE8D9"/><text class="clabel" x="550" y="118" text-anchor="middle">Produção</text><text class="cnote" x="550" y="134" text-anchor="middle">marcenaria</text></g>
+          <g><circle cx="720" cy="92" r="5" fill="#EFE8D9"/><text class="clabel" x="720" y="118" text-anchor="middle">Uso</text><text class="cnote" x="720" y="134" text-anchor="middle">protótipo</text></g>
+          <g><circle cx="890" cy="92" r="5" fill="#EFE8D9"/><text class="clabel" x="890" y="118" text-anchor="middle">Reparo</text><text class="cnote" x="890" y="134" text-anchor="middle">por componente</text></g>
+          <g><circle cx="1060" cy="92" r="6" fill="#5E6B3C"/><text class="clabel" x="1060" y="118" text-anchor="middle">Retorno</text><text class="cnote" x="1060" y="134" text-anchor="middle">hipótese</text></g>
+        </g>
+        <!-- seta de retorno (logística reversa) -->
+        <path id="returnPath" d="M1060 78 C1060 40, 40 40, 40 78" fill="none" stroke="#5E6B3C" stroke-width="1.2" stroke-dasharray="4 5"/>
+        <text class="cnote" x="550" y="30" text-anchor="middle" fill="#5E6B3C">logística reversa · hipótese de evolução</text>
+      </svg>
+    </div>
+
+    <div class="legend" data-r>
+      <span><span class="dot p"></span>Protótipo validado</span>
+      <span><span class="dot h"></span>Hipótese de evolução</span>
+    </div>
   </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="wrap foot">
-    <a class="brand" href="#top" data-hover style="display:flex;align-items:center;gap:10px;font-size:26px">
-      <svg viewBox="0 0 40 40" width="26" height="26" fill="none" stroke="var(--bronze-2)" stroke-width="1.8"><circle cx="20" cy="20" r="15"/><path d="M11 22 h18"/><path d="M14 22 v6 M26 22 v6"/></svg>beni
-    </a>
-    <div class="fcol">
-      <span class="mono">Projeto</span>
-      Projeto Aplicado em Sustentabilidade — Insper · 2026
+<!-- ===================== FOOTER ===================== -->
+<footer id="fim">
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="big" data-r>Cadeira Beni</div>
+        <p class="say" data-r>Não é caminha descartável. É mobiliário reparável.</p>
+      </div>
+      <div class="foot-cta" data-r>
+        <a href="mailto:luizambritto@gmail.com?subject=Cadeira%20Beni%20—%20projeto">Falar sobre o projeto</a>
+      </div>
     </div>
-    <div class="fright">
-      <span class="mono" style="color:var(--bronze-2)">Contato</span>
-      Luiza Britto<br>
-      <a href="mailto:luizambritto@gmail.com" data-hover>luizambritto@gmail.com</a>
+    <div class="foot-meta">
+      <span>Luiza Britto</span>
+      <span>Design Thinking e Prototipagem · Insper · 2026</span>
+      <span>Cadeira Beni</span>
     </div>
   </div>
 </footer>
 
+<!-- GSAP + ScrollTrigger: apenas enriquecimento. Sem JS, tudo já está visível. -->
 <script src="vendor/gsap.min.js"></script>
 <script src="vendor/ScrollTrigger.min.js"></script>
-<script src="vendor/lenis.min.js"></script>
 <script>
 (function(){
-  const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-  const hasGSAP = window.gsap && window.ScrollTrigger;
-  if(hasGSAP) gsap.registerPlugin(ScrollTrigger);
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hasGSAP = window.gsap && window.ScrollTrigger;
+  if(!hasGSAP || reduce) return; // degrade: conteúdo permanece visível
+  gsap.registerPlugin(ScrollTrigger);
 
-  /* ---- word splitter (preserves <em>) ---- */
-  function mkWord(txt,accent){
-    const w=document.createElement('span');w.className='word';
-    const i=document.createElement('span');i.className='word-in'+(accent?' accent':'');
-    i.textContent=txt;w.appendChild(i);return w;
-  }
-  function split(el){
-    const nodes=[...el.childNodes];el.innerHTML='';
-    nodes.forEach(n=>{
-      if(n.nodeType===3){
-        n.textContent.split(/(\s+)/).forEach(t=>{
-          if(t==='')return;
-          if(t.trim()==='')el.appendChild(document.createTextNode(t));
-          else el.appendChild(mkWord(t,false));
-        });
-      }else{
-        el.appendChild(mkWord(n.textContent,true));
-      }
-    });
-  }
-  document.querySelectorAll('[data-split]').forEach(split);
+  // ANIMAÇÃO COM INTENÇÃO 1 — Hero: entrada lenta do nome + apoio
+  gsap.from('.hero-copy [data-r]', {y:22, opacity:0, duration:1.1, ease:'power3.out', stagger:.12});
 
-  /* ---- Smooth scroll ---- */
-  let lenis=null;
-  if(hasGSAP && window.Lenis && !reduce){
-    lenis=new Lenis({lerp:0.09,wheelMultiplier:1,smoothWheel:true});
-    lenis.on('scroll',ScrollTrigger.update);
-    gsap.ticker.add(t=>lenis.raf(t*1000));
-    gsap.ticker.lagSmoothing(0);
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{
-        const id=a.getAttribute('href');if(id.length<2)return;
-        const t=document.querySelector(id);if(!t)return;
-        e.preventDefault();lenis.scrollTo(t,{offset:0,duration:1.3});
-      });
-    });
-  }
-
-  /* ---- Custom cursor ---- */
-  const cur=document.querySelector('.cursor');
-  if(cur && matchMedia('(hover:hover)').matches){
-    let cx=innerWidth/2,cy=innerHeight/2,tx=cx,ty=cy;
-    addEventListener('mousemove',e=>{tx=e.clientX;ty=e.clientY});
-    (function loop(){cx+=(tx-cx)*.18;cy+=(ty-cy)*.18;cur.style.transform=`translate(${cx}px,${cy}px) translate(-50%,-50%)`;requestAnimationFrame(loop)})();
-    document.querySelectorAll('[data-hover]').forEach(el=>{
-      el.addEventListener('mouseenter',()=>cur.classList.add('big'));
-      el.addEventListener('mouseleave',()=>cur.classList.remove('big'));
-    });
-  }
-
-  /* ---- Magnetic ---- */
-  if(hasGSAP && matchMedia('(hover:hover)').matches){
-    document.querySelectorAll('[data-magnetic]').forEach(m=>{
-      m.addEventListener('mousemove',e=>{
-        const r=m.getBoundingClientRect();
-        gsap.to(m,{x:(e.clientX-r.left-r.width/2)*.35,y:(e.clientY-r.top-r.height/2)*.5,duration:.5,ease:'power3.out'});
-      });
-      m.addEventListener('mouseleave',()=>gsap.to(m,{x:0,y:0,duration:.7,ease:'elastic.out(1,.35)'}));
-    });
-  }
-
-  /* ---- Nav solid ---- */
-  const nav=document.getElementById('nav');
-  const setNav=()=>nav.classList.toggle('solid',scrollY>innerHeight*.7);
-  addEventListener('scroll',setNav,{passive:true});setNav();
-
-  /* ---- Progress bar ---- */
-  const bar=document.querySelector('.progress');
-  if(hasGSAP){gsap.to(bar,{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3}});}
-
-  /* ==== INTRO / LOADER ==== */
-  function startHero(){
-    if(!hasGSAP){document.getElementById('loader').style.display='none';return;}
-    const tl=gsap.timeline();
-    tl.to('.loader-word span',{y:0,duration:.9,ease:'expo.out'})
-      .to('.loader-bar',{width:'100%',duration:.9,ease:'power2.inOut'},'-=.5')
-      .to('#loader',{yPercent:-100,duration:1,ease:'expo.inOut'},'+=.15')
-      .set('#loader',{display:'none'})
-      .from('.hero-img',{scale:1.28,duration:1.6,ease:'expo.out'},'-=1')
-      .to('.hero-title .line-in',{y:0,duration:1.15,stagger:.1,ease:'expo.out'},'-=1.2')
-      .to('.hero-eyebrow',{opacity:1,y:0,duration:.8,ease:'power2.out'},'-=.9')
-      .to('.hero-tag',{opacity:1,duration:.9,ease:'power2.out'},'-=.7')
-      .to('.hero-scroll',{opacity:1,duration:.8},'-=.5');
-  }
-  if(document.readyState==='complete')startHero();
-  else addEventListener('load',startHero);
-  // safety: never leave loader stuck
-  setTimeout(()=>{const l=document.getElementById('loader');if(l&&getComputedStyle(l).display!=='none'&&l.style.transform==='')l.style.display='none';},4000);
-
-  if(!hasGSAP)return;
-
-  /* ==== HERO parallax ==== */
-  gsap.to('.hero-img',{yPercent:12,scale:1.12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-  gsap.to('.hero-content',{yPercent:-24,opacity:.2,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
-
-  /* ==== generic word reveal ==== */
-  gsap.utils.toArray('[data-split]').forEach(el=>{
-    gsap.to(el.querySelectorAll('.word-in'),{y:0,duration:1,stagger:.045,ease:'expo.out',
-      scrollTrigger:{trigger:el,start:'top 82%'}});
+  // Parallax discreto do objeto (a cadeira), não "efeito"
+  gsap.utils.toArray('[data-parallax]').forEach(function(el){
+    gsap.to(el, {yPercent:-6, ease:'none',
+      scrollTrigger:{trigger:el, start:'top bottom', end:'bottom top', scrub:true}});
   });
 
-  /* ==== generic .anim reveal ==== */
-  gsap.utils.toArray('.anim').forEach(el=>{
-    gsap.to(el,{opacity:1,y:0,duration:1,ease:'power3.out',
-      scrollTrigger:{trigger:el,start:'top 88%'},startAt:{y:38}});
+  // ANIMAÇÃO COM INTENÇÃO 2 — seções: labels/linhas entram conforme rola
+  gsap.utils.toArray('[data-r]').forEach(function(el){
+    if(el.closest('.hero-copy')) return; // já animado
+    gsap.from(el, {y:18, opacity:0, duration:.9, ease:'power2.out',
+      scrollTrigger:{trigger:el, start:'top 88%'}});
   });
 
-  /* ==== SHOWCASE pinned scale ==== */
-  const scTL=gsap.timeline({scrollTrigger:{trigger:'.showcase',start:'top top',end:'+=170%',scrub:1,pin:true,anticipatePin:1}});
-  scTL.fromTo('.sc-frame',{scale:.82,yPercent:4},{scale:1.5,yPercent:-4,ease:'power1.inOut'})
-      .to('.showcase-vignette',{opacity:.7,ease:'power1.in'},'<.3')
-      .to('.sc-label',{opacity:1,duration:.4,ease:'power2.out'},'>-.25');
-
-  /* ==== PROCESS photo parallax ==== */
-  gsap.to('.proc-media img',{yPercent:-14,ease:'none',scrollTrigger:{trigger:'.proc-media',start:'top bottom',end:'bottom top',scrub:true}});
-
-  /* ==== MARQUEE ==== */
-  gsap.to('#mq',{xPercent:-50,repeat:-1,duration:26,ease:'none'});
-  // velocity skew
-  let mqBase=26;
-  ScrollTrigger.create({trigger:'.marquee',start:'top bottom',end:'bottom top',
-    onUpdate:self=>{const v=1+Math.min(Math.abs(self.getVelocity()/300),4);gsap.to('#mq',{timeScale:v,overwrite:true,duration:.3});gsap.to('#mq',{timeScale:1,duration:.8,delay:.3,overwrite:false});}});
-
-  /* ==== CIRCULAR links draw ==== */
-  gsap.utils.toArray('.node .link').forEach((l,i)=>{
-    gsap.to(l,{scaleX:1,duration:.6,ease:'power2.inOut',
-      scrollTrigger:{trigger:'#loop',start:'top 78%'},delay:i*.12});
+  // ANIMAÇÃO COM INTENÇÃO 3 — Circularidade: o ciclo se desenha no scroll
+  ['#cyclePath','#returnPath'].forEach(function(sel){
+    var path = document.querySelector(sel); if(!path) return;
+    var len = path.getTotalLength();
+    gsap.set(path, {strokeDasharray: sel==='#returnPath' ? '4 5' : len, strokeDashoffset: len});
+    gsap.to(path, {strokeDashoffset:0, ease:'none',
+      scrollTrigger:{trigger:'.cycle', start:'top 80%', end:'bottom 70%', scrub:true}});
   });
-  gsap.utils.toArray('.node .dot').forEach((d,i)=>{
-    gsap.from(d,{scale:0,duration:.5,ease:'back.out(2)',
-      scrollTrigger:{trigger:'#loop',start:'top 80%'},delay:i*.12});
-  });
-
 })();
 </script>
 </body>
