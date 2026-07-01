@@ -135,10 +135,6 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
   .s3c,.s2c{grid-column:span 2}.s2r{grid-row:span 1}}
 
 /* ================= MANIFESTO break ================= */
-.manifesto{background:var(--paper-2)}
-.manifesto p{font-family:var(--font-serif);font-size:clamp(26px,4.4vw,58px);line-height:1.08;
-  letter-spacing:-.01em;max-width:20ch}
-.manifesto p em{font-style:italic;color:var(--clay)}
 
 /* ================= MOODBOARD (material) ================= */
 .mood .head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:40px}
@@ -250,14 +246,12 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
 .bb{border:1px solid var(--line);padding:22px;background:var(--paper)}
 .bb .bk{font-family:var(--font-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:16px}
 .bb.logo{grid-column:span 5;display:flex;flex-direction:column;justify-content:center;align-items:center;background:var(--ink);gap:18px}
-.bb.manifesto-bb{grid-column:span 7}
-.bb.manifesto-bb p{font-family:var(--font-serif);font-size:clamp(18px,1.9vw,26px);line-height:1.25}
 .bb.pal{grid-column:span 4}
 .bb.type{grid-column:span 4}
 .bb.voice{grid-column:span 4}
-.bb.photo{grid-column:span 6;padding:0;overflow:hidden}
-.bb.photo img{width:100%;height:100%;object-fit:cover;min-height:200px}
-.bb.apps{grid-column:span 6}
+.bb.photo{grid-column:span 7;padding:0;overflow:hidden;min-height:230px}
+.bb.photo img{width:100%;height:100%;object-fit:cover;min-height:230px}
+.bb.apps{grid-column:span 12}
 .pal-row{display:flex;gap:6px;flex-wrap:wrap}
 .pal-row i{width:44px;height:44px;border-radius:2px;position:relative}
 .type-row{margin-bottom:14px}
@@ -265,7 +259,7 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
 .voice-list li{list-style:none;font-family:var(--font-serif);font-style:italic;font-size:17px;padding:6px 0;border-bottom:1px solid var(--line)}
 .apps-list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .apps-list div{border:1px solid var(--line);padding:12px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
-@media(max-width:900px){.bb.logo,.bb.manifesto-bb,.bb.pal,.bb.type,.bb.voice,.bb.photo,.bb.apps{grid-column:span 12}}
+@media(max-width:900px){.bb.logo,.bb.pal,.bb.type,.bb.voice,.bb.photo,.bb.apps{grid-column:span 12}}
 
 /* ================= FOOTER ================= */
 footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 40px}
@@ -291,7 +285,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
     <span class="wm" style="font-size:17px">Cadeira<b>Beni</b></span>
   </a>
   <div class="navlinks">
-    <a href="#poster">Manifesto</a>
+    <a href="#poster">Campanha</a>
     <a href="#material">Material</a>
     <a href="#prancha">Prancha</a>
     <a href="#digital">Protótipo</a>
@@ -324,7 +318,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 <section class="poster" id="poster">
   <div class="pgrid">
     <div class="tile phrase c-ink s3c s2r" data-r>
-      <span class="mono tl">manifesto / 01</span>
+      <span class="mono tl">campanha / 01</span>
       <div class="ov"><div class="big">Madeira<br>que já<br>teve vida.</div></div>
     </div>
     <div class="tile s2r" data-r><img src="assets/mat-wood.jpg" alt="Veio da madeira reaproveitada"><span class="mono tl" style="color:#fff">madeira</span></div>
@@ -343,13 +337,6 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
     </div>
     <div class="tile phrase c-moss s2c" data-r><div class="ov"><div class="big">Reparo por<br>componente.</div></div></div>
     <div class="tile phrase c-ink" data-r><div class="ov"><div class="big">O pet ficou<br>definitivo.</div></div></div>
-  </div>
-</section>
-
-<!-- ===== MANIFESTO ===== -->
-<section class="manifesto">
-  <div class="wrap">
-    <p data-r>A Cadeira Beni nasce de madeira que já teve outra vida — e é feita para <em>durar, reparar e voltar</em>, peça por peça.</p>
   </div>
 </section>
 
@@ -487,10 +474,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
         <span class="wm" style="font-size:34px;text-align:center">Cadeira<b>Beni</b></span>
         <span class="mono" style="color:var(--muted-d)">símbolo · ripas + pernas</span>
       </div>
-      <div class="bb manifesto-bb" data-r>
-        <span class="bk">Manifesto</span>
-        <p>Móvel pet não precisa ser descartável. A Cadeira Beni pega madeira que já teve vida, levanta o descanso do chão e desmonta a lógica do lixo: quando uma parte cansa, ela sai — a cadeira fica. Design que se repara é design que permanece.</p>
-      </div>
+      <div class="bb photo" data-r><img src="assets/uso-home.jpg" alt="Cachorro na almofada da Cadeira Beni"></div>
       <div class="bb pal" data-r>
         <span class="bk">Paleta</span>
         <div class="pal-row">
@@ -515,7 +499,6 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
           <li>calor de madeira, não de marketing</li>
         </ul>
       </div>
-      <div class="bb photo" data-r><img src="assets/uso-home.jpg" alt="Cachorro na almofada da Cadeira Beni"></div>
       <div class="bb apps" data-r>
         <span class="bk">Aplicações</span>
         <div class="apps-list">
