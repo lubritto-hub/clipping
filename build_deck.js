@@ -6,18 +6,20 @@ const path = require('path');
 const prs = new PptxGenJS();
 prs.defineLayout({ name: 'default', width: 10, height: 5.625 });
 
-// Color palette
+// Premium Color Palette - Tim Cook aesthetic
 const colors = {
-  espresso: '#1F1712',
-  off_white: '#F4EFE7',
-  caramelo: '#B98247',
-  caramelo_claro: '#D8B486',
-  caramelo_escuro: '#9A6A38',
-  oliva: '#3E4A35',
-  bege_pedra: '#E7DED1',
-  cinza_quente: '#8C8378',
-  tinta: '#2A211B',
-  claro_base: '#F6F1E8',
+  espresso: '#0F0C0A',           // Deep luxury black
+  off_white: '#FAFAF8',          // Refined white
+  gold: '#D4AF37',               // Premium gold (bamboo legs reference)
+  gold_light: '#E8C547',         // Light gold accent
+  caramelo: '#8B6F47',           // Warm wood tone
+  caramelo_claro: '#C4A06A',     // Light warm wood
+  caramelo_escuro: '#6B5635',    // Deep wood
+  oliva: '#3E4A35',              // Elegant olive
+  bege_pedra: '#E7DED1',         // Stone beige
+  cinza_quente: '#7A7570',       // Warm gray
+  tinta: '#1A1512',              // Deep ink black
+  claro_base: '#FCFBF9',         // Ultra light
 };
 
 // Helper to create a slide with background
@@ -99,16 +101,27 @@ function addFooter(slide, text, color = colors.off_white) {
 function slide1() {
   const slide = createSlide('output/backgrounds/dark_cover.png');
 
-  // Kicker
-  addKicker(slide, 'MOBILIÁRIO CIRCULAR PARA PETS', { x: 0.5, y: 0.5, color: colors.off_white });
+  // Premium subtitle (kicker)
+  slide.addText('DESIGN CONSCIOUS PET LIVING', {
+    x: 0.5,
+    y: 0.4,
+    w: 5,
+    h: 0.3,
+    fontSize: 11,
+    bold: true,
+    fontFace: 'Calibri',
+    color: colors.gold,
+    align: 'left',
+    charSpacing: 2
+  });
 
-  // Title
+  // Hero Title - VERY LARGE
   slide.addText('Cadeira Beni', {
     x: 0.5,
-    y: 0.95,
+    y: 0.85,
     w: 5.5,
-    h: 1.1,
-    fontSize: 60,
+    h: 1.3,
+    fontSize: 76,
     bold: true,
     fontFace: 'Cambria',
     color: colors.off_white,
@@ -117,65 +130,73 @@ function slide1() {
     wrap: false
   });
 
-  // Subtitle
-  slide.addText('Mobiliário circular de descanso para pets.', {
-    x: 0.5,
-    y: 2.15,
-    w: 4,
-    h: 0.6,
-    fontSize: 18,
-    italic: true,
-    fontFace: 'Cambria',
-    color: colors.off_white,
-    align: 'left',
-    wrap: true
-  });
-
-  // Specs (two lines)
-  slide.addText('Madeira reaproveitada · Estrutura reparável', {
-    x: 0.5,
-    y: 2.85,
-    w: 4,
-    h: 0.3,
-    fontSize: 13,
-    fontFace: 'Calibri',
-    color: colors.caramelo_claro,
-    align: 'left'
-  });
-
-  slide.addText('Estofado lavável · Design para a casa', {
-    x: 0.5,
-    y: 3.2,
-    w: 4,
-    h: 0.3,
-    fontSize: 13,
-    fontFace: 'Calibri',
-    color: colors.caramelo_claro,
-    align: 'left'
-  });
-
-  // Divider line
+  // Gold accent line
   slide.addShape(prs.ShapeType.rect, {
     x: 0.5,
-    y: 3.45,
-    w: 1.5,
-    h: 0.02,
-    fill: { color: colors.caramelo },
+    y: 2.2,
+    w: 2.0,
+    h: 0.03,
+    fill: { color: colors.gold },
     line: { type: 'none' }
   });
 
-  // Footer
-  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026');
+  // Premium tagline
+  slide.addText('Furniture crafted for the discerning pet owner.', {
+    x: 0.5,
+    y: 2.4,
+    w: 4.5,
+    h: 0.5,
+    fontSize: 16,
+    italic: true,
+    fontFace: 'Cambria',
+    color: colors.caramelo_claro,
+    align: 'left'
+  });
 
-  // Try to add photo if exists
+  // Core values (refined)
+  const values = [
+    'Reclaimed Wood — Circular Design',
+    'Replaceable Bamboo Legs — Sustainable',
+    'Removable Linen — Washable Care'
+  ];
+
+  let y = 3.1;
+  values.forEach(val => {
+    slide.addText('• ' + val, {
+      x: 0.5,
+      y: y,
+      w: 4.5,
+      h: 0.25,
+      fontSize: 11,
+      fontFace: 'Calibri',
+      color: colors.caramelo_claro,
+      align: 'left'
+    });
+    y += 0.35;
+  });
+
+  // Footer
+  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026', colors.gold);
+
+  // Hero photo - LARGE
   if (fs.existsSync('fotos/cachorro.jpg')) {
     slide.addImage({
       path: 'fotos/cachorro.jpg',
-      x: 5.5,
-      y: 0.4,
-      w: 4,
-      h: 5,
-      sizing: { type: 'cover', w: 4, h: 5 }
+      x: 5.3,
+      y: 0.3,
+      w: 4.2,
+      h: 5.1,
+      sizing: { type: 'cover', w: 4.2, h: 5.1 }
+    });
+
+    // Subtle overlay for text legibility
+    slide.addShape(prs.ShapeType.rect, {
+      x: 5.3,
+      y: 0.3,
+      w: 4.2,
+      h: 2.0,
+      fill: { color: colors.espresso, transparency: 70 },
+      line: { type: 'none' }
     });
   }
 }
@@ -503,80 +524,96 @@ function slide4() {
 function slide5() {
   const slide = createSlide('output/backgrounds/dark_center.png');
 
-  // Left side
-  addKicker(slide, '04 — A CADEIRA BENI', { y: 0.5, color: colors.off_white });
-
-  addTitle(slide, 'Uma cadeira. Um sistema.', {
+  // Premium kicker - GOLD
+  slide.addText('MEET THE PRODUCT', {
     x: 0.5,
-    y: 1.0,
+    y: 0.4,
     w: 4.8,
-    h: 1.1,
-    fontSize: 48,
-    color: colors.off_white
+    h: 0.3,
+    fontSize: 11,
+    bold: true,
+    fontFace: 'Calibri',
+    color: colors.gold,
+    align: 'left',
+    charSpacing: 2
   });
 
-  slide.addText('Móvel de descanso em madeira maciça reaproveitada.', {
+  // Hero title with line break
+  slide.addText('Cadeira Beni.\nA System.', {
     x: 0.5,
-    y: 2.05,
-    w: 4.5,
-    h: 0.5,
-    fontSize: 15,
-    italic: true,
+    y: 0.85,
+    w: 4.8,
+    h: 1.2,
+    fontSize: 52,
+    bold: true,
     fontFace: 'Cambria',
     color: colors.off_white,
     align: 'left',
-    wrap: true
+    valign: 'top',
+    wrap: false
   });
 
-  // Attributes
-  const attrs = [
-    '1. Plataforma elevada',
-    '2. Madeira maciça reaproveitada',
-    '3. Pernas de bambu substituíveis',
-    '4. Estofado removível e lavável',
-    '5. Estrutura desmontável',
-    '6. Retorno ao ciclo no fim de vida'
+  // Gold accent line
+  slide.addShape(prs.ShapeType.rect, {
+    x: 0.5,
+    y: 2.15,
+    w: 1.8,
+    h: 0.03,
+    fill: { color: colors.gold },
+    line: { type: 'none' }
+  });
+
+  // Premium tagline
+  slide.addText('Design that lasts. Furniture that evolves.', {
+    x: 0.5,
+    y: 2.3,
+    w: 4.5,
+    h: 0.5,
+    fontSize: 14,
+    italic: true,
+    fontFace: 'Cambria',
+    color: colors.caramelo_claro,
+    align: 'left'
+  });
+
+  // Refined features with diamond bullets
+  const features = [
+    'Reclaimed wood — zero new materials',
+    'Replaceable bamboo legs — modularity by design',
+    'Removable linen cushion — washable every week',
+    'Desmontável — repaired, never discarded',
+    'Elevated platform — comfort and ventilation',
+    'Designed for the circular cycle'
   ];
 
   let y = 2.95;
-  attrs.forEach(attr => {
-    slide.addText(attr, {
+  features.forEach(feature => {
+    slide.addText('◆ ' + feature, {
       x: 0.5,
       y: y,
       w: 4.5,
       h: 0.3,
-      fontSize: 13,
+      fontSize: 12,
       fontFace: 'Calibri',
-      color: colors.caramelo_claro,
+      color: colors.off_white,
       align: 'left'
     });
     y += 0.38;
   });
 
-  // Divider + tagline
-  slide.addShape(prs.ShapeType.rect, {
-    x: 0.5,
-    y: 4.95,
-    w: 0.8,
-    h: 0.02,
-    fill: { color: colors.caramelo },
-    line: { type: 'none' }
-  });
-
-  slide.addText('Substitui a cama de espuma (12–24 meses → aterro) por um móvel feito para reparar e voltar ao ciclo.', {
-    x: 0.5,
-    y: 5.05,
-    w: 4.5,
-    h: 0.55,
-    fontSize: 10,
-    italic: true,
-    fontFace: 'Calibri',
-    color: colors.off_white,
-    align: 'left'
-  });
-
-  // Right side: Photo
+  // Right side: Photo with gold border frame
   if (fs.existsSync('fotos/produto.jpg')) {
+    // Gold border/frame
+    slide.addShape(prs.ShapeType.rect, {
+      x: 5.15,
+      y: 0.35,
+      w: 4.35,
+      h: 5.15,
+      fill: { color: colors.gold },
+      line: { type: 'none' }
+    });
+
+    // Photo inside frame (with 15px gold border)
     slide.addImage({
       path: 'fotos/produto.jpg',
       x: 5.3,
@@ -721,7 +758,19 @@ function slide6() {
 function slide7() {
   const slide = createSlide('output/backgrounds/dark_diagram.png');
 
-  addKicker(slide, '06 — PROTÓTIPO DIGITAL', { y: 0.5, color: colors.off_white });
+  // Premium gold kicker
+  slide.addText('THE DIGITAL PROTOTYPE', {
+    x: 0.5,
+    y: 0.4,
+    w: 4.3,
+    h: 0.3,
+    fontSize: 11,
+    bold: true,
+    fontFace: 'Calibri',
+    color: colors.gold,
+    align: 'left',
+    charSpacing: 2
+  });
 
   addTitle(slide, 'A Cadeira Beni como sistema de partes.', {
     x: 0.5,
@@ -1152,16 +1201,27 @@ function slide9() {
 function slide10() {
   const slide = createSlide('output/backgrounds/dark_center.png');
 
-  // Kicker
-  addKicker(slide, 'MOBILIÁRIO CIRCULAR PARA PETS', { x: 0.5, y: 0.5, color: colors.off_white });
+  // Premium gold kicker
+  slide.addText('CIRCULAR FURNITURE FOR THE DISCERNING PET', {
+    x: 0.5,
+    y: 0.4,
+    w: 4.8,
+    h: 0.3,
+    fontSize: 11,
+    bold: true,
+    fontFace: 'Calibri',
+    color: colors.gold,
+    align: 'left',
+    charSpacing: 2
+  });
 
-  // Title
+  // Hero title
   slide.addText('Cadeira Beni', {
     x: 0.5,
-    y: 0.95,
-    w: 5.5,
-    h: 1.1,
-    fontSize: 60,
+    y: 0.85,
+    w: 4.8,
+    h: 1.0,
+    fontSize: 76,
     bold: true,
     fontFace: 'Cambria',
     color: colors.off_white,
@@ -1170,53 +1230,84 @@ function slide10() {
     wrap: false
   });
 
-  // Tagline
-  slide.addText('Um móvel pet feito para durar, reparar e voltar ao ciclo.', {
+  // Gold accent line
+  slide.addShape(prs.ShapeType.rect, {
     x: 0.5,
-    y: 2.15,
-    w: 4,
-    h: 0.6,
+    y: 2.0,
+    w: 2.0,
+    h: 0.03,
+    fill: { color: colors.gold },
+    line: { type: 'none' }
+  });
+
+  // Premium tagline
+  slide.addText('Furniture made to last, repair, and return.', {
+    x: 0.5,
+    y: 2.2,
+    w: 4.5,
+    h: 0.5,
     fontSize: 16,
     italic: true,
     fontFace: 'Cambria',
-    color: colors.off_white,
-    align: 'left',
-    wrap: true
-  });
-
-  // Support line
-  slide.addText('♻ Reduz descarte · valoriza madeira existente · integra o pet à casa.', {
-    x: 0.5,
-    y: 2.85,
-    w: 4,
-    h: 0.4,
-    fontSize: 13,
-    fontFace: 'Calibri',
     color: colors.caramelo_claro,
     align: 'left'
   });
 
-  // Obrigada
-  slide.addText('Obrigada.', {
+  // Core promise
+  const promises = [
+    'Reclaimed wood dignified — never forgotten',
+    'Designed for repair, not replacement',
+    'Your home, elevated'
+  ];
+
+  let y = 2.9;
+  promises.forEach(promise => {
+    slide.addText('• ' + promise, {
+      x: 0.5,
+      y: y,
+      w: 4.5,
+      h: 0.3,
+      fontSize: 12,
+      fontFace: 'Calibri',
+      color: colors.off_white,
+      align: 'left'
+    });
+    y += 0.42;
+  });
+
+  // CTA + footer
+  slide.addText('Join the circular furniture movement.', {
     x: 0.5,
-    y: 3.2,
+    y: 4.1,
     w: 4,
     h: 0.4,
-    fontSize: 20,
-    fontFace: 'Cambria',
-    color: colors.off_white,
+    fontSize: 13,
+    bold: true,
+    fontFace: 'Calibri',
+    color: colors.gold,
     align: 'left'
   });
 
   // Footer
-  addFooter(slide, 'Luiza Britto · Documentação digital: [inserir link]');
+  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026', colors.gold);
 
-  // Right: Photo
+  // Right: Photo with gold frame
   if (fs.existsSync('fotos/produto.jpg')) {
+    // Gold border/frame
+    slide.addShape(prs.ShapeType.rect, {
+      x: 5.15,
+      y: 0.35,
+      w: 4.35,
+      h: 5.15,
+      fill: { color: colors.gold },
+      line: { type: 'none' }
+    });
+
+    // Photo inside frame
     slide.addImage({
       path: 'fotos/produto.jpg',
       x: 5.3,
-      y: 0.4,
+      y: 0.5,
       w: 4.2,
       h: 5,
       sizing: { type: 'cover', w: 4.2, h: 5 }
