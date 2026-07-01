@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cadeira Beni — Mobiliário circular para pets</title>
+<meta name="description" content="Cadeira Beni: móvel de descanso para pets em madeira maciça reaproveitada, com pernas de bambu substituíveis e estofado lavável. Objeto de desejo, desenhado para voltar ao ciclo." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+:root{
+  --charcoal:#211E19;
+  --charcoal-2:#2A2620;
+  --linen:#E8E0D5;
+  --cream:#F6F2EA;
+  --paper:#FBF8F2;
+  --bronze:#9C6B3B;
+  --bronze-2:#B98247;
+  --rose:#C9A961;
+  --terra:#A0714F;
+  --taupe:#8C8378;
+  --sand:#D8CBB8;
+  --ink:#33302B;
+  --line:rgba(45,40,34,.14);
+  --maxw:1200px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,.serif{font-family:'Fraunces',Georgia,serif;font-weight:400;letter-spacing:-.01em;line-height:1.05}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
+.eyebrow{
+  font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--bronze);
+}
+.muted{color:var(--taupe)}
+
+/* ---------- NAV ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 32px;
+  transition:background .4s ease,padding .4s ease,box-shadow .4s ease;
+  mix-blend-mode:difference;
+}
+nav.solid{
+  mix-blend-mode:normal;
+  background:rgba(251,248,242,.82);
+  backdrop-filter:saturate(180%) blur(14px);
+  box-shadow:0 1px 0 var(--line);
+  padding:14px 32px;
+}
+.brand{display:flex;align-items:center;gap:11px;font-family:'Fraunces',serif;font-size:22px;color:#fff}
+nav.solid .brand{color:var(--charcoal)}
+.brand svg{width:26px;height:26px}
+.navlinks{display:flex;gap:30px;font-size:13.5px;font-weight:500;letter-spacing:.02em;color:#fff}
+nav.solid .navlinks{color:var(--ink)}
+.navlinks a{opacity:.82;transition:opacity .2s}
+.navlinks a:hover{opacity:1}
+.navcta{
+  border:1px solid currentColor;border-radius:100px;padding:9px 18px;
+  font-size:13px;font-weight:600;color:#fff;opacity:.9;transition:.25s;
+}
+nav.solid .navcta{color:var(--charcoal)}
+.navcta:hover{background:currentColor}
+nav.solid .navcta:hover{color:var(--paper)}
+@media(max-width:760px){.navlinks{display:none}}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;min-height:100vh;display:flex;align-items:flex-end;
+  background:var(--charcoal);color:var(--linen);overflow:hidden;
+}
+.hero-img{
+  position:absolute;inset:0;background:url('assets/hero-dog.jpg') center 30%/cover no-repeat;
+  filter:saturate(1.02) contrast(1.02);
+}
+.hero-img::after{
+  content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(180deg,rgba(20,17,14,.55) 0%,rgba(20,17,14,0) 30%,rgba(20,17,14,.15) 55%,rgba(20,17,14,.85) 100%),
+    linear-gradient(90deg,rgba(20,17,14,.55) 0%,rgba(20,17,14,0) 55%);
+}
+.hero-inner{position:relative;z-index:2;width:100%;max-width:var(--maxw);margin:0 auto;padding:0 32px 8vh}
+.hero h1{font-size:clamp(56px,11vw,140px);color:#fff;font-weight:400;letter-spacing:-.03em}
+.hero .tag{
+  font-family:'Fraunces',serif;font-style:italic;font-weight:300;
+  font-size:clamp(20px,2.6vw,30px);color:var(--sand);margin-top:6px;
+}
+.hero .sub{max-width:440px;margin-top:22px;color:rgba(232,224,213,.86);font-size:16px}
+.hero-eyebrow{color:var(--rose);margin-bottom:22px}
+.scrollcue{
+  position:absolute;bottom:26px;left:50%;transform:translateX(-50%);z-index:2;
+  color:rgba(232,224,213,.6);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+}
+.scrollcue span{width:1px;height:38px;background:linear-gradient(var(--rose),transparent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:.3}50%{opacity:1}}
+
+/* ---------- SECTION BASICS ---------- */
+section{padding:120px 0}
+.section-head{max-width:760px;margin-bottom:64px}
+.section-head h2{font-size:clamp(34px,5vw,58px);margin:18px 0 0}
+.section-head p{margin-top:20px;font-size:18px;color:var(--taupe);max-width:620px}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- MANIFESTO ---------- */
+.manifesto{background:var(--cream)}
+.big-statement{
+  font-family:'Fraunces',serif;font-size:clamp(30px,4.6vw,54px);line-height:1.12;
+  font-weight:400;letter-spacing:-.02em;max-width:960px;
+}
+.big-statement em{font-style:italic;color:var(--bronze)}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:80px}
+.three .col{padding-top:26px;border-top:2px solid var(--bronze)}
+.three h3{font-size:22px;margin-bottom:12px;color:var(--charcoal)}
+.three p{font-size:15px;color:var(--ink)}
+.three .kw{margin-top:16px;font-style:italic;color:var(--taupe);font-size:13.5px}
+@media(max-width:760px){.three{grid-template-columns:1fr;gap:32px}}
+.stat-bar{
+  margin-top:72px;background:var(--charcoal);color:var(--linen);
+  border-radius:16px;padding:34px 40px;display:flex;align-items:center;gap:28px;flex-wrap:wrap;
+}
+.stat-bar .num{font-family:'Fraunces',serif;font-size:44px;color:var(--rose);line-height:1;white-space:nowrap}
+.stat-bar p{font-size:15px;max-width:640px;color:rgba(232,224,213,.9)}
+
+/* ---------- PRODUCT / SYSTEM ---------- */
+.system{background:var(--charcoal);color:var(--linen)}
+.system .split{display:grid;grid-template-columns:1.05fr .95fr;gap:70px;align-items:center}
+.system .eyebrow{color:var(--rose)}
+.system h2{font-size:clamp(34px,5vw,60px);color:#fff;margin:16px 0 24px}
+.system .lead{font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:var(--sand);margin-bottom:34px}
+.feat{display:flex;gap:16px;padding:18px 0;border-bottom:1px solid rgba(232,224,213,.12)}
+.feat:last-child{border-bottom:none}
+.feat .d{color:var(--rose);font-size:15px;margin-top:3px}
+.feat h4{font-size:16.5px;font-weight:600;color:#fff;margin-bottom:3px}
+.feat p{font-size:14px;color:rgba(232,224,213,.72)}
+.system .photo{border-radius:14px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,.45);position:relative}
+.system .photo::after{content:"";position:absolute;inset:0;border:1px solid rgba(201,169,97,.4);border-radius:14px}
+.system .photo img{width:100%;aspect-ratio:16/10;object-fit:cover}
+@media(max-width:860px){.system .split{grid-template-columns:1fr;gap:40px}}
+
+/* ---------- ANATOMY ---------- */
+.anatomy{background:var(--paper)}
+.parts{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.part{background:var(--paper);padding:30px 22px;transition:background .3s}
+.part:hover{background:var(--cream)}
+.part .n{font-family:'Fraunces',serif;font-size:30px;color:var(--bronze);line-height:1}
+.part h4{font-size:15px;margin:14px 0 6px;color:var(--charcoal)}
+.part p{font-size:13px;color:var(--taupe)}
+@media(max-width:900px){.parts{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.parts{grid-template-columns:1fr}}
+
+/* ---------- PROCESS ---------- */
+.process{background:var(--cream)}
+.proc-split{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.proc-photo{position:relative;border-radius:16px;overflow:hidden;box-shadow:0 30px 60px rgba(45,40,34,.14)}
+.proc-photo img{width:100%;aspect-ratio:4/5;object-fit:cover}
+.proc-cap{position:absolute;left:0;right:0;bottom:0;padding:22px 22px 16px;
+  background:linear-gradient(transparent,rgba(20,17,14,.78));color:var(--linen);font-size:13px;font-style:italic}
+.proc-steps{display:flex;flex-direction:column;gap:6px}
+.pstep{background:var(--paper);border-radius:16px;padding:28px 30px;box-shadow:0 16px 40px rgba(45,40,34,.07)}
+.vbadge{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.12em;padding:5px 12px;border-radius:100px;margin-bottom:14px}
+.vbadge.v1{background:var(--sand);color:var(--bronze)}
+.vbadge.v2{background:var(--charcoal);color:var(--rose)}
+.pstep h3{font-size:24px;color:var(--charcoal);margin-bottom:8px}
+.pstep p{font-size:14.5px;color:var(--taupe)}
+.proc-arrow{font-family:'Fraunces',serif;font-size:32px;color:var(--bronze);text-align:center;padding:6px 0}
+@media(max-width:820px){.proc-split{grid-template-columns:1fr;gap:32px}.proc-photo img{aspect-ratio:4/3}}
+
+/* ---------- CIRCULAR ---------- */
+.circular{background:var(--charcoal);color:var(--linen)}
+.circular .eyebrow{color:var(--rose)}
+.circular h2{color:#fff}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:60px}
+.node{flex:1;min-width:110px;text-align:center;position:relative}
+.node .dot{width:14px;height:14px;border-radius:50%;background:var(--bronze-2);margin:0 auto 14px;box-shadow:0 0 0 6px rgba(185,130,71,.15)}
+.node.key .dot{background:var(--rose);box-shadow:0 0 0 8px rgba(201,169,97,.22)}
+.node h4{font-size:14.5px;color:#fff;font-weight:600}
+.node.key h4{color:var(--rose)}
+.node small{color:var(--taupe);font-size:12px}
+.loop-line{height:1px;flex:0 0 24px;background:rgba(232,224,213,.25)}
+@media(max-width:760px){.loop-line{display:none}.node{min-width:44%;margin-bottom:24px}}
+.loopnote{margin-top:54px;font-family:'Fraunces',serif;font-style:italic;font-size:22px;color:var(--sand);max-width:720px}
+
+/* ---------- QUOTES ---------- */
+.voices{background:var(--paper)}
+.qgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.q{padding:36px 30px;background:var(--cream);border-radius:16px;border-top:3px solid var(--bronze)}
+.q blockquote{font-family:'Fraunces',serif;font-size:22px;font-style:italic;color:var(--charcoal);line-height:1.28}
+.q cite{display:block;margin-top:20px;font-style:normal;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--taupe)}
+@media(max-width:820px){.qgrid{grid-template-columns:1fr}}
+
+/* ---------- AUDIENCE ---------- */
+.audience{background:var(--cream)}
+.aud-split{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.persona h3{font-size:30px;color:var(--charcoal);margin-bottom:8px}
+.persona .meta{font-style:italic;color:var(--taupe);margin-bottom:24px}
+.persona ul{list-style:none}
+.persona li{padding:14px 0;border-bottom:1px solid var(--line);font-size:15.5px;display:flex;gap:12px}
+.persona li::before{content:"◆";color:var(--bronze);font-size:11px;margin-top:5px}
+.reaches h4{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--bronze);margin-bottom:22px}
+.reach{margin-bottom:22px}
+.reach b{display:block;color:var(--charcoal);font-size:16px}
+.reach span{font-size:14px;color:var(--taupe)}
+@media(max-width:820px){.aud-split{grid-template-columns:1fr;gap:40px}}
+
+/* ---------- CTA ---------- */
+.cta{background:var(--charcoal);color:var(--linen);text-align:center;position:relative;overflow:hidden}
+.cta .glow{position:absolute;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,97,.18),transparent 70%);top:-160px;left:50%;transform:translateX(-50%)}
+.cta .inner{position:relative;z-index:2}
+.cta h2{font-size:clamp(44px,8vw,96px);color:#fff;letter-spacing:-.03em}
+.cta .tag{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(20px,2.6vw,28px);color:var(--sand);margin-top:14px}
+.cta .btns{display:flex;gap:16px;justify-content:center;margin-top:42px;flex-wrap:wrap}
+.btn{padding:15px 34px;border-radius:100px;font-weight:600;font-size:15px;transition:.25s}
+.btn-primary{background:var(--rose);color:var(--charcoal)}
+.btn-primary:hover{background:#d8ba76;transform:translateY(-2px)}
+.btn-ghost{border:1px solid rgba(232,224,213,.4);color:var(--linen)}
+.btn-ghost:hover{border-color:var(--rose);color:var(--rose)}
+
+/* ---------- FOOTER ---------- */
+footer{background:#191612;color:var(--taupe);padding:60px 0 40px;font-size:13.5px}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
+.foot .brand{color:var(--linen);font-size:20px}
+.foot .brand svg *{stroke:var(--rose)}
+footer a:hover{color:var(--rose)}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a class="brand" href="#top">
+    <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="20" cy="20" r="15"/>
+      <path d="M11 22 h18" stroke-width="2.4"/>
+      <path d="M14 22 v6 M26 22 v6" stroke-width="2"/>
+    </svg>
+    beni
+  </a>
+  <div class="navlinks">
+    <a href="#produto">Produto</a>
+    <a href="#processo">Processo</a>
+    <a href="#circular">Circularidade</a>
+    <a href="#vozes">Vozes</a>
+  </div>
+  <a class="navcta" href="#cta">Quero uma Beni</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-img"></div>
+  <div class="hero-inner">
+    <div class="eyebrow hero-eyebrow reveal">Mobiliário circular para pets</div>
+    <h1 class="reveal">Cadeira Beni</h1>
+    <div class="tag reveal">Objects of desire, designed to return.</div>
+    <p class="sub reveal">Um móvel de descanso em madeira maciça reaproveitada — com pernas de bambu substituíveis e estofado lavável. Feito para durar, reparar e voltar ao ciclo.</p>
+  </div>
+  <div class="scrollcue"><span></span>scroll</div>
+</header>
+
+<!-- MANIFESTO -->
+<section class="manifesto" id="manifesto">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">01 — O Problema</div>
+    </div>
+    <p class="big-statement reveal">O problema não é estético.<br>É <em>sistêmico</em>. O pet virou membro da família — mas o móvel dele ainda é descartável, feio e esquecido no fim de vida.</p>
+
+    <div class="three">
+      <div class="col reveal">
+        <h3>O tutor</h3>
+        <p>Não quer esconder o objeto pet. Quer um móvel que converse com a casa, não que ela precise disfarçar.</p>
+        <div class="kw">frágil · feio · difícil de manter</div>
+      </div>
+      <div class="col reveal">
+        <h3>O pet</h3>
+        <p>Usa a peça todos os dias, por horas. Conforto, higiene e acesso não são opcionais.</p>
+        <div class="kw">12–16 h/dia em descanso</div>
+      </div>
+      <div class="col reveal">
+        <h3>A cidade</h3>
+        <p>Descarta madeira maciça de boa qualidade como resíduo, sem rota clara de reuso.</p>
+        <div class="kw">resíduo volumoso sem reaproveitamento</div>
+      </div>
+    </div>
+
+    <div class="stat-bar reveal">
+      <div class="num">R$ 76 bi</div>
+      <p>O mercado pet brasileiro é o 2º maior do mundo — porém dominado por produtos de baixa durabilidade, difícil reparo e estética que não conversa com a casa. Há espaço para desejo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT / SYSTEM -->
+<section class="system" id="produto">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <div class="eyebrow reveal">02 — O Produto</div>
+        <h2 class="reveal">Uma cadeira.<br>Um sistema.</h2>
+        <p class="lead reveal">Design que dura. Mobiliário que evolui com a sua vida.</p>
+        <div class="reveal">
+          <div class="feat"><span class="d">◆</span><div><h4>Madeira maciça reaproveitada</h4><p>Zero material novo. Cada peça carrega uma história e uma pátina única.</p></div></div>
+          <div class="feat"><span class="d">◆</span><div><h4>Pernas de bambu substituíveis</h4><p>Modularidade por design — troca simples, sem descartar a peça inteira.</p></div></div>
+          <div class="feat"><span class="d">◆</span><div><h4>Estofado de linho removível</h4><p>Lavável toda semana. Higiene sem comprometer o material.</p></div></div>
+          <div class="feat"><span class="d">◆</span><div><h4>Estrutura desmontável</h4><p>Feita para reparar, nunca para descartar.</p></div></div>
+        </div>
+      </div>
+      <div class="photo reveal">
+        <img src="assets/product.jpg" alt="Cadeira Beni — produto final com estofado branco e pernas de bambu" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANATOMY -->
+<section class="anatomy" id="anatomia">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">03 — Anatomia</div>
+      <h2>Um conjunto de partes, não uma peça única.</h2>
+      <p>Cada componente foi pensado para ser montado, reparado e substituído de forma independente.</p>
+    </div>
+    <div class="parts">
+      <div class="part reveal"><div class="n">01</div><h4>Almofada</h4><p>Removível e lavável, em linho.</p></div>
+      <div class="part reveal"><div class="n">02</div><h4>Proteção lateral</h4><p>Grades de segurança e apoio.</p></div>
+      <div class="part reveal"><div class="n">03</div><h4>Plataforma</h4><p>Madeira maciça reaproveitada.</p></div>
+      <div class="part reveal"><div class="n">04</div><h4>Encaixes</h4><p>Estrutura desmontável sem cola.</p></div>
+      <div class="part reveal"><div class="n">05</div><h4>Pernas de bambu</h4><p>Quatro estacas substituíveis.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="processo">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">04 — Processo</div>
+      <h2>O material decidiu o design.</h2>
+      <p>A tensão entre durabilidade, densidade variável da madeira e tempo de laboratório levou a Beni de V1 a V2.</p>
+    </div>
+    <div class="proc-split">
+      <div class="proc-photo reveal">
+        <img src="assets/lab.jpg" alt="Protótipos da Cadeira Beni no laboratório — evolução do design" />
+        <span class="proc-cap">Protótipos no laboratório — do conceito ao uso real</span>
+      </div>
+      <div class="proc-steps">
+        <div class="pstep reveal">
+          <span class="vbadge v1">V1</span>
+          <h3>Pés em marchetaria</h3>
+          <p>Baixa precisão, densidades variáveis e difícil padronização. O material bruto impôs seus limites.</p>
+        </div>
+        <div class="proc-arrow reveal">↓</div>
+        <div class="pstep reveal">
+          <span class="vbadge v2">V2</span>
+          <h3>Estacas de bambu</h3>
+          <p>Pernas substituíveis, modulares e fáceis de reproduzir. O design respondeu ao material — e ganhou circularidade.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CIRCULAR -->
+<section class="circular" id="circular">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">05 — Economia Circular</div>
+      <h2>Desenhada para voltar ao ciclo.</h2>
+      <p>Da madeira recuperada ao retorno ao ciclo produtivo — um circuito fechado urbano.</p>
+    </div>
+    <div class="loop">
+      <div class="node reveal"><div class="dot"></div><h4>Coleta</h4><small>madeira urbana</small></div>
+      <div class="loop-line"></div>
+      <div class="node reveal"><div class="dot"></div><h4>Triagem</h4><small>seleção</small></div>
+      <div class="loop-line"></div>
+      <div class="node key reveal"><div class="dot"></div><h4>Sanitização</h4><small>etapa-chave</small></div>
+      <div class="loop-line"></div>
+      <div class="node reveal"><div class="dot"></div><h4>Produção</h4><small>marcenaria</small></div>
+      <div class="loop-line"></div>
+      <div class="node reveal"><div class="dot"></div><h4>Uso</h4><small>anos de vida</small></div>
+      <div class="loop-line"></div>
+      <div class="node reveal"><div class="dot"></div><h4>Reparo</h4><small>troca de partes</small></div>
+      <div class="loop-line"></div>
+      <div class="node reveal"><div class="dot"></div><h4>Retorno</h4><small>take-back</small></div>
+    </div>
+    <p class="loopnote reveal">A circularidade não termina na venda: a Beni foi pensada para manutenção, reparo e retorno da madeira ao ciclo — uma nova Beni nasce da anterior.</p>
+  </div>
+</section>
+
+<!-- VOICES -->
+<section class="voices" id="vozes">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">06 — Validação em campo</div>
+      <h2>O que ouvimos.</h2>
+      <p>6 entrevistas com tutores, catadores, marceneiros, veterinários e lojistas.</p>
+    </div>
+    <div class="qgrid">
+      <div class="q reveal"><blockquote>“Se parecer móvel, eu deixo na sala.”</blockquote><cite>Tutor · entrevista</cite></div>
+      <div class="q reveal"><blockquote>“Lavável não é diferencial. É requisito.”</blockquote><cite>Síntese das entrevistas</cite></div>
+      <div class="q reveal"><blockquote>“Madeira reaproveitada precisa vir com protocolo.”</blockquote><cite>Marceneiro / Veterinário</cite></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section class="audience" id="publico">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">07 — Público</div>
+      <h2>Para casas onde o pet também habita o design.</h2>
+    </div>
+    <div class="aud-split">
+      <div class="persona reveal">
+        <h3>Tutor urbano consciente</h3>
+        <div class="meta">28–50 anos · classe média-alta · capitais e regiões metropolitanas</div>
+        <ul>
+          <li>Valoriza peças com história — aceita a pátina como narrativa, não defeito.</li>
+          <li>Quer design que conversa com a casa, não um objeto que ela esconde.</li>
+          <li>Paga mais por durabilidade, origem e reparabilidade.</li>
+        </ul>
+      </div>
+      <div class="reaches reveal">
+        <h4>Também alcança</h4>
+        <div class="reach"><b>Arquitetos & designers de interiores</b><span>especificam peças únicas, com pátina e origem.</span></div>
+        <div class="reach"><b>Lojas de design & curadorias</b><span>produto com narrativa de sustentabilidade verificável.</span></div>
+        <div class="reach"><b>Economia circular urbana</b><span>condomínios, ecopontos e cooperativas de catadores.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta">
+  <div class="glow"></div>
+  <div class="wrap inner">
+    <div class="eyebrow reveal" style="color:var(--rose)">Junte-se ao movimento</div>
+    <h2 class="reveal" style="margin-top:18px">Cadeira Beni</h2>
+    <div class="tag reveal">Feita para durar, reparar e voltar ao ciclo.</div>
+    <div class="btns reveal">
+      <a class="btn btn-primary" href="mailto:luizambritto@gmail.com?subject=Quero%20uma%20Cadeira%20Beni">Quero uma Beni</a>
+      <a class="btn btn-ghost" href="#top">Ver de novo</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap foot">
+    <a class="brand" href="#top" style="display:flex;align-items:center;gap:10px">
+      <svg viewBox="0 0 40 40" width="24" height="24" fill="none" stroke="#C9A961" stroke-width="2">
+        <circle cx="20" cy="20" r="15"/><path d="M11 22 h18"/><path d="M14 22 v6 M26 22 v6"/>
+      </svg>
+      beni
+    </a>
+    <div>Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026</div>
+    <a href="mailto:luizambritto@gmail.com">luizambritto@gmail.com</a>
+  </div>
+</footer>
+
+<script>
+// nav solid on scroll
+const nav=document.getElementById('nav');
+const onScroll=()=>nav.classList.toggle('solid',window.scrollY>window.innerHeight*0.75);
+window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+// reveal on view
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})
+},{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+document.querySelectorAll('.reveal').forEach((el,i)=>{
+  el.style.transitionDelay=(i%4*0.06)+'s';
+  io.observe(el);
+});
+</script>
+</body>
+</html>
