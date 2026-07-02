@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Cadeira Beni — uma peça de marcenaria para pets pequenos</title>
-<meta name="description" content="Cadeira Beni: peça de marcenaria para cães pequenos, feita com madeira reaproveitada, pernas de bambu substituíveis e estofado lavável. Protótipo v2 de um projeto de Design Thinking e Prototipagem." />
+<meta name="description" content="Cadeira Beni: peça de marcenaria para cães pequenos, feita com madeira reaproveitada e pernas de bambu substituíveis. Tecidos em breve. Protótipo v2 de um projeto de Design Thinking e Prototipagem." />
 
 <!--
   v5 — "menos IA, mais Beni"
@@ -176,7 +176,7 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
 .pane{position:relative;padding:clamp(24px,3.4vw,46px);border-top:1px solid var(--line-d)}
 .pane+.pane{border-left:1px solid var(--line-d)}
 .pane figure{position:relative;overflow:hidden;margin-bottom:22px;border:1px solid var(--line-d)}
-.pane img{width:100%;aspect-ratio:5/4;object-fit:cover}
+.pane img{width:100%;aspect-ratio:5/4;object-fit:cover;object-position:center 62%}
 .pane.v1 img{filter:grayscale(1) contrast(1.1)}
 .stamp{position:absolute;top:14px;right:14px;font-family:var(--font-mono);font-size:11px;
   letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;border:1.5px solid;transform:rotate(-6deg);
@@ -338,12 +338,6 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 .wood-streak{animation-duration:9s}
 
 /* ===== MAIS MADEIRA ===== */
-/* veio desenhado deslizando nos fundos escuros */
-.grainlines::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.09;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='150' viewBox='0 0 420 150'%3E%3Cg fill='none' stroke='%23C89B48' stroke-width='1.3'%3E%3Cpath d='M0 30 C60 12 120 48 210 30 S360 10 420 30'/%3E%3Cpath d='M0 75 C70 55 150 95 240 75 S370 55 420 75' stroke='%23D65A2B'/%3E%3Cpath d='M0 120 C80 100 160 140 250 120 S380 100 420 120'/%3E%3Cellipse cx='150' cy='52' rx='16' ry='6'/%3E%3Cellipse cx='320' cy='98' rx='13' ry='5' stroke='%23D65A2B'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:420px 150px;animation:grainslide 30s linear infinite}
-@keyframes grainslide{to{background-position:840px 0}}
-.grainlines>.wrap{position:relative;z-index:1}
 /* faixa de tábuas/ripas deslizando */
 .ripas-div{height:20px;width:100%;
   background:repeating-linear-gradient(90deg,
@@ -425,7 +419,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
       <div>
         <h1 data-r><span>Cadeira</span><span class="l2">Beni</span></h1>
         <p class="hero-tagline" data-r>A caminha saiu do canto. Virou mobiliário.</p>
-        <p class="hero-specs" data-r><em>madeira reaproveitada</em><em>bambu substituível</em><em>estofado lavável</em></p>
+        <p class="hero-specs" data-r><em>madeira reaproveitada</em><em>bambu substituível</em><em>tecidos — em breve</em></p>
       </div>
       <figure class="hero-obj" data-parallax>
         <img src="assets/product-hero.png" alt="Cadeira Beni — plataforma em madeira reaproveitada sobre pernas de bambu" />
@@ -436,7 +430,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 </header>
 
 <!-- ===== O INCÔMODO ===== -->
-<section class="incomodo grainlines">
+<section class="incomodo">
   <div class="pawtrail on-dark" aria-hidden="true" style="left:4%;bottom:5%;width:320px;height:230px">
     <svg class="paw" style="left:0px;bottom:0px;--pr:-14deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:52px;bottom:34px;--pr:10deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:104px;bottom:66px;--pr:-12deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:158px;bottom:100px;--pr:12deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:212px;bottom:134px;--pr:-10deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:266px;bottom:168px;--pr:12deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg>
   </div>
@@ -462,7 +456,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
     <div class="cards">
       <div class="card" data-r><span class="k">Estrutura</span><span class="v">Madeira reaproveitada</span><span class="n">Tábuas que já existiam. Cada lote muda o veio, a cor e a peça — nenhuma Beni é igual à outra.</span></div>
       <div class="card" data-r><span class="k">Pernas</span><span class="v">Partes substituíveis</span><span class="n">Quatro estacas de bambu encaixadas. A parte que mais sofre é a mais fácil de trocar.</span></div>
-      <div class="card" data-r><span class="k">Assento</span><span class="v">Estofado lavável</span><span class="n">A capa sai sem ferramenta. Pet suja — a cadeira não pode fingir que não.</span></div>
+      <div class="card" data-r><span class="k">Assento</span><span class="v">Tecidos (em breve)</span><span class="n">A capa removível e lavável está em desenho — entra na próxima leva.</span></div>
       <div class="card" data-r><span class="k">Escala</span><span class="v">Altura para pet pequeno</span><span class="n">Elevada o bastante para ventilar; baixa o bastante para subir sem esforço.</span></div>
     </div>
   </div>
@@ -471,8 +465,8 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 <!-- MARQUEE -->
 <div class="marq" aria-hidden="true">
   <div class="marq-row">
-    <span>Madeira reaproveitada</span><i></i><span>Pernas substituíveis</span><i class="b"></i><span>Estofado lavável</span><i class="s"></i><span>Altura pet pequeno</span><i></i><span>Feita à mão</span><i class="b"></i>
-    <span>Madeira reaproveitada</span><i></i><span>Pernas substituíveis</span><i class="b"></i><span>Estofado lavável</span><i class="s"></i><span>Altura pet pequeno</span><i></i><span>Feita à mão</span><i class="b"></i>
+    <span>Madeira reaproveitada</span><i></i><span>Pernas substituíveis</span><i class="b"></i><span>Tecidos em breve</span><i class="s"></i><span>Altura pet pequeno</span><i></i><span>Feita à mão</span><i class="b"></i>
+    <span>Madeira reaproveitada</span><i></i><span>Pernas substituíveis</span><i class="b"></i><span>Tecidos em breve</span><i class="s"></i><span>Altura pet pequeno</span><i></i><span>Feita à mão</span><i class="b"></i>
   </div>
 </div>
 
@@ -494,7 +488,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
         <span class="hand hand-mood">cada tábua muda o desenho!</span>
       </div>
       <div class="frame" data-r><img src="assets/mat-bamboo.jpg" alt="Estaca de bambu da perna"><span class="note tl">perna</span><span class="note br">bambu seco</span></div>
-      <div class="frame" data-r><img src="assets/mat-fabric.jpg" alt="Estofado de algodão removível"><span class="note tl">assento</span><span class="note br">capa lavável</span></div>
+      <div class="frame" data-r><img src="assets/dog-chair.jpg" alt="Cachorro pequeno em pé na Cadeira Beni, na varanda"><span class="note tl">em uso</span><span class="note br">cachorro de verdade</span></div>
       <div class="frame" data-r><img src="assets/mat-joint.jpg" alt="Encaixe cavilhado do pé"><span class="note tl">fixação</span><span class="note br">encaixe cavilhado</span></div>
       <div class="frame" data-r><img src="assets/v1-real.jpg" alt="Pés de marchetaria da V1 na bancada"><span class="note tl">bancada</span><span class="note br">processo real</span></div>
     </div>
@@ -509,7 +503,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
     <div class="plan">
       <div class="callcol r">
         <div class="call" data-r><span class="k">Estrutura</span><span class="v">Madeira maciça reaproveitada</span><span class="n">base + assento elevado</span><br><span class="st ok">prototipado</span></div>
-        <div class="call" data-r><span class="k">Assento</span><span class="v">Estofado removível e lavável</span><span class="n">higiene sem ferramenta</span><br><span class="st ok">prototipado</span></div>
+        <div class="call" data-r><span class="k">Assento</span><span class="v">Tecidos — em breve</span><span class="n">capa removível e lavável em desenho</span><br><span class="st evo">em breve</span></div>
         <div class="call" data-r><span class="k">Dimensões</span><span class="v">Sob medida por lote</span><span class="n">padronização P/M em desenho</span><br><span class="st medir">a medir</span></div>
       </div>
       <div class="obj" data-parallax>
@@ -525,7 +519,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 </section>
 
 <!-- ===== PROCESSO V1/V2 ===== -->
-<section class="proc grainlines" id="processo">
+<section class="proc" id="processo">
   <div class="wrap head">
     <span class="kick" data-r>Processo · v1 → v2</span>
     <h2 class="title" data-r style="color:var(--paper)">O erro também é material.</h2>
@@ -534,7 +528,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
   <div class="duo">
     <div class="pane v1" data-r>
       <figure>
-        <img src="assets/v1-real.jpg" alt="V1 — pés e braços em marchetaria, na bancada" />
+        <img src="assets/v1-chair.jpg" alt="Cadeira Beni V1 — suportes superiores em marchetaria" />
         <span class="stamp no">não fechou</span>
         <span class="hand hand-v1">ficou pesada!</span>
       </figure>
@@ -554,7 +548,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
       <span class="vk">V2 · o que mudou</span>
       <div class="vline">Menos material.<br>Partes separadas.</div>
       <div class="lessons">
-        <div><span class="t">componentes</span>estrutura, pernas e tecido viraram partes independentes</div>
+        <div><span class="t">componentes</span>estrutura e pernas viraram partes independentes</div>
         <div><span class="t">perna</span>estaca de bambu padronizada: sai uma, entra outra</div>
         <div><span class="t">peso</span>menos madeira na base — mais leve de mover e limpar embaixo</div>
       </div>
@@ -578,7 +572,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
         <div class="uso-title" data-r>Na sala,<br>com cachorro.</div>
         <div class="obs">
           <p data-r>Subiu sozinho, sem rampa nem convite.</p>
-          <p data-r>O tecido já saiu pra lavar — e voltou.</p>
+          <p data-r>Aguentou pata, peso e soneca comprida.</p>
           <p data-r>Ficou na sala. Não no canto.</p>
         </div>
       </div>
@@ -589,7 +583,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 <div class="streak-div wood-streak"></div>
 
 <!-- ===== COMO ELA DESMONTA ===== -->
-<section class="circ grainlines" id="desmonta">
+<section class="circ" id="desmonta">
   <div class="wrap">
     <span class="kick" data-r>Fim de vida</span>
     <div class="head"><h2 class="title" data-r>Como ela desmonta.</h2></div>
@@ -608,7 +602,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
       </svg>
     </div>
     <div class="cmods">
-      <div class="cmod" data-r><div><div class="from">Suja</div><div class="arrow">↓</div><div class="to">Lava</div></div><span class="tag">protótipo</span></div>
+      <div class="cmod evo" data-r><div><div class="from">Suja</div><div class="arrow">↓</div><div class="to">Lava</div></div><span class="tag">tecidos · em breve</span></div>
       <div class="cmod" data-r><div><div class="from">Lasca</div><div class="arrow">↓</div><div class="to">Troca</div></div><span class="tag">protótipo</span></div>
       <div class="cmod" data-r><div><div class="from">Marca</div><div class="arrow">↓</div><div class="to">Lixa</div></div><span class="tag">protótipo</span></div>
       <div class="cmod evo" data-r><div><div class="from">Acaba</div><div class="arrow">↓</div><div class="to">Separa</div></div><span class="tag">evolução</span></div>
@@ -629,7 +623,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
     </div>
     <div class="mat">
       <div class="r" data-r><div class="k">Cliente</div><div class="v"><b>Cabe na sala sem parecer caminha.</b> Linguagem de móvel — madeira, proporção baixa, presença discreta.</div></div>
-      <div class="r" data-r><div class="k">Pet</div><div class="v"><b>Altura baixa para cão pequeno subir sozinho.</b> Plataforma firme e ventilada; estofado que não escorrega.</div></div>
+      <div class="r" data-r><div class="k">Pet</div><div class="v"><b>Altura baixa para cão pequeno subir sozinho.</b> Plataforma firme e ventilada, sem afundar.</div></div>
       <div class="r" data-r><div class="k">Produção</div><div class="v"><b>Cortes retos e encaixes simples.</b> Marcenaria de baixa complexidade reproduz — sem maquinário especial.</div></div>
       <div class="r" data-r><div class="k">Ecossistema</div><div class="v"><b>Aproveita sobras rígidas</b> que normalmente virariam descarte volumoso urbano.</div></div>
       <div class="r" data-r><div class="k">Negócio</div><div class="v"><b>A peça dura; a reposição circula.</b> Perna e tecido vendidos como componente, não como cadeira nova.</div></div>
@@ -648,6 +642,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
       <h2 class="title" data-r style="margin-top:12px">O que ainda falta.</h2>
     </div>
     <div class="todo">
+      <div data-r><span class="t">Capa de tecido removível e lavável</span><span class="st evo">em breve</span></div>
       <div data-r><span class="t">Padronizar medidas P e M a partir do lote de madeira</span><span class="st medir">em desenho</span></div>
       <div data-r><span class="t">Protocolo de sanitização da madeira reaproveitada</span><span class="st evo">hipótese</span></div>
       <div data-r><span class="t">Testar com mais cães, casas e semanas de uso</span><span class="st medir">planejado</span></div>
@@ -657,23 +652,23 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 </section>
 
 <!-- ===== PRÓXIMA LEVA ===== -->
-<section class="order grainlines" id="leva">
+<section class="order" id="leva">
   <div class="glow" aria-hidden="true"></div>
   <i class="blob cool" aria-hidden="true" style="width:300px;height:270px;right:4%;top:6%;opacity:.4"></i>
   <div class="wrap order-grid">
     <div>
       <span class="kick" data-r>Encomenda</span>
       <h2 class="order-title" data-r>Próxima leva<br>sob encomenda.</h2>
-      <p class="body" data-r>A Beni ainda é protótipo — e é feita em levas pequenas, na bancada. Cada peça muda conforme a madeira disponível: você escolhe tamanho e tecido; o lote define veio e cor.</p>
+      <p class="body" data-r>A Beni ainda é protótipo — e é feita em levas pequenas, na bancada. Cada peça muda conforme a madeira disponível: você escolhe o tamanho; o lote define veio e cor. Tecidos entram em breve.</p>
       <div class="order-specs" data-r>
         <div><span class="k">Estrutura</span><span class="v">Madeira de reuso + bambu</span></div>
-        <div><span class="k">Assento</span><span class="v">Capa removível e lavável</span></div>
+        <div><span class="k">Tecidos</span><span class="v">Em breve — capa em desenho</span></div>
         <div><span class="k">Acabamento</span><span class="v">Verniz + vinil resistente</span></div>
         <div><span class="k">Tamanhos</span><span class="v">P · M — sob medida</span></div>
         <div><span class="k">Prazo</span><span class="v">Por leva, sob consulta</span></div>
-        <div><span class="k">Reposição</span><span class="v">Perna e tecido avulsos</span></div>
+        <div><span class="k">Reposição</span><span class="v">Perna de bambu avulsa</span></div>
       </div>
-      <a class="order-cta" href="mailto:luizambritto@gmail.com?subject=Pr%C3%B3xima%20leva%20—%20Cadeira%20Beni&body=Oi!%20Quero%20entrar%20na%20pr%C3%B3xima%20leva%20da%20Cadeira%20Beni.%20Tamanho%3A%20___%20%7C%20Tecido%3A%20___" data-r>Entrar na próxima leva →</a><span class="hand hand-order">a madeira define a peça</span>
+      <a class="order-cta" href="mailto:luizambritto@gmail.com?subject=Pr%C3%B3xima%20leva%20—%20Cadeira%20Beni&body=Oi!%20Quero%20entrar%20na%20pr%C3%B3xima%20leva%20da%20Cadeira%20Beni.%20Tamanho%3A%20___" data-r>Entrar na próxima leva →</a><span class="hand hand-order">a madeira define a peça</span>
       <span class="order-note mono" data-r>protótipo v2 · levas pequenas · sem estoque</span>
     </div>
     <figure class="order-obj" data-r>
