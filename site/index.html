@@ -458,6 +458,27 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 .reflexao .assin b{color:var(--ink);font-weight:500}
 @media(max-width:760px){.reflexao .rgrid{grid-template-columns:1fr}}
 
+/* ===== ENSAIO DE SALA (molduras orgânicas) ===== */
+.ensaio{background:var(--paper-2);overflow:hidden}
+.ensaio .ehead{max-width:60ch;position:relative;z-index:1}
+.egrid{display:grid;grid-template-columns:1.04fr .96fr;gap:clamp(22px,5vw,70px);align-items:start;margin-top:40px;position:relative;z-index:1}
+.eph{position:relative;margin:0}
+.eph img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;transition:transform .6s}
+.eph:hover img{transform:scale(1.02)}
+.eph.a img{border-radius:53% 47% 45% 55% / 40% 44% 56% 60%}
+.eph.b{margin-top:clamp(48px,9vw,130px)}
+.eph.b img{border-radius:50% 50% 6px 6px / 34% 34% 6px 6px}
+.eph::after{content:"";position:absolute;inset:0;border:1px solid var(--wood-mid);border-radius:inherit;pointer-events:none;
+  transform:translate(11px,11px);opacity:.55}
+.eph.a::after{border-radius:53% 47% 45% 55% / 40% 44% 56% 60%}
+.eph.b::after{border-radius:50% 50% 6px 6px / 34% 34% 6px 6px}
+.eph .ecap{margin-top:14px;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);display:block;text-align:center}
+.eph .hand{position:absolute;z-index:3;font-size:17px;color:var(--paper);text-shadow:0 1px 10px rgba(0,0,0,.75)}
+.epull{margin:clamp(40px,7vw,80px) auto 0;max-width:30ch;text-align:center;font-family:var(--font-serif);font-style:italic;
+  font-size:clamp(22px,3vw,34px);line-height:1.25;color:var(--wood-dark);position:relative;z-index:1}
+.ensaio .strip{margin-top:30px;text-align:center;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);position:relative;z-index:1}
+@media(max-width:760px){.egrid{grid-template-columns:1fr}.eph.b{margin-top:8px}}
+
 /* ===== AURAS — glow editorial granulado (paleta madeira) ===== */
 .aura{position:absolute;pointer-events:none;z-index:0;border-radius:50%;
   filter:blur(46px) saturate(1.12);opacity:.5;
@@ -788,6 +809,33 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
   </div>
 </section>
 
+<!-- ===== ENSAIO DE SALA ===== -->
+<section class="ensaio" id="ensaio">
+  <i class="aura" aria-hidden="true" style="width:640px;height:520px;left:-180px;top:-140px;opacity:.38"></i>
+  <i class="aura" aria-hidden="true" style="width:520px;height:460px;right:-150px;bottom:-160px;opacity:.3"></i>
+  <div class="wrap">
+    <div class="ehead">
+      <span class="kick" data-r>Ensaio de sala</span>
+      <h2 class="title" data-r style="margin-top:12px">Ela não pede um canto.<br>Pede a sala.</h2>
+      <p class="body" data-r>Ensaio de estilo: a Beni na luz das cinco da tarde e na sala escura — a mesma peça, duas casas, nenhum canto.</p>
+    </div>
+    <div class="egrid">
+      <figure class="eph a" data-r>
+        <img src="assets/ensaio-sol.jpg" alt="Cadeira Beni na sala iluminada pelo sol da tarde, com um pinscher sentado sobre a plataforma" />
+        <span class="hand" style="left:8%;bottom:14%;transform:rotate(-4deg)">luz das cinco da tarde</span>
+        <span class="ecap">ensaio 01 · sol baixo, juta e madeira</span>
+      </figure>
+      <figure class="eph b" data-r>
+        <img src="assets/ensaio-noite.jpg" alt="Cadeira Beni em sala escura com parede terracota, com um cão de pelo dourado deitado" />
+        <span class="hand" style="right:6%;top:8%;transform:rotate(3deg)">combina com sala escura tb</span>
+        <span class="ecap">ensaio 02 · terracota, a cara da marca</span>
+      </figure>
+    </div>
+    <p class="epull" data-r>A prova não é a cadeira.<br>É a sala inteira fazendo sentido.</p>
+    <p class="strip" data-r>ensaio de estilo · a peça como ela quer morar</p>
+  </div>
+</section>
+
 <div class="streak-div wood-streak"></div>
 
 <!-- ===== COMO ELA DESMONTA ===== -->
@@ -927,8 +975,10 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
       <a class="order-cta" href="mailto:luizambritto@gmail.com?subject=Pr%C3%B3xima%20leva%20—%20Cadeira%20Beni&body=Oi!%20Quero%20entrar%20na%20pr%C3%B3xima%20leva%20da%20Cadeira%20Beni.%20Tamanho%3A%20___" data-r>Entrar na próxima leva →</a><span class="hand hand-order">a madeira define a peça</span>
       <span class="order-note mono" data-r>protótipo v2 · levas pequenas · sem estoque</span>
     </div>
-    <figure class="order-obj" data-r>
-      <img src="assets/product-hero.png" alt="Cadeira Beni — protótipo v2 aberto a encomendas" />
+    <figure class="order-obj" data-r style="position:relative">
+      <img src="assets/ensaio-sol.jpg" alt="Cadeira Beni na sala, ao sol da tarde — protótipo v2 aberto a encomendas"
+        style="object-fit:cover;aspect-ratio:4/5;border-radius:50% 50% 6px 6px / 30% 30% 6px 6px;animation:none" />
+      <span class="hand" style="position:absolute;right:4%;bottom:6%;font-size:16px;transform:rotate(-3deg);color:var(--paper);text-shadow:0 1px 10px rgba(0,0,0,.8)">na sua sala em breve</span>
     </figure>
   </div>
 </section>
