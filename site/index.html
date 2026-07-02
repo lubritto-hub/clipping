@@ -263,8 +263,8 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
     radial-gradient(40% 50% at 60% 40%, rgba(200,155,72,.35), transparent 60%);
   filter:blur(10px)}
 .order .wrap{position:relative;z-index:2}
-.order-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:center}
-.order-title{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(56px,11vw,150px);
+.order-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr);gap:clamp(24px,4vw,56px);align-items:center}
+.order-title{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(40px,6.4vw,104px);
   line-height:.82;letter-spacing:-.01em;color:var(--paper);margin:14px 0 22px}
 .order .body{color:rgba(239,231,214,.82);margin-bottom:30px}
 .order-specs{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line-d);margin-bottom:30px}
@@ -288,6 +288,50 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
   font-size:10.5px;letter-spacing:.05em;color:var(--muted-d);padding-top:22px;border-top:1px solid var(--line-d)}
 .foot-cta a{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
   color:var(--paper);border-bottom:1px solid var(--bamboo);padding-bottom:4px}
+
+/* ================= MOVIMENTO (CSS puro — roda sem JS, iPad ok) ================= */
+/* faixa de verniz correndo (reforço da madeira) */
+.wood-streak{background-size:240% 100%;animation:streak 9s linear infinite}
+@keyframes streak{to{background-position:-240% 0}}
+.streak-div{height:7px;width:100%;position:relative;z-index:5}
+/* gradiente iridescente em movimento (referência Eye of Film) */
+.order .glow{animation:glowdrift 15s ease-in-out infinite alternate}
+@keyframes glowdrift{
+  0%{transform:translate3d(0,0,0) scale(1);opacity:.9}
+  50%{transform:translate3d(-4%,3%,0) scale(1.1);opacity:1}
+  100%{transform:translate3d(3%,-2%,0) scale(1.05);opacity:.92}}
+.hero .iris{position:absolute;inset:-25% -10% auto -10%;height:150%;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(46% 56% at 74% 26%, rgba(242,106,27,.4), transparent 60%),
+    radial-gradient(42% 52% at 90% 58%, rgba(159,180,189,.24), transparent 60%),
+    radial-gradient(40% 50% at 58% 82%, rgba(200,155,72,.28), transparent 60%);
+  filter:blur(26px);animation:glowdrift 17s ease-in-out infinite alternate;mix-blend-mode:screen}
+.hero-inner,.hero-obj{position:relative;z-index:2}
+/* cadeira flutuando */
+.hero-obj img{animation:float 7s ease-in-out infinite}
+.order-obj img{animation:float 6.5s ease-in-out infinite .4s}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-15px)}}
+/* pill pulsando */
+.status-pill{animation:pulse 2.6s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(214,90,43,.55)}70%{box-shadow:0 0 0 7px rgba(214,90,43,0)}}
+/* MARQUEE de ripas/palavras */
+.marq{overflow:hidden;background:var(--ink);color:var(--paper);
+  border-top:1px solid var(--line-d);border-bottom:1px solid var(--line-d);padding:15px 0}
+.marq-row{display:flex;align-items:center;white-space:nowrap;width:max-content;animation:marq 26s linear infinite}
+.marq .marq-row span{font-family:var(--font-display);text-transform:uppercase;
+  font-size:clamp(20px,2.6vw,34px);letter-spacing:.02em;padding:0 .35em}
+.marq .marq-row i{width:26px;height:8px;border-radius:4px;background:var(--clay);margin:0 .55em;flex:none}
+.marq .marq-row i.b{background:var(--bamboo)} .marq .marq-row i.s{background:var(--sun)}
+@keyframes marq{to{transform:translateX(-50%)}}
+.marq:hover .marq-row{animation-play-state:paused}
+/* hover forte (navegador) */
+.val{transition:background .3s,transform .3s}
+.val:hover{background:rgba(214,90,43,.07)}
+.frame{transition:transform .4s} .frame:hover{transform:translateY(-4px)}
+.cmod{transition:border-color .3s,background .3s}
+.cmod:hover{background:rgba(242,106,27,.06);border-color:var(--clay)}
+.navlinks a{transition:color .2s} .order-cta{transition:background .25s,transform .25s}
+.order-cta:hover{transform:translateY(-2px)}
 
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
@@ -317,6 +361,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 <!-- ===== HERO ===== -->
 <header class="hero" id="topo">
   <div class="wood-streak streak"></div>
+  <div class="iris"></div>
   <div class="wrap hero-inner">
     <div class="hero-head">
       <svg class="sym" viewBox="0 0 66 72" aria-hidden="true">
@@ -354,6 +399,14 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 </section>
 
 <!-- ===== MOODBOARD (material) ===== -->
+<!-- MARQUEE -->
+<div class="marq" aria-hidden="true">
+  <div class="marq-row">
+    <span>Madeira de reuso</span><i></i><span>Modular</span><i class="b"></i><span>Reparável</span><i class="s"></i><span>Feito à mão</span><i></i><span>Peça única</span><i class="b"></i>
+    <span>Madeira de reuso</span><i></i><span>Modular</span><i class="b"></i><span>Reparável</span><i class="s"></i><span>Feito à mão</span><i></i><span>Peça única</span><i class="b"></i>
+  </div>
+</div>
+
 <section class="mood" id="material">
   <div class="wrap">
     <div class="head">
@@ -385,6 +438,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 </section>
 
 <!-- ===== PRANCHA TÉCNICA ===== -->
+<div class="streak-div wood-streak"></div>
 <section class="prancha" id="prancha">
   <div class="grid-bg"></div>
   <div class="wrap">
@@ -448,6 +502,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 </section>
 
 <!-- ===== CIRCULARIDADE ===== -->
+<div class="streak-div wood-streak"></div>
 <section class="circ" id="circularidade">
   <div class="wrap">
     <span class="kick" data-r>Circularidade</span>
@@ -478,6 +533,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 </section>
 
 <!-- ===== ENCOMENDE A SUA ===== -->
+<div class="streak-div wood-streak"></div>
 <section class="order" id="encomendar">
   <div class="glow"></div>
   <div class="wrap order-grid">
