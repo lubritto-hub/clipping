@@ -24,7 +24,7 @@
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=League+Gothic&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Permanent+Marker&display=swap" rel="stylesheet" />
 <style>
 :root{
   /* paleta madeira */
@@ -342,6 +342,54 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 .navlinks a{transition:color .2s} .order-cta{transition:background .25s,transform .25s}
 .order-cta:hover{transform:translateY(-2px)}
 
+/* ===== MIX REFS: blobs de verniz, veio fluido, grão de filme, manuscrita ===== */
+.hand{font-family:'Permanent Marker',cursive;letter-spacing:0;text-transform:none}
+.hero-obj{position:relative}
+.hand-hero{position:absolute;right:2%;bottom:2%;color:var(--bamboo);font-size:clamp(15px,1.7vw,23px);transform:rotate(-6deg)}
+.hand-mood{position:absolute;left:12px;bottom:12px;z-index:3;color:#fff;font-size:16px;transform:rotate(-3deg);text-shadow:0 1px 10px rgba(0,0,0,.75)}
+.hand-order{display:inline-block;margin-left:16px;color:var(--bamboo);font-size:17px;transform:rotate(-4deg);vertical-align:middle}
+.hand-uso{color:var(--bamboo);font-size:clamp(16px,2vw,24px);transform:rotate(-3deg);display:inline-block;margin-top:14px}
+/* blobs (ref SHOWROOM) */
+.blob{position:absolute;pointer-events:none;filter:blur(24px);opacity:.5;z-index:0;
+  animation:blobmorph 16s ease-in-out infinite alternate;
+  border-radius:46% 54% 58% 42%/52% 44% 56% 48%}
+.blob.warm{background:radial-gradient(circle at 35% 35%, var(--sun), var(--clay) 60%, transparent 78%)}
+.blob.cool{background:radial-gradient(circle at 60% 40%, rgba(185,167,216,.9), rgba(159,180,189,.7) 55%, transparent 78%)}
+@keyframes blobmorph{
+  0%{border-radius:46% 54% 58% 42%/52% 44% 56% 48%;transform:translate(0,0) scale(1)}
+  100%{border-radius:58% 42% 44% 56%/44% 58% 42% 56%;transform:translate(4%,-6%) scale(1.14)}}
+.produto{overflow:hidden}
+.produto .wrap{position:relative;z-index:1}
+/* veio de madeira fluindo (ref linha) */
+.flow{margin:30px 0 40px}
+.flow svg{width:100%;height:auto;overflow:visible;display:block}
+.flow path{fill:none;stroke-width:1.6;stroke-dasharray:7 9;animation:flowdash 7s linear infinite}
+.flow .p1{stroke:var(--bamboo)} .flow .p2{stroke:var(--clay);opacity:.6;animation-duration:10s}
+.flow .p3{stroke:var(--blue-haze);opacity:.4;animation-duration:13s;animation-direction:reverse}
+@keyframes flowdash{to{stroke-dashoffset:-160}}
+.flow text{font-family:var(--font-mono);font-size:11px;letter-spacing:.08em;fill:rgba(239,231,214,.75)}
+.flow circle{fill:var(--bamboo)}
+/* grão de filme animado (ref posters) */
+.grainov{position:absolute;inset:-42%;pointer-events:none;opacity:.07;mix-blend-mode:overlay;z-index:4;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation:grainmove 5s steps(6) infinite}
+@keyframes grainmove{0%,100%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-2%)}80%{transform:translate(3%,2%)}}
+/* USO REAL — poster com glow + grão (refs 0241/0242) */
+.uso{position:relative;background:var(--ink);color:var(--paper);padding:0;overflow:hidden}
+.uso-media{position:relative;height:min(78vh,720px)}
+.uso-media img{width:100%;height:100%;object-fit:cover;object-position:center 44%}
+.uso-media::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg, rgba(17,16,13,.88) 0%, rgba(17,16,13,.15) 46%, rgba(17,16,13,.3) 100%)}
+.uso .warmglow{position:absolute;inset:0;pointer-events:none;z-index:1;mix-blend-mode:screen;
+  background:radial-gradient(46% 62% at 20% 70%, rgba(242,106,27,.45), transparent 64%),
+             radial-gradient(42% 56% at 82% 26%, rgba(185,167,216,.3), transparent 62%);
+  animation:glowdrift 14s ease-in-out infinite alternate}
+.uso-copy{position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end}
+.uso-copy .wrap{width:100%;padding-bottom:clamp(30px,6vh,64px)}
+.uso-title{font-family:var(--font-display);text-transform:uppercase;color:var(--paper);
+  font-size:clamp(44px,8.5vw,120px);line-height:.82;letter-spacing:-.01em}
+.uso-sub{font-family:var(--font-serif);font-style:italic;font-size:clamp(15px,1.8vw,23px);color:rgba(239,231,214,.85);margin-top:12px;max-width:30ch}
+
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -371,6 +419,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 <header class="hero" id="topo">
   <div class="wood-streak streak"></div>
   <div class="iris"></div>
+  <div class="grainov" aria-hidden="true"></div>
   <div class="wrap hero-inner">
     <div class="hero-head">
       <svg class="sym" viewBox="0 0 66 72" aria-hidden="true">
@@ -387,6 +436,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
       </div>
       <figure class="hero-obj" data-parallax>
         <img src="assets/product-hero.png" alt="Cadeira Beni — plataforma em madeira reaproveitada sobre pernas de bambu" />
+        <span class="hand hand-hero">feita à mão!</span>
       </figure>
     </div>
   </div>
@@ -394,6 +444,8 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 
 <!-- ===== PRODUTO (proposta de valor) ===== -->
 <section class="produto" id="produto">
+  <i class="blob warm" aria-hidden="true" style="width:360px;height:320px;left:50%;top:-4%"></i>
+  <i class="blob cool" aria-hidden="true" style="width:280px;height:250px;left:72%;top:36%;animation-delay:-8s"></i>
   <div class="wrap">
     <div class="prod-top">
       <div>
@@ -429,7 +481,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
     <div class="mb">
       <div class="frame" data-r>
         <img src="assets/mat-wood.jpg" alt="Veio da madeira maciça reaproveitada">
-        <span class="note tl">01 · estrutura</span><span class="note br">madeira reaproveitada</span>
+        <span class="note tl">01 · estrutura</span><span class="note br">madeira reaproveitada</span><span class="hand hand-mood">cada madeira é diferente!</span>
       </div>
       <div class="mb-col">
         <div class="frame" data-r><img src="assets/mat-bamboo.jpg" alt="Perna de bambu"><span class="note tl">02 · perna</span></div>
@@ -515,12 +567,41 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 </section>
 
 <!-- ===== CIRCULARIDADE ===== -->
+<!-- ===== USO REAL (poster glow+grão) ===== -->
+<section class="uso">
+  <div class="uso-media">
+    <img src="assets/uso-home.jpg" alt="Cachorro dormindo na almofada da Cadeira Beni, em casa" />
+    <div class="warmglow" aria-hidden="true"></div>
+    <div class="grainov" aria-hidden="true"></div>
+    <div class="uso-copy">
+      <div class="wrap">
+        <div class="uso-title" data-r>Na casa,<br>de verdade.</div>
+        <p class="uso-sub" data-r>Estofado que sai pra lavar. Altura fácil pro pet. Madeira que combina com a sala.</p>
+        <span class="hand hand-uso" data-r>aprovada pelo pet!</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <div class="streak-div wood-streak"></div>
 <section class="circ" id="circularidade">
   <div class="wrap">
     <span class="kick" data-r>Circularidade</span>
     <div class="head"><h2 class="title" data-r>Começa quando algo desgasta.</h2></div>
     <p class="sub" data-r>Estrutura, tecido e pernas têm ciclos separados. O que desgasta primeiro sai primeiro — sem levar o resto junto.</p>
+    <div class="flow" aria-hidden="true" data-r>
+      <svg viewBox="0 0 1200 170">
+        <path class="p3" d="M0,60 C160,20 320,100 500,60 S780,10 960,70 S1120,110 1200,50"/>
+        <path class="p2" d="M0,120 C180,80 300,160 480,115 S760,60 940,120 S1120,160 1200,110"/>
+        <path class="p1" d="M0,90 C150,40 260,140 420,95 S700,30 860,95 S1080,150 1200,80"/>
+        <g>
+          <circle cx="60" cy="76" r="5"/><text x="60" y="52" text-anchor="middle">coleta</text>
+          <circle cx="420" cy="95" r="5"/><text x="420" y="128" text-anchor="middle">produção</text>
+          <circle cx="760" cy="72" r="5"/><text x="760" y="48" text-anchor="middle">uso</text>
+          <circle cx="1140" cy="88" r="6" fill="#D65A2B"/><text x="1140" y="120" text-anchor="middle">retorno</text>
+        </g>
+      </svg>
+    </div>
     <div class="cmods">
       <div class="cmod" data-r><div><div class="from">Suja</div><div class="arrow">↓</div><div class="to">Lava</div></div><span class="tag">protótipo</span></div>
       <div class="cmod" data-r><div><div class="from">Lasca</div><div class="arrow">↓</div><div class="to">Troca</div></div><span class="tag">protótipo</span></div>
@@ -549,6 +630,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
 <div class="streak-div wood-streak"></div>
 <section class="order" id="encomendar">
   <div class="glow"></div>
+  <i class="blob cool" aria-hidden="true" style="width:300px;height:270px;right:4%;top:6%;opacity:.4"></i>
   <div class="wrap order-grid">
     <div class="order-copy">
       <span class="kick" data-r>Sob encomenda</span>
@@ -562,7 +644,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
         <div><span class="k">Prazo</span><span class="v">Sob consulta</span></div>
         <div><span class="k">Peça</span><span class="v">Única — feita pra durar</span></div>
       </div>
-      <a class="order-cta" href="mailto:luizambritto@gmail.com?subject=Quero%20encomendar%20uma%20Cadeira%20Beni&body=Oi!%20Quero%20encomendar%20uma%20Cadeira%20Beni.%20Tamanho%3A%20___%20%7C%20Tecido%3A%20___" data-r>Encomendar por e-mail →</a>
+      <a class="order-cta" href="mailto:luizambritto@gmail.com?subject=Quero%20encomendar%20uma%20Cadeira%20Beni&body=Oi!%20Quero%20encomendar%20uma%20Cadeira%20Beni.%20Tamanho%3A%20___%20%7C%20Tecido%3A%20___" data-r>Encomendar por e-mail →</a><span class="hand hand-order">peça única ✳</span>
       <span class="order-note mono" data-r>Protótipo v2 · produção artesanal · encomendas sob consulta</span>
     </div>
     <figure class="order-obj" data-r>
