@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Postal — Cadeira Beni</title>
+<style>
+  :root{--ink:#11100D;--paper:#EFE7D6;--wood-dark:#4B2A17;--wood-mid:#8A4A22;--clay:#D65A2B;--sun:#F26A1B;--bamboo:#C89B48;--muted:#8A7B60}
+  *{box-sizing:border-box;margin:0}
+  body{background:#888}
+  .card{width:105mm;height:148mm;position:relative;overflow:hidden;page-break-after:always;background:var(--paper)}
+  /* FRENTE */
+  .frente img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .frente .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,9,7,.15),transparent 30%,transparent 62%,rgba(10,9,7,.62))}
+  .frente .wm{position:absolute;left:9mm;bottom:8mm;font-family:'League Gothic',Impact,'Arial Narrow',sans-serif;
+    text-transform:uppercase;font-size:64px;line-height:.86;color:var(--paper);
+    text-shadow:1px 1px 0 #4B2A17,2px 2px 0 #4B2A17,3px 3px 0 #4B2A17,6px 7px 14px rgba(0,0,0,.4)}
+  .frente .wm em{font-style:normal;color:var(--sun)}
+  .frente .tag{position:absolute;right:7mm;top:7mm;font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:2.5px;
+    text-transform:uppercase;color:var(--paper);border:1px solid rgba(239,231,214,.8);padding:4px 8px;backdrop-filter:blur(2px)}
+  /* VERSO */
+  .verso{display:flex;flex-direction:column;padding:10mm 9mm 8mm}
+  .streak{height:4px;display:flex;margin:-10mm -9mm 8mm}
+  .streak i{flex:1}
+  .verso .kick{font-family:'IBM Plex Mono',monospace;font-size:8.5px;letter-spacing:3px;text-transform:uppercase;color:var(--wood-mid)}
+  .verso h2{font-family:'League Gothic',Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:34px;line-height:.92;margin:6px 0 8px}
+  .verso h2 em{font-style:normal;color:var(--clay)}
+  .verso .msg{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-size:15.5px;line-height:1.45;color:#3A362E;margin-bottom:auto}
+  .paws{display:flex;gap:7px;margin:6mm 0 5mm}
+  .paws svg{width:15px;opacity:.55}
+  .paws svg:nth-child(2n){transform:rotate(14deg)}
+  .paws svg:nth-child(3n){transform:rotate(-12deg);opacity:.35}
+  .verso .rule{border-top:1px dashed var(--wood-mid);padding-top:5mm;display:flex;justify-content:space-between;align-items:flex-end;gap:6mm}
+  .verso .mono{font-family:'IBM Plex Mono',monospace;font-size:7.6px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted);line-height:2}
+  .verso .mono b{color:var(--ink);font-weight:500}
+  .verso .hand{font-family:'Permanent Marker',cursive;color:var(--clay);font-size:13px;transform:rotate(-3deg)}
+  .selo{width:64px;height:64px;flex:0 0 auto}
+</style>
+</head>
+<body>
+
+<!-- FRENTE -->
+<div class="card frente">
+  <img src="../site/assets/ensaio-noite.jpg" alt="Cadeira Beni em sala escura com parede terracota">
+  <div class="scrim"></div>
+  <span class="tag">protótipo v2 · madeira de reuso</span>
+  <div class="wm">Cadeira<br><em>Beni</em></div>
+</div>
+
+<!-- VERSO -->
+<div class="card verso">
+  <div class="streak"><i style="background:#4B2A17"></i><i style="background:#8A4A22"></i><i style="background:#D65A2B"></i><i style="background:#F26A1B"></i><i style="background:#8A4A22"></i><i style="background:#4B2A17"></i></div>
+  <span class="kick">Da bancada para a sua sala</span>
+  <h2>Esta peça<br>já foi <em>outra coisa.</em></h2>
+  <p class="msg">A madeira desta Beni veio de um móvel que ia para o descarte. Foi triada, tratada, cortada e envernizada à mão — e agora começa a segunda vida dela na sua sala, com alguém de quatro patas por cima. Risco se lixa. Perna se troca. História, ela acumula.</p>
+  <div class="paws" aria-hidden="true">
+    <svg viewBox="0 0 50 44"><path fill="#8A4A22" d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg>
+    <svg viewBox="0 0 50 44"><path fill="#D65A2B" d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg>
+    <svg viewBox="0 0 50 44"><path fill="#C89B48" d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg>
+  </div>
+  <div class="rule">
+    <div class="mono">
+      <b>Cuide dela:</b> manual + lixa vêm na caixa<br>
+      suporte circular · luizambritto@gmail.com<br>
+      <b>não jogue a Beni fora — devolve.</b>
+    </div>
+    <svg class="selo" viewBox="0 0 120 120" aria-hidden="true">
+      <defs><path id="pc" d="M60,60 m-45,0 a45,45 0 1,1 90,0 a45,45 0 1,1 -90,0"/></defs>
+      <circle cx="60" cy="60" r="58" fill="#D65A2B"/>
+      <circle cx="60" cy="60" r="57" fill="none" stroke="#EFE7D6" stroke-width="1" stroke-dasharray="3 4"/>
+      <text font-family="'IBM Plex Mono',monospace" font-size="11" letter-spacing="2.4" fill="#EFE7D6" font-weight="500"><textPath href="#pc">CADEIRA BENI · MADEIRA DE REUSO · FEITA À MÃO ·</textPath></text>
+      <g transform="translate(43,42) scale(.52)" fill="#EFE7D6">
+        <rect x="6" y="4" width="8" height="52" rx="2"/><rect x="14" y="4" width="30" height="7" rx="3.5"/>
+        <rect x="14" y="14" width="40" height="7" rx="3.5"/><rect x="14" y="24" width="28" height="7" rx="3.5"/>
+        <rect x="14" y="30" width="28" height="7" rx="3.5"/><rect x="14" y="40" width="42" height="7" rx="3.5"/>
+        <rect x="14" y="50" width="32" height="7" rx="3.5"/>
+        <rect x="10" y="58" width="7" height="12" rx="2"/><rect x="42" y="58" width="7" height="12" rx="2"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
+</body>
+</html>
