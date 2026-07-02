@@ -404,6 +404,43 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
   text-transform:uppercase;color:var(--muted)}
 @media(max-width:760px){.dgrid{grid-template-columns:1fr}.dtile.big{grid-row:auto}.dtile.big img{min-height:300px}}
 
+/* ===== SUPORTE CIRCULAR ===== */
+.suporte{background:var(--paper-2);overflow:hidden}
+.suporte .head{max-width:62ch;margin-bottom:14px}
+.suporte .lead-line{font-family:var(--font-serif);font-style:italic;font-size:clamp(16px,1.9vw,24px);
+  color:var(--wood-mid);margin:14px 0 10px}
+.suporte .intro{margin-bottom:40px}
+.scards{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
+.scard{padding:24px 20px 30px;border-bottom:1px solid var(--ink);border-right:1px solid var(--line);
+  transition:background .3s;position:relative}
+.scard:last-child{border-right:none}
+.scard:hover{background:rgba(214,90,43,.06)}
+.scard .num{font-family:var(--font-mono);font-size:10px;letter-spacing:.09em;color:var(--muted);display:block;margin-bottom:10px}
+.scard .q{font-family:var(--font-display);text-transform:uppercase;font-size:clamp(19px,2vw,26px);line-height:.9;display:block;margin-bottom:10px;color:var(--ink)}
+.scard .q em{font-style:normal;color:var(--clay)}
+.scard p{font-size:13.5px;color:var(--muted);line-height:1.55;max-width:28ch}
+/* fluxo visual */
+.sflow{display:flex;align-items:center;flex-wrap:wrap;gap:8px 0;margin:44px 0 40px}
+.sflow b{font-family:var(--font-display);text-transform:uppercase;font-weight:400;
+  font-size:clamp(20px,3vw,42px);line-height:1;letter-spacing:.01em}
+.sflow b:nth-child(odd){color:var(--ink)}
+.sflow .arr{font-family:var(--font-mono);color:var(--clay);font-size:clamp(14px,2vw,24px);padding:0 clamp(8px,1.6vw,20px);
+  animation:arrpulse 2.2s ease-in-out infinite}
+.sflow .arr:nth-of-type(2){animation-delay:.3s}.sflow .arr:nth-of-type(4){animation-delay:.6s}
+.sflow .arr:nth-of-type(6){animation-delay:.9s}.sflow .arr:nth-of-type(8){animation-delay:1.2s}
+@keyframes arrpulse{0%,100%{opacity:.45;transform:translateX(0)}50%{opacity:1;transform:translateX(5px)}}
+.sflow .fim{color:var(--moss)}
+/* ctas */
+.sctas{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+.scta{display:inline-block;font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--ink);color:var(--paper);padding:13px 22px;border-radius:3px;transition:background .25s,transform .25s}
+.scta:hover{background:var(--clay);transform:translateY(-2px)}
+.scta-sec{font-family:var(--font-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink);border-bottom:1px solid var(--clay);padding-bottom:3px}
+.suporte .tags-row{position:relative;height:0}
+@media(max-width:900px){.scards{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.scards{grid-template-columns:1fr}.scard{border-right:none}}
+
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -425,6 +462,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
     <a href="#processo">Processo</a>
     <a href="#uso">Uso</a>
     <a href="#provas">Provas</a>
+    <a href="#suporte">Suporte</a>
     <a href="#leva">Próxima leva</a>
   </div>
   <span class="status-pill">protótipo v2</span>
@@ -679,6 +717,34 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
       <div class="cmod" data-r><div><div class="from">Marca</div><div class="arrow">↓</div><div class="to">Lixa</div></div><span class="tag">protótipo</span></div>
       <div class="cmod evo" data-r><div><div class="from">Acaba</div><div class="arrow">↓</div><div class="to">Separa</div></div><span class="tag">evolução</span></div>
       <div class="cmod evo" data-r><div><div class="from">Sobra</div><div class="arrow">↓</div><div class="to">Volta</div></div><span class="tag">evolução</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUPORTE CIRCULAR ===== -->
+<section class="suporte" id="suporte">
+  <span class="tagl" style="top:26px;right:5%;transform:rotate(3deg)">reparo antes do descarte</span>
+  <span class="tagl alt" style="top:64px;right:8%;transform:rotate(-2deg)">fim de uso ≠ fim de vida</span>
+  <div class="wrap">
+    <div class="head">
+      <span class="kick" data-r>Suporte circular</span>
+      <h2 class="title" data-r style="margin-top:12px">Não jogue<br>a Beni fora.</h2>
+      <p class="lead-line" data-r>Da casa. Para o cachorro. De volta para o ciclo.</p>
+      <p class="body intro" data-r>Madeira risca, marca, vive e muda. Se a sua peça chegar danificada, quebrar com o uso ou deixar de fazer sentido na sua casa, ela não precisa virar descarte comum — a gente orienta o reparo, a troca ou a devolução da madeira para reaproveitamento.</p>
+    </div>
+    <div class="scards">
+      <div class="scard" data-r><span class="num">01</span><span class="q">Chegou <em>danificada?</em></span><p>Envie fotos da peça, da embalagem e do pedido. A gente avalia e combina a troca ou a substituição da parte danificada.</p></div>
+      <div class="scard" data-r><span class="num">02</span><span class="q">Precisa de <em>reparo?</em></span><p>Riscos e marcas fazem parte da vida da madeira. Antes de descartar, fale com a gente: dá pra lixar, reforçar ou trocar só uma parte.</p></div>
+      <div class="scard" data-r><span class="num">03</span><span class="q">Não quer <em>mais?</em></span><p>Devolva a Beni pro ciclo. Ela pode ser restaurada, virar matéria-prima de novos produtos ou seguir para descarte correto.</p></div>
+      <div class="scard" data-r><span class="num">04</span><span class="q">O que acontece <em>depois?</em></span><p>Toda peça passa por triagem: reuso, reparo, reaproveitamento em protótipos — ou descarte responsável quando não der.</p></div>
+    </div>
+    <div class="sflow" data-r aria-label="Comprou, usou, reparou, devolveu, reaproveitou">
+      <b>Comprou</b><span class="arr">→</span><b>Usou</b><span class="arr">→</span><b>Reparou</b><span class="arr">→</span><b>Devolveu</b><span class="arr">→</span><b class="fim">Reaproveitou</b>
+    </div>
+    <div class="sctas" data-r>
+      <a class="scta" href="mailto:luizambritto@gmail.com?subject=Suporte%20—%20Cadeira%20Beni">Falar com o suporte</a>
+      <a class="scta-sec" href="mailto:luizambritto@gmail.com?subject=Troca%20ou%20devolu%C3%A7%C3%A3o%20—%20Cadeira%20Beni&body=Cidade%3A%20___%0AFotos%20da%20pe%C3%A7a%20em%20anexo.">Solicitar troca ou devolução</a>
+      <span class="hand" style="font-size:16px;transform:rotate(-3deg)">madeira volta pro ciclo!</span>
     </div>
   </div>
 </section>
