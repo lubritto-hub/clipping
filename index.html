@@ -175,7 +175,7 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
   .callcol.r .call{text-align:left}}
 
 /* ===== PROCESSO V1/V2 ===== */
-.proc{background:var(--ink);color:var(--paper);padding:0}
+.proc{background:var(--ink);color:var(--paper);padding:0;overflow:hidden}
 .proc .head{padding:clamp(60px,9vh,110px) 0 40px}
 .proc .head .body{margin-top:16px}
 .duo{display:grid;grid-template-columns:1fr 1fr}
@@ -458,6 +458,49 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 .reflexao .assin b{color:var(--ink);font-weight:500}
 @media(max-width:760px){.reflexao .rgrid{grid-template-columns:1fr}}
 
+/* ===== AURAS — glow editorial granulado (paleta madeira) ===== */
+.aura{position:absolute;pointer-events:none;z-index:0;border-radius:50%;
+  filter:blur(46px) saturate(1.12);opacity:.5;
+  background:
+    radial-gradient(closest-side at 32% 38%, rgba(242,106,27,.85), rgba(214,90,43,.5) 46%, transparent 72%),
+    radial-gradient(closest-side at 70% 64%, rgba(200,155,72,.65), transparent 70%),
+    radial-gradient(closest-side at 58% 26%, rgba(159,180,189,.45), transparent 66%);
+  animation:auradrift 16s ease-in-out infinite alternate}
+.aura.dark{opacity:.32;mix-blend-mode:screen}
+@keyframes auradrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(3%,-4%) scale(1.07)}}
+
+/* ===== DIÁRIO DE BANCADA (fotos reais do processo) ===== */
+.bancada{position:relative;padding-top:14px;padding-bottom:clamp(60px,9vh,100px)}
+.bancada .bkick{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px;position:relative;z-index:1}
+.bancada .bkick .body{color:var(--muted-d);font-size:14px;margin:0}
+.bgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;position:relative;z-index:1}
+.bfoto{position:relative;margin:0;border:1px solid rgba(239,231,214,.16);background:#000;overflow:hidden}
+.bfoto img{width:100%;aspect-ratio:4/5;object-fit:cover;display:block;transition:transform .5s}
+.bfoto:hover img{transform:scale(1.045)}
+.bfoto figcaption{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:26px 12px 10px;
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:var(--paper);
+  background:linear-gradient(transparent, rgba(10,9,7,.82))}
+.bfoto .hand{position:absolute;z-index:4;font-size:15px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.85)}
+@media(max-width:860px){.bgrid{grid-template-columns:1fr 1fr}}
+
+/* ===== MANUAL DE CUIDADO ===== */
+.manual{background:var(--paper);position:relative;overflow:hidden}
+.manual .head{position:relative;z-index:1}
+.cuida{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;position:relative;z-index:1;margin-top:34px}
+.cure{border:1px solid var(--ink);background:rgba(255,255,255,.34);padding:20px 18px 18px;display:flex;flex-direction:column;gap:9px;
+  transition:transform .25s, box-shadow .25s}
+.cure:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(17,16,13,.12)}
+.cure .dano{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--clay)}
+.cure .gesto{font-family:var(--font-display);font-size:clamp(28px,3.2vw,42px);line-height:.92;text-transform:uppercase;color:var(--ink)}
+.cure p{font-size:13.5px;line-height:1.5;color:#3A362E}
+.nunca{margin-top:26px;position:relative;z-index:1;border:1px dashed var(--wood-mid);padding:14px 18px;
+  font-family:var(--font-mono);font-size:12px;letter-spacing:.04em;color:#3A362E}
+.nunca .nk{color:var(--clay);text-transform:uppercase;letter-spacing:.1em;margin-right:8px}
+.nunca a{color:var(--wood-mid);text-decoration:underline}
+.manual .hand-lixa{position:absolute;right:6%;top:96px;font-size:18px;transform:rotate(4deg);z-index:1}
+@media(max-width:900px){.cuida{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.cuida{grid-template-columns:1fr}.manual .hand-lixa{display:none}}
+
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -480,6 +523,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
     <a href="#uso">Uso</a>
     <a href="#provas">Provas</a>
     <a href="#suporte">Suporte</a>
+    <a href="#manual">Manual</a>
     <a href="#leva">Próxima leva</a>
   </div>
   <span class="status-pill">protótipo v2</span>
@@ -506,6 +550,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
         <p class="hero-specs" data-r><em>madeira reaproveitada</em><em>bambu substituível</em><em>tecidos — em breve</em></p>
       </div>
       <figure class="hero-obj" data-parallax>
+        <i class="aura" aria-hidden="true" style="width:130%;height:110%;left:-15%;top:-8%;opacity:.42;z-index:-1"></i>
         <img src="assets/product-hero.png" alt="Cadeira Beni — plataforma em madeira reaproveitada sobre pernas de bambu" />
         <span class="hand hand-hero">feita à mão, uma a uma</span>
         <svg class="seal" style="right:2%;top:4%" viewBox="0 0 120 120" aria-hidden="true">
@@ -659,6 +704,33 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
       </div>
     </div>
   </div>
+  <div class="wrap bancada">
+    <i class="aura dark" aria-hidden="true" style="width:620px;height:480px;right:-140px;top:-60px"></i>
+    <div class="bkick">
+      <span class="kick" data-r style="color:var(--bamboo)">Diário de bancada</span>
+      <p class="body" data-r>Sem render: serragem, cola e erro ao vivo, no laboratório.</p>
+    </div>
+    <div class="bgrid">
+      <figure class="bfoto" data-r>
+        <img src="assets/proc-corte.jpg" alt="Blocos de madeira de reuso cortados e organizados na bancada do laboratório" />
+        <figcaption>corte e triagem dos blocos</figcaption>
+        <span class="hand" style="left:12px;top:10px;transform:rotate(-3deg)">cada bloco era um móvel</span>
+      </figure>
+      <figure class="bfoto" data-r>
+        <img src="assets/proc-pes.jpg" alt="Pés laminados com cavilha central, marcados com X para colagem" />
+        <figcaption>pés laminados · cavilha marcada</figcaption>
+      </figure>
+      <figure class="bfoto" data-r>
+        <img src="assets/proc-v1-bancada.jpg" alt="Plataforma da V1 montada na bancada com blocos de marchetaria" />
+        <figcaption>v1 nascendo na bancada</figcaption>
+        <span class="hand" style="right:10px;top:8px;transform:rotate(2deg)">ainda sem lixar!</span>
+      </figure>
+      <figure class="bfoto" data-r>
+        <img src="assets/proc-virada.jpg" alt="Estrutura de cabeça para baixo durante o ajuste dos encaixes" />
+        <figcaption>de cabeça pra baixo · encaixes</figcaption>
+      </figure>
+    </div>
+  </div>
 </section>
 
 <!-- ===== TESTE NA CASA ===== -->
@@ -775,6 +847,29 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
   </div>
 </section>
 
+<!-- ===== MANUAL DE CUIDADO ===== -->
+<section class="manual" id="manual">
+  <i class="aura" aria-hidden="true" style="width:680px;height:540px;left:-170px;top:-150px"></i>
+  <i class="aura" aria-hidden="true" style="width:540px;height:470px;right:-160px;bottom:-180px;opacity:.32"></i>
+  <span class="hand hand-lixa">a lixa vem na caixa!</span>
+  <div class="wrap">
+    <div class="head">
+      <span class="kick" data-r>Manual de cuidado</span>
+      <h2 class="title" data-r style="margin-top:12px">Toda Beni chega<br>com uma lixa.</h2>
+      <p class="body" data-r>Porque quase todo dano em madeira maciça se resolve com trinta segundos de lixa fina, no sentido do veio. O manual impresso acompanha a peça — e o que a lixa não resolve, o <a href="#suporte" style="border-bottom:1px solid var(--clay)">suporte circular</a> resolve.</p>
+    </div>
+    <div class="cuida">
+      <div class="cure" data-r><span class="dano">Risco de unha</span><span class="gesto">Lixa.</span><p>Lixa fina — a que veio na caixa — sempre no sentido do veio. Pano seco depois. Se o risco passou do verniz, uma demão de verniz à base d'água fecha.</p></div>
+      <div class="cure" data-r><span class="dano">Xixi · água</span><span class="gesto">Seca.</span><p>Pano seco na hora e sabão neutro se precisar. O verniz segura o líquido — só não deixe empoçar nem encharque a madeira.</p></div>
+      <div class="cure" data-r><span class="dano">Mordida na quina</span><span class="gesto">Arredonda.</span><p>Lixe a quina até suavizar. A marca que fica não é defeito: é pátina — a peça contando a história de quem mora nela.</p></div>
+      <div class="cure" data-r><span class="dano">Verniz opaco</span><span class="gesto">Renova.</span><p>Com os anos o brilho cansa. Lixa leve na peça inteira e uma demão de verniz incolor à base d'água. Vinte minutos, e parece outra.</p></div>
+      <div class="cure" data-r><span class="dano">Perna rachada</span><span class="gesto">Troca.</span><p>Perna de bambu não se conserta — se substitui. O encaixe é seco de propósito: estaca sai, estaca entra. Peça avulsa por e-mail.</p></div>
+      <div class="cure" data-r><span class="dano">Estrutura soltou</span><span class="gesto">Chama.</span><p>Tábua rachou, encaixe cedeu? Manda foto pro suporte. A gente orienta o reparo, troca a parte — ou a peça volta pro ciclo.</p></div>
+    </div>
+    <div class="nunca" data-r><span class="nk">Nunca:</span>encharcar a madeira · usar cola na estaca (o encaixe é seco de propósito) · jogar fora — <a href="#suporte">devolve</a>.</div>
+  </div>
+</section>
+
 <div class="ripas-div" aria-hidden="true"></div>
 
 <!-- ===== CINCO PROVAS ===== -->
@@ -841,7 +936,8 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 <div class="ripas-div" aria-hidden="true"></div>
 
 <!-- ===== REFLEXÃO DA AUTORA ===== -->
-<section class="reflexao" id="reflexao">
+<section class="reflexao" id="reflexao" style="overflow:hidden">
+  <i class="aura" aria-hidden="true" style="width:560px;height:480px;left:-160px;bottom:-180px;opacity:.3"></i>
   <div class="wrap rgrid">
     <div>
       <span class="kick" data-r>Reflexão · da oficina pra cá</span>
