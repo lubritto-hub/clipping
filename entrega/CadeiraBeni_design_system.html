@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design System — Cadeira Beni</title>
+<style>
+  :root{--ink:#11100D;--paper:#EFE7D6;--paper2:#E6DAC2;--wood-dark:#4B2A17;--wood-mid:#8A4A22;--clay:#D65A2B;--sun:#F26A1B;--bamboo:#C89B48;--moss:#243D2C;--muted:#6B5F47}
+  *{box-sizing:border-box;margin:0}
+  body{background:var(--paper);color:var(--ink);font-family:'IBM Plex Sans',Arial,sans-serif;font-size:14px;line-height:1.55}
+  .page{max-width:900px;margin:0 auto;padding:44px 36px 70px}
+  .streak{height:5px;display:flex;margin:-44px -36px 40px}
+  .streak i{flex:1}
+  h1{font-family:'League Gothic',Impact,'Arial Narrow',sans-serif;font-weight:400;text-transform:uppercase;font-size:64px;line-height:.88;
+     text-shadow:1px 1px 0 var(--clay),2px 2px 0 var(--clay),3px 3px 0 var(--clay);margin-bottom:8px}
+  h2{font-family:'League Gothic',Impact,sans-serif;font-weight:400;text-transform:uppercase;font-size:32px;margin:46px 0 12px;
+     text-shadow:1px 1px 0 var(--clay),2px 2px 0 var(--clay)}
+  .kick{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:3px;text-transform:uppercase;color:var(--wood-mid)}
+  p.lead{color:#3A362E;max-width:70ch;margin:6px 0 4px}
+  table{width:100%;border-collapse:collapse;margin:14px 0 6px;font-size:13px;background:rgba(255,255,255,.35);border:1.5px solid var(--ink);border-radius:12px;overflow:hidden}
+  th{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;text-align:left;
+     background:var(--ink);color:var(--paper);padding:9px 12px}
+  td{padding:9px 12px;border-top:1px solid rgba(17,16,13,.15);vertical-align:top}
+  code,pre{font-family:'IBM Plex Mono',monospace;font-size:11.5px}
+  pre{background:var(--ink);color:var(--paper);padding:16px 18px;border-radius:12px;overflow-x:auto;line-height:1.5;margin:12px 0}
+  .sw{display:inline-block;width:15px;height:15px;border-radius:4px;border:1px solid rgba(0,0,0,.25);vertical-align:-3px;margin-right:7px}
+  .pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;
+     border:1.5px solid var(--ink);border-radius:999px;padding:4px 10px;background:var(--paper);box-shadow:2px 3px 0 rgba(17,16,13,.3)}
+  .btnrow{display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin:14px 0}
+  .btn-p{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:13px 24px;border-radius:999px;
+     border:1.5px solid var(--ink);background:var(--clay);color:var(--paper);box-shadow:4px 4px 0 rgba(17,16,13,.85);display:inline-block}
+  .btn-s{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--ink);
+     border-bottom:2px solid var(--clay);padding-bottom:3px;display:inline-block}
+  .darkbox{background:var(--ink);border-radius:12px;padding:14px 18px;display:inline-block}
+  .btn-g{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;padding:12px 22px;border-radius:999px;
+     border:1.5px solid var(--paper);color:var(--paper);display:inline-block}
+  .ok{color:var(--moss);font-weight:600}
+  ul{margin:8px 0 8px 20px}
+  li{margin:5px 0}
+  .foot{margin-top:50px;font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="streak"><i style="background:#4B2A17"></i><i style="background:#8A4A22"></i><i style="background:#D65A2B"></i><i style="background:#F26A1B"></i><i style="background:#8A4A22"></i><i style="background:#4B2A17"></i></div>
+  <span class="kick">Cadeira Beni · sistema de design v6</span>
+  <h1>Design System</h1>
+  <p class="lead"><b>Direção única:</b> pet furniture club + marcenaria circular + sticker editorial. <b>Estilo visual:</b> vibrante-artesanal em paleta de madeira — nunca corporativo, dark-mode-SaaS ou minimalismo de lançamento. Este documento é a fonte de verdade do site, dos slides e dos impressos (manual, postal).</p>
+
+  <h2>1 · Cores</h2>
+  <table>
+    <tr><th>Token</th><th>HEX</th><th>Papel</th><th>Uso</th></tr>
+    <tr><td><span class="sw" style="background:#11100D"></span><code>--ink</code></td><td>#11100D</td><td>Principal</td><td>Texto, bordas, seções escuras</td></tr>
+    <tr><td><span class="sw" style="background:#EFE7D6"></span><code>--paper</code></td><td>#EFE7D6</td><td>Principal</td><td>Fundo base, texto sobre escuro</td></tr>
+    <tr><td><span class="sw" style="background:#D65A2B"></span><code>--clay</code></td><td>#D65A2B</td><td>Principal (marca)</td><td>Extrusão 3D dos títulos, botão primário, destaques grandes (AA: só texto ≥24px sobre paper)</td></tr>
+    <tr><td><span class="sw" style="background:#E6DAC2"></span><code>--paper-2</code></td><td>#E6DAC2</td><td>Secundária</td><td>Fundo alternado de seções</td></tr>
+    <tr><td><span class="sw" style="background:#4B2A17"></span><code>--wood-dark</code></td><td>#4B2A17</td><td>Secundária</td><td>Extrusão sobre escuro, madeira profunda</td></tr>
+    <tr><td><span class="sw" style="background:#8A4A22"></span><code>--wood-mid</code></td><td>#8A4A22</td><td>Secundária</td><td>Kickers e rótulos pequenos (AA 5,5:1 sobre paper)</td></tr>
+    <tr><td><span class="sw" style="background:#F26A1B"></span><code>--sun</code></td><td>#F26A1B</td><td>Secundária</td><td>Hover do primário, brilhos da aura</td></tr>
+    <tr><td><span class="sw" style="background:#C89B48"></span><code>--bamboo</code></td><td>#C89B48</td><td>Secundária</td><td>Acentos sobre escuro, status "em breve"</td></tr>
+    <tr><td><span class="sw" style="background:#243D2C"></span><code>--moss</code></td><td>#243D2C</td><td>Secundária</td><td>Status "prototipado", fechamento do ciclo</td></tr>
+    <tr><td><span class="sw" style="background:#6B5F47"></span><code>--muted</code></td><td>#6B5F47</td><td>Apoio</td><td>Corpo de texto sobre claro (AA 5,2:1 — era #8A7B60, reprovava)</td></tr>
+  </table>
+  <p class="lead"><b>Regra:</b> paleta 100% madeira. Nenhum azul/lavanda (leitura de SaaS). Contraste mínimo AA: texto pequeno usa ink, muted ou wood-mid; clay fica para display e componentes.</p>
+
+  <h2>2 · Tipografia (Google Fonts, embutidas em woff2)</h2>
+  <table>
+    <tr><th>Família</th><th>Papel</th><th>Regra de uso</th><th>Escala</th></tr>
+    <tr><td><b>League Gothic</b></td><td>Títulos/display</td><td>Sempre CAIXA ALTA, line-height .84, extrusão 3D clay (1–4px + sombra difusa)</td><td>H1 clamp(54–168px) · H2 clamp(38–88px) · card clamp(20–28px)</td></tr>
+    <tr><td><b>Instrument Serif</b> <i>itálico</i></td><td>Voz editorial</td><td>Frases de efeito, taglines, observações — nunca UI</td><td>clamp(16–52px)</td></tr>
+    <tr><td><b>IBM Plex Sans</b> 400/500/600</td><td>Corpo</td><td>Parágrafos e descrições, máx. 54ch, line-height 1.65</td><td>clamp(14.5–17px)</td></tr>
+    <tr><td><b>IBM Plex Mono</b> 400/500</td><td>Microtexto</td><td>Kickers, legendas, etiquetas, botões — uppercase + tracking .07–.18em</td><td>9.5–12px</td></tr>
+    <tr><td><b>Permanent Marker</b></td><td>Notas à mão</td><td>Só anotações-sticker sobre fotos (com text-shadow) ou no papel (clay)</td><td>13–20px</td></tr>
+  </table>
+
+  <h2>3 · Espaçamento &amp; bordas</h2>
+  <table>
+    <tr><th>Token</th><th>Valor</th><th>Uso</th></tr>
+    <tr><td><code>--sec-pad</code></td><td>clamp(80px, 12vh, 150px)</td><td>Respiro vertical de toda seção</td></tr>
+    <tr><td><code>--wrap</code></td><td>max-width 1280px · pad lateral clamp(18–54px)</td><td>Grade de conteúdo</td></tr>
+    <tr><td><code>gap</code></td><td>20px (cards) · 14–16px (fotos)</td><td>Grades internas</td></tr>
+    <tr><td><code>--r-card</code></td><td>16px</td><td>Cards-adesivo e fotos editoriais</td></tr>
+    <tr><td><code>--r-photo</code></td><td>8px</td><td>Fotos documentais</td></tr>
+    <tr><td><code>pill</code></td><td>999px</td><td>Botões, stickers, status</td></tr>
+    <tr><td><code>--bd</code></td><td>1.5px solid ink</td><td>Toda borda de componente</td></tr>
+    <tr><td><code>--shadow-card</code></td><td>5px 5px 0 rgba(17,16,13,.85)</td><td>Sombra dura (adesivo). Hover: translate(-3px,-3px) + 8px 8px 0</td></tr>
+    <tr><td><code>--shadow-stk</code></td><td>2px 3px 0 rgba(17,16,13,.3)</td><td>Stickers e pílulas</td></tr>
+  </table>
+
+  <h2>4 · Botões</h2>
+  <div class="btnrow">
+    <span class="btn-p">Primário — Entrar na leva</span>
+    <span class="btn-s">Secundário — Solicitar troca</span>
+    <span class="darkbox"><span class="btn-g">Fantasma — Ver o processo</span></span>
+  </div>
+  <table>
+    <tr><th>Estilo</th><th>Anatomia</th><th>Quando usar</th></tr>
+    <tr><td><b>Primário</b></td><td>Pílula clay, borda 1.5px ink, texto paper mono, sombra dura 4px; hover: sun + levanta (-2px) + sombra 6px</td><td>1 por seção, ação principal (encomenda, suporte)</td></tr>
+    <tr><td><b>Secundário</b></td><td>Texto mono ink com sublinhado 2px clay</td><td>Ação alternativa ao lado do primário</td></tr>
+    <tr><td><b>Fantasma</b></td><td>Pílula transparente, borda 1.5px currentColor; hover: véu 12% + levanta</td><td>Sobre fotos e seções escuras (hero)</td></tr>
+  </table>
+
+  <h2>5 · Layout da home em blocos (mapa Shadcn/Tailwind)</h2>
+  <table>
+    <tr><th>Bloco</th><th>Seção do site</th><th>Componente shadcn/ui equivalente</th></tr>
+    <tr><td>Navbar sticky</td><td>nav + sticker de status</td><td><code>NavigationMenu</code> + <code>Badge</code></td></tr>
+    <tr><td><b>Hero com CTA claro</b></td><td>Cadeira BENI + tagline + specs + botões</td><td><code>Button</code> (default + ghost), imagem com <code>AspectRatio</code></td></tr>
+    <tr><td><b>Proposta de valor</b></td><td>"O problema sistêmico" + "A peça"</td><td><code>Card</code> ×4 em <code>grid md:grid-cols-4</code></td></tr>
+    <tr><td><b>Benefícios</b></td><td>Detalhes, prancha técnica, manual</td><td><code>Card</code> + <code>Badge</code> de status + <code>Separator</code></td></tr>
+    <tr><td><b>Depoimentos</b></td><td>Diário da Beni (o crítico é o cachorro) + teste de campo</td><td><code>Carousel</code> de <code>Card</code> com foto + citação serif</td></tr>
+    <tr><td>Circularidade</td><td>Economia circular + suporte</td><td><code>Card</code> ×4 numerados + fluxo</td></tr>
+    <tr><td>Conversão</td><td>Próxima leva</td><td><code>Card</code> escuro + <code>Button</code> primário</td></tr>
+    <tr><td><b>Rodapé</b></td><td>marca + contato + assinatura acadêmica</td><td><code>footer</code> + <code>Separator</code></td></tr>
+  </table>
+
+  <pre>// tailwind.config — tokens do sistema
+theme: { extend: {
+  colors: { ink:'#11100D', paper:'#EFE7D6', paper2:'#E6DAC2',
+    wood:{dark:'#4B2A17', mid:'#8A4A22'}, clay:'#D65A2B',
+    sun:'#F26A1B', bamboo:'#C89B48', moss:'#243D2C', muted:'#6B5F47' },
+  fontFamily: { display:['League Gothic'], serif:['Instrument Serif'],
+    sans:['IBM Plex Sans'], mono:['IBM Plex Mono'], hand:['Permanent Marker'] },
+  borderRadius: { card:'16px', photo:'8px' },
+  boxShadow: { card:'5px 5px 0 rgba(17,16,13,.85)', stk:'2px 3px 0 rgba(17,16,13,.3)' },
+}}
+
+// estrutura da home (React + Tailwind, 100% responsiva)
+&lt;main className="bg-paper text-ink"&gt;
+  &lt;Nav className="sticky top-0 border-b-[1.5px] border-ink" /&gt;
+  &lt;Hero&gt;                       {/* grid md:grid-cols-2, min-h-svh */}
+    &lt;h1 className="font-display uppercase text-[clamp(54px,10vw,168px)]" /&gt;
+    &lt;Button className="rounded-full bg-clay shadow-card" /&gt;      {/* CTA */}
+    &lt;Button variant="ghost" className="rounded-full border-paper" /&gt;
+  &lt;/Hero&gt;
+  &lt;Proposta className="grid gap-5 md:grid-cols-4" /&gt;  {/* Cards-adesivo */}
+  &lt;Beneficios /&gt; &lt;Depoimentos /&gt; &lt;Circularidade /&gt;
+  &lt;Leva className="bg-ink text-paper" /&gt;
+  &lt;Footer /&gt;
+&lt;/main&gt;</pre>
+
+  <h2>6 · UX — aplicado agora <span class="pill">nesta versão</span></h2>
+  <ul>
+    <li class="ok">✓ Contraste AA: <code>--muted</code> escurecido (5,2:1), rótulos pequenos de clay → wood-mid; clay reservado a texto grande.</li>
+    <li class="ok">✓ Respiro: seções de 130→150px máx., cards com padding 26px e gap 20px, títulos com margens padronizadas.</li>
+    <li class="ok">✓ Hierarquia: kicker mono → título display 3D → serif editorial → corpo 54ch/1.65 — a mesma cadência em todas as seções.</li>
+    <li class="ok">✓ Hero com CTA claro: "Entrar na próxima leva" (primário) + "Ver o processo" (fantasma).</li>
+    <li class="ok">✓ Animações: hover consistente (levanta + sombra cresce) e fade-in em scroll 100% CSS (<code>animation-timeline: view()</code>), com GSAP como camada extra quando há JS e <code>prefers-reduced-motion</code> respeitado.</li>
+    <li class="ok">✓ Fontes embutidas: identidade não depende de rede.</li>
+  </ul>
+
+  <h2>7 · UX — próximas recomendações</h2>
+  <ul>
+    <li>Menu hambúrguer no mobile (hoje os links somem &lt;900px; âncoras seguem via scroll).</li>
+    <li><code>loading="lazy"</code> nas fotos abaixo da dobra e <code>srcset</code> para 2 tamanhos.</li>
+    <li>Link "pular para o conteúdo" e <code>:focus-visible</code> estilizado nos botões (teclado).</li>
+    <li>Depoimentos humanos: 2–3 falas reais de tutores das entrevistas ao lado do Diário da Beni.</li>
+    <li>FAQ curto na seção de encomenda (prazo, medidas, reposição) usando <code>Accordion</code>.</li>
+  </ul>
+
+  <h2>8 · Amarração com o brief da documentação</h2>
+  <table>
+    <tr><th>Exigência</th><th>Onde o sistema responde</th></tr>
+    <tr><td>Contar a história do projeto</td><td>Fluxo da home: problema → peça → detalhes → processo → teste → ciclo</td></tr>
+    <tr><td>Erros e acertos</td><td>Processo produtivo V1/V2 + diário de bancada + antes/depois</td></tr>
+    <tr><td>Imagens e/ou vídeos</td><td>20 fotos reais/ensaios rotulados, 2 tratamentos padronizados</td></tr>
+    <tr><td>Comentário individual</td><td>Seção Reflexão (voz da autora, serif editorial)</td></tr>
+  </table>
+
+  <p class="foot">Luiza Britto · PAS — Programa Avançado de Sustentabilidade · Insper · 2026 · design system v6</p>
+</div>
+</body>
+</html>
