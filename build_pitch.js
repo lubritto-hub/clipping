@@ -201,24 +201,28 @@ function chip(s,txt,x,y,color,w=1.35){ s.addText(txt.toUpperCase(),{x,y,w,h:.26,
 
 /* ---------- S10 · PROCESSO PRODUTIVO ---------- */
 (()=>{ const s=P.addSlide(); bg(s,C.paper2); streak(s);
-  kick(s,'3 · processo produtivo — erros e acertos',.45,.34,C.woodMid);
+  kick(s,'3 · processo produtivo — testes de bancada, erros e acertos',.45,.34,C.woodMid);
   title(s,'O erro também é material.',.42,.66,36,C.ink,9);
-  s.addImage({path:A+'v1-chair-bw.jpg',x:.45,y:1.7,w:2.3,h:2.3*1280/960*0.72,sizing:{type:'cover',w:2.3,h:2.2}});
-  s.addText('NÃO FECHOU',{x:.55,y:1.86,w:1.6,h:.34,fontFace:F.mono,fontSize:11,charSpacing:2,color:C.clay,rotate:-6,line:{color:C.clay,width:1.2},align:'center'});
-  s.addText('V1 · PÉS E BRAÇOS EM MARCHETARIA',{x:.45,y:4.0,w:2.5,h:.24,fontFace:F.mono,fontSize:8.5,charSpacing:1,color:C.muted});
+  // V1 (esquerda): foto + lições
+  s.addImage({path:A+'v1-chair-bw.jpg',x:.45,y:1.72,w:2.0,h:2.35,sizing:{type:'cover',w:2.0,h:2.35}});
+  s.addText('NÃO FECHOU',{x:.52,y:1.86,w:1.5,h:.32,fontFace:F.mono,fontSize:10.5,charSpacing:2,color:C.clay,rotate:-6,line:{color:C.clay,width:1.2},align:'center'});
+  s.addText('V1 · PÉS E BRAÇOS EM MARCHETARIA',{x:.45,y:4.12,w:2.2,h:.36,fontFace:F.mono,fontSize:8,charSpacing:1,color:C.muted});
   s.addText([
-    {text:'Densidade variável: cada pé saía diferente.',options:{bullet:{code:'2022'},breakLine:true}},
-    {text:'Exigia precisão que a madeira de reuso não dá.',options:{bullet:{code:'2022'},breakLine:true}},
-    {text:'Estética colada: quebrou uma parte, perdeu a peça. E ficou pesada.',options:{bullet:{code:'2022'}}}],
-    {x:2.95,y:1.78,w:3.1,h:2.4,fontFace:F.sans,fontSize:11,color:C.ink70,lineSpacingMultiple:1.25,valign:'top'});
-  s.addImage({path:A+'dog-chair.jpg',x:6.35,y:1.7,w:2.2,h:2.2,sizing:{type:'cover',w:2.2,h:2.2}});
-  s.addText('MAIS REPARÁVEL',{x:6.45,y:1.86,w:1.9,h:.34,fontFace:F.mono,fontSize:11,charSpacing:2,color:C.moss,rotate:-6,line:{color:C.moss,width:1.2},align:'center'});
-  s.addText('V2 · ESTACAS DE BAMBU',{x:6.35,y:4.0,w:2.5,h:.24,fontFace:F.mono,fontSize:8.5,charSpacing:1,color:C.muted});
+    {text:'Densidade variável: cada pé saía diferente na bancada.',options:{bullet:{code:'2022'},breakLine:true}},
+    {text:'Marchetaria exigia precisão que a madeira de reuso não dá.',options:{bullet:{code:'2022'},breakLine:true}},
+    {text:'Estética colada: quebrou uma parte, perdeu a peça.',options:{bullet:{code:'2022'},breakLine:true}},
+    {text:'E ficou pesada de mover e limpar.',options:{bullet:{code:'2022'}}}],
+    {x:2.62,y:1.76,w:2.35,h:2.6,fontFace:F.sans,fontSize:10.5,color:C.ink70,lineSpacingMultiple:1.22,valign:'top'});
+  // V2 (direita): foto + mudanças
+  s.addImage({path:A+'dog-chair.jpg',x:5.15,y:1.72,w:2.0,h:2.35,sizing:{type:'cover',w:2.0,h:2.35}});
+  s.addText('MAIS REPARÁVEL',{x:5.2,y:1.86,w:1.75,h:.32,fontFace:F.mono,fontSize:10,charSpacing:2,color:C.moss,rotate:-6,line:{color:C.moss,width:1.2},align:'center'});
+  s.addText('V2 · ESTACAS DE BAMBU',{x:5.15,y:4.12,w:2.2,h:.36,fontFace:F.mono,fontSize:8,charSpacing:1,color:C.muted});
   s.addText([
     {text:'Estrutura e pernas viraram partes independentes.',options:{bullet:{code:'2022'},breakLine:true}},
     {text:'Estaca padronizada: sai uma, entra outra.',options:{bullet:{code:'2022'},breakLine:true}},
-    {text:'Menos madeira na base — mais leve de mover e limpar.',options:{bullet:{code:'2022'}}}],
-    {x:8.7,y:1.78,w:1.25,h:2.6,fontFace:F.sans,fontSize:9.5,color:C.ink70,lineSpacingMultiple:1.2,valign:'top'});
+    {text:'Menos madeira na base — mais leve.',options:{bullet:{code:'2022'},breakLine:true}},
+    {text:'Verniz + vinil no acabamento: resiste a unha, xixi e mordida.',options:{bullet:{code:'2022'}}}],
+    {x:7.32,y:1.76,w:2.35,h:2.6,fontFace:F.sans,fontSize:10.5,color:C.ink70,lineSpacingMultiple:1.22,valign:'top'});
   s.addShape('rect',{x:.45,y:4.55,w:9.1,h:.56,fill:{color:C.ink},line:{type:'none'}});
   s.addText('TENSÕES:   USUÁRIO (conforto + altura + higiene)   ×   MATERIAL (variação do reuso)   ×   LABORATÓRIO (tempo e ferramentas)',
     {x:.65,y:4.58,w:8.8,h:.5,fontFace:F.mono,fontSize:9,charSpacing:1,color:C.paper,valign:'middle'});
