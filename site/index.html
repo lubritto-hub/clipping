@@ -261,6 +261,23 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
 .mat .r .v{padding:20px 22px;font-size:clamp(15px,1.4vw,18px);border-left:1px solid var(--line)}
 @media(max-width:620px){.mat .r{grid-template-columns:1fr}.mat .r .v{border-left:none;border-top:1px solid var(--line)}}
 
+/* ================= EM USO (teste de campo — Beni) ================= */
+.uso{background:var(--paper-2)}
+.uso .head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:40px}
+.uso .head h2{max-width:14ch}
+.uso-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:18px;align-items:stretch}
+.uso-col{display:flex;flex-direction:column;gap:18px;min-width:0}
+.uso .frame.wide img{aspect-ratio:16/9;height:100%;object-fit:cover}
+.uso .frame.tall{flex:1}
+.uso .frame.tall img{aspect-ratio:4/3;height:100%;object-fit:cover;object-position:50% 38%}
+.uso-quote{font-family:var(--font-serif);font-style:italic;font-size:clamp(18px,2vw,26px);line-height:1.15;max-width:24ch}
+.uso-report{border:1px solid var(--line);background:var(--paper)}
+.uso-report .rr{display:grid;grid-template-columns:minmax(110px,150px) 1fr;border-bottom:1px solid var(--line)}
+.uso-report .rr:last-child{border-bottom:none}
+.uso-report .rk{font-family:var(--font-mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--wood-mid);padding:11px 12px;border-right:1px solid var(--line)}
+.uso-report .rv{font-family:var(--font-mono);font-size:11px;letter-spacing:.03em;padding:11px 12px}
+@media(max-width:820px){.uso-grid{grid-template-columns:1fr}.uso .frame.tall img{aspect-ratio:16/10}}
+
 /* ================= ENCOMENDE A SUA (venda) ================= */
 .order{background:var(--ink);color:var(--paper);overflow:hidden;position:relative}
 /* gradiente iridescente/quente (ref. Eye of Film + SUMMA) */
@@ -362,6 +379,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
     <a href="#material">Material</a>
     <a href="#prancha">Prancha</a>
     <a href="#digital">Protótipo</a>
+    <a href="#uso">Em uso</a>
     <a href="#encomendar">Encomendar</a>
   </div>
   <span class="status-pill">Protótipo v2</span>
@@ -541,6 +559,35 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
       <div class="r" data-r><div class="k">Produção</div><div class="v">Madeira reaproveitada + bambu; marcenaria simples e reproduzível.</div></div>
       <div class="r" data-r><div class="k">Ecossistema</div><div class="v">Usa material urbano que iria pro descarte; reduz resíduo volumoso.</div></div>
       <div class="r" data-r><div class="k">Negócio</div><div class="v">Peça durável que também vende reposição: pernas, tecido, reparo.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EM USO (teste de campo) ===== -->
+<section class="uso" id="uso">
+  <div class="wrap">
+    <div class="head">
+      <div><span class="kick" data-r>Teste de uso · usuário nº 01</span><h2 class="title" data-r style="margin-top:12px">Beni testou.<br>Beni dormiu.</h2></div>
+      <p class="body" data-r>A cadeira leva o nome do primeiro usuário — e ele não sabe o que é design circular. Sabe onde dorme bem. O protótipo v2 está em uso diário na casa dele.</p>
+    </div>
+    <div class="uso-grid">
+      <div class="frame wide" data-r>
+        <img src="assets/uso-home.jpg" alt="Beni dormindo na Cadeira Beni, na sala de casa" />
+        <span class="note tl">registro 01 · em casa</span><span class="note br">uso diário · protótipo v2</span>
+      </div>
+      <div class="uso-col">
+        <div class="frame tall" data-r>
+          <img src="assets/hero-dog.jpg" alt="Beni sobre a plataforma de madeira reaproveitada, na varanda" />
+          <span class="note tl">registro 02 · varanda</span>
+        </div>
+        <p class="uso-quote" data-r>“O teste de conforto durou trinta segundos. Depois ele dormiu.”</p>
+        <div class="uso-report" data-r>
+          <div class="rr"><span class="rk">Usuário</span><span class="rv">Beni · poodle toy</span></div>
+          <div class="rr"><span class="rk">Protocolo</span><span class="rv">Subir, deitar, ficar</span></div>
+          <div class="rr"><span class="rk">Resultado</span><span class="rv">Sono profundo</span></div>
+          <div class="rr"><span class="rk">Ressalvas</span><span class="rv">Nenhuma até agora</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
