@@ -176,7 +176,7 @@ function slide1() {
   });
 
   // Footer
-  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026', colors.rose_gold);
+  addFooter(slide, 'Luiza Britto · Programa Avançado de Sustentabilidade — Insper · 2026', colors.rose_gold);
 
   // Hero photo - LARGE
   if (fs.existsSync('fotos/cachorro.jpg')) {
@@ -1289,7 +1289,7 @@ function slide10() {
   });
 
   // Footer
-  addFooter(slide, 'Luiza Britto · Projeto Aplicado em Sustentabilidade — Insper · 2026', colors.rose_gold);
+  addFooter(slide, 'Luiza Britto · Programa Avançado de Sustentabilidade — Insper · 2026', colors.rose_gold);
 
   // Right: Photo with gold frame
   if (fs.existsSync('fotos/produto.jpg')) {

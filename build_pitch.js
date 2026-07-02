@@ -24,7 +24,7 @@ function slats(s,x,y,hIn,legs=C.woodDark){ const u=hIn/72;
   put(10,58,7,12,legs); put(42,58,7,12,legs); }
 function kick(s,t,x,y,color){ s.addText(t.toUpperCase(),{x,y,w:9,h:.3,fontFace:F.mono,fontSize:10.5,charSpacing:4,color}); }
 function title(s,t,x,y,size,color,w=9,o={}){ s.addText(t.toUpperCase(),{x,y,w,h:size/46,fontFace:F.disp,fontSize:size,color,lineSpacing:size*.86,valign:'top',...o}); }
-function foot(s,dark=true){ s.addText('Luiza Britto · PAS — Projeto Aplicado em Sustentabilidade · Insper · 02 jul 2026',{x:.45,y:5.28,w:9.1,h:.28,fontFace:F.mono,fontSize:8,charSpacing:2,color:dark?C.mutedD:C.muted}); }
+function foot(s,dark=true){ s.addText('Luiza Britto · PAS — Programa Avançado de Sustentabilidade · Insper · 02 jul 2026',{x:.45,y:5.28,w:9.1,h:.28,fontFace:F.mono,fontSize:8,charSpacing:2,color:dark?C.mutedD:C.muted}); }
 function chip(s,t,x,y,color,w=1.4){ s.addText(t.toUpperCase(),{x,y,w,h:.26,fontFace:F.mono,fontSize:8,charSpacing:1,color,align:'center',line:{color,width:.75}}); }
 
 /* S1 · CAPA */
