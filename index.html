@@ -117,6 +117,12 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
 .incomodo p.big em{font-style:italic;color:var(--clay)}
 .incomodo .body{margin-top:26px}
 
+/* incômodo com retrato */
+.incomodo .igrid{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(24px,4vw,64px);align-items:center}
+.incomodo .frame{border-color:var(--line-d)}
+.incomodo .frame img{min-height:0;aspect-ratio:4/5;object-fit:cover}
+@media(max-width:760px){.incomodo .igrid{grid-template-columns:1fr}}
+
 /* ===== A PEÇA ===== */
 .peca .head{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(20px,4vw,60px);align-items:end;margin-bottom:44px}
 .cards{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--ink)}
@@ -514,9 +520,17 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 <!-- ===== O INCÔMODO ===== -->
 <section class="incomodo">
   <div class="wrap">
-    <span class="kick" data-r>O incômodo</span>
-    <p class="big" data-r style="margin-top:20px">Quase todo móvel pet resolve o conforto do animal — e <em>estraga a linguagem da casa</em>.</p>
-    <p class="body" data-r>A Beni nasceu dessa tensão, numa disciplina de Design Thinking e Prototipagem: em vez de esconder uma caminha no canto, desenhar uma peça pequena de mobiliário — elevada, reparável, feita com madeira que já existia.</p>
+    <div class="igrid">
+      <div>
+        <span class="kick" data-r>O incômodo</span>
+        <p class="big" data-r style="margin-top:20px">Quase todo móvel pet resolve o conforto do animal — e <em>estraga a linguagem da casa</em>.</p>
+        <p class="body" data-r>A Beni nasceu dessa tensão, numa disciplina de Design Thinking e Prototipagem: em vez de esconder uma caminha no canto, desenhar uma peça pequena de mobiliário — elevada, reparável, feita com madeira que já existia.</p>
+      </div>
+      <div class="frame" data-r>
+        <img src="assets/beni-noite.jpg" alt="Cadeira Beni — retrato editorial em luz baixa" />
+        <span class="note tl">cadeira beni</span><span class="note br">protótipo v2</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -570,6 +584,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
       <div class="frame" data-r><img src="assets/dog-chair.jpg" alt="Cachorro pequeno em pé na Cadeira Beni, na varanda"><span class="note tl">em uso</span><span class="note br">cachorro de verdade</span></div>
       <div class="frame" data-r><img src="assets/mat-joint.jpg" alt="Encaixe cavilhado do pé"><span class="note tl">fixação</span><span class="note br">encaixe cavilhado</span></div>
       <div class="frame" data-r><img src="assets/v1-real.jpg" alt="Pés de marchetaria da V1 na bancada"><span class="note tl">bancada</span><span class="note br">processo real</span></div>
+      <div class="frame" data-r><img src="assets/beni-retrato.jpg" alt="Cadeira Beni — retrato editorial em luz clara"><span class="note tl">retrato</span><span class="note br">cadeira beni</span></div>
     </div>
   </div>
 </section>
