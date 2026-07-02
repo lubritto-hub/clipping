@@ -24,7 +24,7 @@ function slats(s,x,y,hIn,legs=C.woodDark){ const u=hIn/72;
   put(10,58,7,12,legs); put(42,58,7,12,legs); }
 function kick(s,t,x,y,color){ s.addText(t.toUpperCase(),{x,y,w:9,h:.3,fontFace:F.mono,fontSize:10.5,charSpacing:4,color}); }
 function title(s,t,x,y,size,color,w=9,o={}){ s.addText(t.toUpperCase(),{x,y,w,h:size/46,fontFace:F.disp,fontSize:size,color,lineSpacing:size*.86,valign:'top',...o}); }
-function foot(s,dark=true){ s.addText('Luiza Britto · Design Thinking e Prototipagem · Insper · 02 jul 2026',{x:.45,y:5.28,w:9.1,h:.28,fontFace:F.mono,fontSize:8,charSpacing:2,color:dark?C.mutedD:C.muted}); }
+function foot(s,dark=true){ s.addText('Luiza Britto · PAS — Projeto Aplicado em Sustentabilidade · Insper · 02 jul 2026',{x:.45,y:5.28,w:9.1,h:.28,fontFace:F.mono,fontSize:8,charSpacing:2,color:dark?C.mutedD:C.muted}); }
 function chip(s,t,x,y,color,w=1.4){ s.addText(t.toUpperCase(),{x,y,w,h:.26,fontFace:F.mono,fontSize:8,charSpacing:1,color,align:'center',line:{color,width:.75}}); }
 
 /* S1 · CAPA */
@@ -46,7 +46,7 @@ function chip(s,t,x,y,color,w=1.4){ s.addText(t.toUpperCase(),{x,y,w,h:.26,fontF
   s.addText('A caminha deforma, não lava e vai inteira pro lixo — escondida no canto da sala.',
     {x:.45,y:2.78,w:4.3,h:.85,fontFace:F.sans,fontSize:14,color:C.ink70,lineSpacingMultiple:1.15});
   s.addText('ECOSSISTEMA',{x:5.2,y:2.5,w:2.5,h:.26,fontFace:F.mono,fontSize:10,charSpacing:3,color:C.moss});
-  s.addText('Madeira urbana de qualidade vira descarte volumoso; o setor roda em espuma e plástico virgem.',
+  s.addText('Madeira maciça de móveis antigos vira descarte volumoso — e cada peça reusada substitui madeira nova.',
     {x:5.18,y:2.78,w:4.35,h:.85,fontFace:F.sans,fontSize:14,color:C.ink70,lineSpacingMultiple:1.15});
   const num=(x,big,small)=>{ s.addText(big,{x,y:3.9,w:3,h:.72,fontFace:F.disp,fontSize:44,color:C.ink});
     s.addText(small.toUpperCase(),{x:x+.03,y:4.62,w:3,h:.26,fontFace:F.mono,fontSize:9,charSpacing:2,color:C.muted}); };
@@ -75,14 +75,14 @@ function chip(s,t,x,y,color,w=1.4){ s.addText(t.toUpperCase(),{x,y,w,h:.26,fontF
 
 /* S4 · VALIDAÇÃO — só as 3 frases de ouro */
 (()=>{ const s=P.addSlide(); bg(s,C.ink); streak(s);
-  kick(s,'validação · 6 conversas — tutores, marceneiros, veterinário, catadores',.45,.36,C.bamboo);
+  kick(s,'validação · certezas & suposições da pesquisa · 6 entrevistas — tutores, marceneiro, veterinário, catador',.45,.36,C.bamboo);
   const q=(y,quote,who,dec)=>{
     s.addShape('rect',{x:.47,y:y+.08,w:.04,h:.9,fill:{color:C.clay},line:{type:'none'}});
     s.addText('“'+quote+'”',{x:.66,y,w:8.9,h:.66,fontFace:F.serif,italic:true,fontSize:23,color:C.paper,valign:'top'});
     s.addText(who.toUpperCase()+'      →  '+dec.toUpperCase(),{x:.66,y:y+.64,w:8.9,h:.26,fontFace:F.mono,fontSize:9,charSpacing:2,color:C.bamboo}); };
-  q(1.05,'Se parecer móvel, eu deixo na sala.','Tutora','virou: linguagem de móvel');
-  q(2.35,'Lavável não é diferencial. É requisito.','Síntese','virou: capa lavável no roadmap');
-  q(3.65,'Madeira reaproveitada precisa vir com cuidado.','Marceneiro · Veterinário','virou: triagem + sanitização');
+  q(1.05,'Higiene — urina, pelos, ácaros — é fator obrigatório de aceitação.','Certeza · pesquisa','virou: verniz lavável agora, capa removível no roadmap');
+  q(2.35,'Só confio no reaproveitado com protocolo claro de sanitização.','Suposição · consumidores','virou: triagem, tratamento e verniz no processo');
+  q(3.65,'Peroba e jacarandá, hoje, só se obtêm por reuso.','Certeza · madeira-fonte','virou: mineração urbana como valor');
   foot(s);
 })();
 
@@ -95,7 +95,7 @@ function chip(s,t,x,y,color,w=1.4){ s.addText(t.toUpperCase(),{x,y,w,h:.26,fontF
   const row=(y,a,b)=>{ s.addShape('rect',{x:.45,y:y-.1,w:6.9,h:.011,fill:{color:C.ink70},line:{type:'none'}});
     s.addText(a,{x:.45,y,w:4.2,h:.42,fontFace:F.sans,fontSize:14,color:C.muted});
     s.addText(b,{x:5.0,y,w:2.6,h:.42,fontFace:F.sans,bold:true,fontSize:14,color:C.ink}); };
-  row(2.98,'Espuma + plástico virgem','Madeira que já existia');
+  row(2.98,'Madeira nova, insumo virgem','Madeira que já existia');
   row(3.56,'Estragou? Joga tudo fora','Troca por componente');
   row(4.14,'Some no canto','Fica na sala');
   chip(s,'tecidos — em breve',5.0,4.72,C.haze,1.6);
