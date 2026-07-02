@@ -337,6 +337,50 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 .frame:hover{transform:translateY(-4px)}
 .wood-streak{animation-duration:9s}
 
+/* ===== MAIS MADEIRA ===== */
+/* veio desenhado deslizando nos fundos escuros */
+.grainlines::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;opacity:.09;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='150' viewBox='0 0 420 150'%3E%3Cg fill='none' stroke='%23C89B48' stroke-width='1.3'%3E%3Cpath d='M0 30 C60 12 120 48 210 30 S360 10 420 30'/%3E%3Cpath d='M0 75 C70 55 150 95 240 75 S370 55 420 75' stroke='%23D65A2B'/%3E%3Cpath d='M0 120 C80 100 160 140 250 120 S380 100 420 120'/%3E%3Cellipse cx='150' cy='52' rx='16' ry='6'/%3E%3Cellipse cx='320' cy='98' rx='13' ry='5' stroke='%23D65A2B'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:420px 150px;animation:grainslide 30s linear infinite}
+@keyframes grainslide{to{background-position:840px 0}}
+.grainlines>.wrap{position:relative;z-index:1}
+/* faixa de tábuas/ripas deslizando */
+.ripas-div{height:20px;width:100%;
+  background:repeating-linear-gradient(90deg,
+    var(--wood-mid) 0 44px, var(--wood-dark) 44px 48px, var(--wood-mid) 48px 92px, var(--clay) 92px 95px);
+  background-size:190px 100%;animation:ripasslide 18s linear infinite;
+  border-top:1px solid var(--wood-dark);border-bottom:1px solid var(--wood-dark)}
+@keyframes ripasslide{to{background-position:-380px 0}}
+
+/* ===== MAIS PET ===== */
+.pawtrail{position:absolute;pointer-events:none;z-index:1}
+.pawtrail .paw{position:absolute;width:26px;height:auto;opacity:0;animation:pawstep 5.4s ease-in-out infinite}
+.pawtrail .paw:nth-child(1){animation-delay:0s}
+.pawtrail .paw:nth-child(2){animation-delay:.55s}
+.pawtrail .paw:nth-child(3){animation-delay:1.1s}
+.pawtrail .paw:nth-child(4){animation-delay:1.65s}
+.pawtrail .paw:nth-child(5){animation-delay:2.2s}
+.pawtrail .paw:nth-child(6){animation-delay:2.75s}
+@keyframes pawstep{0%{opacity:0;transform:scale(.7) rotate(var(--pr,0deg))}
+  8%,52%{opacity:.55;transform:scale(1) rotate(var(--pr,0deg))}
+  70%,100%{opacity:0;transform:scale(.95) rotate(var(--pr,0deg))}}
+.pawtrail.on-dark .paw{fill:var(--bamboo)}
+.pawtrail.on-photo .paw{fill:rgba(239,231,214,.85)}
+.pawtrail.on-paper .paw{fill:var(--clay)}
+/* patinha como marcador das observações */
+.obs p{position:relative;padding-left:26px}
+.obs p::before{content:"";position:absolute;left:0;top:14px;width:17px;height:15px;opacity:.9;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 50 44'%3E%3Cpath fill='%23C89B48' d='M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z'/%3E%3C/svg%3E") no-repeat center/contain}
+/* zzz do cachorro dormindo */
+.zzz{position:absolute;z-index:3;pointer-events:none;font-family:'Permanent Marker',cursive;color:rgba(239,231,214,.95)}
+.zzz span{position:absolute;left:0;bottom:0;opacity:0;animation:zrise 4.8s ease-out infinite;text-shadow:0 1px 8px rgba(0,0,0,.6)}
+.zzz span:nth-child(1){font-size:15px;animation-delay:0s}
+.zzz span:nth-child(2){font-size:20px;left:14px;animation-delay:1.6s}
+.zzz span:nth-child(3){font-size:26px;left:30px;animation-delay:3.2s}
+@keyframes zrise{0%{opacity:0;transform:translateY(8px) rotate(-6deg) scale(.8)}
+  22%{opacity:.95}60%{opacity:.5}
+  100%{opacity:0;transform:translateY(-34px) rotate(6deg) scale(1.2)}}
+
 @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -392,7 +436,10 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 </header>
 
 <!-- ===== O INCÔMODO ===== -->
-<section class="incomodo">
+<section class="incomodo grainlines">
+  <div class="pawtrail on-dark" aria-hidden="true" style="left:4%;bottom:5%;width:320px;height:230px">
+    <svg class="paw" style="left:0px;bottom:0px;--pr:-14deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:52px;bottom:34px;--pr:10deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:104px;bottom:66px;--pr:-12deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:158px;bottom:100px;--pr:12deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:212px;bottom:134px;--pr:-10deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:266px;bottom:168px;--pr:12deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg>
+  </div>
   <div class="wrap">
     <span class="kick" data-r>O incômodo</span>
     <p class="big" data-r style="margin-top:20px">Quase todo móvel pet resolve o conforto do animal — e <em>estraga a linguagem da casa</em>.</p>
@@ -478,7 +525,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 </section>
 
 <!-- ===== PROCESSO V1/V2 ===== -->
-<section class="proc" id="processo">
+<section class="proc grainlines" id="processo">
   <div class="wrap head">
     <span class="kick" data-r>Processo · v1 → v2</span>
     <h2 class="title" data-r style="color:var(--paper)">O erro também é material.</h2>
@@ -520,6 +567,10 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
   <div class="uso-media">
     <img src="assets/uso-home.jpg" alt="Cachorro pequeno dormindo na almofada da Cadeira Beni, na sala" />
     <div class="warmglow" aria-hidden="true"></div>
+    <div class="pawtrail on-photo" aria-hidden="true" style="right:6%;top:10%;width:300px;height:170px">
+    <svg class="paw" style="left:0px;top:140px;--pr:100deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:54px;top:116px;--pr:128deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:108px;top:92px;--pr:100deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:162px;top:66px;--pr:126deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:216px;top:40px;--pr:102deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:268px;top:12px;--pr:128deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg>
+    </div>
+    <div class="zzz" aria-hidden="true" style="left:56%;top:22%"><span>z</span><span>z</span><span>z</span></div>
     <div class="grainov" aria-hidden="true"></div>
     <div class="uso-copy">
       <div class="wrap">
@@ -538,7 +589,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 <div class="streak-div wood-streak"></div>
 
 <!-- ===== COMO ELA DESMONTA ===== -->
-<section class="circ" id="desmonta">
+<section class="circ grainlines" id="desmonta">
   <div class="wrap">
     <span class="kick" data-r>Fim de vida</span>
     <div class="head"><h2 class="title" data-r>Como ela desmonta.</h2></div>
@@ -566,6 +617,8 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
   </div>
 </section>
 
+<div class="ripas-div" aria-hidden="true"></div>
+
 <!-- ===== CINCO PROVAS ===== -->
 <section class="viab" id="provas">
   <div class="wrap">
@@ -585,7 +638,10 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 </section>
 
 <!-- ===== O QUE AINDA FALTA ===== -->
-<section class="falta" id="falta">
+<section class="falta" id="falta" style="overflow:hidden">
+  <div class="pawtrail on-paper" aria-hidden="true" style="right:5%;top:14%;width:230px;height:150px;opacity:.8">
+    <svg class="paw" style="left:0px;top:120px;--pr:80deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:46px;top:96px;--pr:106deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:92px;top:72px;--pr:78deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:138px;top:46px;--pr:108deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg><svg class="paw" style="left:184px;top:20px;--pr:80deg" viewBox="0 0 50 44" aria-hidden="true"><path d="M25 42c-7 0-13-4.6-13-10.3 0-5 5.8-9.2 13-9.2s13 4.2 13 9.2C38 37.4 32 42 25 42zM8.5 22.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7zm11-8.5c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 0c-3.3 0-6-3.1-6-7s2.7-7 6-7 6 3.1 6 7-2.7 7-6 7zm11 8.5c-3.3 0-6-3-6-6.7s2.7-6.7 6-6.7 6 3 6 6.7-2.7 6.7-6 6.7z"/></svg>
+  </div>
   <div class="wrap">
     <div class="head">
       <span class="kick" data-r>Próximo protótipo</span>
@@ -601,7 +657,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
 </section>
 
 <!-- ===== PRÓXIMA LEVA ===== -->
-<section class="order" id="leva">
+<section class="order grainlines" id="leva">
   <div class="glow" aria-hidden="true"></div>
   <i class="blob cool" aria-hidden="true" style="width:300px;height:270px;right:4%;top:6%;opacity:.4"></i>
   <div class="wrap order-grid">
@@ -625,6 +681,8 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(50px,7vh,80px) 0 3
     </figure>
   </div>
 </section>
+
+<div class="ripas-div" aria-hidden="true"></div>
 
 <!-- ===== FOOTER ===== -->
 <footer id="fim">
