@@ -89,23 +89,32 @@ nav{position:sticky;top:0;z-index:70;display:flex;align-items:center;justify-con
   color:var(--clay);border:1px solid var(--clay);border-radius:2px;padding:5px 10px}
 @media(max-width:860px){.navlinks{display:none}}
 
-/* ================= HERO (campanha) ================= */
+/* ================= HERO (campanha — nome + cadeira numa tela só) ================= */
 .hero{background:var(--ink);color:var(--paper);overflow:hidden;padding:0;position:relative}
 .hero .streak{height:8px}
-.hero-inner{position:relative;padding:clamp(26px,5vh,54px) 0 0}
+.hero-inner{position:relative;display:flex;flex-direction:column;
+  min-height:calc(100vh - 62px);min-height:calc(100svh - 62px);
+  padding-top:clamp(18px,3vh,34px);padding-bottom:clamp(16px,3vh,30px)}
 .hero-head{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.hero .sym{width:clamp(70px,9vw,120px);height:auto}
+.hero .sym{width:clamp(54px,6vw,84px);height:auto}
 .hero .meta{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--bamboo);text-align:right;line-height:1.7}
+.hero-main{flex:1;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  align-items:center;gap:clamp(14px,3vw,44px);min-height:0}
 .hero h1{font-family:var(--font-display);text-transform:uppercase;color:var(--paper);
-  font-size:clamp(84px,21vw,300px);line-height:.8;letter-spacing:-.01em;margin:clamp(10px,2vh,26px) 0 0}
+  font-size:clamp(56px,10.5vw,176px);line-height:.8;letter-spacing:-.01em;margin:0}
 .hero h1 span{display:block}
 .hero h1 .l2{color:var(--clay)}
-.hero-obj{position:relative;margin-top:-4%;display:flex;justify-content:center}
-.hero-obj img{width:min(1120px,98vw);margin-bottom:-2%}
-.hero-tagline{position:absolute;left:clamp(18px,4vw,54px);bottom:clamp(18px,4vh,40px);z-index:3;
-  font-family:var(--font-serif);font-style:italic;font-size:clamp(16px,1.8vw,24px);color:var(--paper);max-width:16ch}
-@media(max-width:640px){.hero-obj img{width:130vw}.hero-tagline{position:static;margin:8px 0 24px;padding:0 18px}}
+.hero-tagline{font-family:var(--font-serif);font-style:italic;
+  font-size:clamp(15px,1.7vw,23px);color:var(--paper);max-width:20ch;margin-top:18px}
+.hero-obj{display:flex;justify-content:center;align-items:center;min-height:0}
+.hero-obj img{max-height:min(62vh,640px);max-height:min(62svh,640px);max-width:100%;width:auto;
+  filter:drop-shadow(0 34px 44px rgba(0,0,0,.55))}
+@media(max-width:720px){
+  .hero-main{grid-template-columns:1fr;align-content:space-evenly;gap:6px}
+  .hero h1{font-size:clamp(56px,15vw,110px)}
+  .hero-obj img{max-height:40vh;max-height:40svh}
+  .hero-tagline{margin-top:10px}}
 
 /* ================= PRODUTO (proposta de valor) ================= */
 .produto .prod-top{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,60px);align-items:end;margin-bottom:44px}
@@ -371,11 +380,15 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
       </svg>
       <div class="meta" data-r>móvel pet · modular<br>madeira de reuso<br><span style="color:var(--clay)">protótipo v2</span></div>
     </div>
-    <h1 data-r><span>Cadeira</span><span class="l2">Beni</span></h1>
-  </div>
-  <div class="hero-obj" data-parallax>
-    <img src="assets/product-cutout.png" alt="Cadeira Beni — plataforma em madeira reaproveitada sobre pernas de bambu" />
-    <p class="hero-tagline">O móvel do pet também pode permanecer.</p>
+    <div class="hero-main">
+      <div>
+        <h1 data-r><span>Cadeira</span><span class="l2">Beni</span></h1>
+        <p class="hero-tagline" data-r>O móvel do pet também pode permanecer.</p>
+      </div>
+      <figure class="hero-obj" data-parallax>
+        <img src="assets/product-hero.png" alt="Cadeira Beni — plataforma em madeira reaproveitada sobre pernas de bambu" />
+      </figure>
+    </div>
   </div>
 </header>
 
@@ -450,7 +463,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
         <div class="call" data-r><span class="k">Dimensão</span><span class="v">— a medir</span><span class="n">altura / vão / base</span><br><span class="st medir">a medir</span></div>
       </div>
       <div class="obj" data-parallax>
-        <img src="assets/product-cutout.png" alt="Cadeira Beni de frente com callouts técnicos">
+        <img src="assets/product-hero.png" alt="Cadeira Beni de frente com callouts técnicos">
         <span class="ring" style="left:26%;top:32%"></span>
         <span class="ring" style="left:74%;top:34%"></span>
         <span class="ring" style="left:50%;top:60%"></span>
@@ -469,7 +482,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
   <div class="wrap">
     <div class="head"><span class="kick" data-r>Protótipo digital</span><h2 class="title" data-r>Do objeto<br>ao sistema.</h2></div>
     <div class="wireframe" data-r>
-      <img src="assets/product-cutout.png" alt="Malha wireframe sobre a Cadeira Beni">
+      <img src="assets/product-hero.png" alt="Malha wireframe sobre a Cadeira Beni">
       <div class="mesh"></div><div class="scan"></div>
     </div>
     <div class="dig-tags">
@@ -493,7 +506,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
       <p>Densidade variável, baixa precisão e encaixe trabalhoso. O acabamento pedia arte; o uso pedia sistema.</p>
     </div>
     <div class="pane v2" data-r>
-      <figure><img src="assets/product-cutout.png" alt="V2 — pernas de bambu"><span class="bigstamp yes">Mais<br>reparável</span></figure>
+      <figure><img src="assets/product-hero.png" alt="V2 — pernas de bambu"><span class="bigstamp yes">Mais<br>reparável</span></figure>
       <span class="vk">V2 · estacas de bambu</span>
       <div class="vline">Simples o bastante<br>para reparar.</div>
       <p>Perna padronizada: sai uma, entra outra. Menos virtuosismo, mais manutenção possível — circularidade real na peça que mais desgasta.</p>
@@ -553,7 +566,7 @@ footer{background:var(--ink);color:var(--paper);padding:clamp(56px,8vh,90px) 0 4
       <span class="order-note mono" data-r>Protótipo v2 · produção artesanal · encomendas sob consulta</span>
     </div>
     <figure class="order-obj" data-r>
-      <img src="assets/product-cutout.png" alt="Cadeira Beni — encomende a sua" />
+      <img src="assets/product-hero.png" alt="Cadeira Beni — encomende a sua" />
     </figure>
   </div>
 </section>
