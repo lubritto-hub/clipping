@@ -2,6 +2,16 @@
 
 Repo-specific gotchas for future syncs. Read before touching config.
 
+## Direction
+
+- The brief is "less SaaS dashboard, more Y2K editorial climate technology".
+  Concretely that means: no pure black (the ground is petrol), depth by light
+  rather than shadow, hairlines rather than borders, sage/eucalyptus/mineral
+  greens rather than flag green, treated photography rather than clean images,
+  instruments rather than charts, and roughly 60% editorial to 40% product.
+  A change that makes the system tidier usually makes it worse - check it
+  against `conventions.md` §0 before shipping.
+
 ## Layout
 
 - The DS package is `design-system/`, not the repo root (the repo root holds an
@@ -50,6 +60,32 @@ Repo-specific gotchas for future syncs. Read before touching config.
   grotesque. This suppresses `[FONT_MISSING]`; do not "fix" it by shipping
   webfonts without checking licensing first.
 
+## Atmosphere layer
+
+- The look depends on plates that are easy to delete by accident:
+  `TerraCarbonProvider` composes `grain` (fine noise), `wash` (coarse blotchy
+  plate), `leak` (light entering the frame) and `halo`. All four are
+  pseudo-elements at `z-index: 0..1`, so **any new direct child of `.tc-root`
+  needs `position: relative; z-index: 2`** or it renders under the texture.
+  The rule that does this lives at `.tc-root.tc-grain > *, .tc-root.tc-wash > *,
+  .tc-root--leak > *`.
+- `Figure` duotones are CSS `filter` chains (grayscale → sepia → hue-rotate →
+  saturate). They are tuned against the petrol/paper grounds; changing the
+  palette ramps means re-tuning the hue-rotate values.
+- `Stat variant="projected"` renders the value TWICE - a blurred `.tc-stat__ghost`
+  behind the crisp glyphs. If the value is not a string the ghost still renders
+  it, so keep values simple.
+
+## Type contracts
+
+- The converter emits `<Name>Props` only; a sibling interface referenced from an
+  array prop (`SpecItem`, `TableColumn`, `SelectOption`, `RadioOption`,
+  `TabItem`) comes out **dangling** - referenced but never defined - which
+  leaves the design agent guessing the item shape. `cfg.dtsPropsFor` inlines
+  those shapes for Spec, Table, Select, RadioGroup and Tabs. **Any new component
+  taking an array of objects needs the same treatment**; check with a grep for
+  `Item|Option|Column` names that have no `interface` in the emitted `.d.ts`.
+
 ## Card layout
 
 - Ten components are pinned to `cardMode: "column"` in `cfg.overrides` because
@@ -63,7 +99,7 @@ Repo-specific gotchas for future syncs. Read before touching config.
 
 ## Known render warns
 
-None. The last full validate ran clean: 22/22 render, 0 bad, 0 thin,
+None. The last full validate ran clean: 29/29 render, 0 bad, 0 thin,
 0 variants-identical, 0 floor cards.
 
 ## Re-sync risks
@@ -72,10 +108,14 @@ None. The last full validate ran clean: 22/22 render, 0 bad, 0 thin,
   locally but could not upload: `DesignSync` had no design-system authorization
   in the remote session. There is therefore **no `projectId` in config.json and
   no uploaded `_ds_sync.json` anchor** — the next sync is still a first sync and
-  will re-verify all 22 components. Grades in `.design-sync/.cache/review/` are
+  will re-verify all 29 components. Grades in `.design-sync/.cache/review/` are
   gitignored working state and will not survive a fresh clone.
-- The conventions header (`.design-sync/conventions.md`) names 35 tokens, 27
-  props and 11 components. All verified against the build at authoring time.
+- The conventions header (`.design-sync/conventions.md`) names 50 tokens, 47
+  props and 15 components. All verified against the build at authoring time.
+- **The system ships no photography.** `Figure` supplies the treatment; the host
+  app supplies images. The local demo at `.preview/` uses synthetic SVG
+  turbulence plates as stand-ins - they are gitignored and are NOT a design
+  asset. Do not mistake them for approved imagery.
   **Re-run that check on every sync** — renaming a token silently makes the
   header lie, and the design agent trusts it.
 - The generated theme blocks in `tokens.css` (see Theming above) are the most

@@ -19,6 +19,14 @@ export interface TerraCarbonProviderProps {
   grainStrength?: 'normal' | 'strong';
   /** Paint the ambient halo wash behind the content - for hero areas. */
   halo?: boolean;
+  /**
+   * The coarse, blotchy plate over the grain - unevenly-developed film and
+   * washed-out patches. Pair with `grain`; it is what stops large flat areas
+   * reading as digitally perfect.
+   */
+  wash?: boolean;
+  /** Light entering the frame from outside it, top-left and top-right. */
+  leak?: boolean;
   /** Stretch to at least the full height of its container. */
   fill?: boolean;
   className?: string;
@@ -40,7 +48,7 @@ export interface TerraCarbonProviderProps {
  */
 export const TerraCarbonProvider = React.forwardRef<HTMLDivElement, TerraCarbonProviderProps>(
   function TerraCarbonProvider(
-    { children, theme = 'system', grain = false, grainStrength = 'normal', halo = false, fill = false, className, style },
+    { children, theme = 'system', grain = false, grainStrength = 'normal', halo = false, wash = false, leak = false, fill = false, className, style },
     ref
   ) {
     return (
@@ -51,6 +59,8 @@ export const TerraCarbonProvider = React.forwardRef<HTMLDivElement, TerraCarbonP
           'tc-root',
           fill && 'tc-root--fill',
           halo && 'tc-root--halo',
+          leak && 'tc-root--leak',
+          wash && 'tc-wash',
           grain && 'tc-grain',
           grain && grainStrength === 'strong' && 'tc-grain--strong',
           className

@@ -24,8 +24,8 @@ export const DarkRegister = () => (
   </TerraCarbonProvider>
 );
 
-export const GrainAndHalo = () => (
-  <TerraCarbonProvider theme="dark" grain halo style={{ padding: 40, borderRadius: 18 }}>
+export const Atmosphere = () => (
+  <TerraCarbonProvider theme="dark" grain wash leak halo style={{ padding: 40, borderRadius: 18 }}>
     <Stack gap="lg">
       <Sample />
       <Stat variant="display" value="1.8M+" unit="tons of CO₂ removed" />

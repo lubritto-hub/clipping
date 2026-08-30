@@ -59,7 +59,35 @@
     },
     "Glass": {
       "cardMode": "column"
+    },
+    "Figure": {
+      "cardMode": "column"
+    },
+    "Spec": {
+      "cardMode": "column"
+    },
+    "Instrument": {
+      "cardMode": "column"
+    },
+    "Rule": {
+      "cardMode": "column"
+    },
+    "Bleed": {
+      "cardMode": "column"
+    },
+    "Halo": {
+      "cardMode": "column"
+    },
+    "Mark": {
+      "cardMode": "column"
     }
   },
-  "readmeHeader": ".design-sync/conventions.md"
+  "readmeHeader": ".design-sync/conventions.md",
+  "dtsPropsFor": {
+    "Spec": "items: {\n    /** Field name, e.g. `feedstock` or `permanence`. Rendered uppercase. */\n    label: React.ReactNode;\n    /** The reading. Monospaced and tabular - keep it terse. */\n    value: React.ReactNode;\n    /** Print the value in the accent colour, for the one figure that matters. */\n    accent?: boolean;\n  }[];\n  /** `rows` is a ruled list (label left, value right). `columns` lays the pairs\n   *  out side by side under hairline verticals - use it beneath a big number. */\n  layout?: \"rows\" | \"columns\";",
+    "Table": "columns: {\n    /** Stable key. Used for React keys and as the default accessor. */\n    key: string;\n    /** Column heading. Rendered uppercase and tracked. */\n    header: React.ReactNode;\n    /** Cell renderer. Defaults to `row[key]`. */\n    render?: (row: any, index: number) => React.ReactNode;\n    /** Right-align in tabular figures - use for every number. */\n    numeric?: boolean;\n    /** Fixed column width, e.g. `\"160px\"` or `\"20%\"`. */\n    width?: string;\n  }[];\n  rows: Record<string, React.ReactNode>[];\n  rowKey?: (row: any, index: number) => string | number;\n  /** Tint alternating rows. */\n  striped?: boolean;\n  /** Highlight the row under the cursor. */\n  hoverable?: boolean;\n  /** Tighter vertical rhythm, for dense data views. */\n  compact?: boolean;\n  caption?: React.ReactNode;\n  emptyMessage?: React.ReactNode;",
+    "Select": "options?: {\n    /** Submitted value. */\n    value: string;\n    /** Visible text. */\n    label: string;\n    disabled?: boolean;\n  }[];\n  label?: React.ReactNode;\n  hint?: React.ReactNode;\n  /** Error message. Its presence marks the control invalid. */\n  error?: React.ReactNode;\n  size?: \"sm\" | \"md\" | \"lg\";\n  required?: boolean;\n  /** Leading empty choice, e.g. `\"Select a project\"`. */\n  placeholder?: string;\n  fullWidth?: boolean;\n  defaultValue?: string;\n  value?: string;\n  onChange?: React.ChangeEventHandler<HTMLSelectElement>;\n  disabled?: boolean;\n  name?: string;",
+    "RadioGroup": "/** Shared form name for the options. */\n  name: string;\n  options: {\n    value: string;\n    label: React.ReactNode;\n    /** Secondary line under the label. */\n    description?: React.ReactNode;\n    disabled?: boolean;\n  }[];\n  /** Uncontrolled initial selection. */\n  defaultValue?: string;\n  /** Controlled selection. Pair with `onChange`. */\n  value?: string;\n  onChange?: (value: string) => void;\n  /** Uppercase micro-label above the set. */\n  legend?: React.ReactNode;\n  direction?: \"vertical\" | \"horizontal\";",
+    "Tabs": "items: {\n    /** Stable id, used as the selected value. */\n    id: string;\n    /** Tab text. Rendered uppercase and widely tracked. */\n    label: React.ReactNode;\n    /** Small count beside the label. */\n    badge?: React.ReactNode;\n    disabled?: boolean;\n    /** Panel content for this tab. */\n    content?: React.ReactNode;\n  }[];\n  defaultValue?: string;\n  value?: string;\n  onChange?: (id: string) => void;\n  /** `underline` is the editorial default; `pills` the segmented control. */\n  variant?: \"underline\" | \"pills\";"
+  }
 }

@@ -69,4 +69,25 @@ export type { ModalProps } from './components/Modal';
 export { Pagination } from './components/Pagination';
 export type { PaginationProps } from './components/Pagination';
 
+export { Figure } from './components/Figure';
+export type { FigureProps } from './components/Figure';
+
+export { Spec } from './components/Spec';
+export type { SpecProps, SpecItem } from './components/Spec';
+
+export { Instrument } from './components/Instrument';
+export type { InstrumentProps } from './components/Instrument';
+
+export { Mark } from './components/Mark';
+export type { MarkProps } from './components/Mark';
+
+export { Rule } from './components/Rule';
+export type { RuleProps } from './components/Rule';
+
+export { Bleed } from './components/Bleed';
+export type { BleedProps } from './components/Bleed';
+
+export { Halo } from './components/Halo';
+export type { HaloProps } from './components/Halo';
+
 export { cx } from './utils';

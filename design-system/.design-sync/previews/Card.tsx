@@ -24,6 +24,21 @@ export const Surfaces = () => (
   </Stack>
 );
 
+/** Not everything is a rounded panel. */
+export const LessPanel = () => (
+  <Stack direction="horizontal" gap="lg" wrap align="stretch">
+    <Card surface="bare" title="Bare" description="No container at all" style={{ width: 220 }}>
+      <Text size="sm" tone="muted">Content sits on the page.</Text>
+    </Card>
+    <Card square title="Square" description="Surface, no radius" style={{ width: 220 }}>
+      <Text size="sm" tone="muted">A module, not a card.</Text>
+    </Card>
+    <Card halo title="Halo" description="Light pooled behind" style={{ width: 220 }}>
+      <Text size="sm" tone="muted">Floats in front of a plane.</Text>
+    </Card>
+  </Stack>
+);
+
 export const Elevations = () => (
   <Stack direction="horizontal" gap="lg" wrap align="stretch">
     <Card title="None" elevation="none" style={{ width: 190 }}><Text size="sm" tone="muted">Flat</Text></Card>

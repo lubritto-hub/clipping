@@ -53,8 +53,36 @@
 
 .tc-grain--strong::after { opacity: var(--tc-grain-opacity-strong); }
 
+/* The coarse, blotchy plate: unevenly-developed film, washed-out patches.
+   Sits under the fine grain and is what stops large flats reading digital. */
+.tc-wash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: var(--tc-texture-wash);
+  background-size: 420px 420px;
+  opacity: var(--tc-wash-opacity);
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+
+/* Light entering the frame from outside it. */
+.tc-root--leak::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--tc-lightleak-top), var(--tc-lightleak-corner);
+  mix-blend-mode: screen;
+}
+
 /* Content inside a grained root must sit above the plate. */
-.tc-root.tc-grain > * { position: relative; z-index: 2; }
+.tc-root.tc-grain > *,
+.tc-root.tc-wash > *,
+.tc-root--leak > * { position: relative; z-index: 2; }
 
 /* --- Ambient light -------------------------------------------------------
    The halo wash behind a hero area. Purely decorative. */
@@ -409,8 +437,43 @@
   flex-direction: column;
   min-width: 0;
   background-color: var(--tc-color-surface);
-  border: 1px solid var(--tc-color-border);
+  border: var(--tc-hairline-width) solid var(--tc-color-hairline);
   border-radius: var(--tc-radius-lg);
+}
+
+/* Not everything is a rounded panel. `bare` drops the container entirely and
+   lets the content sit on the page; `square` keeps the surface but removes
+   the radius. Both exist so a layout can stop looking like a dashboard. */
+.tc-card--bare {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.tc-card--square { border-radius: var(--tc-radius-none); }
+
+/* An atmospheric pool of light BEHIND the card - depth by luminance, so the
+   card reads as floating in front of a plane rather than stuck to one. */
+.tc-card--halo::before {
+  content: "";
+  position: absolute;
+  inset: -18% -12%;
+  z-index: -1;
+  pointer-events: none;
+  background-image: var(--tc-halo-behind);
+  filter: blur(var(--tc-blur-fore));
+}
+
+/* A light leak crossing the surface, as if the frame were unevenly exposed. */
+.tc-card--leak::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-lightleak-corner);
+  border-radius: inherit;
+  mix-blend-mode: screen;
 }
 
 .tc-card--elevation-none { box-shadow: var(--tc-bloom-none); }
@@ -479,7 +542,7 @@
   align-items: center;
   gap: var(--tc-space-xs);
   padding: var(--tc-space-md) var(--tc-space-lg);
-  border-top: 1px solid var(--tc-color-border-subtle);
+  border-top: var(--tc-hairline-width) solid var(--tc-color-hairline);
   border-radius: 0 0 var(--tc-radius-lg) var(--tc-radius-lg);
 }
 
@@ -747,13 +810,20 @@
   width: 100%;
   overflow-x: auto;
   background-color: var(--tc-color-surface);
-  border: 1px solid var(--tc-color-border);
+  border: var(--tc-hairline-width) solid var(--tc-color-hairline);
   border-radius: var(--tc-radius-lg);
+}
+
+/* Instrument reading: no container at all, just ruled rows. */
+.tc-table-wrapper--bare {
+  background-color: transparent;
+  border: 0;
+  border-radius: 0;
 }
 
 .tc-table { width: 100%; font-size: var(--tc-font-size-sm); border-collapse: collapse; }
 
-.tc-table__head { border-bottom: 1px solid var(--tc-color-border); }
+.tc-table__head { border-bottom: var(--tc-hairline-width) solid var(--tc-color-hairline); }
 
 .tc-table__th {
   padding: var(--tc-space-sm) var(--tc-space-md);
@@ -769,7 +839,7 @@
 .tc-table__td {
   padding: var(--tc-space-sm) var(--tc-space-md);
   color: var(--tc-color-text);
-  border-bottom: 1px solid var(--tc-color-border-subtle);
+  border-bottom: var(--tc-hairline-width) solid var(--tc-color-hairline);
   vertical-align: middle;
 }
 
@@ -942,7 +1012,7 @@
   justify-content: flex-end;
   gap: var(--tc-space-xs);
   padding: var(--tc-space-md) var(--tc-space-xl);
-  border-top: 1px solid var(--tc-color-border-subtle);
+  border-top: var(--tc-hairline-width) solid var(--tc-color-hairline);
 }
 
 /* ==========================================================================
@@ -1227,10 +1297,43 @@
 
 .tc-stat--display .tc-stat__value {
   font-size: var(--tc-font-size-6xl);
-  font-weight: var(--tc-font-weight-light);
+  font-weight: var(--tc-font-weight-thin);
   line-height: var(--tc-line-height-tight);
   letter-spacing: var(--tc-letter-spacing-tighter);
   text-shadow: var(--tc-glow-text-strong);
+}
+
+/* Colossal - meant to be cut by the frame edge (pair with Bleed). */
+.tc-stat--colossal .tc-stat__value {
+  font-size: var(--tc-font-size-7xl);
+  font-weight: var(--tc-font-weight-thin);
+  line-height: var(--tc-line-height-tight);
+  letter-spacing: var(--tc-letter-spacing-tighter);
+  text-shadow: var(--tc-glow-text-strong);
+}
+
+/* Projected: the numeral as light thrown onto an old screen. A blurred
+   duplicate sits behind the crisp glyphs, so it reads soft without ever
+   becoming illegible. */
+.tc-stat--projected .tc-stat__value-row { position: relative; }
+
+.tc-stat--projected .tc-stat__value {
+  position: relative;
+  z-index: 1;
+  text-shadow: var(--tc-glow-text-strong);
+}
+
+.tc-stat--projected .tc-stat__ghost {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  font: inherit;
+  color: var(--tc-color-accent);
+  filter: blur(var(--tc-blur-ghost));
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
 }
 
 .tc-stat--display .tc-stat__unit {
@@ -1257,3 +1360,336 @@
 /* Contained dialog - backdrop bounded by the nearest positioned ancestor
    rather than the viewport. For docs panels and preview frames. */
 .tc-modal-overlay--contained { position: absolute; z-index: 10; }
+
+/* ==========================================================================
+   Bleed - break the grid
+   Pushes a child past its container's edge, so a photograph can run into the
+   text column and a numeral can be cut by the frame.
+   ========================================================================== */
+
+.tc-bleed { position: relative; }
+.tc-bleed--left { margin-left: calc(-1 * var(--tc-bleed-amount, var(--tc-space-3xl))); }
+.tc-bleed--right { margin-right: calc(-1 * var(--tc-bleed-amount, var(--tc-space-3xl))); }
+.tc-bleed--top { margin-top: calc(-1 * var(--tc-bleed-amount, var(--tc-space-3xl))); }
+.tc-bleed--bottom { margin-bottom: calc(-1 * var(--tc-bleed-amount, var(--tc-space-3xl))); }
+/* Clipped so the escaping element is genuinely cut, not just overlapping. */
+.tc-bleed--clip { overflow: hidden; }
+
+/* ==========================================================================
+   Halo - a plane of light behind content
+   ========================================================================== */
+
+.tc-halo { position: relative; }
+
+.tc-halo::before {
+  content: "";
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--tc-halo-behind);
+  filter: blur(var(--tc-blur-fore));
+}
+
+.tc-halo > * { position: relative; z-index: 1; }
+.tc-halo--flare::before { background-image: var(--tc-gradient-flare); }
+.tc-halo--tight::before { inset: -6%; filter: blur(var(--tc-blur-frost)); }
+
+/* ==========================================================================
+   Rule - the hairline, with optional technical label
+   ========================================================================== */
+
+.tc-rule {
+  display: flex;
+  align-items: center;
+  gap: var(--tc-space-md);
+  width: 100%;
+}
+
+.tc-rule::after,
+.tc-rule__line {
+  flex: 1;
+  height: var(--tc-rule-width);
+  background-color: var(--tc-color-hairline);
+  content: "";
+}
+
+.tc-rule__label {
+  flex: none;
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-2xs);
+  letter-spacing: var(--tc-letter-spacing-widest);
+  color: var(--tc-color-text-subtle);
+  text-transform: uppercase;
+}
+
+.tc-rule--plain::after { content: none; }
+
+/* ==========================================================================
+   Figure - editorial photography, treated
+   The system never ships images; it ships their treatment. Grain, defocus,
+   duotone and a ghosted echo are what make a stock photograph belong here.
+   ========================================================================== */
+
+.tc-figure {
+  position: relative;
+  display: block;
+  margin: 0;
+  overflow: hidden;
+  background-color: var(--tc-color-surface-sunken);
+}
+
+.tc-figure--radius-none { border-radius: var(--tc-radius-none); }
+.tc-figure--radius-md { border-radius: var(--tc-radius-md); }
+.tc-figure--radius-lg { border-radius: var(--tc-radius-lg); }
+.tc-figure--radius-full { border-radius: var(--tc-radius-full); }
+
+.tc-figure__frame { position: relative; display: block; width: 100%; overflow: hidden; }
+
+.tc-figure__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Defocus planes: a foreground element is meant to be out of focus. */
+.tc-figure--focus-soft .tc-figure__image { filter: blur(var(--tc-blur-focus)); }
+.tc-figure--focus-lost .tc-figure__image { filter: blur(var(--tc-blur-ghost)); }
+.tc-figure--focus-fore .tc-figure__image { filter: blur(var(--tc-blur-fore)); }
+
+/* Duotone: the photograph pushed into the brand's own register. */
+.tc-figure--tone-cool .tc-figure__image { filter: grayscale(1) sepia(0.35) hue-rotate(150deg) saturate(2.1) contrast(1.05); }
+.tc-figure--tone-mineral .tc-figure__image { filter: grayscale(1) sepia(0.5) hue-rotate(118deg) saturate(1.8) contrast(1.08); }
+.tc-figure--tone-earth .tc-figure__image { filter: grayscale(1) sepia(0.62) saturate(1.5) contrast(1.04); }
+.tc-figure--tone-flare .tc-figure__image { filter: grayscale(1) sepia(0.6) hue-rotate(-18deg) saturate(2.2) contrast(1.06); }
+
+/* Motion blur / ghosting: a soft duplicate offset behind the subject. */
+.tc-figure__ghost {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-position: center;
+  background-size: cover;
+  filter: blur(var(--tc-blur-ghost));
+  opacity: 0.55;
+  transform: translateX(var(--tc-figure-ghost-x, 14px));
+}
+
+/* Blown highlights bleeding off the subject. */
+.tc-figure__bloom {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-lightleak-top);
+  mix-blend-mode: screen;
+}
+
+/* Every figure carries grain - a clean photograph is the tell. */
+.tc-figure__grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-texture-grain);
+  opacity: var(--tc-grain-opacity);
+  mix-blend-mode: overlay;
+}
+
+.tc-figure__wash {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-texture-wash);
+  background-size: 420px 420px;
+  opacity: calc(var(--tc-wash-opacity) * 2.2);
+  mix-blend-mode: overlay;
+}
+
+/* Fade the frame into the page instead of ending it on a hard edge. */
+.tc-figure--fade::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-gradient-fade);
+}
+
+.tc-figure__caption {
+  display: flex;
+  gap: var(--tc-space-md);
+  align-items: baseline;
+  margin-top: var(--tc-space-sm);
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-2xs);
+  letter-spacing: var(--tc-letter-spacing-wide);
+  color: var(--tc-color-text-subtle);
+  text-transform: uppercase;
+}
+
+.tc-figure__caption-index { color: var(--tc-color-accent-text); }
+
+/* Caption laid over the image, bottom-left, as in the reference spreads. */
+.tc-figure--caption-over .tc-figure__caption {
+  position: absolute;
+  bottom: var(--tc-space-md);
+  left: var(--tc-space-md);
+  margin: 0;
+  color: var(--tc-palette-sage-100);
+  text-shadow: 0 1px 12px rgb(7 20 18 / 70%);
+}
+
+/* ==========================================================================
+   Spec - technical microtypography
+   Batch IDs, coordinates, feedstock, permanence, MRV. The science layer.
+   ========================================================================== */
+
+.tc-spec { display: flex; flex-direction: column; min-width: 0; }
+
+.tc-spec--columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0;
+}
+
+.tc-spec__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--tc-space-md);
+  padding: var(--tc-space-xs) 0;
+  border-bottom: var(--tc-hairline-width) solid var(--tc-color-hairline);
+}
+
+.tc-spec--columns .tc-spec__row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--tc-space-2xs);
+  padding: var(--tc-space-sm) var(--tc-space-md) var(--tc-space-sm) 0;
+  border-bottom: 0;
+  border-left: var(--tc-hairline-width) solid var(--tc-color-hairline);
+  padding-left: var(--tc-space-md);
+}
+
+.tc-spec__row:last-child { border-bottom: 0; }
+
+.tc-spec__label {
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-2xs);
+  letter-spacing: var(--tc-letter-spacing-widest);
+  color: var(--tc-color-text-subtle);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.tc-spec__value {
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--tc-color-text);
+  text-align: right;
+}
+
+.tc-spec--columns .tc-spec__value { text-align: left; }
+.tc-spec__value--accent { color: var(--tc-color-accent-text); }
+
+/* ==========================================================================
+   Instrument - conceptual data display
+   A scientific readout, not a business chart: one hairline trace, a luminous
+   head, no gridlines, no axes furniture.
+   ========================================================================== */
+
+.tc-instrument { position: relative; display: flex; flex-direction: column; gap: var(--tc-space-sm); min-width: 0; }
+
+.tc-instrument__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--tc-space-md);
+}
+
+.tc-instrument__label {
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-2xs);
+  letter-spacing: var(--tc-letter-spacing-widest);
+  color: var(--tc-color-text-subtle);
+  text-transform: uppercase;
+}
+
+.tc-instrument__reading {
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-sm);
+  font-variant-numeric: tabular-nums;
+  color: var(--tc-color-accent-text);
+}
+
+.tc-instrument__plot { display: block; width: 100%; overflow: visible; }
+
+.tc-instrument__trace {
+  fill: none;
+  stroke: var(--tc-color-accent);
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.tc-instrument__area { fill: var(--tc-color-accent); opacity: 0.09; }
+
+.tc-instrument__baseline {
+  stroke: var(--tc-color-hairline);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+.tc-instrument__tick {
+  stroke: var(--tc-color-hairline);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+
+/* The luminous head of the trace - the one bright point in the readout. */
+.tc-instrument__head { fill: var(--tc-color-accent); }
+.tc-instrument__head-glow { fill: var(--tc-color-accent); opacity: 0.28; }
+
+.tc-instrument__scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-3xs);
+  letter-spacing: var(--tc-letter-spacing-wide);
+  color: var(--tc-color-text-subtle);
+}
+
+/* ==========================================================================
+   Mark - the wordmark's symbol
+   Abstract: concentric orbits with a porous interior. Reads as carbon, cycle,
+   matter, orbit or porosity without depicting any of them.
+   ========================================================================== */
+
+.tc-mark { display: inline-flex; align-items: center; gap: var(--tc-space-sm); color: var(--tc-color-text); }
+.tc-mark__glyph { display: block; flex: none; overflow: visible; }
+.tc-mark__orbit { fill: none; stroke: currentColor; stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.tc-mark__orbit--faint { opacity: 0.42; }
+.tc-mark__pore { fill: currentColor; }
+.tc-mark__core { fill: none; stroke: currentColor; stroke-width: 1.25; vector-effect: non-scaling-stroke; }
+.tc-mark--glow .tc-mark__glyph { filter: drop-shadow(0 0 10px var(--tc-color-accent)); }
+
+.tc-mark__wordmark {
+  display: flex;
+  flex-direction: column;
+  font-family: var(--tc-font-sans);
+  line-height: 1.15;
+}
+
+.tc-mark__name {
+  font-size: var(--tc-font-size-lg);
+  font-weight: var(--tc-font-weight-regular);
+  letter-spacing: var(--tc-letter-spacing-tight);
+}
+
+.tc-mark__descriptor {
+  font-size: var(--tc-font-size-3xs);
+  letter-spacing: var(--tc-letter-spacing-ultra);
+  color: var(--tc-color-text-subtle);
+  text-transform: uppercase;
+}

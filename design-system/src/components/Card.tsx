@@ -18,8 +18,17 @@ export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 't
   /**
    * `frost` is translucent glass and needs something behind it to refract.
    * `iridescent` is the pearlescent hero surface - one per view.
+   * **`bare` removes the container entirely** (no background, border or
+   * radius) so content sits directly on the page - reach for it whenever a
+   * section should not read as a dashboard panel.
    */
-  surface?: 'solid' | 'frost' | 'iridescent';
+  surface?: 'solid' | 'frost' | 'iridescent' | 'bare';
+  /** Drop the corner radius. Square modules are a deliberate register here. */
+  square?: boolean;
+  /** Pool diffuse light behind the card, so it floats in front of a plane. */
+  halo?: boolean;
+  /** Let a light leak cross the surface, as if the frame were over-exposed. */
+  leak?: boolean;
   /** Add hover bloom and a pointer, for a whole-card link or button. */
   interactive?: boolean;
   /** Drop the body padding, e.g. when the body is a Table. */
@@ -36,7 +45,7 @@ export interface CardProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 't
  * </Card>
  */
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
-  { children, title, description, action, footer, elevation = 'sm', surface = 'solid', interactive = false, flushBody = false, className, ...rest },
+  { children, title, description, action, footer, elevation = 'sm', surface = 'solid', square = false, halo = false, leak = false, interactive = false, flushBody = false, className, ...rest },
   ref
 ) {
   const hasHeader = title != null || description != null || action != null;
@@ -47,6 +56,9 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(function Card(
         'tc-card',
         `tc-card--elevation-${elevation}`,
         surface !== 'solid' && `tc-card--${surface}`,
+        square && 'tc-card--square',
+        halo && 'tc-card--halo',
+        leak && 'tc-card--leak',
         interactive && 'tc-card--interactive',
         className
       )}

@@ -17,6 +17,13 @@ export const ImpactRow = () => (
   </TerraCarbonProvider>
 );
 
+/** Projected: a blurred duplicate behind the glyphs - soft, never illegible. */
+export const Projected = () => (
+  <TerraCarbonProvider theme="dark" halo style={{ padding: 48, borderRadius: 18 }}>
+    <Stat variant="projected" value="250K+" unit="hectares of soils enhanced" />
+  </TerraCarbonProvider>
+);
+
 export const Cards = () => (
   <Stack direction="horizontal" gap="lg" wrap>
     <Stat label="active projects" value="23" caption="across 12 countries" style={{ minWidth: 210 }} />
