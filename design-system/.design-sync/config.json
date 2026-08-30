@@ -80,6 +80,16 @@
     },
     "Mark": {
       "cardMode": "column"
+    },
+    "Slide": {
+      "cardMode": "column",
+      "viewport": "1000x640"
+    },
+    "Process": {
+      "cardMode": "column"
+    },
+    "ProcessStep": {
+      "cardMode": "column"
     }
   },
   "readmeHeader": ".design-sync/conventions.md",

@@ -133,6 +133,33 @@
   --tc-palette-paper-50: #f6f3ea;
   --tc-palette-paper-25: #faf8f2;
 
+
+  /* --- Mist: the light register's ground -------------------------------
+     Mineral white / blue-white, like a very refined old LCD. NOT corporate
+     white and no longer cream: warm paper read as SaaS product design. */
+  --tc-palette-mist-25: #fbfcfd;
+  --tc-palette-mist-50: #f4f7f9;
+  --tc-palette-mist-100: #eaeff3;
+  --tc-palette-mist-200: #dce4ea;
+  --tc-palette-mist-300: #c6d2db;
+  --tc-palette-mist-400: #a7b6c2;
+  --tc-palette-mist-500: #8494a2;
+
+  /* --- Optical light ----------------------------------------------------
+     These are NOT brand colours. They are colours PRODUCED BY LIGHT passing
+     through glass: the dispersion fringe on a lens edge, the flare off a
+     sphere, the sheen on a pearlescent surface. Only ever used in gradients,
+     glows and edges - never as a fill, never as a text colour. */
+  --tc-optic-ice: #d9e8f6;
+  --tc-optic-mint: #d2f0e3;
+  --tc-optic-silver: #e7ebee;
+  --tc-optic-lilac: #e3dff3;
+  --tc-optic-peach: #f9e1d2;
+  --tc-optic-ice-deep: #7fb2d8;
+  --tc-optic-mint-deep: #74d4b4;
+  --tc-optic-lilac-deep: #a99ed6;
+  --tc-optic-peach-deep: #eda887;
+
   /* --- Typography --------------------------------------------------------
      Satoshi is the brand face and is NOT bundled; the stack falls through to
      the system grotesque. The editorial character comes from the SCALE
@@ -240,23 +267,23 @@
 [data-theme="light"] {
   color-scheme: light;
 
-  --tc-color-bg: var(--tc-palette-paper-50);
-  --tc-color-surface: var(--tc-palette-paper-25);
-  --tc-color-surface-sunken: var(--tc-palette-paper-100);
-  --tc-color-surface-raised: #fffdf8;
+  --tc-color-bg: var(--tc-palette-mist-50);
+  --tc-color-surface: var(--tc-palette-mist-25);
+  --tc-color-surface-sunken: var(--tc-palette-mist-100);
+  --tc-color-surface-raised: #ffffff;
   --tc-color-surface-inverse: var(--tc-palette-petrol-900);
-  --tc-color-overlay: rgb(7 20 18 / 38%);
+  --tc-color-overlay: rgb(7 20 18 / 34%);
 
-  --tc-color-border: var(--tc-palette-paper-300);
-  --tc-color-border-strong: var(--tc-palette-paper-400);
-  --tc-color-border-subtle: var(--tc-palette-paper-200);
+  --tc-color-border: var(--tc-palette-mist-200);
+  --tc-color-border-strong: var(--tc-palette-mist-300);
+  --tc-color-border-subtle: var(--tc-palette-mist-100);
   --tc-color-hairline: rgb(29 61 60 / 16%);
 
   --tc-color-text: var(--tc-palette-petrol-900);
   --tc-color-text-muted: var(--tc-palette-graphite-500);
-  --tc-color-text-subtle: var(--tc-palette-graphite-400);
-  --tc-color-text-inverse: var(--tc-palette-paper-50);
-  --tc-color-text-on-accent: var(--tc-palette-paper-25);
+  --tc-color-text-subtle: var(--tc-palette-mist-500);
+  --tc-color-text-inverse: var(--tc-palette-mist-50);
+  --tc-color-text-on-accent: var(--tc-palette-mist-25);
 
   --tc-color-accent: var(--tc-palette-mineral-600);
   --tc-color-accent-hover: var(--tc-palette-mineral-700);
@@ -361,6 +388,48 @@
   );
   --tc-gradient-fade: linear-gradient(180deg, transparent 0%, var(--tc-color-bg) 100%);
 
+
+  /* --- Refraction -------------------------------------------------------
+     Light bent through glass. These are layered and off-axis on purpose: a
+     single linear ramp reads as a Figma gradient, dispersion does not.
+     `prism` is the dispersion fringe, `caustic` the focused light a lens
+     throws, `sheen` the pearlescent sweep across a surface. */
+  --tc-gradient-prism: conic-gradient(
+    from 210deg at 62% 38%,
+    var(--tc-optic-ice) 0deg,
+    var(--tc-optic-mint) 58deg,
+    var(--tc-optic-silver) 122deg,
+    var(--tc-optic-lilac) 196deg,
+    var(--tc-optic-peach) 268deg,
+    var(--tc-optic-ice) 360deg
+  );
+  --tc-gradient-caustic:
+    radial-gradient(52% 38% at 28% 22%, rgb(255 255 255 / 78%) 0%, transparent 62%),
+    radial-gradient(38% 46% at 74% 70%, var(--tc-optic-mint) 0%, transparent 66%),
+    radial-gradient(64% 58% at 52% 96%, var(--tc-optic-lilac) 0%, transparent 72%),
+    radial-gradient(40% 40% at 88% 18%, var(--tc-optic-peach) 0%, transparent 68%);
+  --tc-gradient-sheen: linear-gradient(
+    104deg,
+    transparent 0%,
+    var(--tc-optic-mint) 18%,
+    var(--tc-optic-silver) 34%,
+    transparent 48%,
+    var(--tc-optic-lilac) 66%,
+    var(--tc-optic-peach) 82%,
+    transparent 100%
+  );
+  /* The dispersion fringe on an edge - a numeral, a rule, an object. */
+  --tc-edge-iridescent: linear-gradient(
+    96deg,
+    var(--tc-optic-ice-deep) 0%,
+    var(--tc-optic-mint-deep) 32%,
+    var(--tc-optic-lilac-deep) 64%,
+    var(--tc-optic-peach-deep) 100%
+  );
+  --tc-flare-soft:
+    radial-gradient(46% 30% at 30% 26%, rgb(255 255 255 / 62%) 0%, transparent 70%),
+    radial-gradient(70% 44% at 62% 30%, var(--tc-optic-ice) 0%, transparent 76%);
+
   /* --- Light leaks: unevenly-developed film, light entering the frame --- */
   --tc-lightleak-top: radial-gradient(
     80% 60% at 20% -10%,
@@ -405,8 +474,8 @@
     0 0 44px rgb(51 171 196 / 30%),
     0 0 96px rgb(168 230 210 / 24%);
 
-  --tc-frost-tint: rgb(250 248 242 / 52%);
-  --tc-frost-tint-strong: rgb(250 248 242 / 78%);
+  --tc-frost-tint: rgb(251 252 253 / 50%);
+  --tc-frost-tint-strong: rgb(251 252 253 / 78%);
 
   --tc-grain-opacity: 0.5;
   --tc-grain-opacity-strong: 0.82;
@@ -538,6 +607,42 @@
     var(--tc-palette-flare-400) 100%
   );
   --tc-gradient-fade: linear-gradient(180deg, transparent 0%, var(--tc-color-bg) 100%);
+
+
+  --tc-gradient-prism: conic-gradient(
+    from 210deg at 62% 38%,
+    rgb(127 178 216 / 46%) 0deg,
+    rgb(116 212 180 / 42%) 58deg,
+    rgb(231 235 238 / 30%) 122deg,
+    rgb(169 158 214 / 44%) 196deg,
+    rgb(237 168 135 / 38%) 268deg,
+    rgb(127 178 216 / 46%) 360deg
+  );
+  --tc-gradient-caustic:
+    radial-gradient(52% 38% at 28% 22%, rgb(255 255 255 / 34%) 0%, transparent 62%),
+    radial-gradient(38% 46% at 74% 70%, rgb(116 212 180 / 34%) 0%, transparent 66%),
+    radial-gradient(64% 58% at 52% 96%, rgb(169 158 214 / 30%) 0%, transparent 72%),
+    radial-gradient(40% 40% at 88% 18%, rgb(237 168 135 / 26%) 0%, transparent 68%);
+  --tc-gradient-sheen: linear-gradient(
+    104deg,
+    transparent 0%,
+    rgb(116 212 180 / 26%) 18%,
+    rgb(231 235 238 / 20%) 34%,
+    transparent 48%,
+    rgb(169 158 214 / 26%) 66%,
+    rgb(237 168 135 / 22%) 82%,
+    transparent 100%
+  );
+  --tc-edge-iridescent: linear-gradient(
+    96deg,
+    var(--tc-optic-ice) 0%,
+    var(--tc-optic-mint) 32%,
+    var(--tc-optic-lilac) 64%,
+    var(--tc-optic-peach) 100%
+  );
+  --tc-flare-soft:
+    radial-gradient(46% 30% at 30% 26%, rgb(255 255 255 / 26%) 0%, transparent 70%),
+    radial-gradient(70% 44% at 62% 30%, rgb(127 178 216 / 24%) 0%, transparent 76%);
 
   --tc-lightleak-top: radial-gradient(
     80% 60% at 20% -10%,
@@ -709,6 +814,42 @@
       var(--tc-palette-flare-400) 100%
     );
     --tc-gradient-fade: linear-gradient(180deg, transparent 0%, var(--tc-color-bg) 100%);
+
+
+    --tc-gradient-prism: conic-gradient(
+      from 210deg at 62% 38%,
+      rgb(127 178 216 / 46%) 0deg,
+      rgb(116 212 180 / 42%) 58deg,
+      rgb(231 235 238 / 30%) 122deg,
+      rgb(169 158 214 / 44%) 196deg,
+      rgb(237 168 135 / 38%) 268deg,
+      rgb(127 178 216 / 46%) 360deg
+    );
+    --tc-gradient-caustic:
+      radial-gradient(52% 38% at 28% 22%, rgb(255 255 255 / 34%) 0%, transparent 62%),
+      radial-gradient(38% 46% at 74% 70%, rgb(116 212 180 / 34%) 0%, transparent 66%),
+      radial-gradient(64% 58% at 52% 96%, rgb(169 158 214 / 30%) 0%, transparent 72%),
+      radial-gradient(40% 40% at 88% 18%, rgb(237 168 135 / 26%) 0%, transparent 68%);
+    --tc-gradient-sheen: linear-gradient(
+      104deg,
+      transparent 0%,
+      rgb(116 212 180 / 26%) 18%,
+      rgb(231 235 238 / 20%) 34%,
+      transparent 48%,
+      rgb(169 158 214 / 26%) 66%,
+      rgb(237 168 135 / 22%) 82%,
+      transparent 100%
+    );
+    --tc-edge-iridescent: linear-gradient(
+      96deg,
+      var(--tc-optic-ice) 0%,
+      var(--tc-optic-mint) 32%,
+      var(--tc-optic-lilac) 64%,
+      var(--tc-optic-peach) 100%
+    );
+    --tc-flare-soft:
+      radial-gradient(46% 30% at 30% 26%, rgb(255 255 255 / 26%) 0%, transparent 70%),
+      radial-gradient(70% 44% at 62% 30%, rgb(127 178 216 / 24%) 0%, transparent 76%);
 
     --tc-lightleak-top: radial-gradient(
       80% 60% at 20% -10%,

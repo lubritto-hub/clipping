@@ -22,6 +22,20 @@ export interface FigureProps extends Omit<React.HTMLAttributes<HTMLElement>, 'ch
   tone?: 'none' | 'cool' | 'mineral' | 'earth' | 'flare';
   /** A soft, offset duplicate behind the subject — motion blur and ghosting. */
   ghost?: boolean;
+  /**
+   * Stacked, decaying echoes instead of one ghost — a long exposure. Use it
+   * on people and machines in motion; it is the most editorial of the
+   * treatments and the least like stock photography.
+   */
+  smear?: boolean;
+  /** Blown highlights and lifted blacks, as if lit on-camera with soft flash. */
+  flash?: boolean;
+  /** Crush the subject to a shape against the light. */
+  silhouette?: boolean;
+  /** Chromatic aberration — the lens failing to focus all wavelengths together. */
+  chroma?: boolean;
+  /** An iridescent veil across the frame, as if light entered the lens. */
+  prism?: boolean;
   /** Horizontal offset of the ghost, in px. Defaults to `14`. */
   ghostOffset?: number;
   /** Blown highlights leaking across the frame. */
@@ -44,10 +58,15 @@ export interface FigureProps extends Omit<React.HTMLAttributes<HTMLElement>, 'ch
 /**
  * Editorial photography, treated.
  *
- * Terra Carbon's imagery is people, laboratories, industry, biomass, material
- * macro, soil and machines — shot at unusual crops, not "climate stock". This
- * component supplies the treatment that makes a photograph belong to the
- * brand: duotone, defocus, ghosting, bloom and grain.
+ * Terra Carbon's imagery is people, hands, operators, farmers, researchers and
+ * silhouettes, alongside laboratories, industry, biomass, material macro, soil
+ * and machines — shot at unusual crops. **Never smiling-at-camera ESG stock,
+ * and never the literal set** (a seedling, a glowing planet, hands holding
+ * earth). This component supplies the treatment that makes a photograph belong
+ * to the brand: duotone, defocus, motion, optics, bloom and grain.
+ *
+ * The house tension is hyper-precision against imperfection: `84.7% FIXED
+ * CARBON` set beside a photograph that is almost entirely out of focus.
  *
  * @example
  * <Figure src="/kiln.jpg" alt="Pyrolysis kiln at night" ratio={3 / 2}
@@ -56,7 +75,8 @@ export interface FigureProps extends Omit<React.HTMLAttributes<HTMLElement>, 'ch
  */
 export const Figure = React.forwardRef<HTMLElement, FigureProps>(function Figure(
   {
-    src, alt, ratio = 4 / 5, focus = 'sharp', tone = 'none', ghost = false, ghostOffset = 14,
+    src, alt, ratio = 4 / 5, focus = 'sharp', tone = 'none', ghost = false, smear = false,
+    flash = false, silhouette = false, chroma = false, prism = false, ghostOffset = 14,
     bloom = false, grain = true, wash = false, fade = false, radius = 'none',
     caption, captionIndex, captionOver = false, className, style, ...rest
   },
@@ -77,6 +97,8 @@ export const Figure = React.forwardRef<HTMLElement, FigureProps>(function Figure
         `tc-figure--radius-${radius}`,
         focus !== 'sharp' && `tc-figure--focus-${focus}`,
         tone !== 'none' && `tc-figure--tone-${tone}`,
+        flash && 'tc-figure--flash',
+        silhouette && 'tc-figure--silhouette',
         fade && 'tc-figure--fade',
         captionOver && 'tc-figure--caption-over',
         className
@@ -88,6 +110,15 @@ export const Figure = React.forwardRef<HTMLElement, FigureProps>(function Figure
         className="tc-figure__frame"
         style={{ aspectRatio: String(ratio), ['--tc-figure-ghost-x' as string]: `${ghostOffset}px` }}
       >
+        {smear &&
+          [1, 2, 3].map((n) => (
+            <span
+              key={n}
+              className={`tc-figure__smear tc-figure__smear--${n}`}
+              aria-hidden="true"
+              style={{ backgroundImage: `url(${JSON.stringify(src)})` }}
+            />
+          ))}
         {ghost && (
           <span
             className="tc-figure__ghost"
@@ -96,6 +127,15 @@ export const Figure = React.forwardRef<HTMLElement, FigureProps>(function Figure
           />
         )}
         <img className="tc-figure__image" src={src} alt={alt} />
+        {chroma && (
+          <>
+            <span className="tc-figure__chroma tc-figure__chroma--warm" aria-hidden="true"
+              style={{ backgroundImage: `url(${JSON.stringify(src)})` }} />
+            <span className="tc-figure__chroma tc-figure__chroma--cool" aria-hidden="true"
+              style={{ backgroundImage: `url(${JSON.stringify(src)})` }} />
+          </>
+        )}
+        {prism && <span className="tc-figure__prism" aria-hidden="true" />}
         {bloom && <span className="tc-figure__bloom" aria-hidden="true" />}
         {wash && <span className="tc-figure__wash" aria-hidden="true" />}
         {grain && <span className="tc-figure__grain" aria-hidden="true" />}

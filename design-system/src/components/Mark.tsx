@@ -15,9 +15,13 @@ export interface MarkProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, '
 /**
  * The terra carbon symbol.
  *
- * Deliberately abstract: two offset orbits around a porous core. It can be
- * read as carbon, a cycle, matter, transformation, an orbit, or the porosity
- * of biochar itself — without depicting any of them. There is no leaf.
+ * Deliberately abstract: two open, off-axis arcs around an irregular cluster
+ * of voids. It can be read as a particle, a pore, carbon, a cycle, an orbit,
+ * matter or transformation — without depicting any of them. There is no leaf,
+ * and the arcs are broken so it never resolves into a generic eco roundel.
+ *
+ * **It has to work alone.** In presentations the glyph is used without the
+ * wordmark far more often than with it.
  *
  * @example
  * <Mark size={40} wordmark />
@@ -37,17 +41,19 @@ export const Mark = React.forwardRef<HTMLSpanElement, MarkProps>(function Mark(
         role="img"
         aria-label="terra carbon"
       >
-        {/* Two orbits, offset — cycle and transformation, never concentric. */}
-        <circle className="tc-mark__orbit" cx="16" cy="16" r="14" />
-        <circle className="tc-mark__orbit tc-mark__orbit--faint" cx="18.5" cy="14" r="10.5" />
-        {/* The core, held open. */}
-        <circle className="tc-mark__core" cx="16" cy="16" r="5.2" />
-        {/* Porosity — irregular voids, the material read at macro. */}
-        <circle className="tc-mark__pore" cx="16" cy="16" r="1.5" />
-        <circle className="tc-mark__pore" cx="10.2" cy="20.4" r="1.05" />
-        <circle className="tc-mark__pore" cx="22.6" cy="21.2" r="0.8" />
-        <circle className="tc-mark__pore" cx="21.4" cy="9.6" r="1.25" />
-        <circle className="tc-mark__pore" cx="9.4" cy="12.2" r="0.62" />
+        {/* Two open arcs, off-axis and never concentric. Closed rings read as
+            a generic eco/orbit icon; the gaps keep it a trajectory. */}
+        <path className="tc-mark__orbit" d="M4.31 9.25 A13.5 13.5 0 1 1 9.25 27.69" />
+        <path className="tc-mark__orbit tc-mark__orbit--faint" d="M25.78 20.61 A9.5 9.5 0 1 1 23.25 6.27" />
+        {/* Porosity: an irregular cluster of unequal voids, offset from centre.
+            Read as particle, pore, carbon, matter - none of them literally. */}
+        <circle className="tc-mark__pore" cx="14.2" cy="17.8" r="2.1" />
+        <circle className="tc-mark__pore" cx="18.9" cy="15.1" r="1.15" />
+        <circle className="tc-mark__pore" cx="17.6" cy="20.4" r="1.4" />
+        <circle className="tc-mark__pore" cx="12.1" cy="13.4" r="0.85" />
+        <circle className="tc-mark__pore" cx="21.2" cy="19" r="0.72" />
+        <circle className="tc-mark__pore" cx="10.6" cy="19.6" r="0.6" />
+        <circle className="tc-mark__pore" cx="15" cy="11.6" r="0.5" />
       </svg>
       {wordmark && (
         <span className="tc-mark__wordmark">

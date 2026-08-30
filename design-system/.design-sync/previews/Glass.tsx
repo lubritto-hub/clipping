@@ -22,6 +22,17 @@ export const Panel = () => (
   </TerraCarbonProvider>
 );
 
+/** Real optics: caustics through the body, a dispersion fringe on the rim. */
+export const PearlAndDroplets = () => (
+  <TerraCarbonProvider theme="dark" halo style={{ padding: 48, borderRadius: 18 }}>
+    <Stack direction="horizontal" gap="2xl" align="center" justify="center">
+      <Glass orb size={150} droplets />
+      <Glass orb size={150} pearl />
+      <Glass orb size={150} pearl droplets />
+    </Stack>
+  </TerraCarbonProvider>
+);
+
 export const OnLight = () => (
   <TerraCarbonProvider theme="light" halo style={{ padding: 48, borderRadius: 18 }}>
     <Stack direction="horizontal" gap="xl" align="center" justify="center">

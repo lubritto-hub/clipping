@@ -25,6 +25,13 @@ export interface StatProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
   variant?: 'card' | 'plain' | 'display' | 'projected' | 'colossal' | 'iridescent';
   /** Add the glow without going to `display` size. */
   glow?: boolean;
+  /**
+   * Optical treatment of the numeral itself. `edge` adds the chromatic
+   * dispersion fringe; `soft` puts it gently out of focus; `veiled` dissolves
+   * its trailing edge into light. Vary these across a deck - a number that is
+   * always crisp reads as a data label, not as the image of the slide.
+   */
+  optic?: 'none' | 'edge' | 'soft' | 'veiled';
 }
 
 /**
@@ -39,7 +46,7 @@ export interface StatProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
  * <Stat label="hectares of soils enhanced" value="250,412" delta="+8.2%" deltaDirection="up" />
  */
 export const Stat = React.forwardRef<HTMLDivElement, StatProps>(function Stat(
-  { label, value, unit, delta, deltaDirection = 'flat', caption, variant = 'card', glow = false, className, ...rest },
+  { label, value, unit, delta, deltaDirection = 'flat', caption, variant = 'card', glow = false, optic = 'none', className, ...rest },
   ref
 ) {
   return (
@@ -51,6 +58,7 @@ export const Stat = React.forwardRef<HTMLDivElement, StatProps>(function Stat(
         // `projected` and `colossal` build on the display treatment.
         (variant === 'projected' || variant === 'colossal') && 'tc-stat--display',
         glow && variant === 'card' && 'tc-stat--glow',
+        optic !== 'none' && `tc-stat--${optic}`,
         className
       )}
       {...rest}

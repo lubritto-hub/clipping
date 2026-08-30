@@ -2,10 +2,14 @@
 
 **biochar · climate solutions.**
 
-> Less SaaS dashboard, more Y2K editorial climate technology: softer,
-> stranger, more atmospheric, more tactile, more photographic, more premium.
-> Sony/Apple 2001 meeting a 2030 climate-tech — not a 2026 carbon-credit
-> startup.
+> **Sony 2001 × Apple Aqua × climate science × biochar materiality,
+> reinterpreted for 2026.**
+>
+> This is *Y2K soft-tech editorial applied to a scientific climate-tech* —
+> not a scientific climate brand with a Y2K veneer. That order matters: light,
+> refraction and optics come first, and the science reads through them.
+> Softer, stranger, more atmospheric, more tactile, more photographic, more
+> premium. Never an ESG startup, never carbon-credit software.
 
 Voice: science-rooted, future-focused. Clarity, humility, optimism. Headlines
 are lowercase.
@@ -63,6 +67,8 @@ glue use `var(--tc-*)`. Never a hex, a px shadow, or an off-scale space.
 | **Material tones** | `--tc-color-organic` (sage, living biomass), `--tc-color-earth` (soil, char), `--tc-color-mineral` (deep teal) |
 | **Depth = bloom** | `--tc-bloom-sm/md/lg`, `--tc-bloom-accent`, `--tc-bloom-inner`, `--tc-halo-behind` |
 | **Atmosphere** | `--tc-lightleak-top`, `--tc-lightleak-corner`, `--tc-lightleak-edge`, `--tc-texture-grain`, `--tc-texture-wash`, `--tc-grain-opacity`, `--tc-wash-opacity` |
+| **Optical light** | `--tc-optic-ice`, `--tc-optic-mint`, `--tc-optic-silver`, `--tc-optic-lilac`, `--tc-optic-peach` (+ `-deep` variants) |
+| **Refraction** | `--tc-gradient-prism`, `--tc-gradient-caustic`, `--tc-gradient-sheen`, `--tc-edge-iridescent`, `--tc-flare-soft` |
 | Iridescence | `--tc-gradient-iridescent`, `--tc-gradient-iridescent-text`, `--tc-gradient-chrome`, `--tc-gradient-halo`, `--tc-gradient-glass`, `--tc-gradient-verdant`, `--tc-gradient-terra`, `--tc-gradient-flare` |
 | Glow | `--tc-glow-text`, `--tc-glow-text-strong` |
 | Blur | `--tc-blur-focus`, `--tc-blur-ghost`, `--tc-blur-fore`, `--tc-blur-frost`, `--tc-frost-tint-strong` |
@@ -74,8 +80,17 @@ glue use `var(--tc-*)`. Never a hex, a px shadow, or an off-scale space.
 drop shadow. For real separation put a `Halo` behind the element.
 
 **Palette rules.** Green is sage / eucalyptus / mineral / celadon — never flag
-or forest green. The dark ground is petrol, never `#000`. Iridescence runs
-cyan → mint → lilac → peach and stays faint.
+or forest green. The dark ground is petrol, never `#000`. The light ground is
+mineral white / mist / blue-white, like a very refined old LCD — **never cream
+and never corporate white**; warm paper reads as SaaS.
+
+**Optical light is not brand colour.** `--tc-optic-*` are the colours *produced
+by light* passing through glass: ice, pale mint, silver, washed lilac, optical
+peach. Use them only in gradients, glows and edges — never as a fill, never as
+a text colour. And never build a plain two-stop linear ramp: `--tc-gradient-prism`
+(conic dispersion), `--tc-gradient-caustic` (layered off-axis radials) and
+`--tc-gradient-sheen` exist because a Figma-looking gradient breaks the spell.
+It has to read as light through glass, not as a colour transition.
 
 **Status vs material.** `success/warning/danger/info` = how something is
 *doing*. `organic` / `earth` / `mineral` = what it *is*. `Badge`, `Alert`,
@@ -83,10 +98,15 @@ cyan → mint → lilac → peach and stays faint.
 
 ## 3. The gestures that make it this brand
 
-- **BIG NUMBER** — `<Stat variant="display" />` (120px) · `variant="projected"`
-  puts a blurred duplicate behind the glyphs so it reads as light thrown on an
-  old screen · `variant="colossal"` (176px) is meant to be **cut by the frame**:
-  wrap it in `<Bleed>`. **One per view**, surrounded by near-empty space.
+- **BIG NUMBER — a brand signature, not a metric** — it should occupy 30–50%
+  of a frame and effectively *be* the image. `<Stat variant="display" />`
+  (120px) · `projected` (blurred duplicate behind the glyphs — light thrown on
+  an old screen) · `colossal` (176px, meant to be **cut by the frame**: wrap in
+  `<Bleed>`). Vary the optics with `optic`: `edge` (chromatic dispersion
+  fringe), `soft` (gently out of focus), `veiled` (dissolving into light).
+  A number that is always crisp reads as a dashboard label. The meaning arrives
+  tiny and widely tracked underneath: `TONNES OF DURABLE CO₂ REMOVAL · VERIFIED`.
+  **One per view**, surrounded by near-empty space.
 - **Scale tension** — pair every big number with `<Spec>` microtypography.
   `1.8M+` above `84.7% fixed carbon · batch 0241 · verified 18.08.26` is the
   single most characteristic move in the system.
@@ -95,29 +115,87 @@ cyan → mint → lilac → peach and stays faint.
 - **Hairlines, not boxes** — `<Rule label="03 — science" />` before a bordered
   container. `<Card surface="bare">` removes the container entirely;
   `square` removes the radius. Not everything is a pill.
+- **Precision against imperfection** — the house tension. `84.7% FIXED CARBON`
+  set beside a photograph that is almost entirely out of focus. `VM0044 · batch
+  0241 · 540 °C` beside an ethereal sphere with barely any form. Pair every
+  exact figure with something soft; that contrast is what reads as editorial
+  *and* technological at once.
 - **Treated photography** — `<Figure>` never ships images, it ships their
-  treatment: `tone` (cool/mineral/earth/flare duotone), `focus`
-  (sharp/soft/lost/fore depth planes), `ghost` (motion blur), `bloom`, `grain`,
-  `wash`. **Untreated photography is the fastest way to look like stock.**
-  Subjects: people, laboratory, industry, biomass, material macro, soil,
-  machines — unusual crops. Avoid literal sustainability imagery (glowing
-  planets, plants in spheres); treat biochar as a luxury material.
+  treatment. Duotone `tone` (cool/mineral/earth/flare) · depth `focus`
+  (sharp/soft/lost/fore) · motion `ghost` and `smear` (long exposure) · optics
+  `flash`, `silhouette`, `chroma` (chromatic aberration), `prism` · texture
+  `grain`, `wash`, `bloom`. They compose — a duotone, an exposure and a defocus
+  all apply together. **Untreated photography is the fastest way to look like
+  stock.** Subjects: people, hands, operators, farmers, researchers,
+  silhouettes, laboratory, industry, biomass, material macro, soil, machines,
+  smoke and vapour, reflections, glass, near-abstract aerials — unusual crops,
+  never posed. **Never** a seedling, a glowing planet, hands holding earth, or
+  generic "sustainable industry". Treat biochar as a luxury material.
 - **Instruments, not charts** — `<Instrument>` is a hairline trace with one
   luminous head and no gridlines. Use it instead of any conventional chart.
-- **Glass** — `<Glass orb />`, `<Card surface="frost">`, `<Button variant="frost">`
-  only read as glass **over something** (a figure, or a provider with `halo`).
+- **Glass as a subject, not a container** — `<Glass orb pearl droplets />` is
+  an abstract object with real optics: caustics through the body, a dispersion
+  fringe on the rim, a specular catch-light. Use it as an image in its own
+  right — a sphere, a lens, a bead entering the frame. It only reads as glass
+  **over something** (a figure, or a provider with `halo`). Not glassmorphism UI.
+- **Process stages** — `<ProcessStep stage="earth|heat|carbon|atmosphere">`.
+  The palette tells the transformation: earth → heat → carbon → atmosphere.
+  Give each step a differently-treated photograph and exactly one figure.
+  Four identically-treated cards is the failure mode.
 - **Pearlescence** — `Card surface="iridescent"`, `Stat variant="iridescent"`,
   `Badge tone="iridescent"`, `Heading iridescent`: **at most one per view.**
 - **The mark** — `<Mark wordmark />` is abstract (offset orbits, porous core).
   There is no leaf. Never substitute one.
 
-## 4. Where the truth lives
+## 4. Presentations — a grammar, not a template
+
+**Never build a repeating slide layout** (logo corner → title → subtitle →
+content → footer). That structure is exactly what would flatten this identity.
+`<Slide>` supplies only the register, the bleed and the grain; compose each
+slide from the rest of the system. Alternate visually dense slides with clean
+technical ones — that rhythm is what reads as premium.
+
+The eight archetypes (all authored as `Slide` preview stories — read them):
+
+| # | Archetype | Built from |
+|---|---|---|
+| 01 | Cover / manifesto | full-bleed `Figure` + `Heading` level 1–2 + one `Text eyebrow`. Nothing else. |
+| 02 | Big statement | one sentence over 60–70% of the frame, a `Glass orb` entering from the edge |
+| 03 | Big number | `Stat variant="colossal"` in a `Bleed`, `Spec` beneath as a lab caption |
+| 04 | Science / evidence | dark, one `Instrument`, one large insight, 3–4 `Spec` rows |
+| 05 | Process | `Process` + four differently-treated `ProcessStep`s |
+| 06 | Project case | huge `Figure`, small name, `Spec` as an archive record |
+| 07 | Data / comparison | `tone="mineral"`, hairlines, no boxes, heavy negative space |
+| 08 | Section divider | `tone="atmospheric"`, nearly empty, one tiny `Rule` or eyebrow |
+
+**Register mix across a deck: ~55–60% `dark`, 25–30% `mineral`, 10–15%
+`atmospheric`.** An all-dark deck goes gloomy and the dark slides stop landing.
+
+**Always set `scrim` when type sits over a `backdrop`** — the treated
+photography is deliberately bright and hazy, and tracked microcopy vanishes
+into it otherwise.
+
+**The typographic code**, repeated until it is recognisable: a large, tightly
+tracked neo-grotesk headline, then — far below and far smaller — monospace or
+ultra-tracked metadata.
+
+```
+engineered by nature,
+scaled by technology.
+
+FEEDSTOCK   RICE HUSK
+PYROLYSIS   540 °C
+FIXED C     84.7%
+VERIFIED    18.08.26
+```
+
+## 5. Where the truth lives
 
 Read before styling: `_ds/<folder>/styles.css` and the `tokens/` files it
 imports, then `components/<group>/<Name>/<Name>.prompt.md` and `<Name>.d.ts`
 for real props. The files beat this summary.
 
-## 5. A build in the idiom
+## 6. A build in the idiom
 
 ```jsx
 <TerraCarbonProvider theme="dark" grain wash leak fill>

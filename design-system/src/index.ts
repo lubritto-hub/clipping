@@ -90,4 +90,10 @@ export type { BleedProps } from './components/Bleed';
 export { Halo } from './components/Halo';
 export type { HaloProps } from './components/Halo';
 
+export { Process, ProcessStep } from './components/ProcessStep';
+export type { ProcessProps, ProcessStepProps, ProcessStage } from './components/ProcessStep';
+
+export { Slide } from './components/Slide';
+export type { SlideProps } from './components/Slide';
+
 export { cx } from './utils';

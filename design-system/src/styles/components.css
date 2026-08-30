@@ -1260,31 +1260,73 @@
 
 .tc-glass {
   position: relative;
-  /* A sized orb is a floating object, not a flex child to be squeezed:
-     without this it shrinks on the cross axis and reads as a capsule. */
   flex: none;
+  overflow: hidden;
   background-image: var(--tc-gradient-glass);
-  border: 1px solid var(--tc-color-border-subtle);
   border-radius: var(--tc-radius-lg);
   box-shadow: var(--tc-bloom-inner), var(--tc-bloom-md);
-  backdrop-filter: blur(var(--tc-blur-frost)) saturate(1.6);
-  -webkit-backdrop-filter: blur(var(--tc-blur-frost)) saturate(1.6);
+  backdrop-filter: blur(var(--tc-blur-frost)) saturate(1.7);
+  -webkit-backdrop-filter: blur(var(--tc-blur-frost)) saturate(1.7);
+  isolation: isolate;
 }
 
 .tc-glass--orb { border-radius: var(--tc-radius-full); }
 
-/* The specular highlight that sells the refraction. */
+/* Caustics: the focused light a lens throws through itself. Layered,
+   off-axis radials - a single ramp would read as a flat gradient. */
 .tc-glass::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background:
-    radial-gradient(60% 38% at 30% 10%, rgb(255 255 255 / 72%) 0%, transparent 70%),
-    radial-gradient(90% 70% at 78% 92%, var(--tc-color-accent-subtle) 0%, transparent 66%);
+  background-image: var(--tc-gradient-caustic);
   border-radius: inherit;
-  /* A rim of light around the edge - what actually sells glass on a dark ground. */
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 14%), inset 0 1px 10px rgb(255 255 255 / 12%);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
+/* The dispersion fringe on the rim - where glass splits light into colour.
+   This is the detail that separates real glass from glassmorphism. */
+.tc-glass::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-gradient-prism);
+  border-radius: inherit;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(circle at 50% 50%, transparent 58%, #000 78%, #000 100%);
+  mask-image: radial-gradient(circle at 50% 50%, transparent 58%, #000 78%, #000 100%);
+}
+
+/* Specular: the hard white catch-light near the top-left. */
+.tc-glass__specular {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-flare-soft);
+  border-radius: inherit;
+  mix-blend-mode: screen;
+}
+
+/* Pearlescent sweep across the body - translucent plastic, not glass. */
+.tc-glass--pearl { background-image: var(--tc-gradient-sheen), var(--tc-gradient-glass); }
+
+/* Condensation. Small refracting beads scattered over the surface. */
+.tc-glass__droplets {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  opacity: 0.7;
+  background-image:
+    radial-gradient(circle at 22% 34%, rgb(255 255 255 / 62%) 0 1.4px, transparent 2.2px),
+    radial-gradient(circle at 68% 21%, rgb(255 255 255 / 52%) 0 2.1px, transparent 3px),
+    radial-gradient(circle at 44% 72%, rgb(255 255 255 / 46%) 0 1.1px, transparent 1.9px),
+    radial-gradient(circle at 81% 63%, rgb(255 255 255 / 56%) 0 1.7px, transparent 2.6px),
+    radial-gradient(circle at 33% 88%, rgb(255 255 255 / 40%) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 12% 61%, rgb(255 255 255 / 48%) 0 0.9px, transparent 1.6px);
 }
 
 /* ==========================================================================
@@ -1451,18 +1493,22 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Composed, not competing: each treatment sets its own slot, so a duotone
+     and an exposure and a defocus can all apply at once. Declaring `filter`
+     directly in the modifier rules would make the last one win outright. */
+  filter: var(--tc-fig-tone, ) var(--tc-fig-exposure, ) var(--tc-fig-focus, );
 }
 
 /* Defocus planes: a foreground element is meant to be out of focus. */
-.tc-figure--focus-soft .tc-figure__image { filter: blur(var(--tc-blur-focus)); }
-.tc-figure--focus-lost .tc-figure__image { filter: blur(var(--tc-blur-ghost)); }
-.tc-figure--focus-fore .tc-figure__image { filter: blur(var(--tc-blur-fore)); }
+.tc-figure--focus-soft { --tc-fig-focus: blur(var(--tc-blur-focus)); }
+.tc-figure--focus-lost { --tc-fig-focus: blur(var(--tc-blur-ghost)); }
+.tc-figure--focus-fore { --tc-fig-focus: blur(var(--tc-blur-fore)); }
 
 /* Duotone: the photograph pushed into the brand's own register. */
-.tc-figure--tone-cool .tc-figure__image { filter: grayscale(1) sepia(0.35) hue-rotate(150deg) saturate(2.1) contrast(1.05); }
-.tc-figure--tone-mineral .tc-figure__image { filter: grayscale(1) sepia(0.5) hue-rotate(118deg) saturate(1.8) contrast(1.08); }
-.tc-figure--tone-earth .tc-figure__image { filter: grayscale(1) sepia(0.62) saturate(1.5) contrast(1.04); }
-.tc-figure--tone-flare .tc-figure__image { filter: grayscale(1) sepia(0.6) hue-rotate(-18deg) saturate(2.2) contrast(1.06); }
+.tc-figure--tone-cool { --tc-fig-tone: grayscale(1) sepia(0.35) hue-rotate(150deg) saturate(2.1) contrast(1.05); }
+.tc-figure--tone-mineral { --tc-fig-tone: grayscale(1) sepia(0.5) hue-rotate(118deg) saturate(1.8) contrast(1.08); }
+.tc-figure--tone-earth { --tc-fig-tone: grayscale(1) sepia(0.62) saturate(1.5) contrast(1.04); }
+.tc-figure--tone-flare { --tc-fig-tone: grayscale(1) sepia(0.6) hue-rotate(-18deg) saturate(2.2) contrast(1.06); }
 
 /* Motion blur / ghosting: a soft duplicate offset behind the subject. */
 .tc-figure__ghost {
@@ -1692,4 +1738,222 @@
   letter-spacing: var(--tc-letter-spacing-ultra);
   color: var(--tc-color-text-subtle);
   text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Optical treatments for the big number
+   Sometimes sharp, sometimes glowing, sometimes half-dissolved into light.
+   The number IS the image - it should rarely look like a data label.
+   ========================================================================== */
+
+/* Chromatic fringing on the glyph edges - dispersion, Y2K optical. */
+.tc-stat--edge .tc-stat__value {
+  text-shadow:
+    -1.5px 0 0 var(--tc-optic-ice-deep),
+    1.5px 0 0 var(--tc-optic-peach-deep),
+    var(--tc-glow-text-strong);
+}
+
+/* Softly out of focus, still readable. */
+.tc-stat--soft .tc-stat__value { filter: blur(1.4px); }
+
+/* Dissolving into light on the trailing edge. */
+.tc-stat--veiled .tc-stat__value {
+  -webkit-mask-image: linear-gradient(102deg, #000 0%, #000 46%, rgb(0 0 0 / 35%) 82%, transparent 100%);
+  mask-image: linear-gradient(102deg, #000 0%, #000 46%, rgb(0 0 0 / 35%) 82%, transparent 100%);
+}
+
+/* ==========================================================================
+   Figure — optical and photographic treatments
+   ========================================================================== */
+
+/* Soft flash: blown highlights and lifted blacks, as if lit on-camera. */
+.tc-figure--flash { --tc-fig-exposure: brightness(1.16) contrast(0.88) saturate(0.9); }
+.tc-figure--flash .tc-figure__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-flare-soft);
+  mix-blend-mode: screen;
+}
+
+/* Silhouette: the subject crushed to a shape against the light. */
+.tc-figure--silhouette { --tc-fig-exposure: brightness(0.42) contrast(1.9) saturate(0.5); }
+
+/* Long exposure: stacked, decaying echoes rather than one ghost. */
+.tc-figure__smear {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-position: center;
+  background-size: cover;
+}
+.tc-figure__smear--1 { transform: translateX(calc(var(--tc-figure-ghost-x, 14px) * 1)); filter: blur(4px); opacity: 0.5; }
+.tc-figure__smear--2 { transform: translateX(calc(var(--tc-figure-ghost-x, 14px) * 2.2)); filter: blur(9px); opacity: 0.32; }
+.tc-figure__smear--3 { transform: translateX(calc(var(--tc-figure-ghost-x, 14px) * 3.6)); filter: blur(16px); opacity: 0.18; }
+
+/* Chromatic aberration: the lens failing to focus all wavelengths together. */
+.tc-figure__chroma {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-position: center;
+  background-size: cover;
+  mix-blend-mode: screen;
+  opacity: 0.42;
+}
+.tc-figure__chroma--warm { transform: translateX(2.5px); filter: sepia(1) hue-rotate(-30deg) saturate(4); }
+.tc-figure__chroma--cool { transform: translateX(-2.5px); filter: sepia(1) hue-rotate(150deg) saturate(4); }
+
+/* Iridescent veil across the frame - light entering the lens. */
+.tc-figure__prism {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-gradient-sheen);
+  mix-blend-mode: screen;
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   ProcessStep — the transformation, told by the palette
+   earth → heat → carbon → atmosphere. Each stage owns a different colour,
+   figure treatment and weight, so four steps never read as four equal boxes.
+   ========================================================================== */
+
+.tc-process { display: flex; gap: var(--tc-space-lg); align-items: stretch; flex-wrap: wrap; }
+
+.tc-step { position: relative; display: flex; flex-direction: column; gap: var(--tc-space-sm); min-width: 0; flex: 1 1 140px; }
+
+.tc-step__frame { position: relative; overflow: hidden; }
+
+.tc-step__index {
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-2xs);
+  letter-spacing: var(--tc-letter-spacing-widest);
+  color: var(--tc-color-text-subtle);
+}
+
+.tc-step__name {
+  font-size: var(--tc-font-size-lg);
+  font-weight: var(--tc-font-weight-light);
+  letter-spacing: var(--tc-letter-spacing-tight);
+  color: var(--tc-color-text);
+}
+
+.tc-step__datum {
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 01 earth — warm, organic, granular. */
+.tc-step--earth .tc-step__datum { color: var(--tc-color-earth-text); }
+.tc-step--earth .tc-step__wash {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(80% 70% at 40% 80%, rgb(156 129 104 / 34%) 0%, transparent 74%);
+  mix-blend-mode: screen;
+}
+
+/* 02 heat — industrial, metal, flare. */
+.tc-step--heat .tc-step__datum { color: var(--tc-color-warning-text); }
+.tc-step--heat .tc-step__wash {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(70% 60% at 60% 30%, rgb(220 117 84 / 40%) 0%, transparent 72%);
+  mix-blend-mode: screen;
+}
+
+/* 03 carbon — near-black, tactile, almost no colour at all. */
+.tc-step--carbon .tc-step__datum { color: var(--tc-color-text); }
+.tc-step--carbon .tc-step__wash {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 30%, rgb(7 20 18 / 62%) 100%);
+}
+
+/* 04 atmosphere — ice and mint, luminous, weightless. */
+.tc-step--atmosphere .tc-step__datum { color: var(--tc-color-accent-text); }
+.tc-step--atmosphere .tc-step__wash {
+  position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(80% 80% at 50% 20%, rgb(127 178 216 / 40%) 0%, rgb(116 212 180 / 22%) 46%, transparent 78%);
+  mix-blend-mode: screen;
+}
+
+/* ==========================================================================
+   Slide — a 16:9 frame for presentation work
+   Deliberately NOT a template: no locked header, no footer, no logo slot.
+   It supplies the register and the bleed; composition is per archetype.
+   ========================================================================== */
+
+.tc-slide {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--tc-color-bg);
+  color: var(--tc-color-text);
+}
+
+.tc-slide__body {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: var(--tc-space-2xl);
+}
+
+.tc-slide--flush .tc-slide__body { padding: 0; }
+
+.tc-slide__atmos { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+
+/* Mineral register: the LCD-white slides that let the dark ones land. */
+.tc-slide--mineral { background-color: var(--tc-palette-mist-50); }
+
+/* Atmospheric register: almost pure light, for dividers and transitions. */
+.tc-slide--atmospheric {
+  background-color: var(--tc-palette-mist-25);
+}
+.tc-slide--atmospheric .tc-slide__atmos {
+  background-image: var(--tc-gradient-caustic), var(--tc-gradient-prism);
+  background-blend-mode: screen;
+  opacity: 0.85;
+  filter: blur(18px) saturate(1.15);
+}
+
+.tc-slide__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.tc-slide__scrim--bottom {
+  background: linear-gradient(180deg, transparent 28%, rgb(7 20 18 / 62%) 74%, rgb(7 20 18 / 88%) 100%);
+}
+.tc-slide__scrim--left {
+  background: linear-gradient(94deg, rgb(7 20 18 / 88%) 0%, rgb(7 20 18 / 52%) 44%, transparent 78%);
+}
+.tc-slide__scrim--full { background: rgb(7 20 18 / 58%); }
+
+.tc-slide--atmospheric .tc-slide__scrim--bottom,
+.tc-slide--mineral .tc-slide__scrim--bottom {
+  background: linear-gradient(180deg, transparent 28%, rgb(244 247 249 / 70%) 74%, rgb(244 247 249 / 92%) 100%);
+}
+.tc-slide--mineral .tc-slide__scrim--left {
+  background: linear-gradient(94deg, rgb(244 247 249 / 92%) 0%, rgb(244 247 249 / 58%) 44%, transparent 78%);
+}
+.tc-slide--mineral .tc-slide__scrim--full { background: rgb(244 247 249 / 62%); }
+
+.tc-slide__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: var(--tc-texture-grain);
+  opacity: var(--tc-grain-opacity);
+  mix-blend-mode: overlay;
 }

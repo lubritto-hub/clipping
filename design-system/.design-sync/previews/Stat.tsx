@@ -24,6 +24,17 @@ export const Projected = () => (
   </TerraCarbonProvider>
 );
 
+/** The number is the image: vary the optics so it never reads as a data label. */
+export const Optics = () => (
+  <TerraCarbonProvider theme="dark" halo style={{ padding: 44, borderRadius: 18 }}>
+    <Stack gap="xl">
+      <Stat variant="display" optic="edge" value="1.8M+" unit="chromatic edge" />
+      <Stat variant="display" optic="soft" value="1.8M+" unit="soft focus" />
+      <Stat variant="display" optic="veiled" value="1.8M+" unit="veiled" />
+    </Stack>
+  </TerraCarbonProvider>
+);
+
 export const Cards = () => (
   <Stack direction="horizontal" gap="lg" wrap>
     <Stat label="active projects" value="23" caption="across 12 countries" style={{ minWidth: 210 }} />

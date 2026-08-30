@@ -50,6 +50,20 @@ export const GhostAndBloom = () => (
   </Stack>
 );
 
+/** Motion and optics: the treatments that keep people out of ESG-stock territory. */
+export const MotionAndOptics = () => (
+  <Stack direction="horizontal" gap="lg" wrap>
+    <Figure src={FIGURES} alt="Long exposure" ratio={3 / 4} tone="cool" smear ghostOffset={16}
+      style={{ width: 190 }} captionIndex="01" caption="long exposure" />
+    <Figure src={FIGURES} alt="Soft flash" ratio={3 / 4} tone="cool" flash
+      style={{ width: 190 }} captionIndex="02" caption="soft flash" />
+    <Figure src={FIGURES} alt="Silhouette" ratio={3 / 4} tone="mineral" silhouette
+      style={{ width: 190 }} captionIndex="03" caption="silhouette" />
+    <Figure src={MATERIAL} alt="Chromatic aberration" ratio={3 / 4} tone="earth" chroma prism
+      style={{ width: 190 }} captionIndex="04" caption="chroma · prism" />
+  </Stack>
+);
+
 export const CaptionOver = () => (
   <Figure src={MATERIAL} alt="Char macro" ratio={4 / 3} tone="earth" grain wash
     captionOver captionIndex="fig. 04" caption="char · macro · 400× · 18.08.26"

@@ -11,6 +11,9 @@ Repo-specific gotchas for future syncs. Read before touching config.
   instruments rather than charts, and roughly 60% editorial to 40% product.
   A change that makes the system tidier usually makes it worse - check it
   against `conventions.md` §0 before shipping.
+- The order of the words matters: this is **Y2K soft-tech editorial applied to
+  a climate-tech**, not a climate brand with a Y2K veneer. When in doubt, add
+  light (refraction, bloom, iridescence, glass) rather than structure.
 
 ## Layout
 
@@ -60,6 +63,25 @@ Repo-specific gotchas for future syncs. Read before touching config.
   grotesque. This suppresses `[FONT_MISSING]`; do not "fix" it by shipping
   webfonts without checking licensing first.
 
+## Optics layer
+
+- `Figure` composes its filters through custom-property slots
+  (`--tc-fig-tone`, `--tc-fig-exposure`, `--tc-fig-focus`) rather than
+  declaring `filter` in each modifier. **This is not stylistic.** Competing
+  `filter` declarations do not merge - the last matching rule wins outright -
+  so the earlier version silently dropped the duotone whenever `flash` or
+  `silhouette` was combined with a `tone`. Any new Figure treatment must set a
+  slot, never `filter` directly.
+- `Glass` is real optics, not glassmorphism: `::before` carries layered
+  off-axis caustics, `::after` a conic dispersion fringe masked to the rim.
+  The prism ring depends on the mask - dropping it floods the whole surface.
+- `--tc-optic-*` are light-produced colours, valid only inside gradients,
+  glows and edges. Using one as a fill or a text colour breaks the rule the
+  conventions header states, and the design agent follows that header.
+- `Slide` maps `tone` to `data-theme`: `dark` -> dark, `mineral` AND
+  `atmospheric` -> light. Atmospheric is the luminous register (near-white
+  with iridescence); if it ever renders dark, that mapping regressed.
+
 ## Atmosphere layer
 
 - The look depends on plates that are easy to delete by accident:
@@ -99,7 +121,7 @@ Repo-specific gotchas for future syncs. Read before touching config.
 
 ## Known render warns
 
-None. The last full validate ran clean: 29/29 render, 0 bad, 0 thin,
+None. The last full validate ran clean: 32/32 render, 0 bad, 0 thin,
 0 variants-identical, 0 floor cards.
 
 ## Re-sync risks
@@ -108,10 +130,10 @@ None. The last full validate ran clean: 29/29 render, 0 bad, 0 thin,
   locally but could not upload: `DesignSync` had no design-system authorization
   in the remote session. There is therefore **no `projectId` in config.json and
   no uploaded `_ds_sync.json` anchor** — the next sync is still a first sync and
-  will re-verify all 29 components. Grades in `.design-sync/.cache/review/` are
+  will re-verify all 32 components. Grades in `.design-sync/.cache/review/` are
   gitignored working state and will not survive a fresh clone.
-- The conventions header (`.design-sync/conventions.md`) names 50 tokens, 47
-  props and 15 components. All verified against the build at authoring time.
+- The conventions header (`.design-sync/conventions.md`) names 60 tokens, 63
+  props and 17 components, plus the eight presentation archetypes. All verified against the build at authoring time.
 - **The system ships no photography.** `Figure` supplies the treatment; the host
   app supplies images. The local demo at `.preview/` uses synthetic SVG
   turbulence plates as stand-ins - they are gitignored and are NOT a design
