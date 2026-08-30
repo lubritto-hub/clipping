@@ -1,0 +1,65 @@
+{
+  "shape": "package",
+  "pkg": "@terra-carbon/design-system",
+  "globalName": "TerraCarbon",
+  "buildCmd": "npm run build",
+  "entry": "./dist/index.js",
+  "srcDir": "src",
+  "tsconfig": "tsconfig.json",
+  "cssEntry": "dist/styles.css",
+  "tokensGlob": "dist/tokens.css",
+  "runtimeFontPrefixes": [
+    "Satoshi",
+    "Inter",
+    "JetBrains Mono"
+  ],
+  "provider": {
+    "component": "TerraCarbonProvider",
+    "props": {
+      "theme": "light",
+      "style": {
+        "padding": 28
+      }
+    }
+  },
+  "overrides": {
+    "Modal": {
+      "cardMode": "single",
+      "viewport": "720x520"
+    },
+    "Table": {
+      "cardMode": "column"
+    },
+    "TerraCarbonProvider": {
+      "cardMode": "column"
+    },
+    "Heading": {
+      "cardMode": "column"
+    },
+    "Pagination": {
+      "cardMode": "column"
+    },
+    "ProgressBar": {
+      "cardMode": "column"
+    },
+    "RadioGroup": {
+      "cardMode": "column"
+    },
+    "Stack": {
+      "cardMode": "column"
+    },
+    "Stat": {
+      "cardMode": "column"
+    },
+    "Tabs": {
+      "cardMode": "column"
+    },
+    "Tooltip": {
+      "cardMode": "column"
+    },
+    "Glass": {
+      "cardMode": "column"
+    }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
+}

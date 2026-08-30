@@ -309,8 +309,8 @@
   background-color: var(--tc-color-danger);
 }
 .tc-button--danger:hover:not(:disabled) {
-  background-color: var(--tc-palette-ember-700);
-  box-shadow: var(--tc-bloom-ember);
+  background-color: var(--tc-palette-flare-700);
+  box-shadow: var(--tc-bloom-flare);
 }
 
 .tc-button:disabled { cursor: not-allowed; opacity: 0.42; box-shadow: none; }
@@ -657,7 +657,7 @@
 .tc-control--size-lg { height: var(--tc-control-height-lg); padding: 0 var(--tc-space-lg); font-size: var(--tc-font-size-lg); }
 
 .tc-control--invalid { border-color: var(--tc-color-danger); }
-.tc-control--invalid:focus { box-shadow: var(--tc-bloom-ember); }
+.tc-control--invalid:focus { box-shadow: var(--tc-bloom-flare); }
 
 .tc-control--textarea {
   height: auto;
@@ -1190,6 +1190,9 @@
 
 .tc-glass {
   position: relative;
+  /* A sized orb is a floating object, not a flex child to be squeezed:
+     without this it shrinks on the cross axis and reads as a capsule. */
+  flex: none;
   background-image: var(--tc-gradient-glass);
   border: 1px solid var(--tc-color-border-subtle);
   border-radius: var(--tc-radius-lg);

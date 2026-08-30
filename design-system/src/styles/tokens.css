@@ -143,6 +143,7 @@
   --tc-font-weight-light: 300;
   --tc-font-weight-regular: 400;
   --tc-font-weight-medium: 500;
+  --tc-font-weight-semibold: 600;
   --tc-font-weight-bold: 700;
 
   --tc-line-height-tight: 1.02;
