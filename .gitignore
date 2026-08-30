@@ -1,0 +1,11 @@
+# design-sync working directories
+.ds-sync/
+ds-bundle/
+.design-sync/.cache/
+.design-sync/learnings/
+.design-sync/node_modules
+
+# design-system build + local visual verification
+design-system/node_modules/
+design-system/dist/
+design-system/.preview/

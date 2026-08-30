@@ -1,0 +1,64 @@
+import * as React from 'react';
+import { cx } from '../utils';
+
+export interface StatProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
+  /** Uppercase micro-label. Keep it short: "tons of CO₂ removed". */
+  label?: React.ReactNode;
+  /** The figure itself. Pre-format it - the component does not format numbers. */
+  value: React.ReactNode;
+  /** Unit shown beside the value, e.g. `'tCO₂'`. */
+  unit?: React.ReactNode;
+  /** Signed change, e.g. `'+12.4%'`. Rendered in the direction's colour. */
+  delta?: React.ReactNode;
+  /** Which way `delta` points. `'up'` is the organic green, `'down'` the flare. */
+  deltaDirection?: 'up' | 'down' | 'flat';
+  /** Small line under everything, e.g. `'vs. last quarter'`. */
+  caption?: React.ReactNode;
+  /**
+   * `display` is the BIG NUMBER: 104px, light weight, glowing. It is the
+   * brand's loudest gesture - **one per view**, with near-empty space around
+   * it. `plain` drops the card chrome; `iridescent` fills it with pearl.
+   */
+  variant?: 'card' | 'plain' | 'display' | 'iridescent';
+  /** Add the glow without going to `display` size. */
+  glow?: boolean;
+}
+
+/**
+ * A single metric.
+ *
+ * The `display` variant is the signature of the whole system - the
+ * `1.8M+` treatment from the brand board. Give it room: a display Stat in a
+ * cramped grid loses the entire effect.
+ *
+ * @example
+ * <Stat variant="display" value="1.8M+" unit="tons of CO₂ removed" caption="and counting" />
+ * <Stat label="hectares of soils enhanced" value="250,412" delta="+8.2%" deltaDirection="up" />
+ */
+export const Stat = React.forwardRef<HTMLDivElement, StatProps>(function Stat(
+  { label, value, unit, delta, deltaDirection = 'flat', caption, variant = 'card', glow = false, className, ...rest },
+  ref
+) {
+  return (
+    <div
+      ref={ref}
+      className={cx(
+        'tc-stat',
+        variant !== 'card' && `tc-stat--${variant}`,
+        glow && variant !== 'display' && 'tc-stat--glow',
+        className
+      )}
+      {...rest}
+    >
+      {label != null && <span className="tc-stat__label">{label}</span>}
+      <span className="tc-stat__value-row">
+        <span className="tc-stat__value">{value}</span>
+        {unit != null && <span className="tc-stat__unit">{unit}</span>}
+        {delta != null && (
+          <span className={cx('tc-stat__delta', `tc-stat__delta--${deltaDirection}`)}>{delta}</span>
+        )}
+      </span>
+      {caption != null && <span className="tc-stat__caption">{caption}</span>}
+    </div>
+  );
+});
