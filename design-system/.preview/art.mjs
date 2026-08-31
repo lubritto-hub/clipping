@@ -289,42 +289,70 @@ const PLATES = {
    crossing the frame at different scales, and a fibre macro so far out of
    focus it is only a warm pressure in the corner. Product launch, not report
    cover. */
+/* MODE A — hero atmosférico. A membrana não é uma esfera de vidro: tem um
+   campo de poros dentro dela, então é uma MEMBRANA DE CARBONO. É o device da
+   permanência, apresentado antes de ser explicado. */
 'art-01': () => `
   ${atmos([[16,18,52,48,C.cyan(78),1],[80,32,74,70,C.nacre(58),1],
            [56,88,60,50,C.mint(64),1],[98,80,46,44,C.peach(38),1],
            [6,74,48,44,C.ice(52),1]])}
-  <div class="crop crop--far fade-t" style="right:-8%;bottom:-16%;width:48%;height:72%;opacity:.55">
+  <div class="crop crop--far fade-t" style="right:-8%;bottom:-16%;width:48%;height:72%;opacity:.5">
     <img src="${img('fibre')}"></div>
   <div class="obj" style="right:-16%;top:-30%;width:68%;height:126%;opacity:.96">
     <img src="${img('membrane')}" style="object-fit:contain"></div>
+  <div style="position:absolute;right:-16%;top:-30%;width:68%;height:126%;overflow:hidden;
+    border-radius:50%;opacity:.5;-webkit-mask-image:radial-gradient(closest-side,#000 62%,transparent 96%);
+    mask-image:radial-gradient(closest-side,#000 62%,transparent 96%)">
+    ${pores(3, 1360, 1420, 0.5, 'rgb(20 55 67', 22)}
+  </div>
+  ${thermal('01', 'M0 806 C420 806 620 790 900 764 C1240 733 1540 716 2000 706', 1.4, 0.6)}
   ${arc('right:-30%;top:-48%;width:100%;height:176%', 150, 1.2, 0.9)}
   ${arc('left:-40%;top:22%;width:82%;height:132%', 330, 2, 0.42)}
   <div class="L bloom" style="background-image:var(--tc-lightleak-top)"></div>
   ${refract(0.3)}${grain()}`,
 
+
 /* 02 OPORTUNIDADE — type zone: left 58% above the line; the supply→gap→demand
    axis sits at y 68%. A colossal faded halo at the right, and a ghost 100 that
    is the demand the market cannot reach. */
-'art-02': () => `
+'art-02': () => {
+  /* MODE A — a lacuna DESENHADA EM ESCALA VERDADEIRA.
+     A barra inteira é a demanda anual projetada para 2030 (100 Mt). O que já
+     foi entregue no mundo — 1,5 Mt, acumulado — é a lasca na ponta esquerda.
+     Um gráfico de três caixas esconderia essa razão de 66x; a barra a mostra.
+     O campo de poros ocupa o que ainda NÃO existe: demanda não resolvida. */
+  const X0 = 100, XW = 1800;
+  const sliver = XW * (M.MERCADO.entregueMundoMt / M.MERCADO.demandaMt2030);
+  const y = 470, h = 128;
+  return `
   ${atmos([[14,24,54,50,C.cyan(72),1],[86,42,82,76,C.nacre(52),1],
            [44,92,66,46,C.mint(60),1],[68,6,40,36,C.pearl(78),1],
            [2,62,44,52,C.ice(48),1]])}
-  <div class="obj" style="right:-20%;top:-20%;width:66%;height:136%;opacity:.6">
-    <img src="${img('membrane')}" style="object-fit:contain"></div>
-  <div class="ghost" style="right:2.5%;top:26%;font-size:330px;text-align:right">100</div>
-  <div class="ghost" style="right:3.5%;top:60%;font-size:74px;letter-spacing:.06em">Mt / ano</div>
-  <div class="rule" style="left:5%;right:5%;top:68%"></div>
-  <div class="tick" style="left:5%;top:66.2%;height:3.6%"></div>
-  <div class="tick" style="left:47%;top:66.2%;height:3.6%"></div>
-  <div class="tick" style="right:5%;top:64.6%;height:6.8%;background:rgb(31 115 112 / 60%)"></div>
-  <div class="node" style="left:4.4%;top:67.2%;width:16px;height:16px"></div>
-  <div class="node" style="right:4.4%;top:66.8%;width:24px;height:24px"></div>
-  ${arc('left:-26%;bottom:-74%;width:74%;height:138%', 20, 1.6, 0.55)}
-  ${refract(0.26)}${grain()}`,
+  <div style="position:absolute;left:${(X0 / 20).toFixed(1)}%;top:${(y / 11.25).toFixed(1)}%;
+    width:${(XW / 20).toFixed(1)}%;height:${(h / 11.25).toFixed(1)}%;overflow:hidden;opacity:.6">
+    ${pores(22, 1800, 130, 0.85, 'rgb(20 55 67', 13)}
+  </div>
+  <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 2000 1125">
+    <rect x="${X0}" y="${y}" width="${XW}" height="${h}" fill="rgb(158 194 220 / 16%)"/>
+    <rect x="${X0}" y="${y}" width="${XW}" height="1.4" fill="rgb(91 138 174 / 55%)"/>
+    <rect x="${X0}" y="${y + h - 1.4}" width="${XW}" height="1.4" fill="rgb(91 138 174 / 40%)"/>
+    <rect x="${X0}" y="${y}" width="${sliver.toFixed(1)}" height="${h}" fill="rgb(31 115 112 / 82%)"/>
+    <path d="M${X0} ${y - 44} V${y} M${(X0 + XW).toFixed(0)} ${y - 44} V${y}"
+      stroke="rgb(91 138 174 / 50%)" stroke-width="1"/>
+    <path d="M${X0} ${y - 34} H${(X0 + XW).toFixed(0)}" stroke="rgb(91 138 174 / 40%)" stroke-width="1"/>
+  </svg>
+  ${aperture(`${((X0 + sliver) / 20).toFixed(2)}%`, `${((y + h) / 11.25).toFixed(2)}%`, 16, 'light')}
+  ${arc('left:-26%;bottom:-74%;width:74%;height:138%', 20, 1.6, 0.5)}
+  ${refract(0.24)}${grain()}`;
+},
+
 
 /* 03 A TESE — three material states in a BROKEN sequence: three sizes, three
    vertical offsets, three different crops, each dissolving on a different
    edge. material → technology → value. Type sits under each. */
+/* MODE B — três estados da matéria numa sequência quebrada. A linha térmica
+   costura os três, porque é o calor que os liga; o campo de poros só aparece no
+   terceiro, porque é ali que a estrutura porosa passa a existir. */
 'art-03': () => `
   ${atmos([[8,16,50,46,C.pearl(88),1],[60,28,60,56,C.cyan(58),1],
            [92,70,52,48,C.nacre(48),1],[32,94,58,42,C.mint(58),1],
@@ -337,13 +365,19 @@ const PLATES = {
     <img src="${img('steel')}"></div>
   <div class="iri-edge" style="left:30%;top:8%;width:24%;height:2.5px"></div>
 
-  <div class="crop fade-l" style="left:66%;top:30%;width:34%;height:44%">
+  <div class="crop fade-l" style="left:66%;top:28%;width:34%;height:38%">
     <img src="${img('carbon-macro')}"></div>
-  <div class="iri-edge" style="right:0;top:30%;width:2.5px;height:44%"></div>
+  <div style="position:absolute;left:66%;top:30%;width:34%;height:44%;overflow:hidden;opacity:.7;
+    -webkit-mask-image:linear-gradient(270deg,#000 0%,#000 52%,transparent 100%);
+    mask-image:linear-gradient(270deg,#000 0%,#000 52%,transparent 100%)">
+    ${pores(55, 700, 500, 0.9, 'rgb(20 55 67', 24)}
+  </div>
+  <div class="iri-edge" style="right:0;top:28%;width:2.5px;height:38%"></div>
 
-  <div class="rule" style="left:4%;right:4%;top:88%;opacity:.55"></div>
+  ${thermal('03', 'M120 700 C420 700 520 380 760 340 C980 304 1120 470 1340 560 C1520 634 1700 620 1960 600', 1.6, 0.75, true, 40)}
   ${arc('right:-42%;top:-32%;width:84%;height:156%', 190, 2, 0.4)}
   ${refract(0.24)}${grain()}`,
+
 
 /* 04 O PILOTO — type zone: left 55%. A hairline section of the three-zone
    fluidised bed at the right, over a steel silhouette so soft it is only a
@@ -405,46 +439,106 @@ const PLATES = {
 /* 05 CAPEX — type zone: left 62%. A steel crop cut by the right edge and
    dissolving into the field, with one iridescent break down its leading edge.
    The cost bar itself is drawn in the .pptx so its numbers stay live. */
-'art-05': () => `
+'art-05': () => {
+  /* MODE C — CAPEX. Duas membranas dimensionadas pela proporção real dos work
+     packages: engenharia e construção. O aço atrás é o que o dinheiro compra. */
+  const wp = M.WP.filter(w => w[2] === 'CAPEX');
+  const tot = wp.reduce((a, w) => a + w[1], 0);
+  const X0 = 100, XW = 1180, y = 690, h = 168;
+  let x = X0;
+  const planes = wp.map(([, v], i) => {
+    const w = v * XW / tot - (i ? 8 : 0);
+    const xx = x + (i ? 8 : 0);
+    x = xx + w;
+    return membrane(`left:${(xx / 20).toFixed(2)}%;top:${(y / 11.25).toFixed(2)}%;
+      width:${(w / 20).toFixed(2)}%;height:${(h / 11.25).toFixed(2)}%`, 'left')
+      + `<div style="position:absolute;left:${(xx / 20).toFixed(2)}%;top:${(y / 11.25).toFixed(2)}%;
+          width:${(w / 20).toFixed(2)}%;height:${(h / 11.25).toFixed(2)}%;
+          background:${i ? 'rgb(31 115 112 / 26%)' : 'rgb(91 138 174 / 20%)'}"></div>`;
+  }).join('');
+  return `
   ${atmos([[12,20,52,48,C.pearl(86),1],[50,72,60,50,C.cyan(60),1],
            [88,18,46,44,C.nacre(48),1],[28,96,54,40,C.mint(56),1],
            [98,88,40,38,C.ice(44),1]])}
   <div class="crop crop--soft fade-l" style="right:0;top:4%;width:34%;height:92%">
     <img src="${img('steel')}"></div>
   <div class="iri-edge" style="right:34%;top:4%;width:2.5px;height:92%;opacity:.85"></div>
+  ${planes}
   ${arc('left:-22%;bottom:-62%;width:68%;height:124%', 10, 1.4, 0.48)}
-  ${refract(0.2)}${grain()}`,
+  ${refract(0.2)}${grain()}`;
+},
+
 
 /* 06 OPEX DO PROJETO — a typographic field, not a chart. The 15,0 total sits
    behind everything as a ghost cut by the right edge; the two halves of it are
    set live on top. Type zone: the whole frame, over the ghost. */
-'art-06': () => `
+'art-06': () => {
+  /* MODE C — campo tipográfico. O fantasma "15,0" é o total; sobre ele, duas
+     bandas em proporção real: o que vira ativo e o que se consome provando-o,
+     e depois quem paga cada parte. */
+  const X0 = 100, XW = 1800, k = XW / M.TOTAL_POC;
+  return `
   ${atmos([[18,16,54,50,C.cyan(70),1],[78,68,68,58,C.mint(58),1],
            [94,14,42,40,C.nacre(52),1],[8,86,50,44,C.ice(50),1],
            [48,46,74,60,C.pearl(64),1]])}
-  <div class="ghost" style="left:41%;top:6%;font-size:560px;letter-spacing:-.07em">15,0</div>
-  <div class="crop crop--far fade-r" style="left:-8%;bottom:-20%;width:40%;height:64%;opacity:.5">
+  <div class="ghost" style="left:41%;top:4%;font-size:520px;letter-spacing:-.07em">15,0</div>
+  <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 2000 1125">
+    <rect x="${X0}" y="720" width="${(M.CAPEX_POC * k - 6).toFixed(0)}" height="58" fill="rgb(91 138 174 / 34%)"/>
+    <rect x="${(X0 + M.CAPEX_POC * k).toFixed(0)}" y="720" width="${(M.OPEX_POC * k).toFixed(0)}" height="58" fill="rgb(31 115 112 / 52%)"/>
+    <rect x="${X0}" y="720" width="${XW}" height="1.6" fill="rgb(255 255 255 / 85%)"/>
+    <rect x="${X0}" y="880" width="${(M.FINEP.subvencao * k - 6).toFixed(0)}" height="26" fill="rgb(53 176 202 / 46%)"/>
+    <rect x="${(X0 + M.FINEP.subvencao * k).toFixed(0)}" y="880" width="${(M.FINEP.contrapartida * k).toFixed(0)}" height="26" fill="rgb(206 192 235 / 62%)"/>
+  </svg>
+  <div class="crop crop--far fade-r" style="left:-8%;top:-14%;width:34%;height:50%;opacity:.42">
     <img src="${img('glass-condens')}"></div>
-  <div class="rule" style="left:6%;right:6%;top:78%;opacity:.5"></div>
   ${arc('right:-36%;top:-42%;width:82%;height:156%', 170, 1.8, 0.44)}
-  ${refract(0.24)}${grain()}`,
+  ${refract(0.24)}${grain()}`;
+},
+
 
 /* 07 OPEX EM REGIME — two overlapping translucent fields: what it costs and
    what it earns. The overlap IS the argument. Type zone: upper left and the
    right column. */
-'art-07': () => `
+'art-07': () => {
+  /* MODE C — o mecanismo do slide: a curva de custo unitário contra o volume.
+     custo/t = fixo/volume + variável. É por isso que a POC não fecha e a escala
+     fecha, e a curva mostra isso sem precisar afirmá-lo.
+     Deliberadamente SEM linha de receita cruzando: esta curva usa a base de
+     custo [EST], e os limiares do slide 09 vêm do solver do plano com salários
+     plenos. Desenhar um cruzamento aqui contradiria aqueles números. */
+  const f = M.OPEX_REGIME.fixoAno, v = M.OPEX_REGIME.varPorT;
+  const cost = t => f / t + v;
+  const X0 = 260, XW = 1560, Y0 = 250, YH = 520;
+  const vmin = 700, vmax = 13000, cmax = 3600, cmin = 700;
+  const px = t => X0 + (Math.log(t / vmin) / Math.log(vmax / vmin)) * XW;
+  const py = c => Y0 + (1 - (c - cmin) / (cmax - cmin)) * YH;
+  const pts = [];
+  for (let i = 0; i <= 60; i++) {
+    const t = vmin * Math.pow(vmax / vmin, i / 60);
+    pts.push(`${px(t).toFixed(0)} ${py(cost(t)).toFixed(0)}`);
+  }
+  const d = 'M' + pts.join(' L');
+  return `
   ${atmos([[16,22,52,48,C.pearl(84),1],[72,72,64,54,C.cyan(56),1],
            [92,28,44,42,C.nacre(46),1],[34,96,56,42,C.mint(56),1],
            [2,58,42,46,C.ice(46),1]])}
-  <div class="stratum" style="left:6%;top:44%;width:46%;height:36%;
-    background:linear-gradient(168deg, rgb(53 176 202 / 30%), rgb(53 176 202 / 7%))"></div>
-  <div class="stratum" style="left:23%;top:55%;width:46%;height:31%;
-    background:linear-gradient(168deg, rgb(255 255 255 / 82%), rgb(203 240 248 / 26%))"></div>
-  <div class="iri-edge" style="left:23%;top:55%;width:46%;height:2.5px"></div>
-  <div class="rule" style="left:6%;right:28%;top:80%;background:rgb(31 115 112 / 55%)"></div>
-  <div class="crop crop--far fade-l" style="right:-4%;top:2%;width:36%;height:58%;opacity:.55">
+  <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 2000 1125">
+    <g stroke="rgb(91 138 174 / 30%)" stroke-width="1" fill="none">
+      <path d="M${X0} ${Y0} V${Y0 + YH} H${X0 + XW}"/>
+      ${[1000, 2000, 3000].map(c => `<path d="M${X0} ${py(c).toFixed(0)} H${X0 + XW}" stroke-dasharray="2 7"/>`).join('')}
+    </g>
+    <path d="${d} L${px(vmax).toFixed(0)} ${(Y0 + YH).toFixed(0)} L${X0} ${(Y0 + YH).toFixed(0)} Z"
+      fill="#35B0CA" fill-opacity="0.1"/>
+  </svg>
+  ${thermal('07', d, 2.2, 1, true, 12)}
+  ${aperture(`${(px(M.PILOTO.charAno) / 20).toFixed(2)}%`, `${(py(cost(M.PILOTO.charAno)) / 11.25).toFixed(2)}%`, 22, 'light')}
+  ${aperture(`${(px(M.BREAKEVEN.capacidadeModulo1) / 20).toFixed(2)}%`, `${(py(cost(M.BREAKEVEN.capacidadeModulo1)) / 11.25).toFixed(2)}%`, 16, 'light')}
+  ${aperture(`${(px(M.BREAKEVEN.grupo) / 20).toFixed(2)}%`, `${(py(cost(M.BREAKEVEN.grupo)) / 11.25).toFixed(2)}%`, 12, 'light')}
+  <div class="crop crop--far fade-l" style="right:-4%;top:2%;width:30%;height:44%;opacity:.4">
     <img src="${img('carbon-macro')}"></div>
-  ${refract(0.2)}${grain()}`,
+  ${refract(0.2)}${grain()}`;
+},
+
 
 /* 08 UNIT ECONOMICS — three translucent strata, overlapping and offset: the
    three revenues stacking into one margin. Each carries its own temperature —
@@ -482,7 +576,7 @@ const PLATES = {
     <rect x="${X0}" y="530" width="${(cost * k).toFixed(0)}" height="2" fill="rgb(255 255 255 / 80%)"/>
     <!-- a única linha de governança: o mesmo quilo nunca é vendido duas vezes -->
     <path d="M${X0} 292 H${(X0 + XW).toFixed(0)}" stroke="rgb(31 115 112 / 55%)" stroke-width="1" stroke-dasharray="3 5"/>
-    <g stroke="rgb(91 138 174 / 40%)" stroke-width="1">
+    <g stroke="rgb(91 138 174 / 40%)" stroke-width="1" fill="none">
       <path d="M${X0} 300 V640 M${(X0 + rev * k).toFixed(0)} 404 V530"/>
     </g>
   </svg>
@@ -523,8 +617,8 @@ const PLATES = {
       height="52" fill="url(#hatch)"/>
     <path d="M${X0} ${y} H${X0 + XW}" stroke="rgb(31 115 112 / 55%)" stroke-width="1.4"/>
     ${marks.map(([v, h]) => `<path d="M${at(v).toFixed(0)} ${y - h * 4} V${y + h * 4}"
-      stroke="rgb(91 138 174 / 60%)" stroke-width="1"/>`).join('')}
-    <g stroke="rgb(31 115 112 / 45%)" stroke-width="1">
+      stroke="rgb(91 138 174 / 60%)" stroke-width="1" fill="none"/>`).join('')}
+    <g stroke="rgb(31 115 112 / 45%)" stroke-width="1" fill="none">
       <path d="M${at(B.capacidadeModulo1).toFixed(0)} ${y - 46} V${y - 92} M${at(B.ebitdaZero).toFixed(0)} ${y - 46} V${y - 92}"/>
       <path d="M${at(B.capacidadeModulo1).toFixed(0)} ${y - 84} H${at(B.ebitdaZero).toFixed(0)}"/>
     </g>
@@ -540,31 +634,33 @@ const PLATES = {
 /* 10 ESCALA — the cinematic frame. A luminous trajectory rising across an
    abstract, almost-white industrial horizon. Momentum, not a bar chart.
    Type zone: under each node, plus the headline top-left. */
-'art-10': () => `
+'art-10': () => {
+  /* MODE A — escala como INFRAESTRUTURA crescendo, não como curva genérica.
+     Quatro membranas, cada uma dimensionada pela capacidade da sua fase; a
+     trajetória luminosa fica atrás, como camada secundária. */
+  const caps = M.ESCALA.map(e => e[2]);
+  const maxC = Math.max(...caps);
+  const planes = caps.map((c, i) => {
+    const w = 7 + 11 * Math.pow(c / maxC, 0.42);
+    const h = 16 + 46 * Math.pow(c / maxC, 0.42);
+    const left = 5 + i * 24;
+    return membrane(`left:${left}%;bottom:22%;width:${w.toFixed(1)}%;height:${h.toFixed(1)}%`, 'left')
+      + `<div style="position:absolute;left:${left}%;bottom:22%;width:${w.toFixed(1)}%;
+          height:${h.toFixed(1)}%;overflow:hidden;opacity:.4">
+          ${pores(200 + i * 11, 260, 620, 0.3 + i * 0.16, 'rgb(20 55 67', 11)}</div>`;
+  }).join('');
+  return `
   ${atmos([[10,20,50,46,C.pearl(90),1],[60,18,58,52,C.cyan(60),1],
            [94,56,54,52,C.nacre(50),1],[38,98,64,46,C.mint(62),1],
            [80,94,46,38,C.peach(32),1]])}
-  <div class="crop crop--far fade-t" style="left:0;bottom:0;width:100%;height:56%;opacity:.5">
+  <div class="crop crop--far fade-t" style="left:0;bottom:0;width:100%;height:48%;opacity:.4">
     <img src="${img('steel')}"></div>
-  <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none">
-    <defs>
-      <linearGradient id="traj" x1="0" y1="1" x2="1" y2="0">
-        <stop offset="0%" stop-color="rgb(122 168 201 / 34%)"/>
-        <stop offset="46%" stop-color="rgb(53 176 202 / 82%)"/>
-        <stop offset="100%" stop-color="rgb(151 220 199 / 98%)"/></linearGradient>
-      <filter id="soft10"><feGaussianBlur stdDeviation="11"/></filter>
-    </defs>
-    <path d="M180 830 C560 800 900 690 1180 520 C1420 375 1640 300 1880 250"
-      stroke="url(#traj)" stroke-width="20" filter="url(#soft10)" opacity=".55"/>
-    <path d="M180 830 C560 800 900 690 1180 520 C1420 375 1640 300 1880 250"
-      stroke="url(#traj)" stroke-width="2.2"/>
-  </svg>
-  <div class="node" style="left:8.4%;top:72.6%;width:16px;height:16px"></div>
-  <div class="node" style="left:32%;top:65.2%;width:22px;height:22px"></div>
-  <div class="node" style="left:58.4%;top:45.2%;width:28px;height:28px"></div>
-  <div class="node" style="left:88%;top:20.2%;width:36px;height:36px"></div>
-  ${arc('right:-28%;top:-56%;width:70%;height:132%', 200, 1.6, 0.55)}
-  ${refract(0.24)}${grain()}`,
+  ${thermal('10', 'M180 900 C560 880 900 800 1180 660 C1420 540 1640 420 1900 330', 1.6, 0.6)}
+  ${planes}
+  ${arc('right:-28%;top:-56%;width:70%;height:132%', 200, 1.6, 0.5)}
+  ${refract(0.24)}${grain()}`;
+},
+
 
 /* 11 DISCIPLINA — the single deep frame. Deep petroleum, never near-black,
    with mint light, one cyan glow and visible grain. Five gates as luminous
@@ -608,10 +704,18 @@ const PLATES = {
 /* 12 FINANCIAMENTO — back into the light, and brighter than the cover. One
    refraction band crosses the whole frame; a membrane closes the bottom-right
    corner. It has to read as an opening, not an ending. */
+/* MODE A — conclusão luminosa, e mais clara que a capa. O campo de poros
+   aparece uma última vez quase totalmente resolvido: é o eco do slide 11,
+   depois que todos os gates fecharam. */
 'art-12': () => `
   ${atmos([[14,14,54,50,C.pearl(94),1],[68,32,64,58,C.cyan(66),1],
            [94,72,52,50,C.nacre(50),1],[24,92,58,46,C.mint(66),1],
            [54,52,76,62,C.pearl(66),1]])}
+  <div style="position:absolute;left:4%;top:60%;width:56%;height:30%;overflow:hidden;opacity:.5;
+    -webkit-mask-image:linear-gradient(90deg,#000 0%,transparent 88%);
+    mask-image:linear-gradient(90deg,#000 0%,transparent 88%)">
+    ${pores(255, 1120, 340, 0.1, 'rgb(20 55 67', 15)}
+  </div>
   <div class="L" style="background:linear-gradient(104deg,
     transparent 0%, transparent 24%,
     rgb(150 219 240 / 60%) 36%, rgb(255 255 255 / 86%) 45%,
@@ -622,6 +726,7 @@ const PLATES = {
   ${arc('right:-18%;bottom:-50%;width:60%;height:118%', 290, 1.2, 0.85)}
   ${arc('left:-42%;top:-36%;width:88%;height:156%', 120, 2.2, 0.36)}
   ${refract(0.3)}${grain()}`,
+
 };
 
 /* --- Render -------------------------------------------------------------- */

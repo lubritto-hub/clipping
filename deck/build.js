@@ -119,111 +119,108 @@ const edge = (s, t, x, y, color = HAZE500) =>
     fontFace: 'Arial', fontSize: 6.8, charSpacing: 3, color, rotate: 90 });
 
 /* ===========================================================================
-   01 — CAPA
-   Zona livre da chapa: esquerda 52%, abaixo de y 44%. A membrana ocupa a
-   direita e é cortada pelo topo. Lançamento de produto, não capa de relatório.
+   01 — CAPA · MODE A
+   A membrana translúcida tem um campo de poros dentro dela: é uma membrana de
+   CARBONO, não uma esfera de vidro. O device da permanência aparece antes de
+   ser explicado, e volta resolvido no slide 12.
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('01');
   s.addImage({ path: A + 'mark-dark.png', x: 0.52, y: 0.42, w: 0.3, h: 0.3 });
   micro(s, 'POC / Petrolina / Pernambuco', 0.95, 0.47, 3.4, HAZE600);
-
-  head(s, 'transformando resíduo\nem impacto climático.', 0.52, 2.62, 6.4, 46);
-
-  hair(s, 0.52, 4.28, 3.6, MINERAL, 50);
-  micro(s, 'estimativas de capex e opex da prova de conceito', 0.52, 4.4, 6, GRAPH, 'left', 8);
-
-  // Microtexto como textura: a régua técnica dá ao quadro densidade de
-  // instrumento sem competir com a headline.
+  head(s, 'transformando resíduo\nem impacto climático.', 0.52, 2.42, 6.4, 46);
+  hair(s, 0.52, 4.16, 3.6, MINERAL, 50);
+  micro(s, 'estimativas de capex e opex da prova de conceito', 0.52, 4.28, 6, GRAPH, 'left', 8);
   metaRow(s, [
-    ['reator', 'FBR 3 zonas'],
-    ['capacidade', '500 kg/h'],
-    ['trl', '04 → 07'],
-    ['método', 'VM0044'],
-  ], 0.52, 4.74, 5.0);
-
+    ['reator', 'FBR 3 zonas'], ['capacidade', '500 kg/h'],
+    ['char', '810 t/ano'], ['trl', '04 → 07'],
+  ], 0.52, 4.62, 5.0);
+  micro(s, 'reciclar · epa/bioecotec · união soluções · uel   ·   agosto 2026',
+    0.52, 5.26, 6.4, HAZE500, 'left', 6.8);
   edge(s, 'lat −9,3891 · long −40,5030', 9.42, 0.42);
-  s.addNotes('Capa. A membrana translúcida é cortada pelo topo e pela direita; a headline '
-    + 'ocupa a zona clara à esquerda. Nenhum quadro escuro antes do slide 11.');
+  s.addNotes('A membrana é o device da permanência e carrega poros — matéria, não vidro.');
 }
 
 /* ===========================================================================
-   02 — A OPORTUNIDADE
-   A chapa traz o eixo oferta → lacuna → demanda em y 68% (3,825") com nós em
-   x 0,44" e 9,56", e o fantasma "100 Mt/ano" à direita. Os três números vivem
-   NO eixo, em escalas completamente diferentes.
+   02 — A OPORTUNIDADE · MODE A
+   A lacuna desenhada EM ESCALA. A barra inteira é a demanda anual projetada
+   para 2030; o que o mundo já entregou é a lasca na ponta esquerda. Três
+   caixas iguais esconderiam essa razão; a barra a torna inevitável.
+   Barra em x 0,50"–9,50", y 2,35"–2,99"; a lasca acaba em 0,64".
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('02');
   micro(s, '01 / mercado', 0.5, 0.44, 3);
-  head(s, 'Remoção durável é o mercado\ncom a demanda travada pela oferta.', 0.5, 0.92, 6.4, 26);
+  head(s, 'A oferta é o gargalo.\nNão a demanda.', 0.5, 0.86, 5.4, 30);
 
-  // O herói absoluto, sentado sobre o eixo.
-  big(s, '1,5', 0.42, 1.80, 3.2, 110, TEXT);
-  s.addText('Mt', { x: 2.34, y: 2.70, w: 1, h: 0.55, isTextBox: true, margin: 0,
-    fontFace: 'Arial', fontSize: 28, color: MINERAL, charSpacing: -0.6, valign: 'top' });
+  const razao = M.MERCADO.demandaMt2030 / M.MERCADO.entregueMundoMt;
+  micro(s, num(M.MERCADO.demandaMt2030) + ' Mt/ano · demanda projetada para 2030',
+    0.5, 1.98, 6.0, HAZE600);
+  big(s, Math.round(razao) + '×', 7.2, 1.50, 2.3, 54, MINERAL7, 'right');
+  micro(s, 'entre entregar e precisar', 6.6, 2.44, 2.9, MINERAL, 'right');
 
-  micro(s, '01 · oferta', 0.5, 3.93, 2.4, MINERAL);
-  body(s, 'entregues no mundo inteiro até jun/26', 0.5, 4.12, 2.4, 0.5, GRAPH, 9.5);
+  big(s, '1,5', 0.42, 3.16, 2.2, 64, TEXT);
+  s.addText('Mt', { x: 1.72, y: 3.72, w: 0.8, h: 0.4, isTextBox: true, margin: 0,
+    fontFace: 'Arial', fontSize: 21, color: MINERAL, charSpacing: -0.4, valign: 'top' });
+  micro(s, 'entregues no mundo inteiro, acumulado até jun/26', 0.52, 4.36, 4.4, HAZE600);
 
-  micro(s, '02 · lacuna', 4.7, 3.93, 2.4, HAZE600);
-  body(s, 'a oferta certificada é o gargalo — não a demanda', 4.7, 4.12, 1.95, 0.5, GRAPH, 9.5);
+  hair(s, 5.4, 3.30, 4.1, MINERAL, 55);
+  micro(s, 'e um único comprador', 5.4, 3.40, 4.1, MINERAL);
+  code(s, num(M.MERCADO.microsoftMt, 1) + ' Mt', 5.4, 3.60, 1.6, TEXT, 'left', 15);
+  body(s, 'contratados pela Microsoft — 63% de todas as compras de CDR em 2024',
+    5.4, 3.92, 4.1, 0.5, GRAPH, 9.5);
+  code(s, 'US$ ' + M.MERCADO.precoCorcUSD + ' / tCO₂', 5.4, 4.44, 2.4, MINERAL7, 'left', 11);
+  micro(s, 'referência de entrega do crédito de biochar', 5.4, 4.68, 4.1, HAZE600, 'left', 6.5);
 
-  // O extremo oposto do eixo, propositalmente pequeno: o comprador é enorme,
-  // mas a história é a lacuna.
-  big(s, '34,6 Mt', 6.85, 2.74, 2.3, 26, MINERAL7, 'right');
-  micro(s, '03 · demanda · microsoft', 6.85, 3.93, 2.3, MINERAL, 'right');
-  body(s, '63% de todas as compras de CDR em 2024', 6.85, 4.12, 2.3, 0.5, GRAPH, 9.5);
-
-  // Preço como etiqueta lateral, fora do fluxo de leitura.
-  micro(s, 'referência de preço', 6.85, 1.62, 2.3, HAZE600, 'right');
-  s.addText('US$ 150 / tCO₂', { x: 6.85, y: 1.8, w: 2.3, h: 0.32, isTextBox: true, margin: 0,
-    fontFace: 'Courier New', fontSize: 15, color: TEXT, align: 'right', valign: 'top' });
-
-  micro(s, 'poc biochar · petrolina', 0.5, 5.26, 4, HAZE500);
-  edge(s, 'mckinsey · cdr.fyi · s&p global', 9.42, 0.42);
-  s.addNotes('1,5 Mt entregues contra 100 Mt/ano de demanda projetada em 2030. '
-    + 'O fantasma "100 Mt/ano" na chapa é a demanda que o mercado não alcança.');
+  hair(s, 0.5, 5.02, 8.9, HAZE600, 68);
+  micro(s, 'o entregue é estoque acumulado e a demanda é fluxo anual projetado — a barra compara ordens de grandeza, não o mesmo período',
+    0.5, 5.12, 8.9, HAZE500, 'left', 6.2);
+  micro(s, 'fontes: cdr.fyi · mckinsey · s&p global   ·   [DOC]', 0.5, 5.30, 8.9, HAZE600, 'left', 6.2);
+  s.addNotes('1,5 Mt entregues contra 100 Mt/ano de demanda projetada em 2030: ~66x, em escala.');
 }
 
 /* ===========================================================================
-   03 — A TESE
-   Três matérias em sequência quebrada: fibra (4–23%), aço (30–63%), carbono
-   (66–100%), em três alturas diferentes. Rótulos ACIMA, escalonados; texto
-   abaixo de cada recorte. material → tecnologia → valor.
+   03 — A TESE · MODE B
+   Três estados da matéria numa sequência quebrada, cada um com a gramática do
+   slide 11: o que é, e o que aquilo destrava. A linha térmica costura os três
+   porque é o calor que os liga.
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('03');
-  micro(s, '02 / tese', 0.4, 0.32, 3);
+  micro(s, '02 / tese', 0.4, 0.30, 3);
 
-  // As legendas vivem ABAIXO de cada recorte, a três alturas diferentes — o
-  // escalonamento é a composição, não um acidente.
   const cols = [
-    // [x, w, labelY, textY, textH, idx, name, en, text]
-    [0.4, 1.9, 3.60, 4.00, 0.9, '01', 'resíduo cativo', 'FEEDSTOCK',
-     '~120 mil t de coco por ano EM Petrolina. 100 mil t úmidas de casca na porta da fábrica.'],
-    [3.0, 3.3, 2.70, 3.10, 1.1, '02', 'tecnologia nacional', 'CONVERSION',
-     'Leito fluidizado circulante de três zonas (Finep, TRL 4→7): char fino por atrito, redução '
-     + 'de potássio pelo leito e syngas queimado no riser — o risco de metano resolvido por projeto.'],
-    [6.6, 3.0, 4.28, 4.66, 0.5, '03', 'três receitas', 'VALUE',
-     'Destinação + material + crédito. O mesmo quilo nunca é vendido duas vezes.'],
+    [0.4, 1.95, 3.58, '01', 'FEEDSTOCK', 'resíduo cativo',
+     '~120 mil t de coco por ano EM Petrolina — 100 mil t úmidas de casca na porta da fábrica.',
+     'um contrato alimenta todas as fases'],
+    [3.0, 3.2, 2.68, '02', 'CONVERSION', 'tecnologia nacional',
+     'Leito fluidizado circulante de três zonas (Finep, TRL 4→7): char fino por atrito, potássio '
+     + 'reduzido pelo leito, syngas queimado no riser.',
+     'o risco de metano resolvido por projeto, não por operação'],
+    [6.6, 3.0, 3.84, '03', 'VALUE', 'três receitas',
+     'Destinação, material de construção e crédito de remoção.',
+     'o resíduo paga antes do primeiro crédito'],
   ];
-  cols.forEach(([x, w, ly, ty, th, idx, name, en, text]) => {
-    code(s, idx, x, ly, 0.4, MINERAL, 'left', 9);
-    micro(s, en, x + 0.42, ly, w - 0.42, HAZE600);
-    s.addText(name, { x, y: ly + 0.2, w, h: 0.28, isTextBox: true, margin: 0,
+  cols.forEach(([x, w, y, idx, en, name, what, unlocks]) => {
+    code(s, idx, x, y, 0.4, MINERAL, 'left', 9);
+    micro(s, en, x + 0.42, y, w - 0.42, HAZE600);
+    s.addText(name, { x, y: y + 0.20, w, h: 0.28, isTextBox: true, margin: 0,
       fontFace: 'Arial', fontSize: 13, color: TEXT, charSpacing: -0.3, valign: 'top' });
-    body(s, text, x, ty, w, th, GRAPH, 8.5);
+    // A coluna mais baixa não tem altura para três degraus soltos, então o
+    // seu "destrava" corre na mesma linha do rótulo.
+    const tight = y > 3.5;
+    body(s, what, x, y + 0.52, w, tight ? 0.42 : 0.7, GRAPH, 8.5);
+    hair(s, x, y + (tight ? 1.0 : 1.24), w - 0.1, MINERAL, 58);
+    micro(s, 'destrava', x, y + (tight ? 1.08 : 1.32), w, MINERAL, 'left', 6);
+    body(s, unlocks, x, y + (tight ? 1.24 : 1.48), w, 0.4, TEXT, 8.5);
   });
-
-  micro(s, 'material → tecnologia → valor', 0.4, 5.06, 4, MINERAL);
-  micro(s, 'nenhuma planta latino-americana produz char de especificação para construção',
-    5.0, 5.06, 4.6, HAZE600, 'right');
-  s.addNotes('Três estados da matéria, não três colunas. O elo do meio é o que está vazio '
-    + 'na América Latina.');
+  micro(s, 'material → tecnologia → valor', 0.4, 5.44, 4, MINERAL);
+  micro(s, 'nenhuma planta latino-americana produz char de especificação',
+    5.4, 5.44, 4.1, HAZE600, 'right');
+  s.addNotes('O elo do meio — char de especificação para construção — é o que está vazio na América Latina.');
 }
 
 /* ===========================================================================
@@ -279,135 +276,132 @@ const edge = (s, t, x, y, color = HAZE500) =>
 }
 
 /* ===========================================================================
-   05 — CAPEX
-   Zona livre: esquerda 62%. A barra de custo é desenhada com retângulos — uma
-   faixa editorial contínua, não um gráfico de barras.
+   05 — CAPEX · MODE C
+   Duas membranas dimensionadas pela proporção real dos work packages. Não é um
+   gráfico: é a divisão do investimento desenhada como duas placas de larguras
+   diferentes, com o aço que o dinheiro compra atrás delas.
+   Membranas em y 3,45"–4,29"; WP1 de 0,50" a 2,19", WP2 de 2,23" a 6,44".
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('05');
-  micro(s, '04 / capex', 0.5, 0.44, 3);
-  head(s, 'O ativo físico e a engenharia\nque o produz.', 0.5, 0.9, 5.4, 26);
+  micro(s, '04 / capex da poc', 0.5, 0.44, 3);
+  head(s, 'O ativo físico e a engenharia\nque o produz.', 0.5, 0.86, 5.4, 26);
 
-  big(s, '7,7', 0.42, 1.78, 3.0, 96, TEXT);
-  s.addText('R$ M', { x: 2.16, y: 2.52, w: 1.2, h: 0.46, isTextBox: true, margin: 0,
+  big(s, '7,7', 0.42, 1.72, 3.0, 96, TEXT);
+  s.addText('R$ M', { x: 2.16, y: 2.46, w: 1.2, h: 0.46, isTextBox: true, margin: 0,
     fontFace: 'Arial', fontSize: 24, color: MINERAL, charSpacing: -0.4, valign: 'top' });
+  micro(s, 'capex total da poc', 0.52, 3.12, 3.0, MINERAL);
 
-  /* A barra editorial: uma faixa contínua de 5,4", partida uma única vez.
-     Uma barra por WP seria um gráfico; uma faixa partida é uma proporção. */
-  const capexWP = M.WP.filter(w => w[2] === 'CAPEX');
-  const total = capexWP.reduce((a, w) => a + w[1], 0);
-  const BAR_X = 0.5, BAR_Y = 3.86, BAR_W = 5.4, BAR_H = 0.075;
-  let cx = BAR_X;
-  capexWP.forEach(([label, v], i) => {
-    const w = (v / total) * BAR_W - (i ? 0.03 : 0);
-    const x = cx + (i ? 0.03 : 0);
-    s.addShape(pres.ShapeType.rect, { x, y: BAR_Y, w, h: BAR_H,
-      fill: { color: i === 0 ? HAZE500 : MINERAL, transparency: i === 0 ? 20 : 0 } });
-    micro(s, label.replace(/^WP\d — /, ''), x, BAR_Y + 0.16, Math.max(w, 1.5),
-      i === 0 ? HAZE600 : MINERAL, 'left', 6.8);
-    s.addText(brlM(v), { x, y: BAR_Y - 0.34, w: 1.2, h: 0.26, isTextBox: true, margin: 0,
-      fontFace: 'Courier New', fontSize: 12, color: TEXT, valign: 'middle' });
-    cx = x + w;
+  const wp = M.WP.filter(w => w[2] === 'CAPEX');
+  const tot = wp.reduce((a, w) => a + w[1], 0);
+  let x = 0.5;
+  wp.forEach(([label, v, , wpc], i) => {
+    const w = (v / tot) * 5.9 - (i ? 0.04 : 0);
+    const xx = x + (i ? 0.04 : 0);
+    micro(s, wpc, xx + 0.08, 3.54, 1.0, i ? MINERAL : HAZE600, 'left', 7);
+    code(s, brlM(v) + ' M', xx + 0.08, 3.74, 1.4, TEXT, 'left', 11);
+    micro(s, label.replace(/^WP\d — /, ''), xx + 0.08, 4.0, w - 0.16,
+      i ? MINERAL : HAZE600, 'left', 6.2);
+    x = xx + w;
   });
-  micro(s, 'WP1', BAR_X, BAR_Y + 0.38, 1.2, HAZE500);
-  micro(s, 'WP2', BAR_X + (capexWP[0][1] / total) * BAR_W + 0.03, BAR_Y + 0.38, 1.2, MINERAL);
-
-  metaColumn(s, [
+  metaRow(s, [
     ['por t de capacidade', brl(M.CAPEX_POC / M.PILOTO.charAno) + '/t'],
     ['precisão', 'AACE 4 · −30/+50%'],
-  ], 0.5, 4.72, 3.2);
-
-  body(s, 'A engenharia básica e de detalhamento é capitalizada junto com o equipamento: '
-    + 'num piloto ela não tem valor separável dele.', 0.5, 5.26, 5.4, 0.3, GRAPH, 8.5);
-  edge(s, 'wp1 + wp2 · finep economia circular', 9.42, 0.42);
+    ['fronteira', 'WP1 + WP2'],
+  ], 0.5, 4.52, 5.9);
+  micro(s, 'a engenharia é capitalizada junto com o equipamento: num piloto ela não tem valor separável dele',
+    0.5, 5.26, 8.9, HAZE500, 'left', 6.5);
+  edge(s, 'finep economia circular · 30 meses', 9.42, 0.42);
   s.addNotes('CAPEX = WP1 (projeto) + WP2 (construção e montagem) = R$ 7,7 M dos R$ 15,0 M.');
 }
 
 /* ===========================================================================
-   06 — OPEX DO PROJETO
-   Campo tipográfico sobre o fantasma "15,0" da chapa. As duas metades do total
-   são postas VIVAS por cima dele; a proporção 85/15 fica na lateral.
+   06 — OPEX DO PROJETO · MODE C
+   Campo tipográfico sobre o fantasma do total. Duas bandas em proporção real:
+   a de cima divide o dinheiro entre ativo e custeio, a de baixo diz quem paga.
+   Bandas em y 3,60"–3,89" e 4,40"–4,53", de x 0,50" a 9,50".
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('06');
   micro(s, '05 / opex do projeto', 0.5, 0.44, 3);
-  head(s, 'O que se consome provando\no ativo, em 30 meses.', 0.5, 0.9, 5.2, 26);
+  head(s, 'O que se consome provando\no ativo, em 30 meses.', 0.5, 0.86, 5.2, 26);
 
-  // As duas metades, sobre o fantasma do total.
-  big(s, '7,3', 0.42, 1.86, 2.6, 96, TEXT);
-  s.addText('R$ M · OPEX', { x: 0.56, y: 3.86, w: 2.6, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: 'Arial', fontSize: 14, color: MINERAL, valign: 'top' });
-  hair(s, 0.52, 3.78, 2.2, MINERAL, 45);
+  big(s, '7,3', 0.42, 1.80, 2.6, 96, TEXT);
+  micro(s, 'R$ M · custeio', 0.52, 2.98, 2.6, MINERAL);
+  big(s, '7,7', 2.62, 2.24, 1.9, 50, HAZE600);
+  micro(s, 'R$ M · investimento', 2.68, 2.98, 2.2, HAZE600);
+  code(s, brl(M.OPEX_POC / 30) + ' / mês', 6.9, 2.44, 2.6, TEXT, 'right', 13);
+  micro(s, 'média ao longo dos 30 meses', 6.9, 2.70, 2.6, HAZE600, 'right');
 
-  big(s, '7,7', 2.62, 2.68, 1.9, 50, HAZE600);
-  micro(s, 'R$ M · capex', 2.72, 3.86, 2, HAZE600);
-  hair(s, 2.68, 3.78, 1.5, HAZE600, 55);
+  micro(s, 'capex · 51%', 0.58, 3.28, 2.0, HAZE600);
+  micro(s, 'opex · 49%', 5.20, 3.28, 2.0, MINERAL);
+  micro(s, 'subvenção finep · 85%', 0.58, 4.10, 3.0, CYAN6);
+  code(s, brl(M.FINEP.subvencao), 0.58, 4.60, 2.2, TEXT, 'left', 9.5);
+  micro(s, 'contrapartida · 15%', 8.23, 4.10, 1.27, HAZE600, 'right', 6.2);
+  code(s, brl(M.FINEP.contrapartida), 8.23, 4.60, 1.27, HAZE600, 'right', 9);
 
-  // A proporção do financiamento, como razão e não como tabela.
-  s.addText('85 / 15', { x: 6.9, y: 1.5, w: 2.6, h: 0.62, isTextBox: true, margin: 0,
-    fontFace: 'Arial', fontSize: 44, color: MINERAL7, align: 'right',
-    charSpacing: -1.4, valign: 'top' });
-  micro(s, 'subvenção finep / contrapartida', 6.9, 2.16, 2.6, HAZE600, 'right');
-  metaColumn(s, [
-    ['subvenção finep', brl(M.FINEP.subvencao)],
-    ['contrapartida', brl(M.FINEP.contrapartida)],
-    ['média mensal', brl(M.OPEX_POC / 30)],
-  ], 6.5, 2.56, 3.0);
-
-  // Os work packages como rótulos numa régua, não como barras.
   const opexWP = M.WP.filter(w => w[2] === 'OPEX');
-  const oTotal = opexWP.reduce((a, w) => a + w[1], 0);
-  let ox = 0.5;
-  opexWP.forEach(([label, v, , wp]) => {
-    const w = (v / oTotal) * 9.0;
-    hair(s, ox, 4.42, w - 0.06, MINERAL, 55);
-    code(s, wp, ox, 4.5, 0.6, MINERAL, 'left', 8);
-    micro(s, label.replace(/^WP\d — /, ''), ox, 4.72, w - 0.1, HAZE600, 'left', 6.8);
-    code(s, brlM(v), ox, 4.92, w - 0.14, TEXT, 'left', 9.5);
-    ox += w;
-  });
-
-  micro(s, 'poc biochar · petrolina', 0.5, 5.26, 4, HAZE500);
-  s.addNotes('R$ 7,3 M de custeio sobre R$ 7,7 M de investimento: R$ 15,0 M no total, '
-    + '85% via subvenção Finep.');
+  metaRow(s, [
+    ['campanhas', brlM(opexWP[0][1]) + ' M'],
+    ['caracterização', brlM(opexWP[1][1]) + ' M'],
+    ['acv e carbono', brlM(opexWP[2][1]) + ' M'],
+    ['eng. industrial', brlM(opexWP[3][1]) + ' M'],
+  ], 0.5, 4.90, 8.9);
+  micro(s, 'wp3 · wp4 · wp5 · wp6   ·   [DOC] proposta finep', 0.5, 5.36, 8.9, HAZE500, 'left', 6.2);
+  s.addNotes('R$ 7,3 M de custeio sobre R$ 7,7 M de investimento, 85% via subvenção Finep.');
 }
 
 /* ===========================================================================
-   07 — OPEX EM REGIME
-   Dois campos translúcidos sobrepostos na chapa: o que custa e o que entra.
-   A sobreposição É o argumento. Insight de engenharia, não slide pessimista.
+   07 — OPEX EM REGIME · MODE C
+   O MECANISMO do baralho inteiro: custo/t = fixo/volume + variável. A curva
+   mostra por que a POC não fecha e a escala fecha, sem precisar afirmá-lo.
+
+   Deliberadamente sem linha de receita cruzando a curva: esta base de custo é
+   [EST] e cruzaria por volta de 860 t, enquanto o solver do plano põe o
+   breakeven pleno em 5.448 t com quinze salários de mercado. São bases de
+   custo diferentes, e o quadro diz isso em vez de desenhar a contradição.
+   Curva em x 1,30"–9,10"; marcas em 1,69" / 6,38" / 9,10".
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('07');
   micro(s, '06 / opex em regime', 0.5, 0.44, 3);
-  head(s, 'O piloto não se paga.\nE não deveria.', 0.5, 0.9, 5.4, 30);
+  head(s, 'O piloto não se paga.\nE não deveria.', 5.3, 0.80, 4.2, 30);
+  micro(s, 'custo por tonelada de char · r$/t', 0.5, 4.02, 3.4, HAZE600);
 
-  // Os dois números partilham a baseline, e o de cima é o custo.
-  big(s, brl(M.OPEX_REGIME.porT), 0.62, 2.5, 3.4, 40, TEXT);
-  micro(s, 'custo por tonelada, em regime', 0.66, 3.28, 3.2, HAZE600);
+  const reads = [
+    [0.5,  1.02, num(Math.round(M.OPEX_REGIME.porT)), 'POC · 810 t/ano', TEXT, 30, 'left'],
+    [6.30, 2.52, num(1192), 'Módulo 1 · 4.700 t/ano', MINERAL7, 24, 'left'],
+    [9.20, 2.86, num(907), 'grupo · 13.000 t/ano', HAZE600, 18, 'right'],
+  ];
+  reads.forEach(([x, y, v, label, color, size, align]) => {
+    const xx = align === 'right' ? x - 2.4 : x;
+    big(s, 'R$ ' + v, xx, y, 2.4, size, color, align);
+    micro(s, label, xx, y + bigH(size) + 0.04, 2.4, color === TEXT ? MINERAL : HAZE600, align);
+  });
 
-  big(s, brl(M.UNIT.receitaBrutaPorT), 2.5, 3.28, 3.4, 40, MINERAL7);
-  micro(s, 'receita bruta por tonelada', 2.54, 4.06, 3.2, MINERAL);
+  hair(s, 0.5, 4.16, 8.9, MINERAL, 55);
+  micro(s, 'custo fixo', 0.5, 4.26, 1.2, MINERAL);
+  code(s, brl(M.OPEX_REGIME.fixoAno) + '/ano', 1.7, 4.24, 1.7, TEXT, 'left', 9.5);
+  micro(s, 'custo variável', 3.7, 4.26, 1.3, MINERAL);
+  code(s, brl(M.OPEX_REGIME.varPorT) + '/t', 5.0, 4.24, 1.2, TEXT, 'left', 9.5);
+  micro(s, 'o fixo não cai com a escala — é ele que a curva dilui',
+    6.4, 4.26, 3.1, HAZE600, 'right', 6.5);
 
-  // O delta. Coral, não vermelho de alerta: é uma constatação, não uma falha.
-  s.addText('−160 / t', { x: 6.4, y: 4.28, w: 1.6, h: 0.34, isTextBox: true, margin: 0,
-    fontFace: 'Courier New', fontSize: 16, color: FLARE, align: 'right', valign: 'top' });
-  micro(s, 'resultado a 810 t/ano', 5.4, 4.66, 2.6, HAZE600, 'right');
+  s.addText('A escala é o destravamento, e a curva é a razão.', {
+    x: 0.5, y: 4.60, w: 6.0, h: 0.34, isTextBox: true, margin: 0, fontFace: 'Arial',
+    fontSize: 15, color: TEXT, charSpacing: -0.4, valign: 'top' });
 
-  metaColumn(s, [
-    ['custo fixo', brl(M.OPEX_REGIME.fixoAno) + '/ano'],
-    ['custo variável', brl(M.OPEX_REGIME.varPorT) + '/t'],
-    ['opex anual', brl(M.OPEX_REGIME.totalAno)],
-  ], 6.1, 1.5, 3.4);
-
-  body(s, 'O custo fixo não cai com a escala — e é exatamente por isso que o Módulo 1 '
-    + 'fecha a conta e a POC não. A escala é o destravamento.',
-    0.5, 4.88, 4.9, 0.6, GRAPH, 9.5);
-  s.addNotes('Honestidade deliberada: R$ 3.336/t de custo contra R$ 3.177/t de receita. '
-    + 'O breakeven do slide seguinte é a resposta.');
+  hair(s, 0.5, 5.06, 8.9, HAZE600, 68);
+  micro(s, 'curva sobre a base de custo [EST] do caso-base — sem linha de receita, porque cruzaria em ~860 t',
+    0.5, 5.16, 8.9, HAZE500, 'left', 6.2);
+  micro(s, 'os limiares do slide 08 vêm do solver do plano [DOC], com quinze salários plenos: outra base de custo',
+    0.5, 5.34, 8.9, HAZE600, 'left', 6.2);
+  s.addNotes('custo/t = fixo/volume + variável. Não cruzo receita com a curva porque esta '
+    + 'base [EST] cruzaria em ~860 t e contradiria o breakeven [DOC] de 5.448 t, que usa '
+    + 'uma estrutura de custo maior.');
 }
 
 /* ===========================================================================
@@ -531,35 +525,39 @@ const edge = (s, t, x, y, color = HAZE500) =>
 }
 
 /* ===========================================================================
-   10 — ESCALA
-   O quadro cinematográfico. A trajetória luminosa sobe da esquerda-baixo para
-   a direita-alto, com nós em (0,84 / 4,08) (3,2 / 3,67) (5,84 / 2,54)
-   (8,8 / 1,14). Os rótulos seguem os nós, não uma linha de base.
+   10 — ESCALA · MODE A
+   Infraestrutura crescendo, não uma curva genérica: quatro membranas
+   dimensionadas pela capacidade de cada fase, com a trajetória luminosa atrás
+   como camada secundária. Bases alinhadas em y 4,39"; esquerdas em 0,50" /
+   2,90" / 5,30" / 7,70".
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('10');
   micro(s, '09 / escala', 0.5, 0.44, 3);
-  head(s, 'De 810 toneladas a um grupo\nque cruza o zero.', 0.5, 0.9, 5.6, 26);
+  head(s, 'De um reator\na uma rede.', 0.5, 0.86, 3.4, 30);
 
   const nodes = [
-    [0.62, 4.12, '2027', 'POC',       '810',    't char/ano',    22, HAZE600],
-    [2.98, 3.80, '2028', 'Módulo 1',  '4,7 K',  't char/ano',    26, MINERAL7],
-    [5.62, 2.76, '2029', 'Planta 1',  '20 K',   't biomassa/ano', 30, MINERAL],
-    [8.10, 1.36, '2031', 'Planta 2',  '40 K',   't biomassa/ano', 36, TEXT],
+    [0.5, '2027', 'POC',      '810',   't char/ano',     20, HAZE600,  'reator piloto'],
+    [2.9, '2028', 'Módulo 1', '4,7 K', 't char/ano',     24, MINERAL7, 'primeiro módulo'],
+    [5.3, '2029', 'Planta 1', '20 K',  't biomassa/ano', 28, MINERAL,  'planta industrial'],
+    [7.7, '2031', 'Planta 2', '40 K',  't biomassa/ano', 34, TEXT,     'a rede começa'],
   ];
-  nodes.forEach(([x, y, ano, nome, val, unit, size, color]) => {
-    code(s, ano, x, y, 0.8, color, 'left', 9);
-    s.addText(nome, { x, y: y + 0.2, w: 1.7, h: 0.26, isTextBox: true, margin: 0,
+  nodes.forEach(([x, ano, nome, val, unit, size, color, kind]) => {
+    micro(s, kind, x, 4.34, 2.0, color === TEXT ? MINERAL : HAZE500, 'left', 6.2);
+    hair(s, x, 4.52, 2.0, color === TEXT ? MINERAL : HAZE600, 55);
+    code(s, ano, x, 4.60, 0.8, color, 'left', 9);
+    s.addText(nome, { x, y: 4.80, w: 2.0, h: 0.26, isTextBox: true, margin: 0,
       fontFace: 'Arial', fontSize: 11.5, color: TEXT, valign: 'top' });
-    big(s, val, x, y + 0.46, 1.85, size, color);
-    micro(s, unit, x, y + 0.46 + bigH(size) + 0.02, 1.85, HAZE600, 'left', 6.8);
+    big(s, val, x, 4.98, 2.1, size, color);
   });
-
-  micro(s, 'o breakeven do grupo fica em ~13 mil t/ano — a segunda planta não é réplica, é o dobro',
-    0.5, 5.38, 7.4, MINERAL);
-  edge(s, 'bndes fundo clima · sudene · fne verde', 9.42, 0.42);
-  s.addNotes('A trajetória é momentum, não um gráfico. Cada nó é um marco de capacidade.');
+  micro(s, 'o breakeven do grupo fica em ~' + num(M.BREAKEVEN.grupo)
+    + ' t/ano — por isso a segunda planta não é réplica, é o dobro',
+    0.5, 1.96, 5.4, MINERAL, 'left', 6.8);
+  micro(s, 'bndes fundo clima 6,5% + 1,3% a.a., carência de 60 meses · sudene 75% irpj · fne verde',
+    0.5, 2.16, 5.4, HAZE600, 'left', 6.5);
+  s.addNotes('Cada membrana está dimensionada pela capacidade da sua fase — a escala é '
+    + 'física, não uma curva desenhada por cima.');
 }
 
 /* ===========================================================================
@@ -618,17 +616,17 @@ const edge = (s, t, x, y, color = HAZE500) =>
 }
 
 /* ===========================================================================
-   12 — FINANCIAMENTO
-   Volta inteiramente para a luz, e mais clara que a capa. Estrutura como
-   razão, não como tabela. Deve terminar como abertura, não como fim.
+   12 — FINANCIAMENTO · MODE A
+   Volta inteiramente para a luz, e mais clara que a capa. O campo de poros
+   aparece uma última vez quase totalmente resolvido — o eco do slide 11,
+   depois que todos os gates fecharam. Deve ler como abertura, não como fim.
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('12');
   micro(s, '11 / financiamento', 0.5, 0.44, 3);
-  head(s, 'Não-dilutivo primeiro.\nEquity com marco provado.', 0.5, 0.92, 5.6, 32);
+  head(s, 'Não-dilutivo primeiro.\nEquity com marco provado.', 0.5, 0.86, 5.6, 32);
 
-  // A estrutura como proporção.
   big(s, '85', 0.42, 2.30, 1.7, 84, MINERAL7);
   micro(s, '% subvenção finep', 0.56, 3.92, 1.55, MINERAL);
   code(s, brl(M.FINEP.subvencao), 0.56, 4.14, 1.9, HAZE600, 'left', 8.5);
@@ -655,10 +653,12 @@ const edge = (s, t, x, y, color = HAZE500) =>
     body(s, t, 7.2, y + 0.3, 2.3, 0.42, TEXT, 9);
   });
 
+  micro(s, 'os cinco gates fecham a incerteza; o capital segue cada um deles',
+    0.5, 4.72, 5.4, MINERAL, 'left', 6.8);
   micro(s, 'valores [EST] com precisão AACE classe 4 (−30% / +50%) · valores [DOC] lidos da '
     + 'proposta Finep e do plano da POC', 0.5, 5.26, 8.2, HAZE500, 'left', 6.8);
-  s.addNotes('Fecha na luz e mais claro que a capa. Grant → offtake parcial com dMRV → '
-    + 'dívida e equity de infraestrutura.');
+  s.addNotes('Fecha na luz. O campo de poros da chapa está quase resolvido — o eco visual '
+    + 'do slide 11 depois de todos os gates.');
 }
 
 pres.writeFile({ fileName: 'poc-biochar-capex-opex.pptx' })
