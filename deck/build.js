@@ -227,37 +227,55 @@ const edge = (s, t, x, y, color = HAZE500) =>
 }
 
 /* ===========================================================================
-   04 — O PILOTO
-   Zona livre: esquerda 55%. O desenho técnico do reator de três zonas ocupa a
-   direita. O numeral toma ~35% do quadro.
+   04 — O PILOTO · BALANÇO DE MASSA E CARBONO
+
+   A chapa desenha o balanço em proporção real: a banda de char tem 20,25% da
+   altura da banda de biomassa porque esse É o rendimento, e a banda de
+   remoção tem o dobro da de char porque são 2,0 tCO₂e por tonelada. A queda
+   de altura é a conversão — não há rótulo dizendo "20%", há 20%.
+
+   Três níveis: a cadeia quantitativa (2 s), o reator que a produz (o
+   mecanismo), e as premissas com a sua procedência (a evidência).
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('04');
-  micro(s, '03 / piloto', 0.5, 0.44, 3);
+  micro(s, '03 / piloto · balanço de massa', 0.5, 0.44, 4);
+  head(s, 'Massa entra.\nCarbono fica.', 0.5, 0.88, 4.2, 30);
 
-  big(s, '810', 0.36, 1.28, 4.6, 168, TEXT);
-  s.addText('t biochar / ano', { x: 0.56, y: 4.42, w: 3.2, h: 0.3, isTextBox: true, margin: 0,
-    fontFace: 'Arial', fontSize: 15, color: MINERAL, charSpacing: -0.2, valign: 'top' });
-  hair(s, 0.52, 4.34, 3.0, MINERAL, 45);
+  // NÍVEL 1 — a cadeia, lida em dois segundos. Cada número dimensionado pelo
+  // seu papel: a entrada é grande, o produto é o protagonista, o resultado
+  // climático fecha.
+  micro(s, 'biomassa · entrada', 0.6, 2.34, 2.4, HAZE600);
+  big(s, '4.000', 0.58, 3.42, 2.6, 34, HAZE600);
+  micro(s, 't/ano de casca de coco', 0.62, 4.06, 2.6, HAZE500, 'left', 6.8);
 
-  metaRow(s, [
-    ['capacidade', '500 kg/h'],
-    ['biomassa', '4.000 t/ano'],
-    ['rendimento', '≥ 20 %'],
-    ['remoção líquida', '1.620 tCO₂e'],
-  ], 0.52, 4.76, 5.2);
+  micro(s, 'char · produto', 5.5, 2.34, 1.8, MINERAL);
+  big(s, '810', 5.46, 3.16, 2.0, 60, TEXT);
+  micro(s, 't/ano de biochar', 5.52, 4.28, 2.0, MINERAL, 'left', 6.8);
 
-  // Legenda do desenho, encostada na margem da própria seção.
-  micro(s, 'zona 1 · combustão', 4.6, 1.42, 1.8, HAZE600, 'right');
-  micro(s, 'zona 2 · pirólise', 4.6, 2.72, 1.8, MINERAL, 'right');
-  micro(s, 'zona 3 · freeboard', 4.6, 4.06, 1.8, HAZE600, 'right');
-  micro(s, 'recirculação de areia', 8.5, 3.34, 1.1, HAZE500, 'left', 6.5);
+  micro(s, 'remoção · resultado', 7.5, 2.34, 1.7, CYAN6);
+  big(s, '1.620', 7.48, 3.24, 2.2, 38, MINERAL7);
+  micro(s, 'tCO₂e/ano · 2,0 por t de char', 7.52, 3.98, 2.4, HAZE500, 'left', 6.8);
 
-  micro(s, '30 meses · trl 04 → 07', 0.52, 5.24, 3.2, HAZE500);
-  edge(s, '2,0 tCO₂e por tonelada de char', 9.42, 0.42);
-  s.addNotes('810 t/ano de char equivalem a 4.000 t de biomassa a ~20% de rendimento. '
-    + 'O laço tracejado no desenho é a recirculação de areia entre as zonas.');
+  // NÍVEL 2 — o mecanismo. O reator que produz a queda, e a taxa que a define.
+  micro(s, '500 kg/h  ·  ≥ 20 % base seca', 3.1, 1.98, 2.4, MINERAL, 'right', 6.8);
+  hair(s, 4.26, 4.30, 1.1, MINERAL, 50);
+  micro(s, 'z1 combustão', 4.26, 4.40, 1.7, HAZE600, 'left', 6.2);
+  micro(s, 'z2 pirólise 600 °C', 4.26, 4.58, 1.7, MINERAL, 'left', 6.2);
+  micro(s, 'z3 freeboard', 4.26, 4.76, 1.7, HAZE600, 'left', 6.2);
+  micro(s, 'areia recircula z1↔z3', 4.26, 4.94, 1.9, HAZE500, 'left', 6.2);
+
+  // NÍVEL 3 — evidência: de onde cada número vem.
+  hair(s, 0.5, 5.06, 3.6, HAZE600, 66);
+  micro(s, 'rendimento ≥20% é o indicador da entrega E3.1 · 2,0 tCO₂e/t é o piso da E5.2',
+    0.5, 5.16, 8.9, HAZE500, 'left', 6.5);
+  micro(s, 'trl 04 → 07 · 30 meses · leito fluidizado circulante de três zonas',
+    0.5, 5.34, 8.9, HAZE600, 'left', 6.5);
+  edge(s, 'a linha térmica é o perfil de temperatura', 9.42, 0.42);
+  s.addNotes('A banda de char é 20,25% da altura da banda de biomassa porque esse é o '
+    + 'rendimento; a banda de remoção é o dobro da de char porque são 2,0 tCO2e/t. '
+    + 'A geometria é o dado.');
 }
 
 /* ===========================================================================
@@ -393,72 +411,123 @@ const edge = (s, t, x, y, color = HAZE500) =>
 }
 
 /* ===========================================================================
-   08 — UNIT ECONOMICS
-   Três estratos translúcidos e sobrepostos na chapa (x 4,4 / 3,9 / 4,8;
-   y 0,84 / 2,25 / 3,66), cada um com a sua temperatura. Nunca três cartões.
+   08 — UNIT ECONOMICS · CONSTRUÇÃO DE VALOR
+
+   Duas barras, uma origem, uma escala. A receita é empilhada a partir dos três
+   fluxos; o custo é desenhado ao lado dela e é MAIS LONGO. O quanto ele
+   ultrapassa é o argumento inteiro do quadro.
+
+   Cuidado contábil declarado: a margem de contribuição de R$ 763 [DOC] vem do
+   cenário conservador do plano, com premissas de custo variável próprias. Ela
+   NÃO é a diferença entre estas duas barras, e o quadro diz isso.
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('08');
   micro(s, '07 / unit economics', 0.5, 0.44, 3);
 
-  big(s, '763', 0.36, 1.58, 3.6, 108, TEXT);
-  s.addText('R$ / t', { x: 0.56, y: 3.62, w: 2, h: 0.4, isTextBox: true, margin: 0,
-    fontFace: 'Arial', fontSize: 22, color: MINERAL, charSpacing: -0.4, valign: 'top' });
-  hair(s, 0.52, 3.54, 2.6, MINERAL, 45);
-  micro(s, 'margem de contribuição por tonelada de char', 0.52, 4.06, 3.6, HAZE600);
-  micro(s, 'cenário conservador · câmbio ' + num(M.CAMBIO, 2), 0.52, 4.28, 3.6, HAZE500);
+  // NÍVEL 1 — a margem do plano, com a sua procedência colada nela.
+  big(s, '763', 0.4, 1.62, 2.8, 92, TEXT);
+  s.addText('R$ / t', { x: 0.56, y: 3.34, w: 1.6, h: 0.34, isTextBox: true, margin: 0,
+    fontFace: 'Arial', fontSize: 19, color: MINERAL, charSpacing: -0.3, valign: 'top' });
+  hair(s, 0.52, 3.26, 2.2, MINERAL, 45);
+  micro(s, 'margem de contribuição [DOC]', 0.52, 3.74, 3.0, MINERAL, 'left', 6.5);
+  micro(s, 'cenário do plano · câmbio ' + num(M.CAMBIO, 2),
+    0.52, 3.92, 3.0, HAZE600, 'left', 6.5);
 
-  const strata = [
-    [4.5, 0.92, 'CARBONO',  brl(M.UNIT.corcPorTChar),
-     'US$ 150/tCO₂e · −25% offtake · −15% comissão · 2,0 tCO₂e líquidas'],
-    [4.0, 2.33, 'MATERIAL', brl(M.UNIT.contratoBPorT),
-     'contrato B: a fábrica fica com o carbono no EPD e não há CORC'],
-    [4.9, 3.74, 'GATE FEE', brl(M.UNIT.gateFeePorTChar),
-     'R$ 38/t úmida × 4,8 t — o resíduo paga antes do primeiro crédito'],
+  // A regra de governança do sistema, sobre a barra que ela governa.
+  micro(s, 'regra do carbono único · o mesmo quilo nunca é vendido duas vezes',
+    3.2, 1.06, 6.1, MINERAL, 'left', 6.5);
+
+  // NÍVEL 2 — o mecanismo: como a receita é construída, e por onde o custo passa.
+  micro(s, 'receita bruta / t', 3.2, 1.36, 2.2, HAZE600);
+  code(s, brl(M.UNIT.receitaBrutaPorT), 6.9, 1.32, 2.2, TEXT, 'right', 11);
+
+  const segs = [
+    [3.2,  1.76, 'carbono', brl(M.UNIT.corcPorTChar)],
+    [4.98, 2.4,  'material', brl(M.UNIT.contratoBPorT)],
+    [8.42, 1.0,  'gate fee', brl(M.UNIT.gateFeePorTChar)],
   ];
-  strata.forEach(([x, y, name, value, note]) => {
-    micro(s, name, x + 0.16, y + 0.12, 2.2, MINERAL);
-    s.addText(value + ' / t', { x: x + 2.2, y: y + 0.06, w: 2.6, h: 0.3, isTextBox: true,
-      margin: 0, fontFace: 'Courier New', fontSize: 15, color: TEXT, align: 'right', valign: 'top' });
-    body(s, note, x + 0.16, y + 0.42, 4.4, 0.5, GRAPH, 8.5);
+  segs.forEach(([x, w, name, v]) => {
+    micro(s, name, x, 2.08, w, MINERAL, 'left', 6.8);
+    code(s, v, x, 2.26, w, TEXT, 'left', 9);
   });
 
-  micro(s, 'regra do carbono único: o mesmo quilo nunca é vendido duas vezes',
-    0.5, 5.26, 6, MINERAL);
-  s.addNotes('Três receitas independentes empilhadas numa margem. O contrato B existe para '
-    + 'o caso de a cimenteira reivindicar o carbono no próprio EPD.');
+  micro(s, 'custo pleno / t · a 810 t/ano', 3.2, 3.10, 2.8, HAZE600);
+  code(s, brl(M.OPEX_REGIME.porT), 6.15, 3.08, 1.6, TEXT, 'right', 11);
+  s.addText('−160', { x: 8.35, y: 3.06, w: 1.05, h: 0.3, isTextBox: true, margin: 0,
+    fontFace: 'Courier New', fontSize: 13, color: FLARE, align: 'right', valign: 'top' });
+
+  // A conclusão que os dois comprimentos já mostram.
+  s.addText('POC ≠ unidade econômica.  A escala é o destravamento.', {
+    x: 3.2, y: 3.80, w: 6.1, h: 0.34, isTextBox: true, margin: 0, fontFace: 'Arial',
+    fontSize: 15, color: TEXT, charSpacing: -0.4, valign: 'top' });
+
+  // NÍVEL 3 — as camadas contábeis, declaradas em vez de misturadas.
+  hair(s, 3.2, 4.36, 6.1, HAZE600, 66);
+  micro(s, 'receita = três fluxos [DOC] somados · custo = OPEX pleno [EST], já com o fixo',
+    3.2, 4.46, 6.2, HAZE500, 'left', 6.0);
+  micro(s, 'a margem de R$ 763 é outra camada: líquida só de custos variáveis',
+    3.2, 4.66, 6.2, HAZE600, 'left', 6.0);
+  micro(s, 'poc biochar · petrolina', 0.5, 5.26, 4, HAZE500);
+  s.addNotes('As duas barras partilham origem e escala, então o excesso do custo é lido '
+    + 'como distância. A margem de R$ 763 é [DOC] e pertence a outra camada contábil — '
+    + 'o slide diz isso em vez de sugerir que uma deriva da outra.');
 }
 
 /* ===========================================================================
-   09 — BREAKEVEN
-   Uma única linha de capacidade atravessa o quadro em y 3,15", com quatro nós
-   em x 1,5 / 3,9 / 6,3 / 8,7. Os números vivem NA linha. Sem caixas.
+   09 — BREAKEVEN · QUATRO LIMIARES NUMA ESCALA
+
+   Os quatro números estão posicionados POR VALOR num eixo comum, então a
+   distância entre eles é legível. Os dois vãos que importam são aritmética
+   sobre valores [DOC], não afirmações novas:
+     Módulo 1 → breakeven pleno   = o que falta
+     breakeven → sem gate fee     = o que a destinação vale
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('09');
   micro(s, '08 / breakeven', 0.5, 0.44, 3);
-  head(s, 'O solver diz exatamente\no que precisa ser verdade.', 0.5, 0.9, 4.4, 26);
+  head(s, 'O solver diz exatamente\no que precisa ser verdade.', 0.5, 0.88, 4.4, 26);
+
+  const B = M.BREAKEVEN;
+  const lo = 3500, hi = 7100;
+  const at = v => 0.75 + ((v - lo) / (hi - lo)) * 8.5;
+  const BASE = 2.60;                       // todos os numerais partilham a base
 
   const marks = [
-    [1.5,  2.03, num(M.BREAKEVEN.caixa),     'breakeven de caixa', 'com subvenções de custeio', HAZE600, 26],
-    [3.9,  1.86, num(M.BREAKEVEN.capacidadeModulo1), 'capacidade módulo 1', 'CAPEX de ' + brlM(M.BREAKEVEN.capexModulo1) + ' M', MINERAL7, 32],
-    [6.3,  1.62, num(M.BREAKEVEN.ebitdaZero), 'EBITDA = 0 em 2028', 'a mercado pleno, 15 pessoas', TEXT, 40],
-    [8.7,  3.62, num(M.BREAKEVEN.semGateFee), 'sem o gate fee', 'a destinação vale ~1.500 t', FLARE, 22],
+    [B.caixa,             26, HAZE600,  'caixa',        'com subvenções de custeio'],
+    [B.capacidadeModulo1, 30, MINERAL7, 'módulo 1',     'CAPEX de ' + brlM(B.capexModulo1) + ' M'],
+    [B.ebitdaZero,        38, TEXT,     'mercado pleno','EBITDA = 0 em 2028'],
+    [B.semGateFee,        22, FLARE,    'sem gate fee', 'se a destinação não fechar'],
   ];
-  marks.forEach(([x, y, n, label, note, color, size]) => {
-    const below = y > 3.15;
-    big(s, n, x - 1.25, y, 2.5, size, color, 'center');
-    const ly = below ? y + bigH(size) + 0.06 : y + bigH(size) + 0.06;
-    micro(s, label, x - 1.25, ly, 2.5, color === FLARE ? FLARE : MINERAL, 'center');
-    body(s, note, x - 1.25, ly + 0.2, 2.5, 0.4, GRAPH, 8.5);
+  marks.forEach(([v, size, color, label, note], i) => {
+    const x = at(v);
+    big(s, num(v), x - 1.15, BASE - bigH(size), 2.3, size, color, 'center');
+    // Alternado em duas alturas: os nós distam 1,77" e um rótulo completo não
+    // caberia numa linha só sem encostar no vizinho.
+    const y = i % 2 ? 3.62 : 3.38;
+    micro(s, label, x - 0.8, y, 1.6, color === FLARE ? FLARE : MINERAL, 'center');
+    micro(s, note, x - 1.15, y + 0.17, 2.3, HAZE600, 'center', 6.2);
   });
+  micro(s, 'toneladas de biochar por ano', 0.5, 2.88, 2.4, HAZE500);
 
-  micro(s, 'toneladas de biochar por ano', 0.5, 3.32, 3, HAZE500);
-  micro(s, 'poc biochar · petrolina', 0.5, 5.26, 4, HAZE500);
-  s.addNotes('4.700 t de capacidade contra 5.448 t de necessidade: o Módulo 1 sozinho não '
-    + 'fecha a conta a mercado pleno. Por isso a Planta 1 entra em 2029.');
+  // NÍVEL 3 — os dois vãos, lidos da própria escala.
+  const gapFalta = B.ebitdaZero - B.capacidadeModulo1;
+  const gapFee   = B.semGateFee - B.ebitdaZero;
+  hair(s, 0.5, 4.36, 8.9, MINERAL, 55);
+  micro(s, 'o vão', 0.5, 4.46, 1.2, FLARE);
+  code(s, num(gapFalta) + ' t', 1.7, 4.44, 1.0, FLARE, 'left', 10);
+  body(s, 'o Módulo 1 sozinho não alcança o breakeven a mercado pleno — a Planta 1 existe por isso',
+    2.9, 4.44, 6.4, 0.3, GRAPH, 9);
+  hair(s, 0.5, 4.84, 8.9, MINERAL, 66);
+  micro(s, 'a destinação', 0.5, 4.94, 1.2, MINERAL);
+  code(s, num(gapFee) + ' t', 1.7, 4.92, 1.0, MINERAL, 'left', 10);
+  body(s, 'é quanto o contrato com a PepsiCo vale em toneladas de breakeven evitadas',
+    2.9, 4.92, 6.4, 0.3, GRAPH, 9);
+  micro(s, 'poc biochar · petrolina', 0.5, 5.34, 4, HAZE500);
+  s.addNotes('Os quatro limiares estão em escala. Os dois vãos são subtrações sobre '
+    + 'números [DOC]: 5.448 − 4.700 = 748 t, e 6.942 − 5.448 = 1.494 t.');
 }
 
 /* ===========================================================================
@@ -494,37 +563,58 @@ const edge = (s, t, x, y, color = HAZE500) =>
 }
 
 /* ===========================================================================
-   11 — DISCIPLINA
-   O ÚNICO quadro profundo do baralho, e petróleo profundo, nunca quase-preto.
-   Os cinco gates são pontos luminosos sobre a linha em y 4,16", em
-   x 0,95 / 2,85 / 4,75 / 6,65 / 8,55. A frase ocupa quase metade do quadro.
+   11 — DISCIPLINA · ARQUITETURA DE GATES
+
+   Não é uma linha do tempo. São cinco membranas atravessadas em sequência, e
+   o que carrega o argumento é a DENSIDADE DE PARTÍCULAS de cada uma: ela cai
+   a cada gate, porque cada gate fecha um risco. Em M15 a matéria está
+   resolvida. Isso está no material, não numa legenda.
+
+   Cada coluna diz três coisas, e é essa a estrutura que o resto do baralho
+   herda: o que é PROVADO, o risco que FECHA, e o que aquilo DESTRAVA.
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = plate('11');
   s.addImage({ path: A + 'mark-light.png', x: 0.5, y: 0.42, w: 0.28, h: 0.28 });
-  micro(s, '10 / disciplina', 0.92, 0.47, 3, MINT);
+  micro(s, '10 / disciplina · arquitetura de gates', 0.92, 0.47, 4, MINT);
 
   s.addText('Cada tonelada da POC compra\no que dinheiro não compra depois.', {
-    x: 0.5, y: 1.42, w: 8.4, h: 1.5, isTextBox: true, margin: 0, fontFace: 'Arial',
-    fontSize: 36, color: MINT100, lineSpacing: 41, charSpacing: -1, valign: 'top' });
+    x: 0.5, y: 0.9, w: 8.6, h: headH(34, 2), isTextBox: true, margin: 0, fontFace: 'Arial',
+    fontSize: 34, color: MINT100, lineSpacing: 36, charSpacing: -0.9, valign: 'top' });
 
+  /* [mês, domínio, o teste, risco fechado, o que destrava] — as três últimas
+     colunas são a gramática que o deck inteiro passa a usar. */
   const gates = [
-    [0.95, 'M03', 'H/Corg ≤ 0,40', 'mantém Puro e EBC abertas'],
-    [2.85, 'M06', 'leito não aglomera', 'com o potássio do coco'],
-    [4.75, 'M09', 'CH₄ sob o teto', 'e areia dentro da spec'],
-    [6.65, 'M12', 'destinação assinada', 'condição de CAPEX'],
-    [8.55, 'M15', 'facility audit', 'primeira emissão'],
+    ['M03', 'qualidade do carbono', 'H/Corg ≤ 0,40',   'permanência',              'Puro e EBC abertas'],
+    ['M06', 'operabilidade',        'leito não aglomera',              'potássio do coco',         'operação contínua'],
+    ['M09', 'integridade climática','CH₄ sob o teto',                  'fugitivas e spec da areia','crédito auditável'],
+    ['M12', 'mercado',              'destinação assinada',             'feedstock e receita',      'CAPEX do Módulo 1'],
+    ['M15', 'verificabilidade',     'facility audit',                  'MRV',                     'primeira emissão'],
   ];
-  gates.forEach(([x, m, gate, note]) => {
-    code(s, m, x - 0.28, 4.42, 0.8, MINT, 'left', 9);
-    s.addText(gate, { x: x - 0.28, y: 4.62, w: 1.75, h: 0.24, isTextBox: true, margin: 0,
-      fontFace: 'Arial', fontSize: 10.5, color: MINT100, valign: 'top' });
-    micro(s, note, x - 0.28, 4.88, 1.8, HAZE300, 'left', 6.5);
+  gates.forEach(([m, dom, test, risk, unlock], i) => {
+    const x = 0.4 + i * 1.9, w = 1.75;
+    code(s, m, x + 0.12, 2.74, 0.8, MINT, 'left', 10);
+    micro(s, dom, x + 0.12, 2.96, w - 0.2, HAZE300, 'left', 6.2);
+    s.addText(test, { x: x + 0.12, y: 3.16, w: w - 0.24, h: 0.5, isTextBox: true, margin: 0,
+      fontFace: 'Arial', fontSize: 11, color: MINT100, lineSpacing: 13, valign: 'top' });
+
+    hair(s, x + 0.12, 3.66, w - 0.24, MINT, 62);
+    micro(s, 'risco fechado', x + 0.12, 3.74, w - 0.24, HAZE300, 'left', 6);
+    s.addText(risk, { x: x + 0.12, y: 3.90, w: w - 0.24, h: 0.4, isTextBox: true, margin: 0,
+      fontFace: 'Arial', fontSize: 8.5, color: MINT, lineSpacing: 10, valign: 'top' });
+
+    hair(s, x + 0.12, 4.32, w - 0.24, MINT, 62);
+    micro(s, 'destrava', x + 0.12, 4.40, w - 0.24, MINT, 'left', 6);
+    s.addText(unlock, { x: x + 0.12, y: 4.56, w: w - 0.24, h: 0.4, isTextBox: true, margin: 0,
+      fontFace: 'Arial', fontSize: 8.5, color: MINT100, lineSpacing: 10, valign: 'top' });
   });
 
-  micro(s, 'poc biochar · petrolina', 0.5, 5.28, 4, HAZE500);
-  s.addNotes('Cinco gates binários. Nenhum é uma meta: cada um é condição para o degrau seguinte.');
+  // A chave de leitura da chapa. Sem ela, a codificação fica invisível.
+  micro(s, 'a densidade de cada membrana cai à medida que o risco fecha — em M15 a matéria está resolvida',
+    0.5, 5.22, 8.6, MINT, 'left', 6.8);
+  s.addNotes('Cinco barreiras técnicas atravessadas, não cinco marcos numa linha. '
+    + 'A densidade de partículas de cada membrana codifica a incerteza restante.');
 }
 
 /* ===========================================================================
