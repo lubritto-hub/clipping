@@ -1337,21 +1337,29 @@
 
 .tc-stat--display { gap: var(--tc-space-sm); padding: 0; background: none; border: 0; }
 
+/* A protagonist number is CONFIDENT, not loud. Its authority comes from
+   scale, air and a hairline-thin weight — not from a stack of glows. The
+   soft glow is the default and `glow` opts into the strong one; a number
+   that needs the strong glow to land is usually a number that is too small.
+   Tabular figures keep a column of numerals optically aligned. */
 .tc-stat--display .tc-stat__value {
   font-size: var(--tc-font-size-6xl);
   font-weight: var(--tc-font-weight-thin);
   line-height: var(--tc-line-height-tight);
   letter-spacing: var(--tc-letter-spacing-tighter);
-  text-shadow: var(--tc-glow-text-strong);
+  font-variant-numeric: lining-nums tabular-nums;
+  text-shadow: var(--tc-glow-text);
 }
 
-/* Colossal - meant to be cut by the frame edge (pair with Bleed). */
+/* Colossal - meant to be cut by the frame edge (pair with Bleed). At this
+   size the tighter tracking starts to collide, so it eases off one step. */
 .tc-stat--colossal .tc-stat__value {
   font-size: var(--tc-font-size-7xl);
   font-weight: var(--tc-font-weight-thin);
   line-height: var(--tc-line-height-tight);
-  letter-spacing: var(--tc-letter-spacing-tighter);
-  text-shadow: var(--tc-glow-text-strong);
+  letter-spacing: var(--tc-letter-spacing-tight);
+  font-variant-numeric: lining-nums tabular-nums;
+  text-shadow: var(--tc-glow-text);
 }
 
 /* Projected: the numeral as light thrown onto an old screen. A blurred
@@ -1391,8 +1399,11 @@
   letter-spacing: var(--tc-letter-spacing-widest);
 }
 
-/* Glow, available to any Stat or Heading without going full display size. */
+/* Glow, available to any Stat or Heading without going full display size.
+   On a display or colossal numeral this is the opt-in STRONG glow. */
 .tc-stat--glow .tc-stat__value { text-shadow: var(--tc-glow-text); }
+.tc-stat--display.tc-stat--glow .tc-stat__value,
+.tc-stat--colossal.tc-stat--glow .tc-stat__value { text-shadow: var(--tc-glow-text-strong); }
 .tc-heading--glow { text-shadow: var(--tc-glow-text); }
 .tc-heading--glow-strong { text-shadow: var(--tc-glow-text-strong); }
 
@@ -1580,8 +1591,8 @@
   bottom: var(--tc-space-md);
   left: var(--tc-space-md);
   margin: 0;
-  color: var(--tc-palette-sage-100);
-  text-shadow: 0 1px 12px rgb(7 20 18 / 70%);
+  color: var(--tc-palette-petrol-900);
+  text-shadow: 0 1px 14px rgb(250 252 254 / 92%), 0 0 34px rgb(250 252 254 / 80%);
 }
 
 /* ==========================================================================
@@ -1848,34 +1859,51 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* 01 earth — warm, organic, granular. */
+/* ---------------------------------------------------------------------------
+   The process palette: one point of colour per stage.
+
+   The four stages are the argument of the whole brand — waste becomes a
+   material becomes durable carbon — so each gets its own light, and the
+   sequence has to read as an ASCENT into light. Every wash adds light
+   (`screen`); none of them darkens. The old "carbon = near-black" step was
+   the single most dystopian moment in the system: biochar is an engineered
+   mineral with a cold specular, so it is now the coolest, most precise light
+   in the run rather than the absence of one.
+   ------------------------------------------------------------------------- */
+
+/* 01 earth — warm, organic, granular. Residue, still unrefined. */
 .tc-step--earth .tc-step__datum { color: var(--tc-color-earth-text); }
 .tc-step--earth .tc-step__wash {
   position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(80% 70% at 40% 80%, rgb(156 129 104 / 34%) 0%, transparent 74%);
+  background: radial-gradient(80% 70% at 40% 80%, rgb(201 179 154 / 46%) 0%, transparent 74%);
   mix-blend-mode: screen;
 }
 
-/* 02 heat — industrial, metal, flare. */
+/* 02 heat — the transformation. The one warm signal in the whole system,
+   and the only place peach is allowed to carry a stage. */
 .tc-step--heat .tc-step__datum { color: var(--tc-color-warning-text); }
 .tc-step--heat .tc-step__wash {
   position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(70% 60% at 60% 30%, rgb(220 117 84 / 40%) 0%, transparent 72%);
+  background: radial-gradient(70% 60% at 60% 30%, rgb(240 161 132 / 44%) 0%, transparent 72%);
   mix-blend-mode: screen;
 }
 
-/* 03 carbon — near-black, tactile, almost no colour at all. */
-.tc-step--carbon .tc-step__datum { color: var(--tc-color-text); }
+/* 03 carbon — the material. Cold, silver, precise: a cut mineral catching
+   light on its facets, never soot. */
+.tc-step--carbon .tc-step__datum { color: var(--tc-color-mineral-text); }
 .tc-step--carbon .tc-step__wash {
   position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, transparent 30%, rgb(7 20 18 / 62%) 100%);
+  background:
+    linear-gradient(var(--tc-w-tilt), transparent 38%, rgb(219 232 238 / 72%) 49%, transparent 60%),
+    radial-gradient(76% 66% at 46% 74%, rgb(180 222 216 / 34%) 0%, transparent 76%);
+  mix-blend-mode: screen;
 }
 
-/* 04 atmosphere — ice and mint, luminous, weightless. */
+/* 04 atmosphere — ice and mint, luminous, weightless. The carbon is gone. */
 .tc-step--atmosphere .tc-step__datum { color: var(--tc-color-accent-text); }
 .tc-step--atmosphere .tc-step__wash {
   position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(80% 80% at 50% 20%, rgb(127 178 216 / 40%) 0%, rgb(116 212 180 / 22%) 46%, transparent 78%);
+  background: radial-gradient(80% 80% at 50% 20%, rgb(185 220 239 / 52%) 0%, rgb(151 220 199 / 30%) 46%, transparent 78%);
   mix-blend-mode: screen;
 }
 
@@ -1910,18 +1938,48 @@
 
 .tc-slide__atmos { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 
-/* Mineral register: the LCD-white slides that let the dark ones land. */
+/* ---------------------------------------------------------------------------
+   Slide registers, in the order a deck should use them.
+
+   AIR is the default and should carry roughly 70% of a deck. HAZE is the
+   ~20% mid. DEEP is the ~10% punctuation. Two adjacent slides never share a
+   register, and DEEP never runs twice in a row.
+   ------------------------------------------------------------------------- */
+
+/* AIR - the native register. Pearl ground, four light events, no shadow.
+   The light is off-axis and additive; the only recession is haze-blue. */
+.tc-slide--air { background-color: var(--tc-palette-pearl-blue); }
+.tc-slide--air .tc-slide__atmos {
+  background-image: var(--tc-ground);
+  opacity: 0.95;
+}
+
+/* HAZE - the mid plane. A slide that has receded into distance rather than
+   into shadow: cooler, bluer, lower in contrast, still luminous. */
+.tc-slide--haze {
+  background-color: var(--tc-palette-haze-50);
+  color: var(--tc-palette-petrol-900);
+}
+.tc-slide--haze .tc-slide__atmos {
+  background-image:
+    radial-gradient(62% 46% at var(--tc-w-x) var(--tc-w-y), rgb(255 255 255 / 92%) 0%, transparent 68%),
+    radial-gradient(58% 50% at calc(var(--tc-w-x) + 48%) calc(var(--tc-w-y) + 54%), rgb(203 240 248 / 62%) 0%, transparent 72%),
+    linear-gradient(168deg, transparent 42%, rgb(158 194 220 / 20%) 100%);
+}
+
+/* Mineral register: the LCD-white slides — the most technical of the light
+   registers, where data and hairlines live. */
 .tc-slide--mineral { background-color: var(--tc-palette-mist-50); }
 
 /* Atmospheric register: almost pure light, for dividers and transitions. */
 .tc-slide--atmospheric {
-  background-color: var(--tc-palette-mist-25);
+  background-color: var(--tc-palette-pearl-lilac);
 }
 .tc-slide--atmospheric .tc-slide__atmos {
   background-image: var(--tc-gradient-caustic), var(--tc-gradient-prism);
   background-blend-mode: screen;
-  opacity: 0.85;
-  filter: blur(18px) saturate(1.15);
+  opacity: 0.62;
+  filter: blur(26px) saturate(1.05);
 }
 
 .tc-slide__scrim {
@@ -1931,22 +1989,34 @@
   pointer-events: none;
 }
 
+/* Scrims on the DEEP register: marine, never black. */
 .tc-slide__scrim--bottom {
-  background: linear-gradient(180deg, transparent 28%, rgb(7 20 18 / 62%) 74%, rgb(7 20 18 / 88%) 100%);
+  background: linear-gradient(180deg, transparent 28%, rgb(18 48 42 / 58%) 74%, rgb(18 48 42 / 86%) 100%);
 }
 .tc-slide__scrim--left {
-  background: linear-gradient(94deg, rgb(7 20 18 / 88%) 0%, rgb(7 20 18 / 52%) 44%, transparent 78%);
+  background: linear-gradient(94deg, rgb(18 48 42 / 86%) 0%, rgb(18 48 42 / 48%) 44%, transparent 78%);
 }
-.tc-slide__scrim--full { background: rgb(7 20 18 / 58%); }
+.tc-slide__scrim--full { background: rgb(18 48 42 / 54%); }
 
+/* Scrims on the LIGHT registers work by ADDING light, not by dimming: the
+   type sits in a brightened area of the frame. This is the whole reason
+   type stays legible over a bright photograph without a grey wash over it. */
+.tc-slide--air .tc-slide__scrim--bottom,
+.tc-slide--haze .tc-slide__scrim--bottom,
 .tc-slide--atmospheric .tc-slide__scrim--bottom,
 .tc-slide--mineral .tc-slide__scrim--bottom {
-  background: linear-gradient(180deg, transparent 28%, rgb(244 247 249 / 70%) 74%, rgb(244 247 249 / 92%) 100%);
+  background: linear-gradient(180deg, transparent 26%, rgb(250 252 254 / 78%) 72%, rgb(250 252 254 / 96%) 100%);
 }
+.tc-slide--air .tc-slide__scrim--left,
+.tc-slide--haze .tc-slide__scrim--left,
+.tc-slide--atmospheric .tc-slide__scrim--left,
 .tc-slide--mineral .tc-slide__scrim--left {
-  background: linear-gradient(94deg, rgb(244 247 249 / 92%) 0%, rgb(244 247 249 / 58%) 44%, transparent 78%);
+  background: linear-gradient(94deg, rgb(250 252 254 / 94%) 0%, rgb(250 252 254 / 62%) 44%, transparent 78%);
 }
-.tc-slide--mineral .tc-slide__scrim--full { background: rgb(244 247 249 / 62%); }
+.tc-slide--air .tc-slide__scrim--full,
+.tc-slide--haze .tc-slide__scrim--full,
+.tc-slide--atmospheric .tc-slide__scrim--full,
+.tc-slide--mineral .tc-slide__scrim--full { background: rgb(250 252 254 / 66%); }
 
 .tc-slide__grain {
   position: absolute;
@@ -2315,12 +2385,16 @@
 }
 
 /* Weight: how loudly a figure speaks in a composition. `ambient` is MEANT to
-   be barely readable — it is the sacrificed-legibility register for imagery. */
-.tc-figure--weight-lead { --tc-fig-veil-op: 0.42; }
+   be quiet — it is the sacrificed-legibility register for imagery.
+
+   On a luminous ground it recedes by GOING HAZY, not by dissolving: dropping
+   opacity toward a bright page erases an image outright, where desaturating
+   and cooling it pushes it back a plane and keeps it readable. */
+.tc-figure--weight-lead { --tc-fig-veil-op: 0.38; }
 .tc-figure--weight-ambient {
-  --tc-fig-veil-op: 0.9;
-  opacity: 0.62;
-  filter: blur(1.2px);
+  --tc-fig-veil-op: 0.6;
+  opacity: 0.88;
+  filter: blur(1.3px) saturate(0.78) contrast(0.92);
 }
 
 /* ==========================================================================
@@ -2448,3 +2522,64 @@
   margin-left: 8%;
   max-width: 22ch;
 }
+
+/* ==========================================================================
+   DEEP register slide — the rationed dark frame.
+   Its ground comes from --tc-color-bg via [data-theme="dark"]; this rule
+   exists so the register is nameable and so the frame carries a visible
+   light source rather than reading as a flat void.
+   ========================================================================== */
+
+.tc-slide--deep .tc-slide__atmos {
+  background-image:
+    var(--tc-lightleak-top),
+    var(--tc-lightleak-corner),
+    var(--tc-ground);
+}
+
+/* One hard specular break across the deep frame. Without it the register is
+   a flat field of colour, and a flat dark field is the single image most
+   responsible for a climate deck reading as dystopian. */
+.tc-slide--deep::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background-image: var(--tc-specular-brushed);
+  opacity: 0.5;
+}
+
+/* ==========================================================================
+   Surface registers — how a section declares which of the three planes it
+   is on. This is the 70 / 20 / 10 mix, expressed as something a page can
+   actually be built from.
+   ========================================================================== */
+
+.tc-plane--air {
+  background-color: var(--tc-palette-pearl-blue);
+  color: var(--tc-palette-petrol-900);
+}
+
+.tc-plane--haze {
+  background-color: var(--tc-palette-haze-50);
+  color: var(--tc-palette-petrol-900);
+}
+
+/* The deep plane is punctuation. It is the only plane allowed to invert, and
+   it must not be the plane a page opens on. */
+.tc-plane--deep {
+  background-color: var(--tc-palette-forest-970);
+  color: var(--tc-palette-mint-100);
+}
+
+/* ==========================================================================
+   Aeration — the negative space the identity depends on.
+   Generous, deliberately asymmetric margins. `silence` is a block that
+   exists to hold nothing: it is a compositional element, not padding.
+   ========================================================================== */
+
+.tc-air { padding: var(--tc-space-3xl) var(--tc-space-2xl) var(--tc-space-2xl) var(--tc-space-3xl); }
+.tc-air--generous { padding: var(--tc-space-4xl) var(--tc-space-3xl) var(--tc-space-3xl) var(--tc-space-4xl); }
+.tc-silence { min-height: var(--tc-space-4xl); }
+.tc-silence--tall { min-height: var(--tc-space-5xl); }

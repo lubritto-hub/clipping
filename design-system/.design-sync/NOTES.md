@@ -220,3 +220,47 @@ None. The last full validate ran clean: 34/34 render, 0 bad, 0 thin,
   **If the deflection is ever increased, re-check the arrow reading.**
 - There is no company name, so `Mark` renders the symbol alone by default and
   `wordmark` takes a string rather than a boolean.
+
+## The luminous inversion (redesign)
+
+The system was rebuilt around the light register. What that actually required,
+beyond swapping the default theme:
+
+- **Every deep value was lifted out of near-black.** The old ground was
+  `#06120c`; nothing in the system is below ~18% luminance now. Lifting the
+  tokens is not enough on its own — `rgb(6 18 12 / …)` and `rgb(0 0 0 / 42%)`
+  literals were baked into blooms, scrims, mirror floors and figure vignettes,
+  and those are what actually painted the dystopia. Grep for raw dark rgb()
+  literals after any palette change; `#000` should survive only inside masks.
+- **The ground plate had a radial that REMOVED light.** One
+  `rgb(71 89 79 / 22%)` radial in `--tc-ground` was doing more to make the page
+  feel heavy than the palette was. Recession on a light page is haze blue.
+- **`grayscale(1) sepia() hue-rotate()` throws the image away.** The figure
+  registers used to open with `grayscale(1)`, then try to put one hue back.
+  Every photograph came out as the same grey plate with a cast on it. The
+  curves now *grade* the source, so the mint/haze/nacre built into the imagery
+  survives, and each register still owns a distinct tonal decision.
+- **Bright plates + graded-up curves + `weight="ambient"` = a blank rectangle.**
+  Three exposure lifts compound. `ambient` now recedes by desaturating and
+  cooling (opacity 0.88, not 0.62): on a bright ground, dropping opacity erases
+  an image outright.
+- **Build imagery with real mid-tone contrast** and let the grading lift it.
+  Building the plates already-light and then grading up washes them to nothing.
+  A bright specular over high-frequency noise averages to chalk — the char
+  plate needs few, small, hard speculars over a genuinely dark ground.
+- **The deep register needs visible light in it**, or it is a flat field of
+  colour — which is the single image most responsible for a climate deck
+  reading as dystopian. `.tc-slide--deep` carries both light leaks plus one
+  hard specular sweep.
+
+## qa_render.py: paragraphs, not runs
+
+The QA renderer used to flatten every `<a:r>` in a `txBody` into one string,
+which fused the last word of each paragraph onto the first word of the next and
+**invented line-break defects that were not in the file**. pptxgenjs writes a
+`\n` as a real `</a:p><a:p>`, not as `<a:br/>`. It now walks paragraph by
+paragraph, and within a paragraph walks child nodes in document order so an
+`<a:br/>` lands between the runs it separates.
+
+Also: a case-insensitive placeholder grep for `nan` matches "fi**nan**ciamento".
+Use word boundaries.

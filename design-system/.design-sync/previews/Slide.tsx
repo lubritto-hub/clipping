@@ -4,47 +4,54 @@ import {
   Figure, Process, ProcessStep,
 } from '@terra-carbon/design-system';
 
-/* Stand-in plates. Real decks pass their own editorial photography. */
+/* Stand-in plates. Real decks pass their own editorial photography.
+   These are deliberately HIGH KEY: an image whose shadows sit near zero drops
+   a hole into a luminous frame, and one hole makes the whole spread heavy. */
 const plate = (seed: number, a: string, b: string, freq: string) =>
   "data:image/svg+xml;utf8," +
   encodeURIComponent(
     `<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600">
 <defs><filter id="f"><feTurbulence type="fractalNoise" baseFrequency="${freq}" numOctaves="4" seed="${seed}"/><feColorMatrix type="saturate" values="0.3"/></filter>
 <linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${a}"/><stop offset="100%" stop-color="${b}"/></linearGradient></defs>
-<rect width="900" height="600" fill="url(#g)"/><rect width="900" height="600" filter="url(#f)" opacity="0.5"/></svg>`
+<rect width="900" height="600" fill="url(#g)"/><rect width="900" height="600" filter="url(#f)" opacity="0.34"/></svg>`
   );
-const FIGURES = plate(11, '#5b6f78', '#141c22', '0.16');
-const INDUSTRY = plate(7, '#31474f', '#0b1418', '0.35');
+const FIGURES = plate(11, '#f2f8fc', '#9dc2dc', '0.16');
+const INDUSTRY = plate(7, '#e7f0f7', '#7aa8c9', '0.35');
+const MINERAL = plate(3, '#cbd9e2', '#5d7b8d', '0.9');
 
-/** 01 — Cover / manifesto. Full bleed, one headline, one technical line. */
+/** 01 — Luminous cover. Full bleed, one headline, one technical line.
+    The frame opens on LIGHT: the scrim brightens under the type rather than
+    dimming the image. */
 export const CoverManifesto = () => (
-  <Slide flush scrim="bottom" backdrop={
+  <Slide flush tone="air" weather="cove" scrim="bottom" backdrop={
     <Figure src={FIGURES} alt="" ratio={16 / 9} smear ghostOffset={20} tone="cool" focus="soft" flash prism style={{ height: '100%' }} />
   }>
     <Stack style={{ height: '100%', padding: 'var(--tc-space-2xl)' }} justify="between">
-      <Mark size={26} wordmark glow />
+      <Mark size={26} />
       <Stack gap="md">
-        <Heading level={2} glow="strong">transforming waste<br />into climate impact.</Heading>
-        <Text eyebrow tone="subtle">terra carbon · biochar · climate solutions · 2026</Text>
+        <Heading level={2}>transforming waste<br />into climate impact.</Heading>
+        <Text eyebrow tone="subtle">biochar · durable carbon removal · 2026</Text>
       </Stack>
     </Stack>
   </Slide>
 );
 
-/** 02 — Big statement. One sentence, an optical object entering the frame. */
+/** 02 — Big statement. One sentence, a translucent bead entering the frame.
+    Solution-led: the copy never states the problem. */
 export const BigStatement = () => (
-  <Slide>
+  <Slide tone="air" weather="blue-hour">
     <Stack style={{ height: '100%' }} justify="center" gap="lg">
-      <Heading level={3} style={{ maxWidth: '70%' }}>carbon removal has a<br />permanence problem.</Heading>
-      <Text eyebrow tone="subtle">01 — the problem</Text>
+      <Heading level={3} style={{ maxWidth: '70%' }}>durable carbon removal,<br />built for the real world.</Heading>
+      <Text eyebrow tone="subtle">01 — the thesis</Text>
     </Stack>
-    <Glass orb size={260} droplets style={{ position: 'absolute', right: -90, top: '20%' }} />
+    <Glass orb size={260} pearl droplets style={{ position: 'absolute', right: -90, top: '20%' }} />
   </Slide>
 );
 
-/** 03 — Big number. The figure IS the image; meaning arrives tiny. */
+/** 03 — Refined big number. The figure IS the image; meaning arrives tiny.
+    Confident, not loud: hairline weight, wide frame, the soft glow only. */
 export const BigNumber = () => (
-  <Slide>
+  <Slide tone="haze" weather="kiln">
     <Stack style={{ height: '100%' }} justify="center" gap="lg">
       <Halo>
         <Bleed sides={['left']} amount="var(--tc-space-2xl)">
@@ -62,9 +69,10 @@ export const BigNumber = () => (
   </Slide>
 );
 
-/** 04 — Science. Dark, one instrument, three or four parameters. */
+/** 04 — Science. The mineral register, which is where precision belongs:
+    one instrument, three or four parameters. */
 export const ScienceEvidence = () => (
-  <Slide>
+  <Slide tone="mineral" weather="condensation">
     <Stack direction="horizontal" gap="3xl" style={{ height: '100%' }} align="center">
       <Stack gap="lg" style={{ flex: 1 }}>
         <Heading level={4}>engineered by nature,<br />scaled by technology.</Heading>
@@ -81,9 +89,10 @@ export const ScienceEvidence = () => (
   </Slide>
 );
 
-/** 05 — Process. Four stages, four different treatments. */
+/** 05 — Process. Four stages, four different treatments. The sequence reads
+    as an ASCENT into light; no stage darkens. */
 export const ProcessSequence = () => (
-  <Slide>
+  <Slide tone="haze" weather="kiln">
     <Stack gap="md" style={{ height: '100%' }}>
       <Rule label="04 — process" />
       <Process style={{ flex: 1 }}>
@@ -94,7 +103,7 @@ export const ProcessSequence = () => (
           <Figure src={INDUSTRY} alt="" ratio={4 / 5} tone="flare" flash bloom />
         </ProcessStep>
         <ProcessStep stage="carbon" index="03" name="biochar" datum="84.7% fixed C">
-          <Figure src={INDUSTRY} alt="" ratio={4 / 5} tone="earth" silhouette grain />
+          <Figure src={MINERAL} alt="" ratio={4 / 5} tone="mineral" grain />
         </ProcessStep>
         <ProcessStep stage="atmosphere" index="04" name="permanence" datum=">1000 yr">
           <Figure src={FIGURES} alt="" ratio={4 / 5} tone="cool" focus="soft" prism />
@@ -104,9 +113,9 @@ export const ProcessSequence = () => (
   </Slide>
 );
 
-/** 06 — Project case. Almost an archive record. */
+/** 06 — Project case. Almost an archive record, shot bright. */
 export const ProjectCase = () => (
-  <Slide flush scrim="bottom" backdrop={
+  <Slide flush tone="air" weather="cove" scrim="bottom" backdrop={
     <Figure src={INDUSTRY} alt="" ratio={16 / 9} tone="mineral" focus="soft" chroma grain style={{ height: '100%' }} />
   }>
     <Stack style={{ height: '100%', padding: 'var(--tc-space-2xl)' }} justify="end" gap="md">
@@ -124,7 +133,7 @@ export const ProjectCase = () => (
 
 /** 07 — Data. The mineral register: hairlines, no boxes, heavy negative space. */
 export const DataComparison = () => (
-  <Slide tone="mineral">
+  <Slide tone="mineral" weather="cove" artefact="quiet">
     <Stack gap="lg" style={{ height: '100%' }}>
       <Rule label="07 — durability" />
       <Stack direction="horizontal" gap="3xl" align="start" style={{ flex: 1 }}>
@@ -143,9 +152,11 @@ export const DataComparison = () => (
   </Slide>
 );
 
-/** 08 — Section divider. Nearly empty, so the deck can breathe. */
+/** 08 — Transitional. Nearly empty, so the deck can breathe. This is also
+    where the deck's single `deep` frame belongs, if it has one — never two
+    in a row, and never more than ~10% of the frames. */
 export const SectionDivider = () => (
-  <Slide tone="atmospheric">
+  <Slide tone="atmospheric" weather="condensation">
     <Stack style={{ height: '100%' }} align="center" justify="center">
       <Glass orb size={180} pearl droplets />
       <Text eyebrow tone="subtle" style={{ marginTop: 'var(--tc-space-xl)' }}>03 — science</Text>

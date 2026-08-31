@@ -13,6 +13,20 @@ the symbol carries the identity alone.
 > Francisco that happens to work on carbon removal. Never an NGO, never an ESG
 > consultancy, never a SaaS product.
 
+## 0a. Copy is solution-led
+
+The writing states the **solution**, never the problem. "Most carbon removal
+does not stay removed" is the register this identity is not in. The lines that
+are:
+
+> transforming waste into climate impact. · engineered by nature, scaled by
+> technology. · durable carbon removal, built for the real world. · from
+> biomass to measurable climate value. · removing carbon. restoring systems. ·
+> designed for permanence. · measurable impact. durable carbon. restored soils.
+
+Compositions should convey solução, evolução, precisão, beleza and a possible
+future — not crisis.
+
 ## 0. The rule that outranks the others
 
 **Flat is the failure state, and tidy is the second failure state.**
@@ -29,12 +43,15 @@ bordered cards, tables and forms.
 ## 1. Wrap in TerraCarbonProvider, then give the surface weather
 
 ```jsx
-<TerraCarbonProvider theme="dark" grain wash leak fill>
+<TerraCarbonProvider theme="light" grain wash leak fill>
   <App />
 </TerraCarbonProvider>
 ```
 
-- `theme`: `"dark"` (**the native register**), `"light"`, `"system"`.
+- `theme`: `"light"` (**the native register**), `"dark"`, `"system"`.
+  The identity is **luminous**, and the light register is where it lives — not
+  a "light mode" bolted onto a dark product. `"dark"` is a deep marine night
+  used as punctuation, at most ~10% of a page or a deck.
 - `grain` · `wash` · `leak` · `halo` — use `grain wash` on any large flat area.
 - **Weather.** `data-weather` on any element re-aims every atmospheric plate
   inside it, so ground, figures and speculars share one light source:
@@ -46,14 +63,26 @@ bordered cards, tables and forms.
 
 ## 2. Colour
 
+**The rule that governs every other colour decision:**
+
+> **Depth is achieved by desaturating toward haze, not by darkening.**
+
+A plane that recedes goes cooler, bluer and lower in contrast. It does not go
+grey and it never goes toward black. Every shadow in the light register is a
+**blue** diffusion at low alpha — which is what a shadow looks like outdoors
+under a bright sky. A neutral or warm shadow is the single reliable way to make
+this identity read as heavy.
+
 | Family | Real names |
 |---|---|
-| **Two darks** | ground `--tc-palette-forest-970` (hue ~150) · surface `--tc-palette-petrol-900` (hue ~198). **Never collapse them** — a card floats by temperature, not elevation. |
-| Material black | `--tc-palette-char-950`, `--tc-palette-char-gloss` (the cold specular that makes char a mineral, not charcoal) |
-| Greens | `--tc-palette-sage-*` (greyed, ~7–11% sat), `--tc-palette-mineral-*` (deep teal). Never a saturated leaf green. |
-| Cold flash | `--tc-palette-cyan-400`, `--tc-palette-cyan-glare` (blown-out core, glow only) |
-| Ice / mist | `--tc-palette-ice-300`, `--tc-palette-mist-25/50` (green-cast off-white — **not** cream, **not** corporate white) |
-| Nacre | `--tc-palette-nacre-400/500` — the iridescent pink at hue ~306 |
+| **The ground** | `--tc-palette-pearl-blue / -mint / -lilac / -warm`. Four whites separated by **temperature, not value** — one white is a background, four are a material. |
+| **The mid** | `--tc-palette-haze-*` (azul névoa). The ~20% band: distance, air, recession. |
+| Ice / mist | `--tc-palette-ice-*` (azul gelo), `--tc-palette-mist-*` (off-white frio, cinza muito claro) |
+| Greens | `--tc-palette-sage-*` (cool sage / greenish grey), `--tc-palette-mineral-*` (soft teal). Never a saturated leaf green, never ESG green. |
+| Soft glow | `--tc-palette-cyan-400`, `--tc-palette-cyan-glare` (blown-out core, glow only — never a fill) |
+| Nacre | `--tc-palette-nacre-200..500` + `-rose` — the delicate lilac→rose iridescence |
+| Material | `--tc-palette-char-950`, `--tc-palette-char-gloss` (the cold specular that makes char a mineral, not soot), `--tc-palette-earth-*` |
+| **The deep** | `--tc-palette-forest-970` (hue ~150) · `--tc-palette-petrol-900` (hue ~198). **Never collapse them** — a card floats by temperature, not elevation. Rationed to ~10%. |
 | Optical light | `--tc-optic-ice / -mint / -silver / -nacre / -peach` — colours *produced by light*, gradients and edges only |
 
 **Green is a material, never a status.** `success`, positive deltas and
@@ -65,11 +94,19 @@ above 18% alpha, always flanked by cool stops. It is jewellery; it stops working
 the moment it becomes a theme colour. Warm (peach/flare) is rationed harder
 still and never sits adjacent to nacre.
 
-**No pure white, no pure black.** The lightest surface is `--tc-palette-mist-25`;
-the darkest is `--tc-palette-char-950`. `#fff`/`#000` only inside masks.
+**No pure black.** The darkest value in the system is a saturated blue-teal at
+roughly 18% luminance. `#000` only inside masks. Pure white is allowed as a
+*surface* (`--tc-color-surface`) because a luminous register needs a true white
+to measure the pearls against — but never as a page ground.
+
+**Hairlines are blue, not grey** (`--tc-color-hairline` is a haze blue). A grey
+hairline on a cool white is what makes a luminous page look printed.
+
+**Grain is halved against the dark register.** The same noise that reads as film
+on a deep plate reads as a *soiled surface* on a bright one.
 
 **In the light register the accent is nearly as dark as the text**
-(`--tc-color-accent: mineral-700`). If an accent could plausibly be a filled
+(`--tc-color-accent: mineral-600`). If an accent could plausibly be a filled
 primary button, it is a SaaS accent.
 
 ## 3. Light: hard, not just soft
@@ -77,7 +114,7 @@ primary button, it is a SaaS accent.
 A soft off-axis radial pool is the 2021 dark-mode default. Aqua, the MiniDisc
 and the VAIO had **hard terminators and speculars**. Use both halves:
 
-| Hard | `--tc-gel` (bright dome, hard terminator at the equator) · `--tc-specular-brushed` (anisotropic streak with a hard core) · `--tc-specular-edge` (the MiniDisc rim break — **one per frame**) |
+| Hard | `--tc-gel` (bright dome, hard terminator at the equator — below it the gel goes to **haze blue**, so a sphere reads as a translucent bead full of light, never a heavy object with a shadowed underside) · `--tc-specular-brushed` (anisotropic streak with a hard core) · `--tc-specular-edge` (the MiniDisc rim break — **one per frame**) |
 |---|---|
 | Soft | `--tc-ground` (four off-axis planes, two of them *removing* light) · `--tc-halo-behind` · `--tc-lightleak-*` · `--tc-gradient-caustic / -prism / -sheen` |
 
@@ -138,8 +175,10 @@ the type scale — if it does not occupy 30–50% of the frame it is not a hero.
 `<Figure register="char | plant | terrain | figures">` is the **first**
 decision; `tone`, `focus`, `flash`, `chroma`, `smear`, `prism` are trim.
 
-- **char** — biochar as a cut mineral: crushed blacks, one hard specular on a
-  facet, dense mineral grain. Never sooty charcoal.
+- **char** — biochar as a cut mineral: cool, dense, one hard specular on a
+  facet. **Never crushed to black** — a crushed image drops a hole into a
+  luminous page, and one hole makes the whole spread read as heavy. Never sooty
+  charcoal: char is the product, and it should look valuable.
 - **plant** — industry at blue hour: mist, backlight, lifted blacks, silhouettes,
   wide framing, pipework. Never a documentary factory photo.
 - **terrain** — soil close-up, cropland from above, roots, biomass, condensation.
@@ -180,19 +219,29 @@ leaf, tree, planet or recycling loop.
 
 `<Slide>` supplies register, bleed, weather and grain — **no locked title, no
 footer, no logo slot**. Compose each frame with `Canvas`/`Place`. The eight
-archetypes are authored as `Slide` preview stories: cover/manifesto · big
-statement · big number · science/evidence · process · project case ·
-data/comparison · section divider.
+archetypes are authored as `Slide` preview stories: **luminous cover** ·
+big statement · **refined** big number · science/evidence · process ·
+project case · data/comparison · transitional.
 
-**Register mix across a deck: ~55–60% `dark`, 25–30% `mineral`, 10–15%
-`atmospheric`.** Alternate dense frames with near-empty ones. Always set
-`scrim` when type sits over a `backdrop`.
+A protagonist number is **confident, not loud**: hairline weight, a wide frame,
+the soft glow by default. `glow` opts into the strong one — and a number that
+needs the strong glow to land is usually a number that is too small.
+
+**Register mix across a deck: ~70% light — `air` (about half of it), `haze`,
+`mineral`, `atmospheric` — and at most ~10% `deep`.** `deep` is punctuation:
+one dark frame after a run of bright ones, never two in a row. A deck that
+leans on it reads as *climate anxiety* rather than *climate innovation*, which
+is the exact failure this mix exists to prevent.
+
+Alternate dense frames with near-empty ones. Always set `scrim` when type sits
+over a `backdrop` — on the light registers the scrim **adds** light under the
+type rather than dimming the image.
 
 **The typographic code**, repeated until recognisable:
 
 ```
-carbon,
-permanently removed.
+transforming waste
+into climate impact.
 
 FEEDSTOCK   RICE HUSK
 PYROLYSIS   540 °C

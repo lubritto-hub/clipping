@@ -17,23 +17,27 @@ export interface MarkProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, '
 }
 
 /**
- * The symbol.
+ * The symbol — **Threshold**.
  *
- * **Refraction as the only event.** A wide, diffuse band arrives from
- * off-canvas, meets a single curved interface, and leaves on a permanently
- * different path — narrower, angled down, exiting the frame. Diffuse abundant
- * input; an interface where matter intervenes; a redirected, denser output
- * that does not come back.
+ * Three loose strata below; one consolidated mass above, bleeding off the top
+ * edge; and a single step cut into the underside of that mass.
  *
- * It is deliberately **the opposite of circularity**: the beam never returns
- * to where it started, which is what permanent removal actually means. The
- * sphere survives only as an arc of an enormous, mostly-invisible curve — the
- * sphere's edge, never the ball. Nothing here is closed, concentric or
- * organic; there is no leaf, tree, planet or recycling loop.
+ * The argument of the business, drawn: dispersed residue crosses one
+ * interface and leaves as a denser, permanent body that continues past the
+ * frame. The strata thin and drift as they fall away — dispersal is losing
+ * definition. The mass does not.
  *
- * The mark is built from two solid masses against two 1.3-unit hairlines. That
- * extreme weight contrast belongs to product photography and editorial rules,
- * not to icon sets — which is why it does not read as an icon.
+ * **The step is the whole mark.** It is the interface the matter crossed, and
+ * it is what makes this a symbol rather than an icon: no text glyph, no chart
+ * and no document icon has a stepped mass, so the silhouette is unmistakable
+ * even at 16px where the step reduces to two pixels.
+ *
+ * Rising, not settling. The permanent thing sits at the top of the frame and
+ * exits it; the residue is what falls away. A mark that consolidated downward
+ * would read as burial, which is the opposite of what this is.
+ *
+ * There is no leaf, tree, planet, globe or recycling loop, and nothing here
+ * closes: permanent removal is precisely the thing that does not come back.
  *
  * **It has to work alone**, and does: there is no name yet.
  *
@@ -55,22 +59,16 @@ export const Mark = React.forwardRef<HTMLSpanElement, MarkProps>(function Mark(
         role="img"
         aria-label="Symbol"
       >
-        {/* The incoming band — wide, horizontal, cropped by the left edge. */}
-        <path d="M0 9H17.6V14.5H0Z" fill="currentColor" />
-        {/* The outgoing band — narrower, laterally displaced and deflected
-            ~20 degrees down, leaving through the right edge. The offset at the
-            surface IS the refraction; a steeper angle turns the two masses
-            into a chevron and the mark reads as an arrow. */}
-        <path d="M17.2 11.6L32 17.6V21.6L16.9 16.4Z" fill="currentColor" />
-        {/* The interface: one continuous arc of a much larger curve, running
-            off the top and bottom edges. The sphere survives only as its edge. */}
-        <path
-          d="M21.4 0Q13.2 16 21.4 32"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.4"
-          strokeLinecap="round"
-        />
+        {/* The consolidated mass. Full width, cut by the top edge so it
+            continues past the mark, with one step in its underside — the
+            interface the matter crossed. */}
+        <path d="M0 0H32V12.4H21.6V8.2H0Z" fill="currentColor" />
+        {/* Three strata falling away: each thinner and laterally offset from
+            the last. They never share a left margin — that is what stops the
+            mark reading as a block of text. */}
+        <path d="M7.6 16.8H32V19.2H7.6Z" fill="currentColor" />
+        <path d="M0 23H20.8V24.8H0Z" fill="currentColor" />
+        <path d="M5.2 28.6H29.4V29.8H5.2Z" fill="currentColor" />
       </svg>
       {wordmark && (
         <span className="tc-mark__wordmark">
