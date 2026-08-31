@@ -9,3 +9,15 @@ ds-bundle/
 design-system/node_modules/
 design-system/dist/
 design-system/.preview/
+
+# ...except the art pipeline, which is source: the deck cannot be rebuilt
+# without it, and the compositions are the design work.
+!design-system/.preview/
+design-system/.preview/*
+!design-system/.preview/art.mjs
+!design-system/.preview/materials.py
+!design-system/.preview/plates.py
+!design-system/.preview/bg.mjs
+!design-system/.preview/markshot.mjs
+!design-system/.preview/demo.tsx
+!design-system/.preview/themecheck.mjs
