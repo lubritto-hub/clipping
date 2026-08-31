@@ -13,6 +13,15 @@ export interface SlideProps extends React.HTMLAttributes<HTMLDivElement> {
   flush?: boolean;
   /** Film grain over the whole slide. On by default. */
   grain?: boolean;
+  /**
+   * The lighting condition. Every atmospheric plate inside re-aims to it, so
+   * ground, figures and speculars agree on one source. **Two adjacent slides
+   * must not share a condition** — that repetition is what makes a deck look
+   * generated.
+   */
+  weather?: 'default' | 'kiln' | 'blue-hour' | 'condensation' | 'cove';
+  /** How visible the print/scan substrate is. `loud` shows its making. */
+  artefact?: 'quiet' | 'normal' | 'loud';
   /** Full-bleed background layer — a `Figure`, a `Glass` object, a wash. */
   backdrop?: React.ReactNode;
   /**
@@ -51,14 +60,25 @@ export interface SlideProps extends React.HTMLAttributes<HTMLDivElement> {
  * </Slide>
  */
 export const Slide = React.forwardRef<HTMLDivElement, SlideProps>(function Slide(
-  { children, tone = 'dark', flush = false, grain = true, backdrop, scrim = 'none', className, ...rest },
+  { children, tone = 'dark', flush = false, grain = true, weather = 'default', artefact = 'normal', backdrop, scrim = 'none', className, ...rest },
   ref
 ) {
   return (
     <div
       ref={ref}
       data-theme={tone === 'dark' ? 'dark' : 'light'}
-      className={cx('tc-slide', `tc-slide--${tone}`, flush && 'tc-slide--flush', className)}
+      data-weather={weather === 'default' ? undefined : weather}
+      data-artefact={artefact === 'normal' ? undefined : artefact}
+      className={cx(
+        'tc-slide',
+        `tc-slide--${tone}`,
+        flush && 'tc-slide--flush',
+        // Weather and substrate are the default state: a flat ground is the
+        // failure mode this whole system exists to avoid.
+        !backdrop && 'tc-ground',
+        'tc-substrate',
+        className
+      )}
       {...rest}
     >
       {backdrop && <div className="tc-slide__atmos">{backdrop}</div>}

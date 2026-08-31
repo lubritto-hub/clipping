@@ -28,13 +28,38 @@
   /* --- Petrol: the dark ground ------------------------------------------
      Deep blue-green graphite. 950 is the darkest surface in the system and
      is deliberately NOT #000 - pure black reads cyber/SaaS, not ethereal. */
-  --tc-palette-petrol-950: #071412;
-  --tc-palette-petrol-900: #0b1c1b;
-  --tc-palette-petrol-850: #0f2423;
-  --tc-palette-petrol-800: #142d2c;
-  --tc-palette-petrol-700: #1d3d3c;
-  --tc-palette-petrol-600: #274e4d;
-  --tc-palette-petrol-500: #356362;
+  --tc-palette-petrol-950: #05141a;
+  --tc-palette-petrol-900: #081b23;
+  --tc-palette-petrol-850: #0b222c;
+  --tc-palette-petrol-800: #0f2b36;
+  --tc-palette-petrol-700: #163a48;
+  --tc-palette-petrol-600: #1f4b5c;
+  --tc-palette-petrol-500: #2b6072;
+
+
+  /* --- Forest: the GROUND ------------------------------------------------
+     Deep forest near-black at hue ~150. This is the page, and it is a
+     different hue family from the surface on purpose: a card separates from
+     the ground by TEMPERATURE, not by a drop shadow. */
+  --tc-palette-forest-970: #06120c;
+  --tc-palette-forest-950: #0a1a12;
+  --tc-palette-forest-900: #0e2318;
+
+  /* --- Char: biochar as an advanced material -----------------------------
+     Near-neutral, colder than forest, with its own cold specular. Sooty black
+     has no specular; a cut mineral does - that single value is what stops
+     char reading as charcoal. */
+  --tc-palette-char-950: #07080a;
+  --tc-palette-char-900: #0d1013;
+  --tc-palette-char-gloss: #c4d5db;
+  --tc-palette-char-ember: #6a4636;
+
+  /* --- Nacre: the rationed iridescent pink -------------------------------
+     A real shell pink at hue ~306, not a lavender. Subject to the nacre
+     ratio: at most one occurrence per frame, never above 18% alpha. */
+  --tc-palette-nacre-400: #c9a3c4;
+  --tc-palette-nacre-500: #b17fae;
+  --tc-palette-nacre-300: #ddc0d8;
 
   /* --- Graphite: the cool neutral ramp, faintly green ------------------- */
   --tc-palette-graphite-900: #131a1a;
@@ -53,20 +78,20 @@
   --tc-palette-sage-900: #1d2b24;
   --tc-palette-sage-800: #2a3d33;
   --tc-palette-sage-700: #3a5245;
-  --tc-palette-sage-600: #4d6a5b;
-  --tc-palette-sage-500: #648274;
-  --tc-palette-sage-400: #86a294;
-  --tc-palette-sage-300: #a9c0b4;
+  --tc-palette-sage-600: #47594f;
+  --tc-palette-sage-500: #5d6f66;
+  --tc-palette-sage-400: #7e9089;
+  --tc-palette-sage-300: #a3b4ad;
   --tc-palette-sage-200: #c8d8ce;
   --tc-palette-sage-100: #e0eae4;
   --tc-palette-sage-50: #eff4f0;
 
   /* --- Mineral: deep teal-green. The instrument colour. ----------------- */
   --tc-palette-mineral-800: #103630;
-  --tc-palette-mineral-700: #164943;
+  --tc-palette-mineral-700: #0d4340;
   --tc-palette-mineral-600: #1d5d55;
   --tc-palette-mineral-500: #26766c;
-  --tc-palette-mineral-400: #3d938a;
+  --tc-palette-mineral-400: #2a908c;
   --tc-palette-mineral-300: #6fb3ab;
   --tc-palette-mineral-200: #a5d0ca;
   --tc-palette-mineral-100: #d5e9e6;
@@ -76,7 +101,7 @@
   --tc-palette-ice-600: #4a6b82;
   --tc-palette-ice-500: #6a8ba2;
   --tc-palette-ice-400: #8fabc0;
-  --tc-palette-ice-300: #b4cbdc;
+  --tc-palette-ice-300: #b3d0e0;
   --tc-palette-ice-200: #d2e2ed;
   --tc-palette-ice-100: #e8f1f7;
   --tc-palette-ice-50: #f3f8fb;
@@ -85,19 +110,23 @@
   --tc-palette-cyan-700: #17758c;
   --tc-palette-cyan-600: #1e8fa8;
   --tc-palette-cyan-500: #33abc4;
-  --tc-palette-cyan-400: #5ec7dd;
+  --tc-palette-cyan-400: #4ac9e2;
   --tc-palette-cyan-300: #92dced;
   --tc-palette-cyan-200: #c0edf7;
   --tc-palette-cyan-100: #e2f7fc;
+  /* The blown-out core of a light source. Glow and bloom only, never a fill -
+     this is what makes a big number look photographed rather than typeset. */
+  --tc-palette-cyan-glare: #a9f2ff;
 
   /* --- Iridescence stops: mint, lilac, peach ---------------------------
      Only ever used inside gradients, at low opacity. Never as a fill. */
-  --tc-palette-mint-400: #7fd8bd;
-  --tc-palette-mint-300: #a8e6d2;
-  --tc-palette-mint-200: #cbf1e5;
-  --tc-palette-lilac-400: #a99fd8;
-  --tc-palette-lilac-300: #c9c2e8;
-  --tc-palette-lilac-200: #e0dcf3;
+  --tc-palette-mint-400: #96dcc8;
+  --tc-palette-mint-300: #bfe8dd;
+  --tc-palette-mint-200: #d8f0e9;
+  --tc-palette-mint-100: #e4f2ee;
+  --tc-palette-nacre-400: #a99fd8;
+  --tc-palette-nacre-300: #c9c2e8;
+  --tc-palette-nacre-300: #e0dcf3;
   --tc-palette-peach-400: #eeb193;
   --tc-palette-peach-300: #f3ceb8;
   --tc-palette-peach-200: #f9e3d6;
@@ -137,10 +166,10 @@
   /* --- Mist: the light register's ground -------------------------------
      Mineral white / blue-white, like a very refined old LCD. NOT corporate
      white and no longer cream: warm paper read as SaaS product design. */
-  --tc-palette-mist-25: #fbfcfd;
-  --tc-palette-mist-50: #f4f7f9;
-  --tc-palette-mist-100: #eaeff3;
-  --tc-palette-mist-200: #dce4ea;
+  --tc-palette-mist-25: #f8fbfa;
+  --tc-palette-mist-50: #f1f5f4;
+  --tc-palette-mist-100: #e6ecea;
+  --tc-palette-mist-200: #d7e0dd;
   --tc-palette-mist-300: #c6d2db;
   --tc-palette-mist-400: #a7b6c2;
   --tc-palette-mist-500: #8494a2;
@@ -152,12 +181,12 @@
      glows and edges - never as a fill, never as a text colour. */
   --tc-optic-ice: #d9e8f6;
   --tc-optic-mint: #d2f0e3;
-  --tc-optic-silver: #e7ebee;
-  --tc-optic-lilac: #e3dff3;
+  --tc-optic-silver: #eef1f0;
+  --tc-optic-nacre: #f0d9ec;
   --tc-optic-peach: #f9e1d2;
   --tc-optic-ice-deep: #7fb2d8;
   --tc-optic-mint-deep: #74d4b4;
-  --tc-optic-lilac-deep: #a99ed6;
+  --tc-optic-nacre-deep: #c98fc0;
   --tc-optic-peach-deep: #eda887;
 
   /* --- Typography --------------------------------------------------------
@@ -169,6 +198,7 @@
   --tc-font-mono: ui-monospace, SFMono-Regular, "SF Mono", "JetBrains Mono",
     Menlo, Consolas, "Liberation Mono", monospace;
 
+  --tc-font-size-4xs: 0.5rem;    /* 8px  - unit and caption microcopy on a numeral */
   --tc-font-size-3xs: 0.5625rem; /* 9px  - the smallest technical microcopy */
   --tc-font-size-2xs: 0.625rem;  /* 10px - spec labels, coordinates */
   --tc-font-size-xs: 0.6875rem;  /* 11px - eyebrows */
@@ -182,6 +212,13 @@
   --tc-font-size-5xl: 5rem;      /* 80px */
   --tc-font-size-6xl: 7.5rem;    /* 120px - the BIG NUMBER */
   --tc-font-size-7xl: 11rem;     /* 176px - cut by the frame edge */
+
+  /* --- Numeral sizing ----------------------------------------------------
+     A protagonist number is sized by the FRAME, not by the type scale. These
+     are container-relative: if the numeral does not occupy roughly 30-50% of
+     its frame's width, it is not the protagonist and should not be a hero. */
+  --tc-numeral-hero: clamp(4rem, 22cqw, 18rem);
+  --tc-numeral-crop: clamp(6rem, 34cqw, 30rem);
 
   --tc-font-weight-thin: 200;
   --tc-font-weight-light: 300;
@@ -244,6 +281,63 @@
   --tc-texture-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
   --tc-texture-wash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='320' height='320' filter='url(%23w)' opacity='0.62'/%3E%3C/svg%3E");
 
+
+  /* --- Weather -----------------------------------------------------------
+     Where the light comes from. Every atmospheric plate in the system reads
+     these, so ground, figure smear and specular all agree on one source.
+     NOTHING that describes light may be centred: 50% is banned here.
+     Override per section with data-weather (see the conditions below). */
+  --tc-w-x: 26%;
+  --tc-w-y: 12%;
+  --tc-w-tilt: 104deg;
+  --tc-w-gain: 1;
+
+  /* --- Artefact gain -----------------------------------------------------
+     Imperfection you cannot see is decoration for the design system, not art
+     direction. This multiplier scales every substrate artefact at once; set
+     data-artefact="loud" on a section that should visibly show its making. */
+  --tc-artefact-gain: 1;
+
+  /* Print/scan substrate. Incommensurate angles so the two never resolve
+     into a moire, and offset from each other so they never tile in step. */
+  --tc-band: repeating-linear-gradient(
+      96.4deg,
+      rgb(0 0 0 / 0%) 0 3px,
+      rgb(0 0 0 / 100%) 3px 4px
+    ),
+    repeating-linear-gradient(
+      3.6deg,
+      rgb(0 0 0 / 0%) 0 7px,
+      rgb(0 0 0 / 100%) 7px 9px
+    );
+  --tc-scan: repeating-linear-gradient(
+    0deg,
+    rgb(0 0 0 / 0%) 0 3px,
+    rgb(0 0 0 / 100%) 3px 4px
+  );
+  --tc-band-opacity: calc(0.042 * var(--tc-artefact-gain));
+  --tc-scan-opacity: calc(0.034 * var(--tc-artefact-gain));
+  /* Colour misregistration - the printing plate that did not line up. */
+  --tc-misreg: 0.7px;
+
+
+  /* --- Photographic registers --------------------------------------------
+     Four SUBJECT registers, not four hue rotations. Each owns a genuinely
+     different tonal decision: char crushes blacks and keeps speculars, plant
+     lifts blacks into mist, terrain holds matter, figures blow out and soften.
+     A 4% contrast delta between "duotones" is a colour cast, not direction. */
+  --tc-fig-curve-char:    grayscale(1) sepia(0.34) hue-rotate(146deg) saturate(1.5) brightness(0.72) contrast(1.85);
+  --tc-fig-curve-plant:   grayscale(1) sepia(0.44) hue-rotate(172deg) saturate(2.60) contrast(0.88) brightness(1.08);
+  --tc-fig-curve-terrain: grayscale(1) sepia(0.52) hue-rotate(108deg) saturate(1.00) contrast(1.14) brightness(0.96);
+  --tc-fig-curve-figures: grayscale(1) sepia(0.30) hue-rotate(160deg) saturate(1.60) contrast(0.74) brightness(1.16);
+
+  /* Anisotropic plates - mineral is tight and hard, ccd is a horizontal
+     sensor pattern from an early digital camera, dust is sparse and light. */
+  --tc-texture-mineral: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23m)' opacity='0.72'/%3E%3C/svg%3E");
+  --tc-texture-ccd: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.018 1.7' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23c)' opacity='0.62'/%3E%3C/svg%3E");
+  --tc-fig-scanline: repeating-linear-gradient(0deg, rgb(0 0 0 / 9%) 0 1px, transparent 1px 3px);
+  --tc-fig-halation: blur(18px) brightness(1.6) contrast(2.5) saturate(0.75);
+
   /* --- Motion ------------------------------------------------------------ */
   --tc-duration-fast: 180ms;
   --tc-duration-normal: 320ms;
@@ -279,23 +373,23 @@
   --tc-color-border-subtle: var(--tc-palette-mist-100);
   --tc-color-hairline: rgb(29 61 60 / 16%);
 
-  --tc-color-text: var(--tc-palette-petrol-900);
-  --tc-color-text-muted: var(--tc-palette-graphite-500);
+  --tc-color-text: var(--tc-palette-forest-900);
+  --tc-color-text-muted: var(--tc-palette-sage-600);
   --tc-color-text-subtle: var(--tc-palette-mist-500);
   --tc-color-text-inverse: var(--tc-palette-mist-50);
   --tc-color-text-on-accent: var(--tc-palette-mist-25);
 
-  --tc-color-accent: var(--tc-palette-mineral-600);
-  --tc-color-accent-hover: var(--tc-palette-mineral-700);
-  --tc-color-accent-active: var(--tc-palette-mineral-800);
+  --tc-color-accent: var(--tc-palette-mineral-700);
+  --tc-color-accent-hover: var(--tc-palette-mineral-800);
+  --tc-color-accent-active: var(--tc-palette-forest-900);
   --tc-color-accent-subtle: var(--tc-palette-mineral-50);
   --tc-color-accent-border: var(--tc-palette-mineral-200);
   --tc-color-accent-text: var(--tc-palette-mineral-700);
 
-  --tc-color-success: var(--tc-palette-sage-600);
-  --tc-color-success-subtle: var(--tc-palette-sage-50);
-  --tc-color-success-border: var(--tc-palette-sage-200);
-  --tc-color-success-text: var(--tc-palette-sage-800);
+  --tc-color-success: var(--tc-palette-cyan-700);
+  --tc-color-success-subtle: var(--tc-palette-cyan-100);
+  --tc-color-success-border: var(--tc-palette-cyan-200);
+  --tc-color-success-text: var(--tc-palette-cyan-700);
 
   --tc-color-info: var(--tc-palette-ice-500);
   --tc-color-info-subtle: var(--tc-palette-ice-50);
@@ -335,7 +429,7 @@
     112deg,
     var(--tc-palette-cyan-200) 0%,
     var(--tc-palette-mint-200) 26%,
-    var(--tc-palette-lilac-200) 54%,
+    var(--tc-palette-nacre-300) 54%,
     var(--tc-palette-peach-200) 82%,
     var(--tc-palette-cyan-100) 100%
   );
@@ -343,7 +437,7 @@
     100deg,
     var(--tc-palette-cyan-600) 0%,
     var(--tc-palette-mint-400) 28%,
-    var(--tc-palette-lilac-400) 60%,
+    var(--tc-palette-nacre-400) 60%,
     var(--tc-palette-peach-400) 100%
   );
   /* Pearl on a surface: a spectral shift, barely there. */
@@ -359,7 +453,7 @@
     130% 130% at 50% 0%,
     var(--tc-palette-cyan-100) 0%,
     var(--tc-palette-mint-200) 28%,
-    var(--tc-palette-lilac-200) 52%,
+    var(--tc-palette-nacre-300) 52%,
     transparent 78%
   );
   --tc-gradient-flare: radial-gradient(
@@ -399,14 +493,14 @@
     var(--tc-optic-ice) 0deg,
     var(--tc-optic-mint) 58deg,
     var(--tc-optic-silver) 122deg,
-    var(--tc-optic-lilac) 196deg,
+    var(--tc-optic-nacre) 196deg,
     var(--tc-optic-peach) 268deg,
     var(--tc-optic-ice) 360deg
   );
   --tc-gradient-caustic:
     radial-gradient(52% 38% at 28% 22%, rgb(255 255 255 / 78%) 0%, transparent 62%),
     radial-gradient(38% 46% at 74% 70%, var(--tc-optic-mint) 0%, transparent 66%),
-    radial-gradient(64% 58% at 52% 96%, var(--tc-optic-lilac) 0%, transparent 72%),
+    radial-gradient(64% 58% at 52% 96%, var(--tc-optic-nacre) 0%, transparent 72%),
     radial-gradient(40% 40% at 88% 18%, var(--tc-optic-peach) 0%, transparent 68%);
   --tc-gradient-sheen: linear-gradient(
     104deg,
@@ -414,7 +508,7 @@
     var(--tc-optic-mint) 18%,
     var(--tc-optic-silver) 34%,
     transparent 48%,
-    var(--tc-optic-lilac) 66%,
+    var(--tc-optic-nacre) 66%,
     var(--tc-optic-peach) 82%,
     transparent 100%
   );
@@ -423,12 +517,83 @@
     96deg,
     var(--tc-optic-ice-deep) 0%,
     var(--tc-optic-mint-deep) 32%,
-    var(--tc-optic-lilac-deep) 64%,
+    var(--tc-optic-nacre-deep) 64%,
     var(--tc-optic-peach-deep) 100%
   );
   --tc-flare-soft:
     radial-gradient(46% 30% at 30% 26%, rgb(255 255 255 / 62%) 0%, transparent 70%),
     radial-gradient(70% 44% at 62% 30%, var(--tc-optic-ice) 0%, transparent 76%);
+
+
+  /* --- Hard light --------------------------------------------------------
+     The correction that matters most: a soft off-axis radial pool is the
+     2021 dark-mode default. Aqua, the MiniDisc and the VAIO had HARD
+     terminators, gel highlights and anisotropic speculars. These tokens are
+     the hard-edged half of the light language; the radial pools stay for
+     atmosphere only. */
+
+  /* The Aqua gel: a bright dome with a hard terminator at the equator. */
+  --tc-gel: linear-gradient(
+    180deg,
+    rgb(255 255 255 / 86%) 0%,
+    rgb(226 247 252 / 46%) 44%,
+    rgb(255 255 255 / 4%) 49.4%,
+    rgb(13 67 64 / 6%) 50%,
+    rgb(13 67 64 / 14%) 100%
+  );
+  /* Anisotropic specular: a brushed streak with a hard core, not a blur. */
+  --tc-specular-brushed: linear-gradient(
+    var(--tc-w-tilt),
+    transparent 0%,
+    rgb(238 241 240 / 6%) 34%,
+    rgb(255 255 255 / 52%) 47%,
+    rgb(255 255 255 / 72%) 49.4%,
+    rgb(238 241 240 / 10%) 52%,
+    transparent 78%
+  );
+  /* The MiniDisc edge: a hard iridescent break on a lit rim. One per frame. */
+  --tc-specular-edge: linear-gradient(
+    var(--tc-w-tilt),
+    transparent 0%,
+    transparent 41%,
+    var(--tc-optic-ice) 44%,
+    var(--tc-optic-mint) 47%,
+    var(--tc-optic-nacre) 49.5%,
+    var(--tc-optic-peach) 52%,
+    transparent 56%,
+    transparent 100%
+  );
+  --tc-ground:
+    radial-gradient(58% 44% at var(--tc-w-x) var(--tc-w-y), rgb(226 247 252 / 34%) 0%, transparent 64%),
+    radial-gradient(72% 56% at calc(var(--tc-w-x) + 46%) calc(var(--tc-w-y) + 62%), rgb(198 220 214 / 30%) 0%, transparent 70%),
+    radial-gradient(46% 62% at calc(var(--tc-w-x) - 18%) 92%, rgb(71 89 79 / 22%) 0%, transparent 66%);
+  --tc-mirror-floor: linear-gradient(
+    180deg,
+    rgb(241 245 244 / 0%) 0%,
+    rgb(241 245 244 / 46%) 34%,
+    rgb(241 245 244 / 92%) 78%,
+    rgb(241 245 244 / 100%) 100%
+  );
+
+
+  --tc-fig-grain-char: 0.42;
+  --tc-fig-grain-plant: 0.24;
+  --tc-fig-grain-terrain: 0.50;
+  --tc-fig-grain-figures: 0.46;
+  --tc-fig-specular: rgb(255 255 255 / 88%);
+  --tc-fig-pressure: radial-gradient(120% 110% at 22% 8%, transparent 0%, rgb(71 89 79 / 10%) 58%, rgb(6 18 12 / 22%) 100%);
+  --tc-fig-veil-char:
+    radial-gradient(34% 26% at 74% 16%, rgb(255 255 255 / 72%) 0%, rgb(217 232 246 / 26%) 42%, transparent 74%),
+    radial-gradient(58% 44% at 18% 92%, rgb(240 217 236 / 18%) 0%, transparent 70%);
+  --tc-fig-veil-plant:
+    linear-gradient(8deg, transparent 0%, rgb(210 240 227 / 18%) 46%, transparent 78%),
+    radial-gradient(70% 50% at 88% 22%, rgb(217 232 246 / 58%) 0%, transparent 72%);
+  --tc-fig-veil-terrain:
+    radial-gradient(96% 70% at 30% 8%, rgb(234 224 210 / 46%) 0%, transparent 66%),
+    linear-gradient(196deg, transparent 40%, rgb(126 144 137 / 24%) 100%);
+  --tc-fig-veil-figures:
+    radial-gradient(60% 46% at 26% 30%, rgb(249 225 210 / 44%) 0%, transparent 70%),
+    radial-gradient(52% 60% at 82% 78%, rgb(240 217 236 / 34%) 0%, transparent 72%);
 
   /* --- Light leaks: unevenly-developed film, light entering the frame --- */
   --tc-lightleak-top: radial-gradient(
@@ -440,7 +605,7 @@
   --tc-lightleak-corner: radial-gradient(
     60% 70% at 108% 8%,
     var(--tc-palette-peach-200) 0%,
-    var(--tc-palette-lilac-200) 40%,
+    var(--tc-palette-nacre-300) 40%,
     transparent 72%
   );
   --tc-lightleak-edge: linear-gradient(
@@ -490,19 +655,22 @@
 [data-theme="dark"] {
   color-scheme: dark;
 
-  --tc-color-bg: var(--tc-palette-petrol-950);
+  /* TWO DARKS. The ground is forest (hue ~150); the surface is petrol
+     (hue ~198). They stay >=40 degrees of hue apart, so a card floats by
+     temperature rather than by elevation. Never collapse them to one value. */
+  --tc-color-bg: var(--tc-palette-forest-970);
   --tc-color-surface: var(--tc-palette-petrol-900);
-  --tc-color-surface-sunken: #050f0e;
+  --tc-color-surface-sunken: var(--tc-palette-char-950);
   --tc-color-surface-raised: var(--tc-palette-petrol-850);
-  --tc-color-surface-inverse: var(--tc-palette-paper-50);
-  --tc-color-overlay: rgb(5 15 14 / 68%);
+  --tc-color-surface-inverse: var(--tc-palette-mist-50);
+  --tc-color-overlay: rgb(6 18 12 / 66%);
 
   --tc-color-border: var(--tc-palette-petrol-700);
   --tc-color-border-strong: var(--tc-palette-petrol-600);
   --tc-color-border-subtle: var(--tc-palette-petrol-800);
   --tc-color-hairline: rgb(169 192 180 / 20%);
 
-  --tc-color-text: var(--tc-palette-sage-100);
+  --tc-color-text: var(--tc-palette-mint-100);
   --tc-color-text-muted: var(--tc-palette-sage-300);
   --tc-color-text-subtle: var(--tc-palette-graphite-400);
   --tc-color-text-inverse: var(--tc-palette-petrol-900);
@@ -515,41 +683,44 @@
   --tc-color-accent-border: rgb(94 199 221 / 26%);
   --tc-color-accent-text: var(--tc-palette-cyan-300);
 
-  --tc-color-success: var(--tc-palette-sage-400);
-  --tc-color-success-subtle: rgb(134 162 148 / 14%);
-  --tc-color-success-border: rgb(134 162 148 / 30%);
-  --tc-color-success-text: var(--tc-palette-sage-300);
+  /* Status is COLD. Green never signals "good" here - it is reserved for
+     material (organic/mineral), so a verified badge cannot be mistaken for
+     an eco motif. */
+  --tc-color-success: var(--tc-palette-cyan-400);
+  --tc-color-success-subtle: rgb(74 201 226 / 11%);
+  --tc-color-success-border: rgb(74 201 226 / 27%);
+  --tc-color-success-text: var(--tc-palette-cyan-300);
 
   --tc-color-info: var(--tc-palette-ice-400);
-  --tc-color-info-subtle: rgb(143 171 192 / 13%);
-  --tc-color-info-border: rgb(143 171 192 / 28%);
+  --tc-color-info-subtle: rgb(179 208 224 / 9%);
+  --tc-color-info-border: rgb(179 208 224 / 24%);
   --tc-color-info-text: var(--tc-palette-ice-300);
 
   --tc-color-warning: var(--tc-palette-flare-400);
-  --tc-color-warning-subtle: rgb(236 152 120 / 14%);
+  --tc-color-warning-subtle: rgb(236 152 120 / 13%);
   --tc-color-warning-border: rgb(236 152 120 / 30%);
   --tc-color-warning-text: var(--tc-palette-flare-300);
 
   --tc-color-danger: var(--tc-palette-flare-500);
-  --tc-color-danger-subtle: rgb(220 117 84 / 16%);
-  --tc-color-danger-border: rgb(220 117 84 / 32%);
+  --tc-color-danger-subtle: rgb(220 117 84 / 21%);
+  --tc-color-danger-border: rgb(220 117 84 / 38%);
   --tc-color-danger-text: var(--tc-palette-flare-300);
 
   --tc-color-focus-ring: var(--tc-palette-cyan-400);
 
   --tc-color-organic: var(--tc-palette-sage-400);
-  --tc-color-organic-subtle: rgb(134 162 148 / 14%);
-  --tc-color-organic-border: rgb(134 162 148 / 30%);
+  --tc-color-organic-subtle: rgb(126 144 137 / 17%);
+  --tc-color-organic-border: rgb(126 144 137 / 31%);
   --tc-color-organic-text: var(--tc-palette-sage-300);
 
   --tc-color-earth: var(--tc-palette-earth-400);
-  --tc-color-earth-subtle: rgb(156 129 104 / 15%);
+  --tc-color-earth-subtle: rgb(156 129 104 / 19%);
   --tc-color-earth-border: rgb(156 129 104 / 32%);
   --tc-color-earth-text: var(--tc-palette-earth-300);
 
   --tc-color-mineral: var(--tc-palette-mineral-400);
-  --tc-color-mineral-subtle: rgb(61 147 138 / 15%);
-  --tc-color-mineral-border: rgb(61 147 138 / 32%);
+  --tc-color-mineral-subtle: rgb(42 144 140 / 12%);
+  --tc-color-mineral-border: rgb(42 144 140 / 35%);
   --tc-color-mineral-text: var(--tc-palette-mineral-300);
 
   --tc-gradient-iridescent: linear-gradient(
@@ -564,7 +735,7 @@
     100deg,
     var(--tc-palette-cyan-300) 0%,
     var(--tc-palette-mint-300) 28%,
-    var(--tc-palette-lilac-300) 60%,
+    var(--tc-palette-nacre-300) 60%,
     var(--tc-palette-peach-300) 100%
   );
   --tc-gradient-chrome: linear-gradient(
@@ -637,12 +808,76 @@
     96deg,
     var(--tc-optic-ice) 0%,
     var(--tc-optic-mint) 32%,
-    var(--tc-optic-lilac) 64%,
+    var(--tc-optic-nacre) 64%,
     var(--tc-optic-peach) 100%
   );
   --tc-flare-soft:
     radial-gradient(46% 30% at 30% 26%, rgb(255 255 255 / 26%) 0%, transparent 70%),
     radial-gradient(70% 44% at 62% 30%, rgb(127 178 216 / 24%) 0%, transparent 76%);
+
+
+  --tc-gel: linear-gradient(
+    180deg,
+    rgb(226 247 252 / 46%) 0%,
+    rgb(74 201 226 / 22%) 44%,
+    rgb(255 255 255 / 3%) 49.4%,
+    rgb(6 18 12 / 26%) 50%,
+    rgb(6 18 12 / 62%) 100%
+  );
+  --tc-specular-brushed: linear-gradient(
+    var(--tc-w-tilt),
+    transparent 0%,
+    rgb(196 213 219 / 4%) 34%,
+    rgb(226 247 252 / 40%) 47%,
+    rgb(169 242 255 / 62%) 49.4%,
+    rgb(196 213 219 / 8%) 52%,
+    transparent 78%
+  );
+  --tc-specular-edge: linear-gradient(
+    var(--tc-w-tilt),
+    transparent 0%,
+    transparent 41%,
+    var(--tc-optic-ice) 44%,
+    var(--tc-optic-mint) 47%,
+    var(--tc-palette-nacre-400) 49.5%,
+    var(--tc-optic-peach) 52%,
+    transparent 56%,
+    transparent 100%
+  );
+  /* Four planes, all off-axis, two of them REMOVING light rather than adding
+     it - a ground that only ever brightens reads as a glow, not as weather. */
+  --tc-ground:
+    radial-gradient(54% 40% at var(--tc-w-x) var(--tc-w-y), rgb(74 201 226 / 17%) 0%, transparent 62%),
+    radial-gradient(66% 52% at calc(var(--tc-w-x) + 52%) calc(var(--tc-w-y) + 28%), rgb(150 220 200 / 9%) 0%, transparent 68%),
+    radial-gradient(64% 48% at 96% 84%, rgb(4 22 26 / 76%) 0%, transparent 68%),
+    radial-gradient(52% 58% at calc(var(--tc-w-x) - 14%) 104%, rgb(7 8 10 / 82%) 0%, transparent 62%);
+  --tc-mirror-floor: linear-gradient(
+    180deg,
+    rgb(6 18 12 / 0%) 0%,
+    rgb(6 18 12 / 44%) 32%,
+    rgb(6 18 12 / 88%) 76%,
+    rgb(6 18 12 / 100%) 100%
+  );
+
+
+  --tc-fig-grain-char: 0.58;
+  --tc-fig-grain-plant: 0.34;
+  --tc-fig-grain-terrain: 0.66;
+  --tc-fig-grain-figures: 0.70;
+  --tc-fig-specular: rgb(226 247 252 / 72%);
+  --tc-fig-pressure: radial-gradient(120% 110% at 22% 8%, transparent 0%, rgb(7 8 10 / 34%) 54%, rgb(7 8 10 / 74%) 100%);
+  --tc-fig-veil-char:
+    radial-gradient(30% 22% at 74% 16%, rgb(255 255 255 / 46%) 0%, rgb(179 208 224 / 20%) 44%, transparent 72%),
+    radial-gradient(60% 46% at 16% 94%, rgb(201 163 196 / 14%) 0%, transparent 70%);
+  --tc-fig-veil-plant:
+    linear-gradient(8deg, transparent 0%, rgb(150 220 200 / 12%) 46%, transparent 78%),
+    radial-gradient(74% 54% at 88% 20%, rgb(74 201 226 / 34%) 0%, rgb(179 208 224 / 12%) 46%, transparent 76%);
+  --tc-fig-veil-terrain:
+    radial-gradient(96% 70% at 30% 6%, rgb(156 129 104 / 22%) 0%, transparent 64%),
+    linear-gradient(196deg, transparent 40%, rgb(6 18 12 / 44%) 100%);
+  --tc-fig-veil-figures:
+    radial-gradient(62% 48% at 24% 28%, rgb(237 168 135 / 20%) 0%, transparent 70%),
+    radial-gradient(54% 62% at 84% 80%, rgb(201 163 196 / 18%) 0%, transparent 72%);
 
   --tc-lightleak-top: radial-gradient(
     80% 60% at 20% -10%,
@@ -697,19 +932,22 @@
 
     color-scheme: dark;
 
-    --tc-color-bg: var(--tc-palette-petrol-950);
+    /* TWO DARKS. The ground is forest (hue ~150); the surface is petrol
+       (hue ~198). They stay >=40 degrees of hue apart, so a card floats by
+       temperature rather than by elevation. Never collapse them to one value. */
+    --tc-color-bg: var(--tc-palette-forest-970);
     --tc-color-surface: var(--tc-palette-petrol-900);
-    --tc-color-surface-sunken: #050f0e;
+    --tc-color-surface-sunken: var(--tc-palette-char-950);
     --tc-color-surface-raised: var(--tc-palette-petrol-850);
-    --tc-color-surface-inverse: var(--tc-palette-paper-50);
-    --tc-color-overlay: rgb(5 15 14 / 68%);
+    --tc-color-surface-inverse: var(--tc-palette-mist-50);
+    --tc-color-overlay: rgb(6 18 12 / 66%);
 
     --tc-color-border: var(--tc-palette-petrol-700);
     --tc-color-border-strong: var(--tc-palette-petrol-600);
     --tc-color-border-subtle: var(--tc-palette-petrol-800);
     --tc-color-hairline: rgb(169 192 180 / 20%);
 
-    --tc-color-text: var(--tc-palette-sage-100);
+    --tc-color-text: var(--tc-palette-mint-100);
     --tc-color-text-muted: var(--tc-palette-sage-300);
     --tc-color-text-subtle: var(--tc-palette-graphite-400);
     --tc-color-text-inverse: var(--tc-palette-petrol-900);
@@ -722,41 +960,44 @@
     --tc-color-accent-border: rgb(94 199 221 / 26%);
     --tc-color-accent-text: var(--tc-palette-cyan-300);
 
-    --tc-color-success: var(--tc-palette-sage-400);
-    --tc-color-success-subtle: rgb(134 162 148 / 14%);
-    --tc-color-success-border: rgb(134 162 148 / 30%);
-    --tc-color-success-text: var(--tc-palette-sage-300);
+    /* Status is COLD. Green never signals "good" here - it is reserved for
+       material (organic/mineral), so a verified badge cannot be mistaken for
+       an eco motif. */
+    --tc-color-success: var(--tc-palette-cyan-400);
+    --tc-color-success-subtle: rgb(74 201 226 / 11%);
+    --tc-color-success-border: rgb(74 201 226 / 27%);
+    --tc-color-success-text: var(--tc-palette-cyan-300);
 
     --tc-color-info: var(--tc-palette-ice-400);
-    --tc-color-info-subtle: rgb(143 171 192 / 13%);
-    --tc-color-info-border: rgb(143 171 192 / 28%);
+    --tc-color-info-subtle: rgb(179 208 224 / 9%);
+    --tc-color-info-border: rgb(179 208 224 / 24%);
     --tc-color-info-text: var(--tc-palette-ice-300);
 
     --tc-color-warning: var(--tc-palette-flare-400);
-    --tc-color-warning-subtle: rgb(236 152 120 / 14%);
+    --tc-color-warning-subtle: rgb(236 152 120 / 13%);
     --tc-color-warning-border: rgb(236 152 120 / 30%);
     --tc-color-warning-text: var(--tc-palette-flare-300);
 
     --tc-color-danger: var(--tc-palette-flare-500);
-    --tc-color-danger-subtle: rgb(220 117 84 / 16%);
-    --tc-color-danger-border: rgb(220 117 84 / 32%);
+    --tc-color-danger-subtle: rgb(220 117 84 / 21%);
+    --tc-color-danger-border: rgb(220 117 84 / 38%);
     --tc-color-danger-text: var(--tc-palette-flare-300);
 
     --tc-color-focus-ring: var(--tc-palette-cyan-400);
 
     --tc-color-organic: var(--tc-palette-sage-400);
-    --tc-color-organic-subtle: rgb(134 162 148 / 14%);
-    --tc-color-organic-border: rgb(134 162 148 / 30%);
+    --tc-color-organic-subtle: rgb(126 144 137 / 17%);
+    --tc-color-organic-border: rgb(126 144 137 / 31%);
     --tc-color-organic-text: var(--tc-palette-sage-300);
 
     --tc-color-earth: var(--tc-palette-earth-400);
-    --tc-color-earth-subtle: rgb(156 129 104 / 15%);
+    --tc-color-earth-subtle: rgb(156 129 104 / 19%);
     --tc-color-earth-border: rgb(156 129 104 / 32%);
     --tc-color-earth-text: var(--tc-palette-earth-300);
 
     --tc-color-mineral: var(--tc-palette-mineral-400);
-    --tc-color-mineral-subtle: rgb(61 147 138 / 15%);
-    --tc-color-mineral-border: rgb(61 147 138 / 32%);
+    --tc-color-mineral-subtle: rgb(42 144 140 / 12%);
+    --tc-color-mineral-border: rgb(42 144 140 / 35%);
     --tc-color-mineral-text: var(--tc-palette-mineral-300);
 
     --tc-gradient-iridescent: linear-gradient(
@@ -771,7 +1012,7 @@
       100deg,
       var(--tc-palette-cyan-300) 0%,
       var(--tc-palette-mint-300) 28%,
-      var(--tc-palette-lilac-300) 60%,
+      var(--tc-palette-nacre-300) 60%,
       var(--tc-palette-peach-300) 100%
     );
     --tc-gradient-chrome: linear-gradient(
@@ -844,12 +1085,76 @@
       96deg,
       var(--tc-optic-ice) 0%,
       var(--tc-optic-mint) 32%,
-      var(--tc-optic-lilac) 64%,
+      var(--tc-optic-nacre) 64%,
       var(--tc-optic-peach) 100%
     );
     --tc-flare-soft:
       radial-gradient(46% 30% at 30% 26%, rgb(255 255 255 / 26%) 0%, transparent 70%),
       radial-gradient(70% 44% at 62% 30%, rgb(127 178 216 / 24%) 0%, transparent 76%);
+
+
+    --tc-gel: linear-gradient(
+      180deg,
+      rgb(226 247 252 / 46%) 0%,
+      rgb(74 201 226 / 22%) 44%,
+      rgb(255 255 255 / 3%) 49.4%,
+      rgb(6 18 12 / 26%) 50%,
+      rgb(6 18 12 / 62%) 100%
+    );
+    --tc-specular-brushed: linear-gradient(
+      var(--tc-w-tilt),
+      transparent 0%,
+      rgb(196 213 219 / 4%) 34%,
+      rgb(226 247 252 / 40%) 47%,
+      rgb(169 242 255 / 62%) 49.4%,
+      rgb(196 213 219 / 8%) 52%,
+      transparent 78%
+    );
+    --tc-specular-edge: linear-gradient(
+      var(--tc-w-tilt),
+      transparent 0%,
+      transparent 41%,
+      var(--tc-optic-ice) 44%,
+      var(--tc-optic-mint) 47%,
+      var(--tc-palette-nacre-400) 49.5%,
+      var(--tc-optic-peach) 52%,
+      transparent 56%,
+      transparent 100%
+    );
+    /* Four planes, all off-axis, two of them REMOVING light rather than adding
+       it - a ground that only ever brightens reads as a glow, not as weather. */
+    --tc-ground:
+      radial-gradient(54% 40% at var(--tc-w-x) var(--tc-w-y), rgb(74 201 226 / 17%) 0%, transparent 62%),
+      radial-gradient(66% 52% at calc(var(--tc-w-x) + 52%) calc(var(--tc-w-y) + 28%), rgb(150 220 200 / 9%) 0%, transparent 68%),
+      radial-gradient(64% 48% at 96% 84%, rgb(4 22 26 / 76%) 0%, transparent 68%),
+      radial-gradient(52% 58% at calc(var(--tc-w-x) - 14%) 104%, rgb(7 8 10 / 82%) 0%, transparent 62%);
+    --tc-mirror-floor: linear-gradient(
+      180deg,
+      rgb(6 18 12 / 0%) 0%,
+      rgb(6 18 12 / 44%) 32%,
+      rgb(6 18 12 / 88%) 76%,
+      rgb(6 18 12 / 100%) 100%
+    );
+
+
+    --tc-fig-grain-char: 0.58;
+    --tc-fig-grain-plant: 0.34;
+    --tc-fig-grain-terrain: 0.66;
+    --tc-fig-grain-figures: 0.70;
+    --tc-fig-specular: rgb(226 247 252 / 72%);
+    --tc-fig-pressure: radial-gradient(120% 110% at 22% 8%, transparent 0%, rgb(7 8 10 / 34%) 54%, rgb(7 8 10 / 74%) 100%);
+    --tc-fig-veil-char:
+      radial-gradient(30% 22% at 74% 16%, rgb(255 255 255 / 46%) 0%, rgb(179 208 224 / 20%) 44%, transparent 72%),
+      radial-gradient(60% 46% at 16% 94%, rgb(201 163 196 / 14%) 0%, transparent 70%);
+    --tc-fig-veil-plant:
+      linear-gradient(8deg, transparent 0%, rgb(150 220 200 / 12%) 46%, transparent 78%),
+      radial-gradient(74% 54% at 88% 20%, rgb(74 201 226 / 34%) 0%, rgb(179 208 224 / 12%) 46%, transparent 76%);
+    --tc-fig-veil-terrain:
+      radial-gradient(96% 70% at 30% 6%, rgb(156 129 104 / 22%) 0%, transparent 64%),
+      linear-gradient(196deg, transparent 40%, rgb(6 18 12 / 44%) 100%);
+    --tc-fig-veil-figures:
+      radial-gradient(62% 48% at 24% 28%, rgb(237 168 135 / 20%) 0%, transparent 70%),
+      radial-gradient(54% 62% at 84% 80%, rgb(201 163 196 / 18%) 0%, transparent 72%);
 
     --tc-lightleak-top: radial-gradient(
       80% 60% at 20% -10%,
@@ -899,3 +1204,14 @@
     --tc-wash-opacity: 0.16;
   }
 }
+
+/* ==========================================================================
+   Weather conditions - lighting situations authored from the material.
+   Two adjacent sections must not share a condition.
+   ========================================================================== */
+[data-weather="kiln"] { --tc-w-x: 78%; --tc-w-y: 76%; --tc-w-tilt: 61deg; --tc-w-gain: 1.25; }
+[data-weather="blue-hour"] { --tc-w-x: 18%; --tc-w-y: 8%; --tc-w-tilt: 97deg; --tc-w-gain: 0.85; }
+[data-weather="condensation"] { --tc-w-x: 44%; --tc-w-y: 118%; --tc-w-tilt: 148deg; --tc-w-gain: 0.7; }
+[data-weather="cove"] { --tc-w-x: -12%; --tc-w-y: 38%; --tc-w-tilt: 12deg; --tc-w-gain: 1.1; }
+[data-artefact="loud"] { --tc-artefact-gain: 2.6; }
+[data-artefact="quiet"] { --tc-artefact-gain: 0.45; }

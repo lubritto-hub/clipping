@@ -2,6 +2,25 @@
 
 Repo-specific gotchas for future syncs. Read before touching config.
 
+## Direction (current)
+
+- The order of the words decides everything: this is **Y2K soft-tech editorial
+  applied to a climate technology**, not a climate brand with a Y2K veneer.
+  Light, refraction and optics come first; the science reads through them.
+- An independent critique pass scored the previous iteration 5.8/10 against the
+  brief, and its sharpest finding is the one to keep in mind: *"every single
+  light event was a soft off-axis radial pool - there was not one hard edge,
+  hard terminator or specular break in the entire token set. A soft radial glow
+  behind content is the 2021 dark-mode SaaS default."* Aqua / MiniDisc / VAIO
+  are HARD light. `--tc-gel`, `--tc-specular-brushed` and `--tc-specular-edge`
+  are that half of the language; do not let them drift back into pools.
+- The second finding worth keeping: *"imperfection engineered to be
+  undetectable"* is a design-system reflex, and it contradicts the brief.
+  `--tc-artefact-gain` exists so artefacts can be turned UP. Sub-perceptual
+  banding is not controlled imperfection, it is decoration.
+- Flat is the failure state and tidy is the second failure state. A change that
+  makes a frame more even usually makes it worse.
+
 ## Direction
 
 - The brief is "less SaaS dashboard, more Y2K editorial climate technology".
@@ -63,6 +82,22 @@ Repo-specific gotchas for future syncs. Read before touching config.
   grotesque. This suppresses `[FONT_MISSING]`; do not "fix" it by shipping
   webfonts without checking licensing first.
 
+## Colour: two darks
+
+- The ground is forest (`--tc-palette-forest-970`, hue ~150); the surface is
+  petrol (`--tc-palette-petrol-900`, hue ~198). **They must stay far apart in
+  hue** - a card separates by TEMPERATURE, not by elevation or a shadow.
+  Collapsing them back to one dark is the single fastest way to make the system
+  look institutional again.
+- Green is a MATERIAL, never a status. `success`, positive deltas and
+  `verified` resolve to cyan/ice. If a green ever signals "good" again, the
+  whole palette reads ESG.
+- The nacre ration is a real constraint, not a preference: one occurrence per
+  frame, <=18% alpha, always flanked by cool stops. Warm is rationed harder and
+  never adjacent to nacre (warm + pink together reads vaporwave).
+- The light register is mineral/mist with a green cast, NOT cream. Warm paper
+  was read - correctly - as SaaS product design.
+
 ## Optics layer
 
 - `Figure` composes its filters through custom-property slots
@@ -98,6 +133,25 @@ Repo-specific gotchas for future syncs. Read before touching config.
   behind the crisp glyphs. If the value is not a string the ghost still renders
   it, so keep values simple.
 
+## Composition and registers
+
+- `Canvas`/`Place` exist to make asymmetry the default. `.tc-canvas` padding is
+  driven by four separate `--tc-frame-*` tokens precisely so equal padding
+  cannot happen by accident - it was the largest single source of the
+  institutional-deck read.
+- `data-register` (primary / secondary / atmosphere) is the ENCODED form of the
+  client's instruction that secondary elements may sacrifice legibility.
+  `.tc-drift` rotation is gated on a demoted register by selector, so a drifted
+  headline is impossible by construction.
+- `Figure` registers (char/plant/terrain/figures) are the FIRST decision; tone/
+  focus/flash/chroma are trim. A register carries a real tonal curve, its own
+  noise plate and its own light direction. **Do not add a fifth register
+  without a genuinely different tonal decision** - four hue rotations of one
+  curve is what the previous version did wrong.
+- `char` is tuned to land as glossy black WITH surviving speculars
+  (`brightness(0.72) contrast(1.85)`). Crushing it further produces a black
+  rectangle and loses the mineral read - that was tried and reverted.
+
 ## Type contracts
 
 - The converter emits `<Name>Props` only; a sibling interface referenced from an
@@ -121,7 +175,7 @@ Repo-specific gotchas for future syncs. Read before touching config.
 
 ## Known render warns
 
-None. The last full validate ran clean: 32/32 render, 0 bad, 0 thin,
+None. The last full validate ran clean: 34/34 render, 0 bad, 0 thin,
 0 variants-identical, 0 floor cards.
 
 ## Re-sync risks
@@ -130,10 +184,15 @@ None. The last full validate ran clean: 32/32 render, 0 bad, 0 thin,
   locally but could not upload: `DesignSync` had no design-system authorization
   in the remote session. There is therefore **no `projectId` in config.json and
   no uploaded `_ds_sync.json` anchor** — the next sync is still a first sync and
-  will re-verify all 32 components. Grades in `.design-sync/.cache/review/` are
+  will re-verify all 34 components. Grades in `.design-sync/.cache/review/` are
   gitignored working state and will not survive a fresh clone.
-- The conventions header (`.design-sync/conventions.md`) names 60 tokens, 63
-  props and 17 components, plus the eight presentation archetypes. All verified against the build at authoring time.
+- The conventions header (`.design-sync/conventions.md`) names 25 tokens, 9
+  utility classes, 71 props and 11 components, plus the eight presentation
+  archetypes. All verified against the build at authoring time.
+- **Grades were deliberately cleared and re-earned** in this pass. The grade
+  contract treats styling churn as non-invalidating, which is normally right -
+  but the visual language changed wholesale, so carried-forward verdicts would
+  have described a render that no longer exists. All verified against the build at authoring time.
 - **The system ships no photography.** `Figure` supplies the treatment; the host
   app supplies images. The local demo at `.preview/` uses synthetic SVG
   turbulence plates as stand-ins - they are gitignored and are NOT a design
@@ -145,3 +204,19 @@ None. The last full validate ran clean: 32/32 render, 0 bad, 0 thin,
   mismatch that no test catches.
 - Toolchain assumed: node 22, npm, esbuild 0.24, typescript 5.6. No network
   fetches at build time.
+
+## The symbol
+
+- Selected from six competing concepts scored by independent judges that
+  rasterised the geometry rather than trusting the write-ups. "Meniscus" won on
+  20/25 (5/5 for reading as a global technology company).
+- The concept is refraction as the only event, and it is deliberately the
+  OPPOSITE of circularity: the beam never returns to where it started, which is
+  what permanent removal means. Any future revision must keep that - a closed
+  or concentric form collapses straight back into an eco roundel.
+- The first geometry shipped by the concept had a 32-degree deflection, which
+  made the two masses converge into an arrowhead; at any size it read as an
+  arrow or a bird. It is now ~20 degrees with a lateral offset at the interface.
+  **If the deflection is ever increased, re-check the arrow reading.**
+- There is no company name, so `Mark` renders the symbol alone by default and
+  `wordmark` takes a string rather than a boolean.

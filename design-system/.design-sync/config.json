@@ -90,6 +90,14 @@
     },
     "ProcessStep": {
       "cardMode": "column"
+    },
+    "Canvas": {
+      "cardMode": "column",
+      "viewport": "900x420"
+    },
+    "Place": {
+      "cardMode": "column",
+      "viewport": "900x360"
     }
   },
   "readmeHeader": ".design-sync/conventions.md",

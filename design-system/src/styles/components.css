@@ -1957,3 +1957,494 @@
   opacity: var(--tc-grain-opacity);
   mix-blend-mode: overlay;
 }
+
+/* ==========================================================================
+   GROUND — weather on every surface
+   A flat fill is the failure state. Three planes: density (composited
+   normally, so light can be REMOVED as well as added), lumen (screen), and
+   substrate (the print/scan artefacts). Nothing here is centred.
+   ========================================================================== */
+
+.tc-ground { position: relative; isolation: isolate; }
+
+.tc-ground::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: var(--tc-ground);
+  opacity: var(--tc-w-gain);
+}
+
+.tc-ground > * { position: relative; z-index: 2; }
+
+/* --- Substrate: visible imperfection --------------------------------------
+   Banding, scan structure and misregistration, at a strength you can point
+   at. Scaled together by --tc-artefact-gain so a section can be turned up
+   (data-artefact="loud") rather than each artefact being retuned. */
+.tc-substrate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background-image: var(--tc-band), var(--tc-scan);
+  background-position: 0 0, 1px -1px;
+  opacity: calc(var(--tc-band-opacity) + var(--tc-scan-opacity));
+  mix-blend-mode: soft-light;
+}
+
+/* Colour misregistration — the plate that did not line up. Deliberately
+   visible on secondary type; never applied to primary content. */
+.tc-misreg {
+  text-shadow:
+    var(--tc-misreg) calc(var(--tc-misreg) * -0.6) 0 rgb(74 201 226 / 42%),
+    calc(var(--tc-misreg) * -1) calc(var(--tc-misreg) * 0.5) 0 rgb(201 163 196 / 34%);
+}
+
+/* --- Foreground plane -----------------------------------------------------
+   The thing between the lens and the subject. Enters from off-canvas and is
+   never fully inside the frame; without one there is no depth, only layers. */
+.tc-fore {
+  position: absolute;
+  inset: -34%;
+  z-index: 4;
+  pointer-events: none;
+  filter: blur(26px);
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 62%, transparent 88%);
+  mask-image: linear-gradient(to right, transparent 0, #000 14%, #000 62%, transparent 88%);
+}
+
+/* ==========================================================================
+   HARD LIGHT — the Aqua / MiniDisc half of the language
+   Soft radial pools alone read as 2021 dark-mode SaaS. These are the hard
+   terminators and speculars that place the work in 1999–2004.
+   ========================================================================== */
+
+/* The gel dome: bright top, hard terminator at the equator, dark below. */
+.tc-gel { position: relative; }
+.tc-gel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-gel);
+  border-radius: inherit;
+}
+
+/* An anisotropic brushed streak with a hard core. */
+.tc-spec-brushed::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-specular-brushed);
+  border-radius: inherit;
+  mix-blend-mode: screen;
+}
+
+/* The hard iridescent break on a lit rim. ONE per frame — this is the
+   nacre ration, and it only reads as jewellery while it stays rare. */
+.tc-spec-edge {
+  position: relative;
+  border-radius: inherit;
+}
+.tc-spec-edge::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  padding: 1px;
+  background-image: var(--tc-specular-edge);
+  border-radius: inherit;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+/* ==========================================================================
+   THROUGH — photographed through a medium
+   A container treatment, not a component. The four media are optically
+   different, not one blur with different numbers.
+   ========================================================================== */
+
+.tc-thru { position: relative; isolation: isolate; }
+
+/* Glass: high transmission, lifted blacks, edge dispersion. */
+.tc-thru--glass {
+  backdrop-filter: blur(var(--tc-blur-frost)) saturate(1.22) brightness(1.18) contrast(0.86);
+  -webkit-backdrop-filter: blur(var(--tc-blur-frost)) saturate(1.22) brightness(1.18) contrast(0.86);
+}
+/* Acrylic: thick, slightly green, low blur but heavy edge colour. */
+.tc-thru--acrylic {
+  backdrop-filter: blur(calc(var(--tc-blur-frost) * 0.4)) saturate(1.5) hue-rotate(-8deg) contrast(1.06);
+  -webkit-backdrop-filter: blur(calc(var(--tc-blur-frost) * 0.4)) saturate(1.5) hue-rotate(-8deg) contrast(1.06);
+}
+/* Mist: forward scatter — destroys contrast rather than sharpness. */
+.tc-thru--mist {
+  backdrop-filter: blur(calc(var(--tc-blur-frost) * 1.6)) contrast(0.62) brightness(1.26) saturate(0.7);
+  -webkit-backdrop-filter: blur(calc(var(--tc-blur-frost) * 1.6)) contrast(0.62) brightness(1.26) saturate(0.7);
+}
+/* Lens: sharp centre, aberrant edges. */
+.tc-thru--lens {
+  backdrop-filter: blur(calc(var(--tc-blur-frost) * 0.25)) saturate(1.35) contrast(1.12);
+  -webkit-backdrop-filter: blur(calc(var(--tc-blur-frost) * 0.25)) saturate(1.35) contrast(1.12);
+}
+.tc-thru--lens::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-gradient-prism);
+  border-radius: inherit;
+  opacity: 0.4;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(circle at var(--tc-w-x) var(--tc-w-y), transparent 44%, #000 82%);
+  mask-image: radial-gradient(circle at var(--tc-w-x) var(--tc-w-y), transparent 44%, #000 82%);
+}
+
+/* ==========================================================================
+   CANVAS + PLACE — asymmetric editorial composition
+   Equal padding on four sides is the single largest source of the
+   institutional-deck read. A canvas frame is never symmetric.
+   ========================================================================== */
+
+.tc-canvas {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: minmax(0, 1fr);
+  width: 100%;
+  height: 100%;
+  column-gap: var(--tc-space-md);
+  row-gap: var(--tc-space-sm);
+  /* Asymmetric by construction: the light side and the heavy side differ by
+     at least two steps of the spacing scale. */
+  padding:
+    var(--tc-frame-top, var(--tc-space-xl))
+    var(--tc-frame-right, var(--tc-space-2xl))
+    var(--tc-frame-bottom, var(--tc-space-3xl))
+    var(--tc-frame-left, var(--tc-space-lg));
+}
+
+.tc-canvas--rows-6 { grid-template-rows: repeat(6, minmax(0, 1fr)); }
+.tc-canvas--rows-8 { grid-template-rows: repeat(8, minmax(0, 1fr)); }
+
+.tc-place { position: relative; min-width: 0; min-height: 0; }
+
+/* Escape: the element leaves the frame. This is how a protagonist breaks an
+   edge and how the grid stops being a container. */
+.tc-place--escape-left { margin-left: calc(-1 * var(--tc-frame-left, var(--tc-space-lg)) - var(--tc-escape, var(--tc-space-2xl))); }
+.tc-place--escape-right { margin-right: calc(-1 * var(--tc-frame-right, var(--tc-space-2xl)) - var(--tc-escape, var(--tc-space-2xl))); }
+.tc-place--escape-top { margin-top: calc(-1 * var(--tc-frame-top, var(--tc-space-xl)) - var(--tc-escape, var(--tc-space-2xl))); }
+.tc-place--escape-bottom { margin-bottom: calc(-1 * var(--tc-frame-bottom, var(--tc-space-3xl)) - var(--tc-escape, var(--tc-space-2xl))); }
+
+.tc-place--align-start { align-self: start; }
+.tc-place--align-center { align-self: center; }
+.tc-place--align-end { align-self: end; }
+.tc-place--justify-start { justify-self: start; }
+.tc-place--justify-center { justify-self: center; }
+.tc-place--justify-end { justify-self: end; }
+
+/* ==========================================================================
+   REGISTER — the legibility ladder
+   The client authorised sacrificing legibility on SECONDARY elements to gain
+   atmosphere. This makes that deliberate rather than accidental: primary is
+   never touched, and only `atmosphere` may become genuinely hard to read.
+   ========================================================================== */
+
+[data-register="secondary"] {
+  color: var(--tc-color-text-subtle);
+  opacity: 0.82;
+}
+
+[data-register="atmosphere"] {
+  color: var(--tc-color-text-subtle);
+  opacity: 0.4;
+  filter: blur(0.35px);
+  letter-spacing: var(--tc-letter-spacing-ultra);
+}
+
+/* Drift is only ever legal on already-demoted registers. A drifted headline
+   reads as a bug; a drifted caption reads as a print artefact. */
+[data-register="secondary"].tc-drift,
+[data-register="atmosphere"].tc-drift {
+  transform: rotate(var(--tc-drift, -0.6deg));
+  transform-origin: left center;
+}
+
+/* Microtype set into the frame edge, running vertically. At least one text
+   element per frame should sit outside the reading flow. */
+.tc-micro-edge {
+  position: absolute;
+  writing-mode: vertical-rl;
+  font-family: var(--tc-font-mono);
+  font-size: var(--tc-font-size-3xs);
+  letter-spacing: var(--tc-letter-spacing-ultra);
+  text-transform: uppercase;
+  color: var(--tc-color-text-subtle);
+  opacity: 0.55;
+}
+.tc-micro-edge--left { left: var(--tc-space-xs); top: var(--tc-space-2xl); }
+.tc-micro-edge--right { right: var(--tc-space-xs); top: var(--tc-space-2xl); transform: rotate(180deg); }
+
+/* ==========================================================================
+   PHOTOGRAPHIC REGISTERS
+   Pick a SUBJECT register, never a filter. tone/focus/flash/chroma are trim
+   applied afterwards, never the first decision. Each register owns its own
+   tonal curve, noise plate, light direction and crop origin.
+   ========================================================================== */
+
+.tc-figure__frame { --tc-fig-light-x: 68%; --tc-fig-light-y: 20%; }
+
+/* 01 char — biochar as a cut mineral. Crushed blacks, surviving speculars,
+   dense hard grain, one cold catch-light on a facet. Never sooty. */
+.tc-figure--reg-char {
+  --tc-fig-tone: var(--tc-fig-curve-char);
+  --tc-fig-light-x: 74%;
+  --tc-fig-light-y: 14%;
+  --tc-fig-grain-plate: var(--tc-texture-mineral);
+  --tc-fig-grain-size: 90px 90px;
+  --tc-fig-grain-op: var(--tc-fig-grain-char);
+  --tc-fig-veil: var(--tc-fig-veil-char);
+  --tc-fig-veil-op: 0.62;
+  --tc-fig-object-position: 62% 38%;
+}
+
+/* 02 plant — the industrial exterior at blue hour. Lifted blacks, mist,
+   backlight; contrast is destroyed rather than sharpness. */
+.tc-figure--reg-plant {
+  --tc-fig-tone: var(--tc-fig-curve-plant);
+  --tc-fig-light-x: 86%;
+  --tc-fig-light-y: 22%;
+  --tc-fig-grain-plate: var(--tc-texture-grain);
+  --tc-fig-grain-size: 160px 160px;
+  --tc-fig-grain-op: var(--tc-fig-grain-plant);
+  --tc-fig-veil: var(--tc-fig-veil-plant);
+  --tc-fig-veil-op: 0.72;
+  --tc-fig-object-position: 22% 64%;
+}
+
+/* 03 terrain — soil, biomass, cropland from above. Matter, not landscape. */
+.tc-figure--reg-terrain {
+  --tc-fig-tone: var(--tc-fig-curve-terrain);
+  --tc-fig-light-x: 28%;
+  --tc-fig-light-y: 10%;
+  --tc-fig-grain-plate: var(--tc-texture-wash);
+  --tc-fig-grain-size: 320px 320px;
+  --tc-fig-grain-op: var(--tc-fig-grain-terrain);
+  --tc-fig-veil: var(--tc-fig-veil-terrain);
+  --tc-fig-veil-op: 0.58;
+  --tc-fig-object-position: 50% 82%;
+}
+
+/* 04 figures — people, never identifiable, never facing camera. Blown
+   highlights, soft contrast, sensor pattern from an early digital camera. */
+.tc-figure--reg-figures {
+  --tc-fig-tone: var(--tc-fig-curve-figures);
+  --tc-fig-light-x: 36%;
+  --tc-fig-light-y: 30%;
+  --tc-fig-grain-plate: var(--tc-texture-ccd);
+  --tc-fig-grain-size: 240px 240px;
+  --tc-fig-grain-op: var(--tc-fig-grain-figures);
+  --tc-fig-veil: var(--tc-fig-veil-figures);
+  --tc-fig-veil-op: 0.8;
+  --tc-fig-object-position: 36% 30%;
+}
+
+/* Registers crop off-centre by default — a centred subject is the tell. */
+.tc-figure[class*="tc-figure--reg-"] .tc-figure__image {
+  object-position: var(--tc-fig-object-position, 50% 50%);
+}
+
+/* The register's own grain plate, masked THIN in the light and THICK in the
+   shadow. An evenly-opaque grain layer reads as a filter, not as film. */
+.tc-figure[class*="tc-figure--reg-"] .tc-figure__grain {
+  background-image: var(--tc-fig-grain-plate, var(--tc-texture-grain));
+  background-size: var(--tc-fig-grain-size, 160px 160px);
+  opacity: var(--tc-fig-grain-op, var(--tc-grain-opacity));
+  -webkit-mask-image: radial-gradient(70% 60% at var(--tc-fig-light-x) var(--tc-fig-light-y), rgb(0 0 0 / 28%) 0%, #000 76%);
+  mask-image: radial-gradient(70% 60% at var(--tc-fig-light-x) var(--tc-fig-light-y), rgb(0 0 0 / 28%) 0%, #000 76%);
+}
+
+/* The veil: the register's own light, entering from its own direction. */
+.tc-figure__veil {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-fig-veil);
+  opacity: var(--tc-fig-veil-op, 0.6);
+  mix-blend-mode: screen;
+}
+
+/* Pressure: the frame gets heavier away from the light. Off-centre. */
+.tc-figure__pressure {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: var(--tc-fig-pressure);
+}
+
+/* char alone gets a hard specular on a facet — the cut-stone tell. */
+.tc-figure--reg-char .tc-figure__frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: radial-gradient(
+    9% 6% at var(--tc-fig-light-x) var(--tc-fig-light-y),
+    var(--tc-fig-specular) 0%,
+    transparent 100%
+  );
+  mix-blend-mode: screen;
+}
+
+/* figures alone carry the early-digital sensor line structure. */
+.tc-figure--reg-figures .tc-figure__frame::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: var(--tc-fig-scanline);
+  opacity: calc(0.7 * var(--tc-artefact-gain));
+}
+
+/* Weight: how loudly a figure speaks in a composition. `ambient` is MEANT to
+   be barely readable — it is the sacrificed-legibility register for imagery. */
+.tc-figure--weight-lead { --tc-fig-veil-op: 0.42; }
+.tc-figure--weight-ambient {
+  --tc-fig-veil-op: 0.9;
+  opacity: 0.62;
+  filter: blur(1.2px);
+}
+
+/* ==========================================================================
+   THE NUMERAL AS PROTAGONIST
+   Sized by the frame, lit by a source, and allowed to dissolve where it
+   crosses that light. The dashboard tile is no longer the default reading.
+   ========================================================================== */
+
+.tc-stat--hero,
+.tc-stat--crop {
+  container-type: inline-size;
+  padding: 0;
+  background: none;
+  border: 0;
+  gap: var(--tc-space-sm);
+}
+
+.tc-stat--hero .tc-stat__value {
+  font-size: var(--tc-numeral-hero);
+  font-weight: var(--tc-font-weight-thin);
+  line-height: 0.86;
+  letter-spacing: var(--tc-letter-spacing-tighter);
+}
+
+.tc-stat--crop .tc-stat__value {
+  font-size: var(--tc-numeral-crop);
+  font-weight: var(--tc-font-weight-thin);
+  line-height: 0.82;
+  letter-spacing: var(--tc-letter-spacing-tighter);
+}
+
+/* --- The light relationship ------------------------------------------------
+   A number never glows without a source. Choose the relationship explicitly:
+   the patch sits behind it, the glyph is eaten where it crosses the patch, or
+   the number is read through a translucent body. */
+
+.tc-stat__patch {
+  position: absolute;
+  inset: -30% -18%;
+  z-index: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    46% 62% at var(--tc-num-lx, 72%) var(--tc-num-ly, 26%),
+    var(--tc-palette-cyan-glare) 0%,
+    rgb(74 201 226 / 34%) 26%,
+    transparent 68%
+  );
+  filter: blur(28px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+}
+
+.tc-stat--light-behind .tc-stat__value-row { position: relative; }
+.tc-stat--light-behind .tc-stat__value { position: relative; z-index: 1; }
+
+/* Crossing: the glyph is eaten on its trailing edge and re-emitted as bloom.
+   Only the trailing ~25% may dissolve — the legibility budget. */
+.tc-stat--light-crossing .tc-stat__value {
+  position: relative;
+  z-index: 1;
+  -webkit-mask-image: linear-gradient(
+    calc(var(--tc-w-tilt) - 14deg),
+    #000 0%,
+    #000 62%,
+    rgb(0 0 0 / 55%) 84%,
+    rgb(0 0 0 / 18%) 100%
+  );
+  mask-image: linear-gradient(
+    calc(var(--tc-w-tilt) - 14deg),
+    #000 0%,
+    #000 62%,
+    rgb(0 0 0 / 55%) 84%,
+    rgb(0 0 0 / 18%) 100%
+  );
+}
+
+/* Through: the numeral is read through a body sitting in front of it. */
+.tc-stat--light-through .tc-stat__value {
+  position: relative;
+  z-index: 1;
+  filter: blur(0.6px) brightness(1.12);
+}
+
+/* --- Halation: directional and em-scaled ---------------------------------
+   Offset toward the light source and unequal on each axis, in em, so a 260px
+   numeral and an 80px one bloom in proportion rather than identically. */
+.tc-stat--hero .tc-stat__value,
+.tc-stat--crop .tc-stat__value {
+  text-shadow:
+    -0.012em -0.008em 0.02em rgb(226 247 252 / 52%),
+    0.008em 0.014em 0.09em rgb(74 201 226 / 46%),
+    0.02em 0.03em 0.26em rgb(74 201 226 / 30%);
+}
+
+/* Seeds move the patch, the mask angle and the bloom together. Two hero
+   numbers in one deck must not share a seed — identical optics on repeat is
+   what makes a treatment read as a filter. */
+.tc-stat--seed-1 { --tc-num-lx: 72%; --tc-num-ly: 26%; }
+.tc-stat--seed-2 { --tc-num-lx: 22%; --tc-num-ly: 68%; }
+.tc-stat--seed-3 { --tc-num-lx: 88%; --tc-num-ly: 74%; }
+.tc-stat--seed-4 { --tc-num-lx: 44%; --tc-num-ly: 8%; }
+.tc-stat--seed-5 { --tc-num-lx: 6%; --tc-num-ly: 42%; }
+
+/* --- Note placement: never on the numeral's baseline ---------------------
+   Parking the unit on the baseline at body size is Bloomberg. 8px, uppercase,
+   ultra-tracked, and set off the glyph block. */
+.tc-stat--hero .tc-stat__unit,
+.tc-stat--crop .tc-stat__unit,
+.tc-stat--hero .tc-stat__caption,
+.tc-stat--crop .tc-stat__caption {
+  font-size: var(--tc-font-size-4xs);
+  font-weight: var(--tc-font-weight-medium);
+  letter-spacing: var(--tc-letter-spacing-ultra);
+  text-transform: uppercase;
+  color: var(--tc-color-text-subtle);
+}
+
+.tc-stat--note-shoulder .tc-stat__value-row { align-items: flex-start; }
+.tc-stat--note-shoulder .tc-stat__unit { margin-top: 0.6em; max-width: 14ch; }
+
+.tc-stat--note-foot .tc-stat__value-row { flex-direction: column; align-items: flex-start; gap: var(--tc-space-xs); }
+.tc-stat--note-foot .tc-stat__unit {
+  padding-top: var(--tc-space-xs);
+  border-top: var(--tc-hairline-width) solid var(--tc-color-hairline);
+  margin-left: 8%;
+  max-width: 22ch;
+}

@@ -4,31 +4,45 @@ import { cx } from '../utils';
 export interface MarkProps extends Omit<React.HTMLAttributes<HTMLSpanElement>, 'children'> {
   /** Glyph edge length in px. Defaults to `32`. */
   size?: number;
-  /** Show `terra carbon` and the descriptor beside the glyph. */
-  wordmark?: boolean;
-  /** The line under the name. Defaults to `biochar — climate solutions`. */
+  /**
+   * Show a wordmark beside the glyph. **There is no company name yet**, so
+   * this is off by default and the symbol is expected to carry the identity
+   * alone. Pass a string only once a name exists.
+   */
+  wordmark?: string;
+  /** The line under the wordmark. Only rendered when `wordmark` is set. */
   descriptor?: React.ReactNode;
   /** Let the glyph emit accent light — for dark hero placements. */
   glow?: boolean;
 }
 
 /**
- * The terra carbon symbol.
+ * The symbol.
  *
- * Deliberately abstract: two open, off-axis arcs around an irregular cluster
- * of voids. It can be read as a particle, a pore, carbon, a cycle, an orbit,
- * matter or transformation — without depicting any of them. There is no leaf,
- * and the arcs are broken so it never resolves into a generic eco roundel.
+ * **Refraction as the only event.** A wide, diffuse band arrives from
+ * off-canvas, meets a single curved interface, and leaves on a permanently
+ * different path — narrower, angled down, exiting the frame. Diffuse abundant
+ * input; an interface where matter intervenes; a redirected, denser output
+ * that does not come back.
  *
- * **It has to work alone.** In presentations the glyph is used without the
- * wordmark far more often than with it.
+ * It is deliberately **the opposite of circularity**: the beam never returns
+ * to where it started, which is what permanent removal actually means. The
+ * sphere survives only as an arc of an enormous, mostly-invisible curve — the
+ * sphere's edge, never the ball. Nothing here is closed, concentric or
+ * organic; there is no leaf, tree, planet or recycling loop.
+ *
+ * The mark is built from two solid masses against two 1.3-unit hairlines. That
+ * extreme weight contrast belongs to product photography and editorial rules,
+ * not to icon sets — which is why it does not read as an icon.
+ *
+ * **It has to work alone**, and does: there is no name yet.
  *
  * @example
- * <Mark size={40} wordmark />
- * <Mark size={64} glow />
+ * <Mark size={40} />
+ * <Mark size={120} glow />
  */
 export const Mark = React.forwardRef<HTMLSpanElement, MarkProps>(function Mark(
-  { size = 32, wordmark = false, descriptor = 'biochar — climate solutions', glow = false, className, ...rest },
+  { size = 32, wordmark, descriptor, glow = false, className, ...rest },
   ref
 ) {
   return (
@@ -39,25 +53,28 @@ export const Mark = React.forwardRef<HTMLSpanElement, MarkProps>(function Mark(
         height={size}
         viewBox="0 0 32 32"
         role="img"
-        aria-label="terra carbon"
+        aria-label="Symbol"
       >
-        {/* Two open arcs, off-axis and never concentric. Closed rings read as
-            a generic eco/orbit icon; the gaps keep it a trajectory. */}
-        <path className="tc-mark__orbit" d="M4.31 9.25 A13.5 13.5 0 1 1 9.25 27.69" />
-        <path className="tc-mark__orbit tc-mark__orbit--faint" d="M25.78 20.61 A9.5 9.5 0 1 1 23.25 6.27" />
-        {/* Porosity: an irregular cluster of unequal voids, offset from centre.
-            Read as particle, pore, carbon, matter - none of them literally. */}
-        <circle className="tc-mark__pore" cx="14.2" cy="17.8" r="2.1" />
-        <circle className="tc-mark__pore" cx="18.9" cy="15.1" r="1.15" />
-        <circle className="tc-mark__pore" cx="17.6" cy="20.4" r="1.4" />
-        <circle className="tc-mark__pore" cx="12.1" cy="13.4" r="0.85" />
-        <circle className="tc-mark__pore" cx="21.2" cy="19" r="0.72" />
-        <circle className="tc-mark__pore" cx="10.6" cy="19.6" r="0.6" />
-        <circle className="tc-mark__pore" cx="15" cy="11.6" r="0.5" />
+        {/* The incoming band — wide, horizontal, cropped by the left edge. */}
+        <path d="M0 9H17.6V14.5H0Z" fill="currentColor" />
+        {/* The outgoing band — narrower, laterally displaced and deflected
+            ~20 degrees down, leaving through the right edge. The offset at the
+            surface IS the refraction; a steeper angle turns the two masses
+            into a chevron and the mark reads as an arrow. */}
+        <path d="M17.2 11.6L32 17.6V21.6L16.9 16.4Z" fill="currentColor" />
+        {/* The interface: one continuous arc of a much larger curve, running
+            off the top and bottom edges. The sphere survives only as its edge. */}
+        <path
+          d="M21.4 0Q13.2 16 21.4 32"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.4"
+          strokeLinecap="round"
+        />
       </svg>
       {wordmark && (
         <span className="tc-mark__wordmark">
-          <span className="tc-mark__name">terra carbon</span>
+          <span className="tc-mark__name">{wordmark}</span>
           {descriptor != null && <span className="tc-mark__descriptor">{descriptor}</span>}
         </span>
       )}

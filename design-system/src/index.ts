@@ -96,4 +96,7 @@ export type { ProcessProps, ProcessStepProps, ProcessStage } from './components/
 export { Slide } from './components/Slide';
 export type { SlideProps } from './components/Slide';
 
+export { Canvas, Place } from './components/Canvas';
+export type { CanvasProps, PlaceProps } from './components/Canvas';
+
 export { cx } from './utils';

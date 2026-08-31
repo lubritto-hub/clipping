@@ -22,7 +22,25 @@ export interface StatProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
    * `colossal` is 176px, meant to be cut by the frame (wrap it in `Bleed`).
    * `plain` drops the card chrome; `iridescent` fills it with pearl.
    */
-  variant?: 'card' | 'plain' | 'display' | 'projected' | 'colossal' | 'iridescent';
+  variant?: 'card' | 'plain' | 'display' | 'projected' | 'colossal' | 'iridescent' | 'hero' | 'crop';
+  /**
+   * Where the light is, relative to the glyphs. A number never glows without
+   * a source. `behind` keeps the glyph crisp over a patch; `crossing` lets the
+   * trailing edge be eaten and re-emitted as bloom; `through` reads the
+   * numeral through a body in front of it.
+   */
+  light?: 'none' | 'behind' | 'crossing' | 'through';
+  /**
+   * 1-5. Moves the light patch, the mask angle and the bloom together.
+   * **No two hero numbers in one deck may share a seed** — identical optics
+   * on repeat is what turns a treatment into a filter.
+   */
+  seed?: 1 | 2 | 3 | 4 | 5;
+  /**
+   * Where the unit and caption sit. Never on the numeral's baseline at body
+   * size — that arrangement is a financial terminal, not a campaign.
+   */
+  note?: 'inline' | 'shoulder' | 'foot';
   /** Add the glow without going to `display` size. */
   glow?: boolean;
   /**
@@ -46,7 +64,7 @@ export interface StatProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'c
  * <Stat label="hectares of soils enhanced" value="250,412" delta="+8.2%" deltaDirection="up" />
  */
 export const Stat = React.forwardRef<HTMLDivElement, StatProps>(function Stat(
-  { label, value, unit, delta, deltaDirection = 'flat', caption, variant = 'card', glow = false, optic = 'none', className, ...rest },
+  { label, value, unit, delta, deltaDirection = 'flat', caption, variant = 'card', glow = false, optic = 'none', light = 'none', seed, note = 'inline', className, ...rest },
   ref
 ) {
   return (
@@ -59,12 +77,16 @@ export const Stat = React.forwardRef<HTMLDivElement, StatProps>(function Stat(
         (variant === 'projected' || variant === 'colossal') && 'tc-stat--display',
         glow && variant === 'card' && 'tc-stat--glow',
         optic !== 'none' && `tc-stat--${optic}`,
+        light !== 'none' && `tc-stat--light-${light}`,
+        seed && `tc-stat--seed-${seed}`,
+        note !== 'inline' && `tc-stat--note-${note}`,
         className
       )}
       {...rest}
     >
       {label != null && <span className="tc-stat__label">{label}</span>}
       <span className="tc-stat__value-row">
+        {light !== 'none' && <span className="tc-stat__patch" aria-hidden="true" />}
         {variant === 'projected' && (
           <span className="tc-stat__ghost" aria-hidden="true">{value}</span>
         )}
