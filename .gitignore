@@ -21,3 +21,6 @@ design-system/.preview/*
 !design-system/.preview/markshot.mjs
 !design-system/.preview/demo.tsx
 !design-system/.preview/themecheck.mjs
+!design-system/.preview/art-pep.mjs
+!design-system/.preview/devices.mjs
+!design-system/.preview/materials-coco.py
