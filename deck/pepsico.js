@@ -1,14 +1,18 @@
 /* ===========================================================================
    PEPSICO · PETROLINA — "POR QUE O COCO"
    ---------------------------------------------------------------------------
-   Modelo de conteúdo. A regra aqui é mais estrita que a do deck da venture:
+   Modelo de conteúdo.
 
-   ESTE DECK NÃO PEDE NADA E NÃO PROMETE NADA.
+   ESTE DECK NÃO PROMETE NADA — E PEDE UMA COISA SÓ.
 
-   Ele mostra por que a casca de coco é uma biomassa naturalmente boa para
-   pirólise, e por que o biochar conversa com metas que a PepsiCo já publicou.
-   Nenhum preço, nenhuma TIR, nenhum número da POC própria — esses pertencem
-   ao outro baralho e, ditos aqui, transformariam um "por quê" num pitch.
+   A regra original, herdada do deck de origem, era não pedir nada. Ela mudou
+   a pedido: o baralho agora termina num próximo passo concreto. O que ele
+   pede é o mínimo que permite sair da conversa para o laboratório — uma
+   amostra, o volume mensal e a destinação atual da casca. Nada além disso.
+
+   O que continua valendo: nenhum preço, nenhuma TIR, nenhum número da POC
+   própria. Esses pertencem ao outro baralho e, ditos aqui, transformariam um
+   "por quê" num pitch.
 
    Procedência:
      [LIT] literatura técnica, com a citação ao lado.
@@ -81,6 +85,14 @@ const MERCADO = {
   registro: 'Puro.earth',
 };
 
+/* --- O próximo passo ------------------------------------------------------
+   Três coisas objetivas. Cada uma é um dado que a unidade já tem — não há
+   trabalho novo do lado deles para entregar nenhuma das três. */
+const PROXIMO = {
+  acao: 'Caracterizar a casca da unidade em laboratório.',
+  pede: ['uma amostra da casca', 'o volume mensal gerado', 'a destinação atual'],
+};
+
 /* --- As três condições ---------------------------------------------------
    Reescritas curtas. A versão anterior trazia uma frase de explicação e uma
    de destravamento para cada condição; num quadro que agora vive de bloco,
@@ -116,4 +128,4 @@ const METAS = [
 ];
 
 module.exports = { LOCAL, COCO, PROCESSO, PEPSICO, EMBRAPA, MERCADO,
-                   CONDICOES, ETAPAS, PRODUTO, METAS };
+                   CONDICOES, ETAPAS, PRODUTO, METAS, PROXIMO };

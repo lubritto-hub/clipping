@@ -134,12 +134,6 @@ const ICONS = {
     <path d="M11.4 13.5h9.2M11.4 10h9.2M11.4 17h5.8" opacity="0.8"/>
     <path d="M11 22.5l-2 7 7-3 7 3-2-7"/>`,
 
-  /* A estrela de quatro pontas: o único glifo puramente gráfico do conjunto.
-     Não descreve nada — é a pontuação do baralho, herdada do Y2K, e serve
-     para marcar o que importa numa linha sem precisar de uma seta. */
-  estrela: `<path d="M16 1.5c0 8 2.2 12.5 14.5 14.5C18.2 18 16 22.5 16 30.5
-    c0-8-2.2-12.5-14.5-14.5C13.8 14 16 9.5 16 1.5z" fill="currentColor" stroke="none"/>`,
-
   /* A unidade: fábrica sóbria, sem fumaça. */
   unidade: `<path d="M2.5 28.5h27"/>
     <path d="M4.5 28.5V14l8 4.6V14l8 4.6V7.5h6.5v21"/>
@@ -151,9 +145,9 @@ const ICONS = {
 /* `steel` é a cor da camada de engenharia: prata só aparece em estrutura —
    fios, marcas de registro, réguas — e nos ícones que descrevem o EQUIPAMENTO,
    nunca nos que descrevem a matéria viva. */
-const COLOURS = { dark: '#16331F', light: '#EAF6DA', palm: '#4D6640',
-                  husk: '#8A5A34', steel: '#7E8C90',
-                  acid: '#C8E85C', cream: '#F5F1E6' };
+const COLOURS = { dark: '#16331F', light: '#F2EEE3', palm: '#4D6640',
+                  husk: '#8A5A34', steel: '#AEB7B9',
+                  acid: '#8FB04E', cream: '#F5F1E6' };
 
 const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 const p = await b.newPage({ viewport: { width: 256, height: 256 }, deviceScaleFactor: 1 });

@@ -29,163 +29,163 @@ import { W, H, CSS } from './devices.mjs';
 
 const OUT = path.resolve('.preview/deck-assets');
 const css = fs.readFileSync('dist/styles.css', 'utf8');
-const img = n => `./img/${n}.svg`;
 
-/* --- A paleta. Poucas cores, muito contraste. ---------------------------- */
-const ACID  = '#c8e85c';   // verde-coco: o coco verde é literalmente esta cor
-const MATA  = '#16331f';
-const CREME = '#f5f1e6';
-const PRETO = '#0b0a09';
+/* --- FOTOS DE VERDADE ----------------------------------------------------
+   Os materiais aqui são desenhados. Se houver uma foto licenciada com o mesmo
+   nome em deck/fotos/, ela entra no lugar do desenho sem mais nenhuma
+   alteração — basta largar o arquivo e rodar o build.
+
+     deck/fotos/coco-yard.jpg     o pátio de casca
+     deck/fotos/coco-macro.jpg    o close da casca
+     deck/fotos/coco-char.jpg     o biochar
+     deck/fotos/coco-section.jpg  a secção do fruto
+     deck/fotos/coco-husk.jpg     a fibra
+
+   Nenhuma imagem de banco com marca d'água entra num material de cliente. */
+const FOTOS = path.resolve('../deck/fotos');
+const img = n => fs.existsSync(`${FOTOS}/${n}.jpg`)
+  ? `file://${FOTOS}/${n}.jpg`
+  : (fs.existsSync(`${FOTOS}/${n}.png`) ? `file://${FOTOS}/${n}.png` : `./img/${n}.svg`);
+
+/* --- A paleta ------------------------------------------------------------
+   Preto, prata, marrom escuro, verde e branco. Duas regras a governam:
+
+     1. O CAMPO É ESCURO. Cinco dos sete quadros têm chão preto; os dois
+        claros existem para dar respiração no meio do baralho, não por
+        alternância decorativa.
+     2. VERDE NUNCA É CAMPO. Ele aparece em número, ícone, pílula e numa
+        única faixa do baralho inteiro — a do próximo passo. Um quadro
+        inteiro de verde é marca-texto, não capa.
+
+   A prata é estrutural: fios, réguas e a chapa escovada. Não existe área
+   prateada, e o marrom vem quase todo da própria matéria fotografada. */
+const PRETO  = '#0c0c0b';
+const CARVAO = '#17181a';
+const VERDE  = '#8fb04e';   // acento — maduro, não fluorescente
+const MATA   = '#1e3320';
+const MARROM = '#4a3320';
+const BRANCO = '#ffffff';
 
 /* --- Primitivas ---------------------------------------------------------- */
 
-/** Um painel de foto: canto arredondado, matéria em força total. Nada de
-    opacidade 20% — a foto ou está no quadro ou não está. */
-const panel = (src, style, radius = 26, extra = '', pos = '50% 50%', zoom = 1) =>
-  `<div style="position:absolute;${style};border-radius:${radius}px;overflow:hidden;
-     ${extra}"><img src="${img(src)}"
-     style="width:100%;height:100%;object-fit:cover;object-position:${pos};display:block;
-     transform:scale(${zoom});transform-origin:${pos}"></div>`;
+/** Um painel de matéria. O tratamento fotográfico é o que separa foto de
+    ilustração, e são três coisas — faixa tonal aberta, vinheta e grão — não
+    mais detalhe. */
+const panel = (src, style, radius = 20, pos = '50% 50%', zoom = 1, vinheta = 0.4) =>
+  `<div style="position:absolute;${style};border-radius:${radius}px;overflow:hidden">
+     <img src="${img(src)}" style="width:100%;height:100%;object-fit:cover;
+       object-position:${pos};display:block;transform:scale(${zoom});
+       transform-origin:${pos};filter:contrast(1.12) saturate(0.9) brightness(1.02)">
+     <div style="position:absolute;inset:0;box-shadow:inset 0 0 130px 34px rgb(6 6 5 / ${vinheta * 100}%)"></div>
+     <div class="L grain" style="opacity:.22;mix-blend-mode:overlay"></div>
+   </div>`;
 
-/** O estouro de luz. Um núcleo, um halo e uma listra horizontal — é a
-    anatomia de um flare de lente, e é o que faz a luz parecer física. */
-const flare = (x, y, s = 1, tint = '255 249 214') => `
-  <div style="position:absolute;left:${x};top:${y};width:${420 * s}px;height:${420 * s}px;
-    margin:${-210 * s}px 0 0 ${-210 * s}px;border-radius:50%;
-    background:radial-gradient(circle, rgb(${tint} / 92%) 0%, rgb(${tint} / 30%) 34%, transparent 70%);
-    filter:blur(${26 * s}px);mix-blend-mode:screen"></div>
-  <div style="position:absolute;left:${x};top:${y};width:${1500 * s}px;height:${5 * s}px;
-    margin:${-2.5 * s}px 0 0 ${-750 * s}px;
-    background:linear-gradient(90deg, transparent, rgb(${tint} / 88%) 46%, rgb(${tint} / 88%) 54%, transparent);
-    filter:blur(${2.5 * s}px);mix-blend-mode:screen"></div>`;
+/** Uma régua de aço escovado. A prata do baralho é sempre esta chapa, nunca
+    um cinza chapado: metal é anisotrópico, e é a escovação que o denuncia. */
+const aco = (style, op = 0.9) =>
+  `<div style="position:absolute;${style};overflow:hidden;opacity:${op}">
+     <img src="./img/metal-plate.svg" style="width:100%;height:100%;object-fit:cover;display:block"></div>`;
 
-/** A estrela de quatro pontas, desenhada grande. Pontuação, não decoração:
-    marca um lugar da composição e some. */
-const star = (x, y, r, colour = '#ffffff', op = 1, blur = 0) => `
-  <svg style="position:absolute;left:${x};top:${y};width:${r * 2}px;height:${r * 2}px;
-    margin:${-r}px 0 0 ${-r}px;opacity:${op};filter:blur(${blur}px)" viewBox="0 0 32 32">
-    <path d="M16 0c0 9 2.4 14 16 16-13.6 2-16 7-16 16 0-9-2.4-14-16-16 13.6-2 16-7 16-16z"
-      fill="${colour}"/></svg>`;
+/** A luz. Sem núcleo estourado e sem listra de lente: só um levantamento vindo
+    de um canto, que é como a luz se comporta numa sala. */
+const luz = (spec) => `<div class="L" style="background:${spec}"></div>`;
 
-/** O grão. Bem mais fraco que no baralho anterior: sobre cor chapada, grão é
-    ruído, e a superfície tem de parecer impressa, não gasta. */
-const grain = (o = 0.12) => `<div class="L grain" style="opacity:${o}"></div>`;
-
-/** Uma lavagem de luz vinda de um canto, para que a cor chapada não fique
-    morta. É a única coisa que sobrou da versão atmosférica. */
-const wash = (spec) => `<div class="L" style="background:${spec}"></div>`;
+const grain = (o = 0.14) => `<div class="L grain" style="opacity:${o}"></div>`;
 
 const PLATES = {
 
 /* ---------------------------------------------------------------------------
-   01 CAPA — verde-coco puro e um coco cromado. É a única peça de cromo do
-   baralho: se ela se repetir, deixa de ser abertura e vira maneirismo.
-   Zona de tipo: esquerda até 52%.
+   01 CAPA — o pátio ocupa o quadro inteiro, rebaixado quase ao preto, e o coco
+   cromado flutua sobre ele. É a única peça de cromo do baralho.
 --------------------------------------------------------------------------- */
 'pep-01': () => `
-  <div class="L" style="background:${ACID}"></div>
-  ${wash(`radial-gradient(72% 62% at 82% 28%, rgb(255 255 255 / 62%) 0%, transparent 66%),
-          radial-gradient(58% 50% at 6% 96%, rgb(22 51 31 / 26%) 0%, transparent 70%)`)}
-  <div style="position:absolute;left:56%;top:5%;width:41%;height:90%">
-    <img src="${img('coco-chrome')}" style="width:100%;height:100%;object-fit:contain;display:block;
-      filter:drop-shadow(0 44px 70px rgb(22 51 31 / 38%))">
+  ${panel('coco-yard', 'inset:0', 0, '50% 100%', 1.95, 0.55)}
+  ${luz(`linear-gradient(100deg, rgb(12 12 11 / 96%) 0%, rgb(12 12 11 / 90%) 36%,
+          rgb(12 12 11 / 62%) 64%, rgb(30 51 32 / 42%) 100%)`)}
+  ${luz(`radial-gradient(56% 50% at 76% 28%, rgb(143 176 78 / 20%) 0%, transparent 66%)`)}
+  <div style="position:absolute;left:57%;top:10%;width:39%;height:80%">
+    <img src="${img('coco-chrome')}" style="width:100%;height:100%;object-fit:contain;
+      display:block;filter:drop-shadow(0 44px 80px rgb(0 0 0 / 66%)) saturate(0.86)">
   </div>
-  ${flare('69%', '26%', 1.4)}
-  ${star('52%', '15%', 42, '#ffffff', 0.95)}
-  ${star('97%', '72%', 22, '#ffffff', 0.8)}
-  ${star('60%', '92%', 15, '#16331f', 0.38)}
-  ${grain(0.1)}`,
+  ${aco('left:5.5%;top:82%;width:15%;height:5px', 0.8)}
+  ${grain(0.18)}`,
 
 /* ---------------------------------------------------------------------------
-   02 O QUE EXISTE HOJE — o pátio em força total, num painel que ocupa metade
-   do quadro. Esta é a foto mais importante do baralho: é a premissa.
+   02 A BIOMASSA — o pátio de novo, agora em painel e em plano aberto: aqui ele
+   conta ESCALA, e é a única chapa em que ele aparece cortado.
 --------------------------------------------------------------------------- */
 'pep-02': () => `
-  <div class="L" style="background:${CREME}"></div>
-  ${wash(`radial-gradient(66% 58% at 8% 4%, rgb(200 232 92 / 46%) 0%, transparent 66%),
-          radial-gradient(50% 48% at 30% 100%, rgb(138 90 52 / 12%) 0%, transparent 70%)`)}
-  ${panel('coco-yard', 'left:49%;top:6%;width:47%;height:88%', 30,
-          '', '50% 100%', 1.55)}
-  ${star('48%', '12%', 28, ACID, 1)}
-  ${flare('74%', '28%', 0.7, '255 252 232')}
-  ${grain(0.14)}`,
-
-/* ---------------------------------------------------------------------------
-   03 POR QUE O COCO — fundo escuro, a secção transversal grande e nítida.
-   No escuro os anéis param de ler como alvo e passam a ler como estratos.
---------------------------------------------------------------------------- */
-'pep-03': () => `
-  <div class="L" style="background:${MATA}"></div>
-  ${wash(`radial-gradient(66% 58% at 88% 16%, rgb(200 232 92 / 20%) 0%, transparent 68%),
-          radial-gradient(50% 44% at 4% 92%, rgb(200 232 92 / 12%) 0%, transparent 70%)`)}
-  <div style="position:absolute;right:-14%;top:-14%;width:64%;height:113.8%;
-    border-radius:50%;overflow:hidden">
-    <img src="${img('coco-section')}" style="width:100%;height:100%;object-fit:cover;display:block">
-  </div>
-  ${flare('58%', '18%', 0.9, '234 246 218')}
-  ${star('55%', '78%', 24, ACID, 0.9)}
+  <div class="L" style="background:${PRETO}"></div>
+  ${luz(`radial-gradient(70% 60% at 4% 4%, rgb(30 51 32 / 80%) 0%, transparent 68%)`)}
+  ${panel('coco-yard', 'left:48%;top:5%;width:48%;height:90%', 22, '50% 100%', 1.5, 0.44)}
+  ${aco('left:5.5%;top:88%;width:15%;height:5px', 0.72)}
   ${grain(0.16)}`,
 
 /* ---------------------------------------------------------------------------
-   04 O PROCESSO — dois painéis de matéria, antes e depois, com o vão no meio
-   onde mora a temperatura. O vão É o reator.
+   03 O MATERIAL — a secção grande à direita. No escuro os anéis param de ler
+   como alvo e passam a ler como estratos.
+--------------------------------------------------------------------------- */
+'pep-03': () => `
+  <div class="L" style="background:${PRETO}"></div>
+  ${luz(`radial-gradient(64% 56% at 88% 20%, rgb(30 51 32 / 74%) 0%, transparent 68%)`)}
+  <div style="position:absolute;right:-15%;top:-13%;width:64%;height:113.8%;
+    border-radius:50%;overflow:hidden">
+    <img src="${img('coco-section')}" style="width:100%;height:100%;object-fit:cover;
+      display:block;filter:contrast(1.14) saturate(0.86) brightness(0.94)">
+    <div style="position:absolute;inset:0;box-shadow:inset 0 0 150px 46px rgb(6 6 5 / 58%)"></div>
+  </div>
+  ${aco('left:5.5%;top:88%;width:15%;height:5px', 0.72)}
+  ${grain(0.16)}`,
+
+/* ---------------------------------------------------------------------------
+   04 O PROCESSO — a matéria antes e depois, em dois painéis largos no pé, e
+   uma régua de aço entre eles. O vão é o reator.
 --------------------------------------------------------------------------- */
 'pep-04': () => `
-  <div class="L" style="background:${CREME}"></div>
-  ${wash(`radial-gradient(56% 50% at 50% 6%, rgb(200 232 92 / 30%) 0%, transparent 70%)`)}
-  ${panel('coco-husk', 'left:5.5%;top:67.5%;width:41.5%;height:20.6%', 22)}
-  ${panel('coco-char', 'left:53%;top:67.5%;width:41.5%;height:20.6%', 22)}
-  ${flare('50%', '40%', 1.0, '255 236 190')}
-  ${star('50%', '56%', 26, ACID, 1)}
-  ${grain(0.14)}`,
+  <div class="L" style="background:${PRETO}"></div>
+  ${luz(`radial-gradient(60% 52% at 50% 2%, rgb(30 51 32 / 66%) 0%, transparent 70%)`)}
+  ${panel('coco-macro', 'left:5.5%;top:67.5%;width:41.5%;height:20.6%', 16, '50% 50%', 1.15, 0.7)}
+  ${panel('coco-char',  'left:53%;top:67.5%;width:41.5%;height:20.6%', 16, '50% 50%', 1.05, 0.3)}
+  ${aco('left:10.5%;top:50.4%;width:67%;height:4px', 0.55)}
+  ${grain(0.16)}`,
 
 /* ---------------------------------------------------------------------------
-   05 O QUE SAI — o char em força total ocupando a direita inteira, sangrando
-   pelo quadro. A esquerda fica creme, para o número.
+   05 O PRODUTO — o quadro branco do baralho. Existe para dar respiração e
+   para que o char, que é a coisa mais preta que há, tenha contra o que
+   aparecer.
 --------------------------------------------------------------------------- */
 'pep-05': () => `
-  <div class="L" style="background:${CREME}"></div>
-  ${panel('coco-char', 'right:0;top:0;width:54%;height:100%', 0)}
-  <div style="position:absolute;left:46%;top:0;width:16%;height:100%;
-    background:linear-gradient(90deg, rgb(245 241 230) 0%, transparent 100%)"></div>
-  ${flare('62%', '22%', 1.1, '234 246 218')}
-  ${star('60%', '70%', 26, ACID, 0.95)}
-  ${star('88%', '18%', 16, '#ffffff', 0.8)}
-  ${grain(0.14)}`,
+  <div class="L" style="background:${BRANCO}"></div>
+  ${panel('coco-char', 'right:0;top:0;width:56%;height:100%', 0, '50% 50%', 1.05, 0.24)}
+  <div style="position:absolute;left:41%;top:0;width:16%;height:100%;
+    background:linear-gradient(90deg, #ffffff 0%, rgb(255 255 255 / 0%) 100%)"></div>
+  ${aco('left:5.5%;top:88%;width:15%;height:5px', 0.85)}
+  ${grain(0.1)}`,
 
 /* ---------------------------------------------------------------------------
-   06 O QUE A PEPSICO JÁ DECIDIU — creme e o palmeiral num painel largo e
-   baixo, porque as metas ocupam a faixa de cima.
+   06 AS METAS — o segundo quadro branco. Os quatro números publicados pedem
+   um chão neutro; a fibra de coir fecha o pé.
 --------------------------------------------------------------------------- */
 'pep-06': () => `
-  <div class="L" style="background:${CREME}"></div>
-  ${wash(`radial-gradient(64% 56% at 88% 10%, rgb(200 232 92 / 32%) 0%, transparent 68%)`)}
-  /* Uma faixa de 0,9 pol de palmeiral distante não lê como palmeiral — lê
-     como uma lavagem verde. Nessa altura, a fibra de coir lê: ela é
-     direcional, e o que a faixa precisa dizer é MATÉRIA. */
-  ${panel('coco-husk', 'left:4%;top:80%;width:92%;height:16%', 20, '', '50% 50%', 1.0)}
-  ${star('6.5%', '78%', 20, ACID, 1)}
-  ${flare('80%', '20%', 0.8, '255 252 232')}
-  ${grain(0.14)}`,
+  <div class="L" style="background:${BRANCO}"></div>
+  ${luz(`radial-gradient(58% 50% at 92% 6%, rgb(143 176 78 / 14%) 0%, transparent 68%)`)}
+  ${panel('coco-husk', 'left:4%;top:84%;width:92%;height:12%', 14, '50% 50%', 1.0, 0.42)}
+  ${grain(0.1)}`,
 
 /* ---------------------------------------------------------------------------
-   07 O QUE PRECISA SER VERDADE — escuro, o char como chão de verdade e não
-   como sombra. Fecha o baralho no mesmo material com que ele abriu, mas em
-   matéria, não em cromo.
+   07 AS CONDIÇÕES E O PRÓXIMO PASSO — o char como chão de verdade. Fecha o
+   baralho no mesmo material com que ele abriu, mas em matéria, não em cromo.
 --------------------------------------------------------------------------- */
 'pep-07': () => `
   <div class="L" style="background:${PRETO}"></div>
-  ${panel('coco-char', 'left:0;top:0;width:100%;height:100%', 0)}
-  ${wash(`linear-gradient(168deg, rgb(22 51 31 / 82%) 0%, rgb(11 10 9 / 74%) 52%, rgb(22 51 31 / 86%) 100%)`)}
-  ${wash(`radial-gradient(58% 50% at 14% 8%, rgb(200 232 92 / 20%) 0%, transparent 66%)`)}
-  ${flare('50%', '8%', 1.2, '200 232 92')}
-  ${star('92%', '82%', 26, ACID, 0.9)}
-  ${star('6%', '30%', 15, '#ffffff', 0.6)}
+  ${panel('coco-char', 'inset:0', 0, '50% 50%', 1.12, 0)}
+  ${luz(`linear-gradient(168deg, rgb(12 12 11 / 88%) 0%, rgb(12 12 11 / 78%) 50%, rgb(30 51 32 / 88%) 100%)`)}
+  ${luz(`radial-gradient(54% 46% at 14% 8%, rgb(143 176 78 / 16%) 0%, transparent 66%)`)}
   ${grain(0.2)}`,
 };
 
 const html = `<!doctype html><meta charset="utf-8"><style>${css}${CSS}
-  .plate{background:${CREME}}
+  .plate{background:${PRETO}}
 </style>
 <body data-theme="light">${Object.entries(PLATES)
   .map(([id, f]) => `<div class="plate" id="${id}">${f()}</div>`).join('\n')}</body>`;

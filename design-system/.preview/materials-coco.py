@@ -384,3 +384,59 @@ open(f'{OUT}/coco-chrome.svg', 'w').write('''<svg xmlns="http://www.w3.org/2000/
 <circle cx="500" cy="500" r="469" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
 </svg>''')
 print('cromo: coco-chrome')
+
+
+# --- 09 MACRO DE CASCA ------------------------------------------------------
+# Um close de meias-cascas empilhadas, com a luz raspando. Existe porque um
+# pátio inteiro conta a escala e um macro conta a MATÉRIA — e o baralho
+# precisava das duas coisas para não repetir a mesma foto três vezes.
+random.seed(311)
+halves = []
+for i in range(190):
+    cx = random.uniform(-80, 1680)
+    cy = random.uniform(-60, 1060)
+    r = random.uniform(120, 300) * (0.55 + 0.75 * (cy / 1000))
+    tilt = random.uniform(-50, 50)
+    # A calota, com a luz vindo de cima à esquerda.
+    lit = random.uniform(0.7, 1.0)
+    body = (f'<ellipse cx="{cx:.0f}" cy="{cy:.0f}" rx="{r:.0f}" ry="{r*0.7:.0f}" '
+            f'transform="rotate({tilt:.0f} {cx:.0f} {cy:.0f})" fill="url(#hb)"/>')
+    # A borda fibrosa: o que faz casca parecer casca e não pedra.
+    fib = []
+    for k in range(int(r / 5)):
+        a = math.pi * random.uniform(0.02, 0.98)
+        x1 = cx + math.cos(a + math.pi) * r * 0.97
+        y1 = cy - math.sin(a) * r * 0.68
+        x2 = cx + math.cos(a + math.pi) * r * 1.1
+        y2 = cy - math.sin(a) * r * 0.78
+        fib.append(f'M{x1:.0f} {y1:.0f}L{x2:.0f} {y2:.0f}')
+    fibre = (f'<path d="{"".join(fib)}" transform="rotate({tilt:.0f} {cx:.0f} {cy:.0f})" '
+             f'stroke="#c39a63" stroke-opacity="{0.45*lit:.2f}" stroke-width="3" fill="none"/>')
+    # A concavidade, quando a metade caiu virada para cima.
+    cup = ''
+    if random.random() < 0.5:
+        cup = (f'<ellipse cx="{cx:.0f}" cy="{cy:.0f}" rx="{r*0.62:.0f}" ry="{r*0.42:.0f}" '
+               f'transform="rotate({tilt:.0f} {cx:.0f} {cy:.0f})" fill="#2b1a0d" fill-opacity="0.55"/>'
+               f'<path d="M{cx-r*0.62:.0f} {cy:.0f}A{r*0.62:.0f} {r*0.42:.0f} 0 0 1 {cx+r*0.62:.0f} {cy:.0f}" '
+               f'transform="rotate({tilt:.0f} {cx:.0f} {cy:.0f})" fill="none" stroke="#e8c191" '
+               f'stroke-opacity="{0.5*lit:.2f}" stroke-width="{r*0.05:.0f}"/>')
+    shade = (f'<ellipse cx="{cx+r*0.16:.0f}" cy="{cy+r*0.2:.0f}" rx="{r:.0f}" ry="{r*0.7:.0f}" '
+             f'transform="rotate({tilt:.0f} {cx:.0f} {cy:.0f})" fill="#1c1006" fill-opacity="0.3"/>')
+    halves.append((cy, shade + body + cup + fibre))
+halves.sort(key=lambda t: t[0])
+
+open(f'{OUT}/coco-macro.svg', 'w').write(f'''<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000">
+<defs>
+  <radialGradient id="hb" cx="34%" cy="26%" r="78%">
+    <stop offset="0%" stop-color="#d9b483"/><stop offset="46%" stop-color="#9d7647"/>
+    <stop offset="100%" stop-color="#4a3218"/></radialGradient>
+  <linearGradient id="hl" x1="0.1" y1="0" x2="0.8" y2="1">
+    <stop offset="0%" stop-color="#fff3d8" stop-opacity="0.32"/>
+    <stop offset="46%" stop-color="#fff3d8" stop-opacity="0.02"/>
+    <stop offset="100%" stop-color="#120a03" stop-opacity="0.55"/></linearGradient>
+</defs>
+<rect width="1600" height="1000" fill="#3a2712"/>
+{''.join(c for _, c in halves)}
+<rect width="1600" height="1000" fill="url(#hl)"/>
+</svg>''')
+print('macro de casca: coco-macro')
