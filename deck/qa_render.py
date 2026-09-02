@@ -24,13 +24,23 @@ def rels_for(z, slide):
     doc = minidom.parseString(z.read(p))
     out = {}
     for r in doc.getElementsByTagName('Relationship'):
-        out[r.getAttribute('Id')] = r.getAttribute('Target').replace('../', 'ppt/')
+        # Alguns geradores escrevem o alvo em forma absoluta ("/ppt/media/x.jpeg").
+        # Sem tirar a barra inicial, a leitura do zip erra por um caractere.
+        out[r.getAttribute('Id')] = r.getAttribute('Target').replace('../', 'ppt/').lstrip('/')
     return out
 
 def media_uri(z, path):
     data = z.read(path)
     ext = Path(path).suffix.lstrip('.').replace('jpg', 'jpeg')
     return f'data:image/{ext};base64,' + base64.b64encode(data).decode()
+
+def _int(v, default=0):
+    """Atributos de OOXML de outras ferramentas vêm vazios com frequência; um
+    int() cru em cima disso derruba o renderizador no primeiro slide."""
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        return default
 
 def _round(av):
     """O raio de canto de um roundRect vem como fração de 100000 do menor lado."""
@@ -40,18 +50,28 @@ def _round(av):
         if g.getAttribute('name') == 'adj':
             f = g.getAttribute('fmla')
             if f.startswith('val '):
-                return int(f[4:]) / 100000
+                return _int(f[4:], 16000) / 100000
     return 0.16
 
 def xfrm(node):
     off, ext = first(node, 'a', 'off'), first(node, 'a', 'ext')
     if off is None or ext is None:
         return None
-    return (int(off.getAttribute('x')) / EMU, int(off.getAttribute('y')) / EMU,
-            int(ext.getAttribute('cx')) / EMU, int(ext.getAttribute('cy')) / EMU)
+    return (_int(off.getAttribute('x')) / EMU, _int(off.getAttribute('y')) / EMU,
+            _int(ext.getAttribute('cx')) / EMU, _int(ext.getAttribute('cy')) / EMU)
+
+def slide_size(z):
+    """O tamanho real vem de presentation.xml; 10 × 5,625 é só o mais comum."""
+    try:
+        doc = minidom.parseString(z.read('ppt/presentation.xml'))
+        sz = doc.getElementsByTagNameNS(NS['p'], 'sldSz')[0]
+        return _int(sz.getAttribute('cx'), 9144000) / EMU, _int(sz.getAttribute('cy'), 5143500) / EMU
+    except Exception:
+        return 10.0, 5.625
 
 def render(pptx, out_prefix, scale=132):
     z = zipfile.ZipFile(pptx)
+    SW, SH = slide_size(z)
     slides = sorted((n for n in z.namelist()
                      if n.startswith('ppt/slides/slide') and n.endswith('.xml')),
                     key=lambda n: int(''.join(c for c in Path(n).stem if c.isdigit())))
@@ -116,7 +136,7 @@ def render(pptx, out_prefix, scale=132):
             if fill is not None and not _has_text:
                 clr = first(fill, 'a', 'srgbClr')
                 alpha = first(clr, 'a', 'alpha') if clr is not None else None
-                op = 1 - int(alpha.getAttribute('val')) / 100000 if alpha is not None else 1
+                op = 1 - _int(alpha.getAttribute('val'), 100000) / 100000 if alpha is not None else 1
                 col = clr.getAttribute('val') if clr is not None else '888888'
                 rr = first(sp_el, 'a', 'avLst')
                 geo = first(sp_el, 'a', 'prstGeom')
@@ -134,7 +154,7 @@ def render(pptx, out_prefix, scale=132):
             bold = False
             xf = first(sp_el, 'a', 'xfrm')
             if xf is not None and xf.getAttribute('rot'):
-                rot = int(xf.getAttribute('rot')) / 60000
+                rot = _int(xf.getAttribute('rot')) / 60000
             # Walk PARAGRAPH BY PARAGRAPH. Flattening every <a:r> in the body
             # into one string fuses the last word of each paragraph onto the
             # first word of the next, which invents line-break defects that are
@@ -159,9 +179,9 @@ def render(pptx, out_prefix, scale=132):
                         rpr = first(node, 'a', 'rPr')
                         if rpr is not None:
                             if rpr.getAttribute('sz'):
-                                size = int(rpr.getAttribute('sz')) / 100
+                                size = _int(rpr.getAttribute('sz'), size * 100) / 100
                             if rpr.getAttribute('spc'):
-                                spacing = int(rpr.getAttribute('spc')) / 100
+                                spacing = _int(rpr.getAttribute('spc'), spacing * 100) / 100
                             if rpr.getAttribute('b') == '1':
                                 bold = True
                             c = first(rpr, 'a', 'srgbClr')
@@ -187,7 +207,7 @@ def render(pptx, out_prefix, scale=132):
 
     html = f'''<!doctype html><meta charset="utf-8"><style>
 body{{margin:0;background:#2a2f2d;font-family:Arial,Helvetica,sans-serif}}
-.slide{{position:relative;width:10in;height:5.625in;overflow:hidden;margin:18px auto;
+.slide{{position:relative;width:{SW}in;height:{SH}in;overflow:hidden;margin:18px auto;
   background:#fff;box-shadow:0 2px 20px rgba(0,0,0,.5)}}
 .bg{{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}}
 .tx{{position:absolute;display:flex;align-items:center;line-height:1.18;overflow:visible}}

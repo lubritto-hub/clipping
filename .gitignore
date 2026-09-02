@@ -25,3 +25,13 @@ design-system/.preview/*
 !design-system/.preview/devices.mjs
 !design-system/.preview/materials-coco.py
 !design-system/.preview/icons-coco.mjs
+!design-system/.preview/art-prop.mjs
+
+# As quatro fotografias da proposta vieram do arquivo do próprio cliente e não
+# são geráveis a partir de nada aqui: sem elas o baralho não reconstrói. Os SVG
+# irmãos delas continuam de fora — esses saem de materials*.py a qualquer hora.
+# É preciso destravar img/ para poder descer nela, e voltar a travar o conteúdo:
+# o git não reinclui um arquivo cujo diretório-pai está excluído.
+!design-system/.preview/img/
+design-system/.preview/img/*
+!design-system/.preview/img/foto/
