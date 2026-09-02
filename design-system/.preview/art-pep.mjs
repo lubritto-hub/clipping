@@ -9,16 +9,29 @@
    verde de palmeira, creme de coir. O azul-menta pertence à identidade da
    venture e não aparece neste baralho.
 
-   A chapa que mais trabalha é a 03: a secção transversal do coco NÃO é
-   decoração — ela é o argumento. O fruto é majoritariamente casca, e o
-   desenho diz isso antes de qualquer número dizer.
+   ---------------------------------------------------------------------------
+   A CAMADA DE ENGENHARIA
+
+   O que faz sete quadros lerem como UM SISTEMA não é o fundo — fundos variam
+   por assunto — é a MOLDURA. Todos os sete carregam exatamente a mesma:
+   grade usinada muito fraca, quadro de prancha com marcas de registro nos
+   cantos, escala cotada no pé e uma régua de aço escovado com o código da
+   chapa. É a linguagem de um desenho técnico, e é a repetição idêntica que
+   constrói a identidade.
+
+   Prata é ESTRUTURA, nunca preenchimento: fios, marcas, réguas. Não existe
+   nenhuma área prateada neste baralho.
+
+   E o pátio de casca está no fundo de três quadros, porque ele é a premissa:
+   a biomassa já existe, nesta quantidade, hoje.
    =========================================================================== */
 
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createRequire } from 'node:module';
-import { W, H, CSS, atmos, pores, thermal, membrane, aperture } from './devices.mjs';
+import { W, H, CSS, atmos, pores, thermal, membrane, aperture,
+         regMarks, techGrid, metalRule } from './devices.mjs';
 
 const P = createRequire(import.meta.url)('../../deck/pepsico.js');
 
@@ -37,6 +50,8 @@ const C = {
   ember: a => `rgb(226 172 110 / ${a}%)`,   // o único quente — a pirólise
   cream: a => `rgb(253 249 240 / ${a}%)`,
 };
+
+const STEEL = a => `rgb(126 140 144 / ${a}%)`;
 
 /* Sobre o chão creme o grão precisa ser mais fino que sobre o perolado, ou
    lê como sujeira num material que é justamente sobre limpeza. */
@@ -60,20 +75,65 @@ const arc = (st, a = 200, blur = 1.2, op = 0.6) =>
 
 const CREAM = 'rgb(90 68 40';   // tinta dos poros sobre chão claro
 
+/* --- O PÁTIO -------------------------------------------------------------
+   A fotografia de referência, redesenhada. Entra por baixo de tudo, esfumada
+   no topo, porque acima dela mora o texto. Nunca aparece inteira: é uma
+   premissa, não uma paisagem. */
+const yard = (op = 0.34, h = 38) =>
+  `<div class="crop fade-t" style="left:0;bottom:0;width:100%;height:${h}%;opacity:${op}">
+     <img src="${img('coco-yard')}" style="object-position:50% 100%"></div>`;
+
+/* O véu. O pátio é a premissa, não a paisagem: onde mora o texto ele tem de
+   recuar. A luz do baralho vem da esquerda, então o véu vem com ela — é uma
+   decisão de iluminação, não um remendo sobre a fotografia. */
+const veil = (to = 66) => `<div class="L" style="background:linear-gradient(96deg,
+  rgb(253 249 240 / 92%) 0%, rgb(253 249 240 / 74%) ${to * 0.45}%,
+  rgb(253 249 240 / 20%) ${to}%, transparent 100%)"></div>`;
+
+/* --- A MOLDURA TÉCNICA ---------------------------------------------------
+   Idêntica nos sete quadros. `code` é a cota da chapa; `dark` inverte o fio
+   para o único quadro profundo. */
+function frame(code, dark = false) {
+  const line = dark ? 'rgb(186 200 202 / 34%)' : STEEL(38);
+  const tick = dark ? 'rgb(186 200 202 / 26%)' : STEEL(30);
+  const I = 34;                                        // recuo do quadro
+  const scale = [];                                    // escala cotada no pé
+  for (let x = I; x <= W - I; x += 62)
+    scale.push(`<path d="M${x} ${H - I} v${(x - I) % 310 === 0 ? -13 : -6}"/>`);
+  return `
+    ${techGrid(125, dark ? 'rgb(186 200 202 / 100%)' : 'rgb(126 140 144 / 100%)', dark ? 0.05 : 0.06)}
+    <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
+      stroke="${line}" stroke-width="1">
+      <rect x="${I}" y="${I}" width="${W - I * 2}" height="${H - I * 2}"/>
+    </svg>
+    <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
+      stroke="${tick}" stroke-width="1">${scale.join('')}</svg>
+    ${regMarks(dark ? 'rgb(186 200 202 / 52%)' : STEEL(58), 34, 18)}
+    ${metalRule(`right:34px;top:44px;width:190px;height:6px`, './img/metal-plate.svg', dark ? 0.5 : 0.78)}
+    <div style="position:absolute;right:238px;top:41px;
+      font:400 12px/1 Helvetica,Arial,sans-serif;letter-spacing:.24em;
+      color:${dark ? 'rgb(186 200 202 / 62%)' : STEEL(72)}">${code}</div>`;
+}
+
 const PLATES = {
 
-/* 01 CAPA — o fruto ocupa a direita, cortado pelo quadro; o palmeiral fica
-   longe, na névoa quente. Zona de tipo: esquerda 54%, abaixo de 40%. */
+/* 01 CAPA — o pátio é o fundo (a premissa: a casca já existe, hoje), o fruto
+   ocupa a direita, cortado pelo quadro. Zona de tipo: esquerda 54%. */
 'pep-01': () => `
   ${atmos([[18,18,54,50,C.coir(72),1],[80,34,74,68,C.husk(44),1],
            [52,90,62,50,C.palm(52),1],[96,84,44,42,C.ember(30),1],
            [6,72,48,46,C.sage(46),1]])}
-  <div class="crop crop--far fade-t" style="left:0;bottom:0;width:100%;height:46%;opacity:.5">
-    <img src="${img('coco-grove')}"></div>
-  <div class="obj" style="right:-18%;top:-24%;width:64%;height:118%;opacity:.95">
+  ${yard(0.44, 38)}${veil(84)}
+  <div class="obj" style="left:62%;top:-34%;width:58%;height:126%;opacity:.96">
     <img src="${img('coco-section')}" style="object-fit:contain"></div>
-  ${arc('right:-32%;top:-42%;width:98%;height:170%', 150, 1.2, 0.7)}
-  ${bloom(0.55)}${grain()}`,
+  ${arc('left:60%;top:-38%;width:62%;height:134%', 138, 1.1, 0.62)}
+  <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
+    stroke="rgb(126 140 144 / 62%)" stroke-width="1">
+    <path d="M1352 372 h-230 M1352 372 v-9"/>
+    <circle cx="1352" cy="372" r="3.5"/>
+  </svg>
+  ${bloom(0.55)}${grain()}
+  ${frame('PET · 01 — BIOMASSA / PÁTIO')}`,
 
 /* 02 PROCESSO — o balanço de massa desenhado em proporção: 1 t de casca seca
    entra, ~0,3 t de biochar sai. A linha térmica sobe até a faixa de pirólise
@@ -94,6 +154,10 @@ const PLATES = {
       <path d="M110 ${cy - H0 / 2} H780 M110 ${cy + H0 / 2} H780"/>
       <path d="M1180 ${cy - hChar / 2} H1880 M1180 ${cy + hChar / 2} H1880"/>
     </g>
+    <g stroke="rgb(126 140 144 / 48%)" stroke-width="1" fill="none">
+      <path d="M110 ${cy - H0 / 2 - 40} v-14 M780 ${cy - H0 / 2 - 40} v-14 M110 ${cy - H0 / 2 - 47} H780"/>
+      <path d="M1180 ${cy + hChar / 2 + 40} v14 M1500 ${cy + hChar / 2 + 40} v14 M1180 ${cy + hChar / 2 + 47} H1500"/>
+    </g>
   </svg>
   <div style="position:absolute;left:59%;top:${((cy - hChar / 2 - 3) / 1125 * 100).toFixed(1)}%;
     width:16%;height:${((hChar + 6) / 1125 * 100).toFixed(1)}%;overflow:hidden;opacity:.9">
@@ -108,8 +172,10 @@ const PLATES = {
     <path d="M160 0 V24 M160 626 V650"/>
     <path d="M248 112 C296 112 296 552 248 552" stroke-dasharray="4 6"/>
   </svg>
+  ${metalRule('left:39%;top:81.5%;width:16%;height:5px', './img/metal-plate.svg', 0.8)}
   ${thermal('p2', 'M110 880 H700 C770 880 770 300 840 300 H1080 C1150 300 1150 800 1220 800 H1900', 2, 0.95, true, 50)}
-  ${bloom(0.45)}${grain()}`;
+  ${bloom(0.45)}${grain()}
+  ${frame('PET · 02 — BALANÇO DE MASSA 1 t → 0,3 t')}`;
 },
 
 /* 03 POR QUE O COCO — a secção transversal como protagonista, com a fração de
@@ -123,31 +189,45 @@ const PLATES = {
   <div class="crop crop--soft fade-r" style="left:0;bottom:-8%;width:26%;height:44%;opacity:.5">
     <img src="${img('coco-husk')}"></div>
   ${arc('right:-4%;top:0%;width:56%;height:100%', 118, 1, 0.65)}
-  ${bloom(0.5)}${grain()}`,
+  <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
+    stroke="rgb(126 140 144 / 52%)" stroke-width="1">
+    <path d="M1250 200 h70 M1250 200 v-8 M1320 200 v-8"/>
+    <path d="M1560 560 h150"/><circle cx="1560" cy="560" r="3"/>
+  </svg>
+  ${bloom(0.5)}${grain()}
+  ${frame('PET · 03 — SECÇÃO / CARACTERIZAÇÃO')}`,
 
 /* 04 OPERAÇÃO — duas massas na mesma escala: a pilha úmida e o char seco. A
-   diferença de área É a redução de 70%, e a de matéria é o campo de poros. */
+   diferença de área É a redução de 70%, e a de matéria é o campo de poros.
+   O pátio volta ao fundo, do lado da casca: é literalmente a pilha de que o
+   slide fala. */
 'pep-04': () => {
   const yieldR = P.PROCESSO.rendimentoKgPorT / 1000;
-  const A = 300, B = A * Math.sqrt(yieldR);              // área proporcional
+  const A = 240, B = A * Math.sqrt(yieldR), base = 652;  // área proporcional
   return `
   ${atmos([[14,18,50,46,C.cream(84),1],[52,74,60,50,C.coir(52),1],
            [88,20,46,44,C.palm(42),1],[28,96,54,40,C.sage(48),1],
            [96,86,40,38,C.husk(32),1]])}
+  <div class="crop fade-bl" style="left:0;bottom:0;width:62%;height:46%;opacity:.4">
+    <img src="${img('coco-yard')}" style="object-position:18% 100%"></div>
+  ${veil(52)}
   <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 2000 1125">
-    <rect x="180" y="${620 - A}" width="${A}" height="${A}" fill="rgb(198 166 118 / 46%)"/>
-    <rect x="180" y="${620 - A}" width="${A}" height="${A}" fill="none"
+    <rect x="180" y="${base - A}" width="${A}" height="${A}" fill="rgb(198 166 118 / 46%)"/>
+    <rect x="180" y="${base - A}" width="${A}" height="${A}" fill="none"
       stroke="rgb(122 96 62 / 50%)" stroke-width="1.2"/>
-    <rect x="1120" y="${620 - B}" width="${B}" height="${B}" fill="rgb(61 42 28 / 76%)"/>
-    <path d="M620 620 H1080" stroke="rgb(122 96 62 / 40%)" stroke-width="1" stroke-dasharray="4 6" fill="none"/>
+    <rect x="1120" y="${base - B}" width="${B}" height="${B}" fill="rgb(61 42 28 / 76%)"/>
+    <path d="M470 ${base} H1100" stroke="rgb(122 96 62 / 40%)" stroke-width="1" stroke-dasharray="4 6" fill="none"/>
+    <g stroke="rgb(126 140 144 / 50%)" stroke-width="1" fill="none">
+      <path d="M180 ${base - A - 22} v-11 M${180 + A} ${base - A - 22} v-11 M180 ${base - A - 28} H${180 + A}"/>
+      <path d="M1120 ${base - B - 22} v-11 M${1120 + B} ${base - B - 22} v-11 M1120 ${base - B - 28} H${1120 + B}"/>
+    </g>
   </svg>
-  <div style="position:absolute;left:56%;top:${((620 - B) / 1125 * 100).toFixed(1)}%;
+  <div style="position:absolute;left:56%;top:${((base - B) / 1125 * 100).toFixed(1)}%;
     width:${(B / 20).toFixed(1)}%;height:${(B / 11.25).toFixed(1)}%;overflow:hidden;opacity:.85">
     ${pores(74, 170, 170, 1, CREAM, 13)}
   </div>
-  <div class="crop crop--far fade-l" style="right:-4%;top:4%;width:30%;height:52%;opacity:.42">
-    <img src="${img('coco-shell')}"></div>
-  ${bloom(0.42)}${grain()}`;
+  ${bloom(0.42)}${grain()}
+  ${frame('PET · 04 — ÁREA = MASSA · ESCALA COMUM')}`;
 },
 
 /* 05 ESTRATÉGIA — o palmeiral, claro e aberto. As metas da PepsiCo vivem numa
@@ -158,13 +238,14 @@ const PLATES = {
            [82,6,38,34,C.ember(24),1]])}
   <div class="crop crop--far fade-t" style="left:0;bottom:0;width:100%;height:52%;opacity:.55">
     <img src="${img('coco-grove')}"></div>
+  ${metalRule('left:6%;top:58.6%;width:88%;height:4px', './img/metal-plate.svg', 0.85)}
   <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 2000 1125">
-    <path d="M120 660 H1880" stroke="rgb(77 102 64 / 45%)" stroke-width="1.3" fill="none"/>
     ${[420, 900, 1380].map(x => `<path d="M${x} 620 V700" stroke="rgb(77 102 64 / 40%)" stroke-width="1" fill="none"/>`).join('')}
   </svg>
   ${[420, 900, 1380, 1860].map((x, i) => aperture(`${(x / 20).toFixed(1)}%`, '58.7%', 13 + i * 3, 'light')).join('')}
   ${arc('left:-30%;top:-30%;width:74%;height:146%', 340, 1.4, 0.45)}
-  ${bloom(0.5)}${grain()}`,
+  ${bloom(0.5)}${grain()}
+  ${frame('PET · 05 — METAS PÚBLICAS / ALINHAMENTO')}`,
 
 /* 06 VALOR — três estratos a partir de uma biomassa. Cada um com a sua
    temperatura: casca, carbono, verde. */
@@ -181,8 +262,12 @@ const PLATES = {
   </div>
   <div class="stratum" style="left:48%;top:65%;width:48%;height:22%;
     background:linear-gradient(160deg, rgb(150 178 132 / 50%), rgb(150 178 132 / 10%))"></div>
+  ${metalRule('left:44%;top:14.4%;width:52%;height:3px', './img/metal-plate.svg', 0.7)}
+  ${metalRule('left:39%;top:39.4%;width:54%;height:3px', './img/metal-plate.svg', 0.7)}
+  ${metalRule('left:48%;top:64.4%;width:48%;height:3px', './img/metal-plate.svg', 0.7)}
   ${arc('left:-32%;top:-28%;width:74%;height:148%', 350, 1.5, 0.42)}
-  ${bloom(0.44)}${grain()}`,
+  ${bloom(0.44)}${grain()}
+  ${frame('PET · 06 — TRÊS ROTAS A PARTIR DE UMA BIOMASSA')}`,
 
 /* 07 O QUE PRECISA SER VERDADE — o único quadro profundo, e em VERDE de mata,
    nunca quase-preto. Três membranas atravessadas, com a densidade caindo:
@@ -193,20 +278,24 @@ const PLATES = {
     const left = 6 + i * 30;
     return membrane(`left:${left}%;top:38%;width:27%;height:58%`, 'left', 'deep')
       + `<div style="position:absolute;left:${left}%;top:38%;width:27%;height:58%;
-          overflow:hidden;opacity:.85">${pores(300 + i * 9, 540, 660, d, 'rgb(214 232 198', 20, 'lit')}</div>`;
+          overflow:hidden;opacity:.85">${pores(300 + i * 9, 540, 660, d, 'rgb(214 232 198', 20, 'lit')}</div>`
+      + metalRule(`left:${left}%;top:37.6%;width:27%;height:4px`, './img/metal-plate.svg', 0.55);
   }).join('');
   return `
   <div class="L" style="background:
     radial-gradient(62% 52% at 20% 12%, rgb(150 178 132 / 26%) 0%, transparent 68%),
     radial-gradient(56% 46% at 86% 78%, rgb(226 172 110 / 14%) 0%, transparent 72%),
     linear-gradient(168deg, #2c3a24 0%, #26331f 48%, #1f2b1c 100%)"></div>
+  <div class="crop fade-t" style="left:0;bottom:0;width:100%;height:44%;opacity:.16;
+    mix-blend-mode:screen"><img src="${img('coco-yard')}" style="object-position:50% 100%"></div>
   ${cols}
-  ${thermal('p7', 'M40 505 C420 505 520 502 900 502 C1300 502 1500 500 1960 498', 1.8, 1, true, 60)}
-  ${dens.map((_, i) => aperture(`${(6 + i * 30 + 13.5).toFixed(1)}%`, '45%', 15 + i * 5, 'deep')).join('')}
+  ${thermal('p7', 'M40 463 C420 463 520 460 900 460 C1300 460 1500 458 1960 456', 1.8, 1, true, 60)}
+  ${dens.map((_, i) => aperture(`${(6 + i * 30 + 13.5).toFixed(1)}%`, '41%', 15 + i * 5, 'deep')).join('')}
   <div class="crop fade-l" style="right:-8%;top:-14%;width:38%;height:60%;opacity:.22;
     mix-blend-mode:screen"><img src="${img('coco-char')}" style="filter:blur(2px)"></div>
   <div class="L grain" style="opacity:.34;mix-blend-mode:screen"></div>
-  <div class="L scan" style="opacity:.24"></div>`;
+  <div class="L scan" style="opacity:.24"></div>
+  ${frame('PET · 07 — TRÊS CONDIÇÕES / GATES', true)}`;
 },
 };
 
@@ -223,7 +312,7 @@ const p = await b.newPage({ viewport: { width: W, height: H }, deviceScaleFactor
 const errs = [];
 p.on('pageerror', e => errs.push(e.message));
 await p.goto('file://' + path.resolve('.preview/art-pep.html'));
-await p.waitForTimeout(1400);
+await p.waitForTimeout(1800);
 for (const id of Object.keys(PLATES)) {
   await p.locator('#' + id).screenshot({ path: path.join(OUT, id + '.jpg'), type: 'jpeg', quality: 94 });
 }

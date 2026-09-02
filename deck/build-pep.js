@@ -20,6 +20,26 @@
 
    Registro: coco. Creme, casca, endocarpo, verde de palmeira. O azul-menta
    pertence à identidade da venture e não aparece aqui.
+
+   ---------------------------------------------------------------------------
+   A CAMADA DE ENGENHARIA
+
+   Cada nível 2 é indexado por ÍCONES, e os ícones obedecem a uma regra: nada
+   de folha, planeta ou símbolo de reciclagem. Cada um é uma coisa específica
+   deste projeto — um endocarpo, um leito fluidizado de três zonas, uma muda de
+   caju do ensaio da Embrapa. Um ícone que serviria para qualquer empresa de
+   sustentabilidade não serve para esta.
+
+   Todos vivem na MESMA caixa de 0,28", sempre alinhados pela esquerda com o
+   texto que indexam, e mudam de cor conforme o que descrevem:
+     palm   matéria viva e processo biológico
+     husk   a casca e o que ainda é resíduo
+     steel  equipamento — a prata é a cor da máquina
+     dark   o produto e o registro
+     light  o único quadro profundo
+
+   E prata é ESTRUTURA, nunca preenchimento: os fios de separação são de aço,
+   as marcas de cota estão nas chapas, e não existe nenhuma área prateada.
    =========================================================================== */
 
 const pptxgen = require('pptxgenjs');
@@ -37,6 +57,7 @@ const PALM_L = '6D8F60';
 const SAGE   = '93B183';
 const EMBER  = 'B87A3C';   // o único quente: a pirólise
 const COIR   = 'C9B48C';
+const STEEL  = '7E8C90';   // aço escovado — só em estrutura, nunca em área
 const LEAF   = 'D9E7C6';   // texto sobre o quadro profundo
 const LEAF_D = 'A9C48F';
 
@@ -75,6 +96,17 @@ const body = (s, t, x, y, w, h, color = BODY, size = 10) =>
   s.addText(t, { x, y, w, h, isTextBox: true, margin: 0, fontFace: 'Arial',
     fontSize: size, color, lineSpacing: size * 1.55, valign: 'top' });
 
+/** Um ícone. Caixa fixa: o tamanho é o mesmo em todo o baralho, e é isso que
+    faz vinte ícones lerem como um sistema em vez de vinte desenhos. */
+const ICO = 0.28;
+const icon = (s, name, x, y, tone = 'palm', size = ICO) =>
+  s.addImage({ path: `${A}ico/${name}-${tone}.png`, x, y, w: size, h: size });
+
+/** O fio de aço: a régua estrutural. Mais claro que o fio de casca, e usado
+    onde a separação é de SISTEMA (entre etapas, entre colunas), não de assunto. */
+const steel = (s, x, y, w, transparency = 46) =>
+  s.addShape(pres.ShapeType.rect, { x, y, w, h: 0.01, fill: { color: STEEL, transparency } });
+
 const plate = n => ({ path: A + `pep-${n}.jpg` });
 
 /** NÍVEL 1 — o cabeçalho, idêntico em todos os quadros. */
@@ -105,8 +137,15 @@ function evidence(s, lines, onDark = false) {
   body(s, 'Por que a pirólise faz sentido para a biomassa de coco — e o que ela pode '
     + 'representar para Petrolina.', 0.5, 3.86, 4.4, 0.7, BODY, 11);
 
-  hair(s, 0.5, 4.68, 4.2, PALM, 50);
-  micro(s, 'biomassa   →   biochar   →   valor', 0.5, 4.80, 4.6, PALM);
+  // A cadeia inteira em três ícones: o que entra, o que sai, o que vale.
+  steel(s, 0.5, 4.62, 4.4);
+  [['coco', 'biomassa', 'husk', HUSK], ['char', 'biochar', 'dark', TEXT],
+   ['registro', 'valor', 'palm', PALM]].forEach(([ic, label, tone, colour], i) => {
+    const x = 0.5 + i * 1.52;
+    icon(s, ic, x, 4.76, tone);
+    micro(s, label, x + 0.36, 4.83, 1.1, colour);
+    if (i < 2) micro(s, '→', x + 1.26, 4.83, 0.2, STEEL, 'center', 8);
+  });
   evidence(s, ['este documento não é uma proposta comercial — é o porquê técnico e estratégico']);
   s.addNotes('Tese em uma frase: a casca de coco é uma biomassa naturalmente boa para '
     + 'pirólise, e o biochar conversa com o que a PepsiCo já decidiu. Não pedir nada — '
@@ -133,15 +172,25 @@ function evidence(s, lines, onDark = false) {
   big(s, '1 t', 0.52, 3.30, 1.6, 34, HUSK_L);
 
   code(s, `${P.PROCESSO.tempMin}–${P.PROCESSO.tempMax} °C`, 2.10, 1.82, 1.7, EMBER, 'right', 11);
-  micro(s, 'pirólise · pouco oxigênio', 1.70, 2.06, 2.1, PALM, 'right', 6.2);
-  micro(s, 'gases recirculam como calor', 3.60, 4.66, 2.4, PALM_L, 'center', 6.2);
-
+  micro(s, 'pouco oxigênio', 2.10, 2.06, 1.7, PALM, 'right', 6.2);
   micro(s, 'biochar', 5.95, 2.30, 2.0, SHELL);
   big(s, `~${P.PROCESSO.rendimentoKgPorT} kg`, 5.92, 3.06, 2.4, 34, TEXT);
   micro(s, `−${P.PROCESSO.perdaMassa}% de massa`, 5.96, 3.80, 2.4, HUSK);
 
-  micro(s, 'tecnologia comercial · operação contínua', 6.0, 4.46, 3.5, PALM, 'right', 6.2);
-  micro(s, `certificável · ${P.PROCESSO.certificacao}`, 6.0, 4.66, 3.5, TEXT, 'right', 7);
+  // As cinco etapas, indexadas. É a única fila de ícones do baralho em que a
+  // ordem importa, então ela é literalmente uma fila, sobre um fio de aço.
+  steel(s, 0.5, 4.18, 9.0);
+  const passos = [
+    ['pilha', 'husk',  HUSK],   ['calor', 'steel', STEEL], ['reator', 'steel', STEEL],
+    ['gases', 'steel', STEEL],  ['char',  'dark',  TEXT],
+  ];
+  P.ETAPAS.forEach(([nome, nota], i) => {
+    const x = 0.5 + i * 1.80;
+    const [ic, tone, colour] = passos[i];
+    icon(s, ic, x, 4.28, tone);
+    micro(s, nome, x + 0.36, 4.35, 1.4, colour);
+    body(s, nota, x, 4.64, 1.68, 0.34, BODY, 7.5);
+  });
 
   evidence(s, [
     'benchmark técnico para casca de coco em ensaios publicados — a validar com a biomassa da unidade',
@@ -170,17 +219,18 @@ function evidence(s, lines, onDark = false) {
   // NÍVEL 2 — as três propriedades, em escada, com a leitura de cada uma.
   const props = [
     [2.66, `${P.COCO.ligninaMin}–${P.COCO.ligninaMax}%`, 'lignina',
-     'Mais lignina, mais carbono fixo — e um char mais estável.', TEXT, 30],
+     'Mais lignina, mais carbono fixo — e um char mais estável.', TEXT, 28, 'endocarpo', 'husk'],
     [3.52, `< ${P.COCO.cinzasMax}%`, 'cinzas',
-     'Pouca cinza, biochar limpo e com alto teor de carbono.', PALM, 26],
+     'Pouca cinza, biochar limpo e com alto teor de carbono.', PALM, 26, 'char', 'dark'],
     [4.38, `${P.COCO.fracaoCascaMin}–${P.COCO.fracaoCascaMax}%`, 'da massa do fruto',
-     'O fruto é majoritariamente casca: biomassa abundante por natureza.', HUSK_L, 26],
+     'O fruto é majoritariamente casca: biomassa abundante por natureza.', HUSK_L, 26, 'secao', 'husk'],
   ];
-  props.forEach(([y, v, label, note, color, size]) => {
-    hair(s, 0.5, y, 4.4, HUSK, 62);
-    big(s, v, 0.5, y + 0.10, 1.5, size, color);
-    micro(s, label, 2.1, y + 0.16, 2.3, PALM);
-    body(s, note, 2.1, y + 0.36, 2.8, 0.36, BODY, 8.5);
+  props.forEach(([y, v, label, note, color, size, ic, tone]) => {
+    steel(s, 0.5, y, 4.4);
+    icon(s, ic, 0.5, y + 0.20, tone);
+    big(s, v, 0.92, y + 0.10, 1.6, size, color);
+    micro(s, label, 2.58, y + 0.16, 2.3, PALM);
+    body(s, note, 2.58, y + 0.36, 2.32, 0.42, BODY, 8.5);
   });
 
   evidence(s, [
@@ -206,19 +256,23 @@ function evidence(s, lines, onDark = false) {
   head(s, 'Menos pilha.\nMais estabilidade.', 0.5, 0.84, 4.6, 34);
 
   // NÍVEL 2 — o antes e o depois, cada um com a sua natureza.
-  micro(s, 'casca úmida', 0.9, 3.24, 2.2, HUSK);
-  code(s, `${P.COCO.umidadeMin}–${P.COCO.umidadeMax}% de umidade`, 0.9, 3.46, 2.4, TEXT, 'left', 9.5);
-  micro(s, 'perecível', 0.9, 3.72, 2.2, EMBER);
-  body(s, 'Em pilha: chorume, odor e metano.', 0.9, 3.90, 2.4, 0.4, BODY, 9);
+  icon(s, 'pilha', 0.9, 3.36, 'husk');
+  steel(s, 0.9, 3.66, 2.4);
+  micro(s, 'casca úmida', 0.9, 3.72, 2.2, HUSK);
+  code(s, `${P.COCO.umidadeMin}–${P.COCO.umidadeMax}% de umidade`, 0.9, 3.94, 2.4, TEXT, 'left', 9.5);
+  micro(s, 'perecível', 0.9, 4.20, 2.2, EMBER);
+  body(s, 'Em pilha: chorume, odor e metano.', 0.9, 4.38, 2.4, 0.4, BODY, 9);
 
-  micro(s, 'biochar', 5.6, 3.24, 2.2, SHELL);
-  code(s, 'seco · inerte', 5.6, 3.46, 2.4, TEXT, 'left', 9.5);
-  micro(s, 'séculos', 5.6, 3.72, 2.2, PALM);
-  body(s, 'Carbono estável, sem decomposição.', 5.6, 3.90, 2.4, 0.4, BODY, 9);
+  icon(s, 'char', 5.6, 3.36, 'dark');
+  steel(s, 5.6, 3.66, 2.4);
+  micro(s, 'biochar', 5.6, 3.72, 2.2, SHELL);
+  code(s, 'seco · inerte', 5.6, 3.94, 2.4, TEXT, 'left', 9.5);
+  micro(s, 'séculos', 5.6, 4.20, 2.2, PALM);
+  body(s, 'Carbono estável, sem decomposição.', 5.6, 4.38, 2.4, 0.4, BODY, 9);
 
   // A relação entre as duas áreas, dita uma vez.
-  micro(s, `−${P.PROCESSO.perdaMassa}% de massa`, 2.55, 2.80, 2.9, HUSK, 'center');
-  micro(s, 'a área de cada quadrado é a massa', 2.55, 2.98, 2.9, HUSK, 'center', 6.2);
+  micro(s, `−${P.PROCESSO.perdaMassa}% de massa`, 2.55, 2.62, 2.9, HUSK, 'center');
+  micro(s, 'a área de cada quadrado é a massa', 2.55, 2.80, 2.9, HUSK, 'center', 6.2);
 
   evidence(s, [
     'umidade e rendimento: literatura técnica para casca de coco',
@@ -240,34 +294,37 @@ function evidence(s, lines, onDark = false) {
   s.background = plate('05');
   header(s, '05 · STRATEGY', 'PEP+ · Climate Transition Plan 2025');
 
-  head(s, 'Conversa com o que\na PepsiCo já decidiu.', 0.5, 0.84, 5.4, 34);
+  head(s, 'Conversa com o que\na PepsiCo já decidiu.', 0.5, 0.80, 5.4, 34);
   body(s, 'Remoções de carbono geradas dentro da própria cadeia agrícola — o tipo de '
-    + 'instrumento que o plano já admite.', 0.5, 1.92, 4.6, 0.6, BODY, 10);
+    + 'instrumento que o plano já admite.', 0.5, 1.86, 4.4, 0.46, BODY, 10);
 
   // NÍVEL 2 — as metas na régua, em ordem de proximidade com o coco.
   const metas = [
     [2.1, `−${P.PEPSICO.flagReducao}%`, 'escopo 3 agrícola',
-     'FLAG · até 2030', TEXT, 26],
+     'FLAG · até 2030', TEXT, 26, 'solo', 'palm'],
     [4.5, `${P.PEPSICO.acresRegenerativos} mi`, 'acres regenerativos',
-     `até 2030 · ${num(P.PEPSICO.acresEntregues, 1)} mi em 2024`, PALM, 24],
-    [6.8, `−${P.PEPSICO.escopo3EI}%`, 'escopo 3 · energia', 'até 2030 · base 2022', HUSK_L, 22],
-    [9.5, `${P.PEPSICO.netZero}`, 'net-zero · SBTi', 'longo prazo', HUSK, 20],
+     `até 2030 · ${num(P.PEPSICO.acresEntregues, 1)} mi em 2024`, PALM, 24, 'palmeira', 'palm'],
+    [6.8, `−${P.PEPSICO.escopo3EI}%`, 'escopo 3 · energia', 'até 2030 · base 2022',
+     HUSK_L, 22, 'unidade', 'steel'],
+    [9.5, `${P.PEPSICO.netZero}`, 'net-zero · SBTi', 'longo prazo', HUSK, 20, 'removal', 'dark'],
   ];
-  metas.forEach(([x, v, label, note, color, size], i) => {
+  metas.forEach(([x, v, label, note, color, size, ic, tone], i) => {
     const align = i === 3 ? 'right' : 'center';
     const w = i === 3 ? 1.7 : 2.0;
     const xx = align === 'right' ? x - w : x - w / 2;
+    icon(s, ic, xx + w / 2 - ICO / 2, 2.42, tone);
     big(s, v, xx, 3.14 - bigH(size), w, size, color, align);
     micro(s, label, xx, 3.40, w, PALM, align, 6.2);
     micro(s, note, xx, 3.56, w, HUSK, align, 6.0);
   });
 
   // A evidência de campo — a única do baralho, e é daqui.
-  hair(s, 0.5, 4.06, 9.0, PALM, 50);
-  big(s, `+${P.EMBRAPA.delta} p.p.`, 0.5, 4.18, 2.6, 30, PALM);
+  steel(s, 0.5, 4.06, 9.0);
+  icon(s, 'muda', 0.5, 4.30, 'palm');
+  big(s, `+${P.EMBRAPA.delta} p.p.`, 0.92, 4.18, 2.4, 30, PALM);
   body(s, `sobrevivência de ${P.EMBRAPA.cultura} com biochar no Semiárido — `
     + `${P.EMBRAPA.sobrevivenciaSem}% → ${P.EMBRAPA.sobrevivenciaCom}%`,
-    3.2, 4.26, 3.6, 0.5, TEXT, 9.5);
+    3.4, 4.26, 3.4, 0.5, TEXT, 9.5);
   micro(s, `ensaio ${P.EMBRAPA.local} · ${P.EMBRAPA.ano}`, 7.0, 4.28, 2.5, HUSK, 'right', 6.2);
 
   evidence(s, [
@@ -294,18 +351,21 @@ function evidence(s, lines, onDark = false) {
   big(s, `${num(P.MERCADO.exomadMt, 2)} Mt`, 0.5, 2.56, 3.2, 38, TEXT);
   body(s, `de remoções de biochar contratadas pela Microsoft em ${P.MERCADO.exomadAnos} anos — `
     + 'o maior acordo do mundo', 0.5, 3.34, 3.2, 0.7, BODY, 9.5);
+  icon(s, 'registro', 0.5, 4.00, 'husk');
   micro(s, `exomad green · ${P.MERCADO.exomadData} · ${P.MERCADO.registro}`,
-    0.5, 4.06, 3.2, HUSK, 'left', 6.2);
+    0.88, 4.07, 2.9, HUSK, 'left', 6.2);
 
   // NÍVEL 2 — os três caminhos, um por estrato.
-  const rows = [[4.5, 0.94], [4.0, 2.35], [4.9, 3.76]];
+  const rows = [[4.5, 0.94, 'pilha', 'husk'], [4.0, 2.35, 'bloco', 'dark'],
+                [4.9, 3.76, 'removal', 'palm']];
   P.CAMINHOS.forEach(([idx, kind, name, note], i) => {
-    const [x, y] = rows[i];
-    code(s, idx, x + 0.16, y, 0.4, PALM, 'left', 8.5);
-    micro(s, kind, x + 0.62, y + 0.01, 1.6, PALM);
-    s.addText(name, { x: x + 0.16, y: y + 0.22, w: 3.0, h: 0.26, isTextBox: true, margin: 0,
+    const [x, y, ic, tone] = rows[i];
+    icon(s, ic, x + 0.16, y - 0.04, tone);
+    code(s, idx, x + 0.54, y, 0.4, PALM, 'left', 8.5);
+    micro(s, kind, x + 0.98, y + 0.01, 1.6, PALM);
+    s.addText(name, { x: x + 0.16, y: y + 0.30, w: 3.0, h: 0.26, isTextBox: true, margin: 0,
       fontFace: 'Arial', fontSize: 12, color: TEXT, valign: 'top' });
-    body(s, note, x + 0.16, y + 0.50, 4.4, 0.42, BODY, 8.5);
+    body(s, note, x + 0.16, y + 0.58, 4.4, 0.42, BODY, 8.5);
   });
 
   evidence(s, [
@@ -328,25 +388,27 @@ function evidence(s, lines, onDark = false) {
   s.background = plate('07');
   header(s, '07 · WHAT MUST BE TRUE', P.LOCAL.coords, P.LOCAL.coords, true);
 
-  s.addText('O que precisa\nser verdade.', { x: 0.5, y: 0.84, w: 5.0, h: headH(38, 2),
+  s.addText('O que precisa\nser verdade.', { x: 0.5, y: 0.76, w: 5.0, h: headH(38, 2),
     isTextBox: true, margin: 0, fontFace: 'Arial', fontSize: 38, color: LEAF,
     lineSpacing: 40, charSpacing: -1, valign: 'top' });
-  micro(s, 'três condições — nenhuma delas é um pedido', 0.5, 2.16, 5.0, LEAF_D);
+  micro(s, 'três condições — nenhuma delas é um pedido', 0.5, 1.92, 5.0, LEAF_D);
 
+  const gateIcons = ['pilha', 'reator', 'solo'];
   P.CONDICOES.forEach(([idx, name, what, unlocks], i) => {
     const x = 0.6 + i * 3.0, w = 2.7;
-    code(s, idx, x + 0.14, 2.42, 0.5, LEAF_D, 'left', 10);
-    s.addText(name, { x: x + 0.14, y: 2.64, w: w - 0.28, h: 0.28, isTextBox: true,
+    icon(s, gateIcons[i], x + 0.14, 2.46, 'light');
+    code(s, idx, x + 0.54, 2.52, 0.5, LEAF_D, 'left', 10);
+    s.addText(name, { x: x + 0.14, y: 2.72, w: w - 0.28, h: 0.28, isTextBox: true,
       margin: 0, fontFace: 'Arial', fontSize: 13, color: LEAF, valign: 'top' });
-    body(s, what, x + 0.14, 2.98, w - 0.28, 0.6, LEAF_D, 9);
+    body(s, what, x + 0.14, 3.04, w - 0.28, 0.56, LEAF_D, 9);
 
-    hair(s, x + 0.14, 3.72, w - 0.28, LEAF_D, 60);
-    micro(s, 'se for verdade', x + 0.14, 3.80, w - 0.28, SAGE, 'left', 6);
-    body(s, unlocks, x + 0.14, 3.98, w - 0.28, 0.5, LEAF, 9);
+    steel(s, x + 0.14, 3.76, w - 0.28, 30);
+    micro(s, 'se for verdade', x + 0.14, 3.84, w - 0.28, SAGE, 'left', 6);
+    body(s, unlocks, x + 0.14, 4.02, w - 0.28, 0.48, LEAF, 9);
   });
 
   s.addText('Se isso for verdade, o coco tem uma segunda vida.', {
-    x: 0.5, y: 4.66, w: 8.4, h: 0.34, isTextBox: true, margin: 0, fontFace: 'Arial',
+    x: 0.5, y: 4.64, w: 8.4, h: 0.34, isTextBox: true, margin: 0, fontFace: 'Arial',
     fontSize: 16, color: LEAF, charSpacing: -0.4, valign: 'top' });
   evidence(s, ['a densidade de cada membrana cai à medida que a condição se resolve'], true);
   s.addNotes('Sem pedido. As três condições são a aderência dita de forma indireta — '

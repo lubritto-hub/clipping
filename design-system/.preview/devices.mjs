@@ -104,6 +104,17 @@ body{background:#888}
   mask-image:linear-gradient(0deg,#000 0%,#000 46%,transparent 100%)}
 .fade-o{-webkit-mask-image:radial-gradient(72% 72% at 42% 40%,#000 42%,transparent 100%);
   mask-image:radial-gradient(72% 72% at 42% 40%,#000 42%,transparent 100%)}
+/* Um esmaecimento de CANTO. Duas classes de aresta não se somam — a segunda
+   sobrescreve a máscara da primeira — e foi assim que a primeira versão do
+   quadro 04 ganhou uma costura reta no meio da chapa. Uma máscara radial
+   ancorada no canto faz o que duas arestas não fazem. */
+.fade-bl{-webkit-mask-image:radial-gradient(124% 124% at 4% 104%,#000 24%,transparent 82%);
+  mask-image:radial-gradient(124% 124% at 4% 104%,#000 24%,transparent 82%)}
+/* E um esmaecimento CENTRADO, que fecha nos quatro cantos. O .fade-o acima
+   está descentrado de propósito, e por isso deixa um canto opaco — foi o que
+   transformou uma amostra de matéria numa mancha quadrada e borrada. */
+.fade-c{-webkit-mask-image:radial-gradient(58% 58% at 50% 50%,#000 26%,transparent 100%);
+  mask-image:radial-gradient(58% 58% at 50% 50%,#000 26%,transparent 100%)}
 
 /* Translucent strata — overlapping planes of light, for the layered slides. */
 .stratum{position:absolute;backdrop-filter:blur(14px) saturate(1.3);
@@ -239,3 +250,46 @@ const aperture = (x, y, r, tone = 'deep') => `<div style="position:absolute;left
 
 
 export { W, H, CSS, atmos, rng, pores, thermal, membrane, aperture };
+
+/* ===========================================================================
+   MOLDURA TÉCNICA — a camada de engenharia
+
+   O que dá identidade padronizada a um baralho não é o fundo, é a MOLDURA:
+   marcas de registro nos cantos, uma grade usinada muito fraca, e uma régua
+   de metal escovado. É a linguagem de um desenho de engenharia, e ela se
+   repete idêntica em todos os quadros — é justamente a repetição que faz o
+   conjunto ler como um sistema em vez de sete peças.
+
+   Prata é estrutura, nunca ornamento: aparece em fios, marcas e réguas, e
+   nunca como preenchimento de área.
+   =========================================================================== */
+
+/** Marcas de registro nos quatro cantos, como numa prancha de desenho. */
+const regMarks = (colour = 'rgb(120 132 136 / 60%)', inset = 26, len = 16) => `
+  <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
+    stroke="${colour}" stroke-width="1">
+    ${[[inset, inset, 1, 1], [2000 - inset, inset, -1, 1],
+       [inset, 1125 - inset, 1, -1], [2000 - inset, 1125 - inset, -1, -1]]
+      .map(([x, y, sx, sy]) =>
+        `<path d="M${x} ${y} h${len * sx} M${x} ${y} v${len * sy}"/>`).join('')}
+  </svg>`;
+
+/** A grade usinada. Muito fraca — se ela for visível de longe, virou xadrez. */
+const techGrid = (step = 100, colour = 'rgb(120 132 136 / 100%)', op = 0.055) => `
+  <div class="L" style="opacity:${op};background-image:
+    repeating-linear-gradient(0deg, ${colour} 0 1px, transparent 1px ${step}px),
+    repeating-linear-gradient(90deg, ${colour} 0 1px, transparent 1px ${step}px)"></div>`;
+
+/** Uma régua de metal escovado: o fio estrutural do sistema. */
+const metalRule = (style, src = './img/metal-plate.svg', op = 0.9) =>
+  `<div style="position:absolute;${style};overflow:hidden;opacity:${op}">
+     <img src="${src}" style="width:100%;height:100%;object-fit:cover;display:block"></div>`;
+
+/** Uma coordenada de escala, como numa peça cotada. */
+const dimension = (x1, x2, y, colour = 'rgb(120 132 136 / 55%)') => `
+  <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
+    stroke="${colour}" stroke-width="1">
+    <path d="M${x1} ${y - 7} v14 M${x2} ${y - 7} v14 M${x1} ${y} H${x2}"/>
+  </svg>`;
+
+export { regMarks, techGrid, metalRule, dimension };
