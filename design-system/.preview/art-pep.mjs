@@ -1,306 +1,191 @@
 /* ===========================================================================
-   ART LAYERS — PEPSICO / PETROLINA, REGISTRO DO COCO
+   CHAPAS — PEPSICO / PETROLINA
+   "CASCA VIRA CARBONO"
 
-   Mesmos três devices do outro baralho (campo de poros, linha térmica,
-   membrana), importados de devices.mjs — o que muda é o REGISTRO, e um
-   registro é um conjunto de cores, não um conjunto de mecanismos.
+   Refeito do zero. O baralho anterior era atmosférico: névoa, véu, fio de
+   cabelo, tudo bem-comportado. Lia como software. Este é o contrário —
+   gráfico, chapado, com contraste alto e a matéria em tamanho real.
 
-   Aqui o registro é o próprio fruto: casca marrom, endocarpo quase preto,
-   verde de palmeira, creme de coir. O azul-menta pertence à identidade da
-   venture e não aparece neste baralho.
+   A DIVISÃO DE TRABALHO
+     A chapa traz o CHÃO, as FOTOS em painéis de canto arredondado, o objeto
+     cromado, o bloom e a granulação. Os BLOCOS de cor, os números, as pílulas
+     e os ícones são vetor vivo no .pptx — assim eles ficam nítidos e andam
+     junto com o texto que descrevem.
 
-   ---------------------------------------------------------------------------
-   A CAMADA DE ENGENHARIA
+   A ABERTURA E O RESTO
+     A capa estabelece um objeto: um coco cromado sobre verde-coco puro. Todo
+     quadro seguinte responde a ela com o mesmo verde, o mesmo bloom e a mesma
+     lógica de painel — nunca repetindo o cromo, que é da capa e só dela.
 
-   O que faz sete quadros lerem como UM SISTEMA não é o fundo — fundos variam
-   por assunto — é a MOLDURA. Todos os sete carregam exatamente a mesma:
-   grade usinada muito fraca, quadro de prancha com marcas de registro nos
-   cantos, escala cotada no pé e uma régua de aço escovado com o código da
-   chapa. É a linguagem de um desenho técnico, e é a repetição idêntica que
-   constrói a identidade.
-
-   Prata é ESTRUTURA, nunca preenchimento: fios, marcas, réguas. Não existe
-   nenhuma área prateada neste baralho.
-
-   E o pátio de casca está no fundo de três quadros, porque ele é a premissa:
-   a biomassa já existe, nesta quantidade, hoje.
+   O Y2K entra em três lugares e em nenhum outro: o cromo iridescente, o
+   estouro de luz (bloom + flare) e a estrela de quatro pontas. Fora disso é
+   editorial chapado.
    =========================================================================== */
 
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
-import { createRequire } from 'node:module';
-import { W, H, CSS, atmos, pores, thermal, membrane, aperture,
-         regMarks, techGrid, metalRule } from './devices.mjs';
-
-const P = createRequire(import.meta.url)('../../deck/pepsico.js');
+import { W, H, CSS } from './devices.mjs';
 
 const OUT = path.resolve('.preview/deck-assets');
 const css = fs.readFileSync('dist/styles.css', 'utf8');
 const img = n => `./img/${n}.svg`;
 
-/* --- O registro do coco --------------------------------------------------
-   Meio-tons, pela mesma razão de sempre: quase-brancos sobre um chão creme
-   voltam à média do chão e o campo desaparece. */
-const C = {
-  coir:  a => `rgb(232 214 182 / ${a}%)`,   // creme de fibra
-  husk:  a => `rgb(198 166 118 / ${a}%)`,   // casca
-  palm:  a => `rgb(150 178 132 / ${a}%)`,   // verde de palmeira
-  sage:  a => `rgb(178 196 162 / ${a}%)`,   // verde acinzentado
-  ember: a => `rgb(226 172 110 / ${a}%)`,   // o único quente — a pirólise
-  cream: a => `rgb(253 249 240 / ${a}%)`,
-};
+/* --- A paleta. Poucas cores, muito contraste. ---------------------------- */
+const ACID  = '#c8e85c';   // verde-coco: o coco verde é literalmente esta cor
+const MATA  = '#16331f';
+const CREME = '#f5f1e6';
+const PRETO = '#0b0a09';
 
-const STEEL = a => `rgb(126 140 144 / ${a}%)`;
+/* --- Primitivas ---------------------------------------------------------- */
 
-/* Sobre o chão creme o grão precisa ser mais fino que sobre o perolado, ou
-   lê como sujeira num material que é justamente sobre limpeza. */
-const grain = () => `<div class="L grain" style="opacity:.2"></div>
-  <div class="L scan" style="opacity:.34"></div><div class="L dither" style="opacity:.05"></div>`;
+/** Um painel de foto: canto arredondado, matéria em força total. Nada de
+    opacidade 20% — a foto ou está no quadro ou não está. */
+const panel = (src, style, radius = 26, extra = '', pos = '50% 50%', zoom = 1) =>
+  `<div style="position:absolute;${style};border-radius:${radius}px;overflow:hidden;
+     ${extra}"><img src="${img(src)}"
+     style="width:100%;height:100%;object-fit:cover;object-position:${pos};display:block;
+     transform:scale(${zoom});transform-origin:${pos}"></div>`;
 
-/* A refração perde o prisma frio: aqui a luz atravessa fibra, não vidro. */
-const bloom = (o = 0.5) => `<div class="L" style="background:
-  radial-gradient(62% 48% at 26% 14%, rgb(255 248 228 / 78%) 0%, transparent 66%),
-  radial-gradient(52% 44% at 84% 84%, rgb(150 178 132 / 26%) 0%, transparent 70%);
-  mix-blend-mode:screen;filter:blur(52px);opacity:${o}"></div>`;
+/** O estouro de luz. Um núcleo, um halo e uma listra horizontal — é a
+    anatomia de um flare de lente, e é o que faz a luz parecer física. */
+const flare = (x, y, s = 1, tint = '255 249 214') => `
+  <div style="position:absolute;left:${x};top:${y};width:${420 * s}px;height:${420 * s}px;
+    margin:${-210 * s}px 0 0 ${-210 * s}px;border-radius:50%;
+    background:radial-gradient(circle, rgb(${tint} / 92%) 0%, rgb(${tint} / 30%) 34%, transparent 70%);
+    filter:blur(${26 * s}px);mix-blend-mode:screen"></div>
+  <div style="position:absolute;left:${x};top:${y};width:${1500 * s}px;height:${5 * s}px;
+    margin:${-2.5 * s}px 0 0 ${-750 * s}px;
+    background:linear-gradient(90deg, transparent, rgb(${tint} / 88%) 46%, rgb(${tint} / 88%) 54%, transparent);
+    filter:blur(${2.5 * s}px);mix-blend-mode:screen"></div>`;
 
-const arc = (st, a = 200, blur = 1.2, op = 0.6) =>
-  `<div class="arc arc--glow" style="${st};--a:${a}deg;opacity:${op * 0.5};
-     background:conic-gradient(from ${a}deg, transparent 0deg,
-       rgb(255 246 224) 60deg, rgb(198 166 118) 130deg, transparent 200deg)"></div>
-   <div class="arc" style="${st};--a:${a}deg;--ab:${blur}px;opacity:${op};
-     background:conic-gradient(from ${a}deg, transparent 0deg,
-       rgb(255 250 236) 56deg, rgb(226 214 182) 116deg,
-       rgb(150 178 132) 158deg, transparent 206deg)"></div>`;
+/** A estrela de quatro pontas, desenhada grande. Pontuação, não decoração:
+    marca um lugar da composição e some. */
+const star = (x, y, r, colour = '#ffffff', op = 1, blur = 0) => `
+  <svg style="position:absolute;left:${x};top:${y};width:${r * 2}px;height:${r * 2}px;
+    margin:${-r}px 0 0 ${-r}px;opacity:${op};filter:blur(${blur}px)" viewBox="0 0 32 32">
+    <path d="M16 0c0 9 2.4 14 16 16-13.6 2-16 7-16 16 0-9-2.4-14-16-16 13.6-2 16-7 16-16z"
+      fill="${colour}"/></svg>`;
 
-const CREAM = 'rgb(90 68 40';   // tinta dos poros sobre chão claro
+/** O grão. Bem mais fraco que no baralho anterior: sobre cor chapada, grão é
+    ruído, e a superfície tem de parecer impressa, não gasta. */
+const grain = (o = 0.12) => `<div class="L grain" style="opacity:${o}"></div>`;
 
-/* --- O PÁTIO -------------------------------------------------------------
-   A fotografia de referência, redesenhada. Entra por baixo de tudo, esfumada
-   no topo, porque acima dela mora o texto. Nunca aparece inteira: é uma
-   premissa, não uma paisagem. */
-const yard = (op = 0.34, h = 38) =>
-  `<div class="crop fade-t" style="left:0;bottom:0;width:100%;height:${h}%;opacity:${op}">
-     <img src="${img('coco-yard')}" style="object-position:50% 100%"></div>`;
-
-/* O véu. O pátio é a premissa, não a paisagem: onde mora o texto ele tem de
-   recuar. A luz do baralho vem da esquerda, então o véu vem com ela — é uma
-   decisão de iluminação, não um remendo sobre a fotografia. */
-const veil = (to = 66) => `<div class="L" style="background:linear-gradient(96deg,
-  rgb(253 249 240 / 92%) 0%, rgb(253 249 240 / 74%) ${to * 0.45}%,
-  rgb(253 249 240 / 20%) ${to}%, transparent 100%)"></div>`;
-
-/* --- A MOLDURA TÉCNICA ---------------------------------------------------
-   Idêntica nos sete quadros. `code` é a cota da chapa; `dark` inverte o fio
-   para o único quadro profundo. */
-function frame(code, dark = false) {
-  const line = dark ? 'rgb(186 200 202 / 34%)' : STEEL(38);
-  const tick = dark ? 'rgb(186 200 202 / 26%)' : STEEL(30);
-  const I = 34;                                        // recuo do quadro
-  const scale = [];                                    // escala cotada no pé
-  for (let x = I; x <= W - I; x += 62)
-    scale.push(`<path d="M${x} ${H - I} v${(x - I) % 310 === 0 ? -13 : -6}"/>`);
-  return `
-    ${techGrid(125, dark ? 'rgb(186 200 202 / 100%)' : 'rgb(126 140 144 / 100%)', dark ? 0.05 : 0.06)}
-    <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
-      stroke="${line}" stroke-width="1">
-      <rect x="${I}" y="${I}" width="${W - I * 2}" height="${H - I * 2}"/>
-    </svg>
-    <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
-      stroke="${tick}" stroke-width="1">${scale.join('')}</svg>
-    ${regMarks(dark ? 'rgb(186 200 202 / 52%)' : STEEL(58), 34, 18)}
-    ${metalRule(`right:34px;top:44px;width:190px;height:6px`, './img/metal-plate.svg', dark ? 0.5 : 0.78)}
-    <div style="position:absolute;right:238px;top:41px;
-      font:400 12px/1 Helvetica,Arial,sans-serif;letter-spacing:.24em;
-      color:${dark ? 'rgb(186 200 202 / 62%)' : STEEL(72)}">${code}</div>`;
-}
+/** Uma lavagem de luz vinda de um canto, para que a cor chapada não fique
+    morta. É a única coisa que sobrou da versão atmosférica. */
+const wash = (spec) => `<div class="L" style="background:${spec}"></div>`;
 
 const PLATES = {
 
-/* 01 CAPA — o pátio é o fundo (a premissa: a casca já existe, hoje), o fruto
-   ocupa a direita, cortado pelo quadro. Zona de tipo: esquerda 54%. */
+/* ---------------------------------------------------------------------------
+   01 CAPA — verde-coco puro e um coco cromado. É a única peça de cromo do
+   baralho: se ela se repetir, deixa de ser abertura e vira maneirismo.
+   Zona de tipo: esquerda até 52%.
+--------------------------------------------------------------------------- */
 'pep-01': () => `
-  ${atmos([[18,18,54,50,C.coir(72),1],[80,34,74,68,C.husk(44),1],
-           [52,90,62,50,C.palm(52),1],[96,84,44,42,C.ember(30),1],
-           [6,72,48,46,C.sage(46),1]])}
-  ${yard(0.44, 38)}${veil(84)}
-  <div class="obj" style="left:62%;top:-34%;width:58%;height:126%;opacity:.96">
-    <img src="${img('coco-section')}" style="object-fit:contain"></div>
-  ${arc('left:60%;top:-38%;width:62%;height:134%', 138, 1.1, 0.62)}
-  <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
-    stroke="rgb(126 140 144 / 62%)" stroke-width="1">
-    <path d="M1352 372 h-230 M1352 372 v-9"/>
-    <circle cx="1352" cy="372" r="3.5"/>
-  </svg>
-  ${bloom(0.55)}${grain()}
-  ${frame('PET · 01 — BIOMASSA / PÁTIO')}`,
-
-/* 02 PROCESSO — o balanço de massa desenhado em proporção: 1 t de casca seca
-   entra, ~0,3 t de biochar sai. A linha térmica sobe até a faixa de pirólise
-   e volta, porque é isso que a temperatura faz. */
-'pep-02': () => {
-  const yieldR = P.PROCESSO.rendimentoKgPorT / 1000;      // 0,30
-  const H0 = 150, hChar = H0 * yieldR, cy = 560;
-  const band = (x1, x2, hL, hR, fill) =>
-    `<path d="M${x1} ${cy - hL / 2} L${x2} ${cy - hR / 2} L${x2} ${cy + hR / 2} L${x1} ${cy + hL / 2} Z" fill="${fill}"/>`;
-  return `
-  ${atmos([[14,16,50,46,C.cream(86),1],[62,26,58,52,C.coir(56),1],
-           [90,72,50,48,C.palm(44),1],[30,94,56,42,C.sage(50),1],
-           [4,66,42,44,C.husk(34),1]])}
-  <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 2000 1125">
-    ${band(110, 780, H0, H0, 'rgb(198 166 118 / 52%)')}
-    ${band(1180, 1500, hChar, hChar, 'rgb(61 42 28 / 72%)')}
-    <g stroke="rgb(122 96 62 / 42%)" stroke-width="1" fill="none">
-      <path d="M110 ${cy - H0 / 2} H780 M110 ${cy + H0 / 2} H780"/>
-      <path d="M1180 ${cy - hChar / 2} H1880 M1180 ${cy + hChar / 2} H1880"/>
-    </g>
-    <g stroke="rgb(126 140 144 / 48%)" stroke-width="1" fill="none">
-      <path d="M110 ${cy - H0 / 2 - 40} v-14 M780 ${cy - H0 / 2 - 40} v-14 M110 ${cy - H0 / 2 - 47} H780"/>
-      <path d="M1180 ${cy + hChar / 2 + 40} v14 M1500 ${cy + hChar / 2 + 40} v14 M1180 ${cy + hChar / 2 + 47} H1500"/>
-    </g>
-  </svg>
-  <div style="position:absolute;left:59%;top:${((cy - hChar / 2 - 3) / 1125 * 100).toFixed(1)}%;
-    width:16%;height:${((hChar + 6) / 1125 * 100).toFixed(1)}%;overflow:hidden;opacity:.9">
-    ${pores(61, 320, 52, 1, CREAM, 8)}
+  <div class="L" style="background:${ACID}"></div>
+  ${wash(`radial-gradient(72% 62% at 82% 28%, rgb(255 255 255 / 62%) 0%, transparent 66%),
+          radial-gradient(58% 50% at 6% 96%, rgb(22 51 31 / 26%) 0%, transparent 70%)`)}
+  <div style="position:absolute;left:56%;top:5%;width:41%;height:90%">
+    <img src="${img('coco-chrome')}" style="width:100%;height:100%;object-fit:contain;display:block;
+      filter:drop-shadow(0 44px 70px rgb(22 51 31 / 38%))">
   </div>
-  ${membrane('left:39%;top:22%;width:16%;height:58%', 'left')}
-  <svg style="position:absolute;left:39%;top:22%;width:16%;height:58%" viewBox="0 0 320 650"
-    fill="none" stroke="rgb(77 102 64 / 72%)" stroke-width="1.3">
-    <rect x="72" y="24" width="176" height="176" rx="4"/>
-    <rect x="72" y="238" width="176" height="200" rx="4"/>
-    <rect x="72" y="476" width="176" height="150" rx="4"/>
-    <path d="M160 0 V24 M160 626 V650"/>
-    <path d="M248 112 C296 112 296 552 248 552" stroke-dasharray="4 6"/>
-  </svg>
-  ${metalRule('left:39%;top:81.5%;width:16%;height:5px', './img/metal-plate.svg', 0.8)}
-  ${thermal('p2', 'M110 880 H700 C770 880 770 300 840 300 H1080 C1150 300 1150 800 1220 800 H1900', 2, 0.95, true, 50)}
-  ${bloom(0.45)}${grain()}
-  ${frame('PET · 02 — BALANÇO DE MASSA 1 t → 0,3 t')}`;
-},
+  ${flare('69%', '26%', 1.4)}
+  ${star('52%', '15%', 42, '#ffffff', 0.95)}
+  ${star('97%', '72%', 22, '#ffffff', 0.8)}
+  ${star('60%', '92%', 15, '#16331f', 0.38)}
+  ${grain(0.1)}`,
 
-/* 03 POR QUE O COCO — a secção transversal como protagonista, com a fração de
-   casca desenhada como um anel: 80–85% da massa é o que hoje é resíduo. */
+/* ---------------------------------------------------------------------------
+   02 O QUE EXISTE HOJE — o pátio em força total, num painel que ocupa metade
+   do quadro. Esta é a foto mais importante do baralho: é a premissa.
+--------------------------------------------------------------------------- */
+'pep-02': () => `
+  <div class="L" style="background:${CREME}"></div>
+  ${wash(`radial-gradient(66% 58% at 8% 4%, rgb(200 232 92 / 46%) 0%, transparent 66%),
+          radial-gradient(50% 48% at 30% 100%, rgb(138 90 52 / 12%) 0%, transparent 70%)`)}
+  ${panel('coco-yard', 'left:49%;top:6%;width:47%;height:88%', 30,
+          '', '50% 100%', 1.55)}
+  ${star('48%', '12%', 28, ACID, 1)}
+  ${flare('74%', '28%', 0.7, '255 252 232')}
+  ${grain(0.14)}`,
+
+/* ---------------------------------------------------------------------------
+   03 POR QUE O COCO — fundo escuro, a secção transversal grande e nítida.
+   No escuro os anéis param de ler como alvo e passam a ler como estratos.
+--------------------------------------------------------------------------- */
 'pep-03': () => `
-  ${atmos([[16,20,52,48,C.coir(70),1],[78,58,64,58,C.husk(42),1],
-           [46,94,58,44,C.palm(50),1],[94,12,40,36,C.cream(76),1],
-           [4,70,44,44,C.sage(44),1]])}
-  <div class="obj" style="right:-6%;top:2%;width:52%;height:96%;opacity:.97">
-    <img src="${img('coco-section')}" style="object-fit:contain"></div>
-  <div class="crop crop--soft fade-r" style="left:0;bottom:-8%;width:26%;height:44%;opacity:.5">
-    <img src="${img('coco-husk')}"></div>
-  ${arc('right:-4%;top:0%;width:56%;height:100%', 118, 1, 0.65)}
-  <svg style="position:absolute;inset:0;width:100%;height:100%" fill="none"
-    stroke="rgb(126 140 144 / 52%)" stroke-width="1">
-    <path d="M1250 200 h70 M1250 200 v-8 M1320 200 v-8"/>
-    <path d="M1560 560 h150"/><circle cx="1560" cy="560" r="3"/>
-  </svg>
-  ${bloom(0.5)}${grain()}
-  ${frame('PET · 03 — SECÇÃO / CARACTERIZAÇÃO')}`,
-
-/* 04 OPERAÇÃO — duas massas na mesma escala: a pilha úmida e o char seco. A
-   diferença de área É a redução de 70%, e a de matéria é o campo de poros.
-   O pátio volta ao fundo, do lado da casca: é literalmente a pilha de que o
-   slide fala. */
-'pep-04': () => {
-  const yieldR = P.PROCESSO.rendimentoKgPorT / 1000;
-  const A = 240, B = A * Math.sqrt(yieldR), base = 652;  // área proporcional
-  return `
-  ${atmos([[14,18,50,46,C.cream(84),1],[52,74,60,50,C.coir(52),1],
-           [88,20,46,44,C.palm(42),1],[28,96,54,40,C.sage(48),1],
-           [96,86,40,38,C.husk(32),1]])}
-  <div class="crop fade-bl" style="left:0;bottom:0;width:62%;height:46%;opacity:.4">
-    <img src="${img('coco-yard')}" style="object-position:18% 100%"></div>
-  ${veil(52)}
-  <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 2000 1125">
-    <rect x="180" y="${base - A}" width="${A}" height="${A}" fill="rgb(198 166 118 / 46%)"/>
-    <rect x="180" y="${base - A}" width="${A}" height="${A}" fill="none"
-      stroke="rgb(122 96 62 / 50%)" stroke-width="1.2"/>
-    <rect x="1120" y="${base - B}" width="${B}" height="${B}" fill="rgb(61 42 28 / 76%)"/>
-    <path d="M470 ${base} H1100" stroke="rgb(122 96 62 / 40%)" stroke-width="1" stroke-dasharray="4 6" fill="none"/>
-    <g stroke="rgb(126 140 144 / 50%)" stroke-width="1" fill="none">
-      <path d="M180 ${base - A - 22} v-11 M${180 + A} ${base - A - 22} v-11 M180 ${base - A - 28} H${180 + A}"/>
-      <path d="M1120 ${base - B - 22} v-11 M${1120 + B} ${base - B - 22} v-11 M1120 ${base - B - 28} H${1120 + B}"/>
-    </g>
-  </svg>
-  <div style="position:absolute;left:56%;top:${((base - B) / 1125 * 100).toFixed(1)}%;
-    width:${(B / 20).toFixed(1)}%;height:${(B / 11.25).toFixed(1)}%;overflow:hidden;opacity:.85">
-    ${pores(74, 170, 170, 1, CREAM, 13)}
+  <div class="L" style="background:${MATA}"></div>
+  ${wash(`radial-gradient(66% 58% at 88% 16%, rgb(200 232 92 / 20%) 0%, transparent 68%),
+          radial-gradient(50% 44% at 4% 92%, rgb(200 232 92 / 12%) 0%, transparent 70%)`)}
+  <div style="position:absolute;right:-14%;top:-14%;width:64%;height:113.8%;
+    border-radius:50%;overflow:hidden">
+    <img src="${img('coco-section')}" style="width:100%;height:100%;object-fit:cover;display:block">
   </div>
-  ${bloom(0.42)}${grain()}
-  ${frame('PET · 04 — ÁREA = MASSA · ESCALA COMUM')}`;
-},
+  ${flare('58%', '18%', 0.9, '234 246 218')}
+  ${star('55%', '78%', 24, ACID, 0.9)}
+  ${grain(0.16)}`,
 
-/* 05 ESTRATÉGIA — o palmeiral, claro e aberto. As metas da PepsiCo vivem numa
-   régua horizontal; a leitura é de alinhamento, não de proposta. */
+/* ---------------------------------------------------------------------------
+   04 O PROCESSO — dois painéis de matéria, antes e depois, com o vão no meio
+   onde mora a temperatura. O vão É o reator.
+--------------------------------------------------------------------------- */
+'pep-04': () => `
+  <div class="L" style="background:${CREME}"></div>
+  ${wash(`radial-gradient(56% 50% at 50% 6%, rgb(200 232 92 / 30%) 0%, transparent 70%)`)}
+  ${panel('coco-husk', 'left:5.5%;top:67.5%;width:41.5%;height:20.6%', 22)}
+  ${panel('coco-char', 'left:53%;top:67.5%;width:41.5%;height:20.6%', 22)}
+  ${flare('50%', '40%', 1.0, '255 236 190')}
+  ${star('50%', '56%', 26, ACID, 1)}
+  ${grain(0.14)}`,
+
+/* ---------------------------------------------------------------------------
+   05 O QUE SAI — o char em força total ocupando a direita inteira, sangrando
+   pelo quadro. A esquerda fica creme, para o número.
+--------------------------------------------------------------------------- */
 'pep-05': () => `
-  ${atmos([[12,16,52,48,C.cream(90),1],[64,28,60,54,C.palm(48),1],
-           [92,70,52,50,C.coir(50),1],[34,96,58,44,C.sage(56),1],
-           [82,6,38,34,C.ember(24),1]])}
-  <div class="crop crop--far fade-t" style="left:0;bottom:0;width:100%;height:52%;opacity:.55">
-    <img src="${img('coco-grove')}"></div>
-  ${metalRule('left:6%;top:58.6%;width:88%;height:4px', './img/metal-plate.svg', 0.85)}
-  <svg style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 2000 1125">
-    ${[420, 900, 1380].map(x => `<path d="M${x} 620 V700" stroke="rgb(77 102 64 / 40%)" stroke-width="1" fill="none"/>`).join('')}
-  </svg>
-  ${[420, 900, 1380, 1860].map((x, i) => aperture(`${(x / 20).toFixed(1)}%`, '58.7%', 13 + i * 3, 'light')).join('')}
-  ${arc('left:-30%;top:-30%;width:74%;height:146%', 340, 1.4, 0.45)}
-  ${bloom(0.5)}${grain()}
-  ${frame('PET · 05 — METAS PÚBLICAS / ALINHAMENTO')}`,
+  <div class="L" style="background:${CREME}"></div>
+  ${panel('coco-char', 'right:0;top:0;width:54%;height:100%', 0)}
+  <div style="position:absolute;left:46%;top:0;width:16%;height:100%;
+    background:linear-gradient(90deg, rgb(245 241 230) 0%, transparent 100%)"></div>
+  ${flare('62%', '22%', 1.1, '234 246 218')}
+  ${star('60%', '70%', 26, ACID, 0.95)}
+  ${star('88%', '18%', 16, '#ffffff', 0.8)}
+  ${grain(0.14)}`,
 
-/* 06 VALOR — três estratos a partir de uma biomassa. Cada um com a sua
-   temperatura: casca, carbono, verde. */
+/* ---------------------------------------------------------------------------
+   06 O QUE A PEPSICO JÁ DECIDIU — creme e o palmeiral num painel largo e
+   baixo, porque as metas ocupam a faixa de cima.
+--------------------------------------------------------------------------- */
 'pep-06': () => `
-  ${atmos([[14,18,50,46,C.coir(66),1],[80,54,62,56,C.palm(46),1],
-           [54,94,60,44,C.sage(48),1],[96,10,38,34,C.ember(28),1],
-           [4,74,46,46,C.husk(36),1]])}
-  <div class="stratum" style="left:44%;top:15%;width:52%;height:22%;
-    background:linear-gradient(160deg, rgb(198 166 118 / 46%), rgb(198 166 118 / 10%))"></div>
-  <div class="stratum" style="left:39%;top:40%;width:54%;height:22%;
-    background:linear-gradient(160deg, rgb(61 42 28 / 34%), rgb(61 42 28 / 7%))"></div>
-  <div style="position:absolute;left:39%;top:40%;width:54%;height:22%;overflow:hidden;opacity:.5">
-    ${pores(66, 1080, 250, 0.55, CREAM, 12)}
-  </div>
-  <div class="stratum" style="left:48%;top:65%;width:48%;height:22%;
-    background:linear-gradient(160deg, rgb(150 178 132 / 50%), rgb(150 178 132 / 10%))"></div>
-  ${metalRule('left:44%;top:14.4%;width:52%;height:3px', './img/metal-plate.svg', 0.7)}
-  ${metalRule('left:39%;top:39.4%;width:54%;height:3px', './img/metal-plate.svg', 0.7)}
-  ${metalRule('left:48%;top:64.4%;width:48%;height:3px', './img/metal-plate.svg', 0.7)}
-  ${arc('left:-32%;top:-28%;width:74%;height:148%', 350, 1.5, 0.42)}
-  ${bloom(0.44)}${grain()}
-  ${frame('PET · 06 — TRÊS ROTAS A PARTIR DE UMA BIOMASSA')}`,
+  <div class="L" style="background:${CREME}"></div>
+  ${wash(`radial-gradient(64% 56% at 88% 10%, rgb(200 232 92 / 32%) 0%, transparent 68%)`)}
+  /* Uma faixa de 0,9 pol de palmeiral distante não lê como palmeiral — lê
+     como uma lavagem verde. Nessa altura, a fibra de coir lê: ela é
+     direcional, e o que a faixa precisa dizer é MATÉRIA. */
+  ${panel('coco-husk', 'left:4%;top:80%;width:92%;height:16%', 20, '', '50% 50%', 1.0)}
+  ${star('6.5%', '78%', 20, ACID, 1)}
+  ${flare('80%', '20%', 0.8, '255 252 232')}
+  ${grain(0.14)}`,
 
-/* 07 O QUE PRECISA SER VERDADE — o único quadro profundo, e em VERDE de mata,
-   nunca quase-preto. Três membranas atravessadas, com a densidade caindo:
-   é a arquitetura de gates do outro baralho, no registro do coco. */
-'pep-07': () => {
-  const dens = [0.8, 0.5, 0.22];
-  const cols = dens.map((d, i) => {
-    const left = 6 + i * 30;
-    return membrane(`left:${left}%;top:38%;width:27%;height:58%`, 'left', 'deep')
-      + `<div style="position:absolute;left:${left}%;top:38%;width:27%;height:58%;
-          overflow:hidden;opacity:.85">${pores(300 + i * 9, 540, 660, d, 'rgb(214 232 198', 20, 'lit')}</div>`
-      + metalRule(`left:${left}%;top:37.6%;width:27%;height:4px`, './img/metal-plate.svg', 0.55);
-  }).join('');
-  return `
-  <div class="L" style="background:
-    radial-gradient(62% 52% at 20% 12%, rgb(150 178 132 / 26%) 0%, transparent 68%),
-    radial-gradient(56% 46% at 86% 78%, rgb(226 172 110 / 14%) 0%, transparent 72%),
-    linear-gradient(168deg, #2c3a24 0%, #26331f 48%, #1f2b1c 100%)"></div>
-  <div class="crop fade-t" style="left:0;bottom:0;width:100%;height:44%;opacity:.16;
-    mix-blend-mode:screen"><img src="${img('coco-yard')}" style="object-position:50% 100%"></div>
-  ${cols}
-  ${thermal('p7', 'M40 463 C420 463 520 460 900 460 C1300 460 1500 458 1960 456', 1.8, 1, true, 60)}
-  ${dens.map((_, i) => aperture(`${(6 + i * 30 + 13.5).toFixed(1)}%`, '41%', 15 + i * 5, 'deep')).join('')}
-  <div class="crop fade-l" style="right:-8%;top:-14%;width:38%;height:60%;opacity:.22;
-    mix-blend-mode:screen"><img src="${img('coco-char')}" style="filter:blur(2px)"></div>
-  <div class="L grain" style="opacity:.34;mix-blend-mode:screen"></div>
-  <div class="L scan" style="opacity:.24"></div>
-  ${frame('PET · 07 — TRÊS CONDIÇÕES / GATES', true)}`;
-},
+/* ---------------------------------------------------------------------------
+   07 O QUE PRECISA SER VERDADE — escuro, o char como chão de verdade e não
+   como sombra. Fecha o baralho no mesmo material com que ele abriu, mas em
+   matéria, não em cromo.
+--------------------------------------------------------------------------- */
+'pep-07': () => `
+  <div class="L" style="background:${PRETO}"></div>
+  ${panel('coco-char', 'left:0;top:0;width:100%;height:100%', 0)}
+  ${wash(`linear-gradient(168deg, rgb(22 51 31 / 82%) 0%, rgb(11 10 9 / 74%) 52%, rgb(22 51 31 / 86%) 100%)`)}
+  ${wash(`radial-gradient(58% 50% at 14% 8%, rgb(200 232 92 / 20%) 0%, transparent 66%)`)}
+  ${flare('50%', '8%', 1.2, '200 232 92')}
+  ${star('92%', '82%', 26, ACID, 0.9)}
+  ${star('6%', '30%', 15, '#ffffff', 0.6)}
+  ${grain(0.2)}`,
 };
 
 const html = `<!doctype html><meta charset="utf-8"><style>${css}${CSS}
-  .plate{background:rgb(253 249 240)}
+  .plate{background:${CREME}}
 </style>
 <body data-theme="light">${Object.entries(PLATES)
   .map(([id, f]) => `<div class="plate" id="${id}">${f()}</div>`).join('\n')}</body>`;
@@ -318,4 +203,4 @@ for (const id of Object.keys(PLATES)) {
 }
 await b.close();
 if (errs.length) { console.error(errs.join('\n')); process.exit(1); }
-console.log('coconut plates:', Object.keys(PLATES).length);
+console.log('chapas:', Object.keys(PLATES).length);

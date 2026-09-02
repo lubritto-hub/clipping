@@ -32,6 +32,17 @@ def media_uri(z, path):
     ext = Path(path).suffix.lstrip('.').replace('jpg', 'jpeg')
     return f'data:image/{ext};base64,' + base64.b64encode(data).decode()
 
+def _round(av):
+    """O raio de canto de um roundRect vem como fração de 100000 do menor lado."""
+    if av is None:
+        return 0.16
+    for g in av.getElementsByTagNameNS(NS['a'], 'gd'):
+        if g.getAttribute('name') == 'adj':
+            f = g.getAttribute('fmla')
+            if f.startswith('val '):
+                return int(f[4:]) / 100000
+    return 0.16
+
 def xfrm(node):
     off, ext = first(node, 'a', 'off'), first(node, 'a', 'ext')
     if off is None or ext is None:
@@ -63,6 +74,14 @@ def render(pptx, out_prefix, scale=132):
                 if clr is not None:
                     parts.append(f'<div class="bg" style="background:#{clr.getAttribute("val")}"></div>')
 
+        tree = first(doc, 'p', 'spTree')
+        zi, k = {}, 0
+        if tree is not None:
+            for node in tree.childNodes:
+                if node.nodeType == node.ELEMENT_NODE:
+                    zi[id(node)] = k
+                    k += 1
+
         for pic in el(doc, 'p', 'pic'):
             box = xfrm(pic)
             blip = first(pic, 'a', 'blip')
@@ -72,7 +91,8 @@ def render(pptx, out_prefix, scale=132):
             if not tgt:
                 continue
             x, y, w, h = box
-            parts.append(f'<img style="position:absolute;left:{x}in;top:{y}in;'
+            parts.append(f'<img style="position:absolute;z-index:{zi.get(id(pic), 0)};'
+                         f'left:{x}in;top:{y}in;'
                          f'width:{w}in;height:{h}in" src="{media_uri(z, tgt)}">')
 
         for gf in el(doc, 'p', 'graphicFrame'):
@@ -90,17 +110,28 @@ def render(pptx, out_prefix, scale=132):
             x, y, w, h = box
             fill = first(sp_el, 'a', 'solidFill')
             tx = first(sp_el, 'p', 'txBody')
-            if tx is None and fill is not None:
+            _has_text = tx is not None and ''.join(
+                (t.firstChild.nodeValue if t.firstChild else '')
+                for t in el(tx, 'a', 't')).strip()
+            if fill is not None and not _has_text:
                 clr = first(fill, 'a', 'srgbClr')
                 alpha = first(clr, 'a', 'alpha') if clr is not None else None
                 op = 1 - int(alpha.getAttribute('val')) / 100000 if alpha is not None else 1
                 col = clr.getAttribute('val') if clr is not None else '888888'
-                parts.append(f'<div style="position:absolute;left:{x}in;top:{y}in;width:{w}in;'
-                             f'height:{h}in;background:#{col};opacity:{1-op if op<1 else 1}"></div>')
+                rr = first(sp_el, 'a', 'avLst')
+                geo = first(sp_el, 'a', 'prstGeom')
+                shape = geo.getAttribute('prst') if geo is not None else 'rect'
+                br = '50%' if shape == 'ellipse' else (
+                     f'{min(w, h) * 0.5 * _round(rr)}in' if shape == 'roundRect' else '0')
+                parts.append(f'<div style="position:absolute;z-index:{zi.get(id(sp_el), 0)};'
+                             f'left:{x}in;top:{y}in;width:{w}in;'
+                             f'height:{h}in;background:#{col};border-radius:{br};'
+                             f'opacity:{1-op if op<1 else 1}"></div>')
                 continue
             if tx is None:
                 continue
             runs, size, color, align, spacing, rot = [], 12, 'FFFFFF', 'left', 0, 0
+            bold = False
             xf = first(sp_el, 'a', 'xfrm')
             if xf is not None and xf.getAttribute('rot'):
                 rot = int(xf.getAttribute('rot')) / 60000
@@ -131,6 +162,8 @@ def render(pptx, out_prefix, scale=132):
                                 size = int(rpr.getAttribute('sz')) / 100
                             if rpr.getAttribute('spc'):
                                 spacing = int(rpr.getAttribute('spc')) / 100
+                            if rpr.getAttribute('b') == '1':
+                                bold = True
                             c = first(rpr, 'a', 'srgbClr')
                             if c is not None:
                                 color = c.getAttribute('val')
@@ -143,8 +176,10 @@ def render(pptx, out_prefix, scale=132):
                 continue
             tr = f'transform:rotate({rot}deg);transform-origin:left top;' if rot else ''
             parts.append(
-                f'<div class="tx" style="left:{x}in;top:{y}in;width:{w}in;height:{h}in;'
+                f'<div class="tx" style="z-index:{zi.get(id(sp_el), 0)};'
+                f'left:{x}in;top:{y}in;width:{w}in;height:{h}in;'
                 f'font-size:{size}pt;color:#{color};text-align:{align};'
+                f'font-weight:{700 if bold else 400};'
                 f'letter-spacing:{spacing}pt;{tr}"><span>{text}</span></div>')
 
         pages.append(f'<section class="slide">{"".join(parts)}'

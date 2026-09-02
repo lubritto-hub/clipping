@@ -162,48 +162,49 @@ open(f'{OUT}/coco-grove.svg', 'w').write(f'''<svg xmlns="http://www.w3.org/2000/
 # de fratura conchoidal que brilham, e arestas vivas que pegam a luz. Não é pó
 # e não é esfera — é vidro preto quebrado, e é isso que faz o material parecer
 # valioso em vez de sujo.
+#
+# A primeira versão saiu CINZA, e por dois motivos: toda lasca ganhava uma face
+# clara, e duas lavagens radiais passavam por cima de tudo no fim. Carvão é
+# preto com poucos brilhos fortes — não é cinza com muitos brilhos fracos.
 random.seed(9)
 chips = []
-for _ in range(1100):
-    cx, cy = random.uniform(-40, 1240), random.uniform(-40, 1040)
-    rad = max(7, min(random.lognormvariate(2.85, 0.5), 62))
+for _ in range(620):
+    cx, cy = random.uniform(-60, 1260), random.uniform(-60, 1060)
+    rad = max(11, min(random.lognormvariate(3.35, 0.52), 108))
     rot = random.uniform(0, 360)
     sides = random.choice([3, 4, 4, 5, 5, 6])
     pts = []
     for k in range(sides):
-        a = (k / sides) * math.tau + random.uniform(-0.25, 0.25)
-        rr = rad * random.uniform(0.55, 1.15)
-        pts.append((cx + math.cos(a) * rr, cy + math.sin(a) * rr * random.uniform(0.7, 1.0)))
+        a = (k / sides) * math.tau + random.uniform(-0.28, 0.28)
+        rr = rad * random.uniform(0.5, 1.2)
+        pts.append((cx + math.cos(a) * rr, cy + math.sin(a) * rr * random.uniform(0.66, 1.0)))
     poly = ' '.join(f'{x:.1f},{y:.1f}' for x, y in pts)
-    base = random.uniform(0.72, 1.0)
     chips.append((cy, f'<polygon points="{poly}" transform="rotate({rot:.0f} {cx:.0f} {cy:.0f})" '
-                      f'fill="#0e0d0c" fill-opacity="{base:.2f}"/>'))
-    # A face conchoidal: um plano interno que reflete, sempre voltado para a luz.
-    if rad > 15:
-        fx = [(cx + (x - cx) * 0.56, cy + (y - cy) * 0.56) for x, y in pts[:max(3, sides - 1)]]
+                      f'fill="#070706"/>'))
+    # A face conchoidal. Só uma lasca em cada três a tem virada para a luz —
+    # é a raridade do brilho que faz o material ler como vítreo.
+    if rad > 22 and random.random() < 0.34:
+        fx = [(cx + (x - cx) * 0.62, cy + (y - cy) * 0.62) for x, y in pts[:max(3, sides - 1)]]
         fpoly = ' '.join(f'{x:.1f},{y:.1f}' for x, y in fx)
         chips.append((cy + 0.1, f'<polygon points="{fpoly}" transform="rotate({rot:.0f} {cx:.0f} {cy:.0f})" '
-                                f'fill="#5c5f60" fill-opacity="{random.uniform(0.18, 0.5):.2f}"/>'))
-    # A aresta viva, num lado só.
-    edge = ' L'.join(f'{x:.1f},{y:.1f}' for x, y in pts[:max(2, sides // 2 + 1)])
+                                f'fill="#8f9698" fill-opacity="{random.uniform(0.3, 0.72):.2f}"/>'))
+    # A aresta viva, num lado só e curta.
+    edge = ' L'.join(f'{x:.1f},{y:.1f}' for x, y in pts[:max(2, sides // 2)])
     chips.append((cy + 0.2, f'<path d="M{edge}" transform="rotate({rot:.0f} {cx:.0f} {cy:.0f})" '
-                            f'fill="none" stroke="#e8ecec" stroke-opacity="{random.uniform(0.25, 0.8):.2f}" '
-                            f'stroke-width="{max(0.8, rad * 0.055):.1f}" stroke-linejoin="round"/>'))
+                            f'fill="none" stroke="#eef2f2" stroke-opacity="{random.uniform(0.3, 0.95):.2f}" '
+                            f'stroke-width="{max(1.0, rad * 0.048):.1f}" stroke-linejoin="round"/>'))
 chips.sort(key=lambda t: t[0])
 
 open(f'{OUT}/coco-char.svg', 'w').write(f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1000">
 <defs>
-  <radialGradient id="cl2" cx="30%" cy="20%" r="76%">
-    <stop offset="0%" stop-color="#dfe8ea" stop-opacity="0.26"/>
-    <stop offset="100%" stop-color="#dfe8ea" stop-opacity="0"/></radialGradient>
-  <radialGradient id="cgn" cx="86%" cy="88%" r="56%">
-    <stop offset="0%" stop-color="#6d8f60" stop-opacity="0.16"/>
-    <stop offset="100%" stop-color="#6d8f60" stop-opacity="0"/></radialGradient>
+  <linearGradient id="clit" x1="0.1" y1="0" x2="0.9" y2="1">
+    <stop offset="0%" stop-color="#c9d6d8" stop-opacity="0.15"/>
+    <stop offset="52%" stop-color="#c9d6d8" stop-opacity="0.02"/>
+    <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/></linearGradient>
 </defs>
-<rect width="1200" height="1000" fill="#1c1b1a"/>
+<rect width="1200" height="1000" fill="#0b0a09"/>
 {''.join(c for _, c in chips)}
-<rect width="1200" height="1000" fill="url(#cl2)"/>
-<rect width="1200" height="1000" fill="url(#cgn)"/>
+<rect width="1200" height="1000" fill="url(#clit)"/>
 </svg>''')
 print('char de lascas: coco-char')
 
@@ -317,3 +318,69 @@ open(f'{OUT}/metal-plate.svg', 'w').write('''<svg xmlns="http://www.w3.org/2000/
 <rect y="398" width="1600" height="2" fill="#7c868a" opacity="0.7"/>
 </svg>''')
 print('metal: metal-plate')
+
+# --- 08 COCO CROMADO --------------------------------------------------------
+# O objeto de abertura. Um coco em cromo: é a única peça Y2K declarada do
+# baralho. Cromo NÃO é uma esfera clara com um brilho — é contraste de valor em
+# faixas horizontais: céu branco em cima, uma banda escura no equador, e o
+# ressalto do chão embaixo. A primeira versão usava um gradiente radial e saiu
+# como bola de vidro fosco.
+#
+# Os três poros de germinação continuam lá, agrupados num polo, porque é o que
+# faz a esfera ler como COCO e não como bola de metal.
+open(f'{OUT}/coco-chrome.svg', 'w').write('''<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000">
+<defs>
+  <linearGradient id="chb" x1="0" y1="0" x2="0.18" y2="1">
+    <stop offset="0%"   stop-color="#ffffff"/>
+    <stop offset="14%"  stop-color="#eef8f6"/>
+    <stop offset="30%"  stop-color="#b9d2cd"/>
+    <stop offset="44%"  stop-color="#5d7570"/>
+    <stop offset="52%"  stop-color="#22302b"/>
+    <stop offset="58%"  stop-color="#4a6146"/>
+    <stop offset="68%"  stop-color="#9dba86"/>
+    <stop offset="80%"  stop-color="#e9f4d8"/>
+    <stop offset="92%"  stop-color="#8fa98a"/>
+    <stop offset="100%" stop-color="#37452f"/></linearGradient>
+  <radialGradient id="chv" cx="38%" cy="30%" r="76%">
+    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.34"/>
+    <stop offset="62%" stop-color="#ffffff" stop-opacity="0"/>
+    <stop offset="100%" stop-color="#0d160f" stop-opacity="0.5"/></radialGradient>
+  <linearGradient id="chi" x1="0.1" y1="0.2" x2="0.9" y2="0.9">
+    <stop offset="0%"   stop-color="#ffd9a8"/>
+    <stop offset="24%"  stop-color="#c8e85c"/>
+    <stop offset="46%"  stop-color="#7fe6d6"/>
+    <stop offset="66%"  stop-color="#b9a8f0"/>
+    <stop offset="84%"  stop-color="#ffc2d2"/>
+    <stop offset="100%" stop-color="#ffeec2"/></linearGradient>
+  <filter id="chs"><feGaussianBlur stdDeviation="9"/></filter>
+  <filter id="chf"><feGaussianBlur stdDeviation="3"/></filter>
+  <clipPath id="chc"><circle cx="500" cy="500" r="470"/></clipPath>
+</defs>
+<circle cx="500" cy="500" r="470" fill="url(#chb)"/>
+<g clip-path="url(#chc)">
+  <!-- a franja iridescente: um arco fino na borda que vira, nunca no corpo -->
+  <circle cx="500" cy="500" r="452" fill="none" stroke="url(#chi)" stroke-width="34"
+    opacity="0.85" filter="url(#chf)"/>
+  <!-- especular dura, e a sua fantasma -->
+  <ellipse cx="342" cy="252" rx="126" ry="76" fill="#ffffff" opacity="0.95"
+    transform="rotate(-26 342 252)"/>
+  <ellipse cx="318" cy="300" rx="212" ry="140" fill="#ffffff" opacity="0.22"
+    transform="rotate(-26 318 300)" filter="url(#chs)"/>
+  <!-- o ressalto do chão, embaixo à direita -->
+  <ellipse cx="716" cy="812" rx="150" ry="52" fill="#f2ffe8" opacity="0.5"
+    transform="rotate(-24 716 812)" filter="url(#chs)"/>
+  <!-- os três poros, agrupados num polo, na banda clara de cima -->
+  <g fill="#16231a" opacity="0.66">
+    <ellipse cx="626" cy="286" rx="29" ry="24" transform="rotate(-18 626 286)"/>
+    <ellipse cx="702" cy="336" rx="26" ry="21" transform="rotate(-18 702 336)"/>
+    <ellipse cx="646" cy="372" rx="24" ry="20" transform="rotate(-18 646 372)"/>
+  </g>
+  <g fill="#e8f6ec" opacity="0.45">
+    <ellipse cx="622" cy="278" rx="25" ry="8" transform="rotate(-18 622 278)"/>
+    <ellipse cx="698" cy="329" rx="22" ry="7" transform="rotate(-18 698 329)"/>
+  </g>
+</g>
+<circle cx="500" cy="500" r="470" fill="url(#chv)"/>
+<circle cx="500" cy="500" r="469" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+</svg>''')
+print('cromo: coco-chrome')

@@ -82,37 +82,38 @@ const MERCADO = {
 };
 
 /* --- As três condições ---------------------------------------------------
-   A mesma gramática de gates do deck da venture: cada condição diz o que
-   precisa ser verdade e o que ela destrava. Sem pedido, sem prazo. */
+   Reescritas curtas. A versão anterior trazia uma frase de explicação e uma
+   de destravamento para cada condição; num quadro que agora vive de bloco,
+   número e ícone, essa prosa não cabia e, pior, não era necessária — o
+   gerente reage ao nome da condição, não ao parágrafo sobre ela.
+   Sem pedido, sem prazo. */
 const CONDICOES = [
-  ['01', 'biomassa regular',
-   'Volume e frequência que sustentem uma operação contínua.',
-   'uma rota térmica dimensionada, não um experimento'],
-  ['02', 'espaço na rotina',
-   'Uma etapa térmica que caiba na operação da unidade.',
-   'a casca deixa de ser uma pilha e vira um fluxo'],
-  ['03', 'destino para o biochar',
-   'Solo, produtores ou materiais que absorvam o produto.',
-   'a remoção fica dentro da própria cadeia'],
+  ['01', 'biomassa regular',    'volume e frequência',          'pilha'],
+  ['02', 'espaço na rotina',    'uma etapa térmica que caiba',  'reator'],
+  ['03', 'destino para o char', 'solo, produtores, materiais',  'solo'],
 ];
 
-/* --- Os três caminhos de valor ------------------------------------------- */
-const CAMINHOS = [
-  ['01', 'fluxo', 'Nova rota de valorização',
-   'Massa −70%, material seco e estável — sem novo passivo.'],
-  ['02', 'produto', 'Biochar',
-   'Solo, substratos e materiais: um produto físico com mercado real.'],
-  ['03', 'carbono', 'Carbon removal',
-   '≈2,5–3 t de CO₂ por t de biochar (benchmark) — certificável e já comprado em escala.'],
-];
-
-/* --- As cinco etapas do processo ---------------------------------------- */
+/* --- As cinco etapas do processo ----------------------------------------
+   Uma palavra cada, porque elas viraram uma fila de ícones. */
 const ETAPAS = [
-  ['biomassa',    'casca úmida, como sai da unidade'],
-  ['preparo',     'secagem com calor do próprio processo'],
-  ['pirólise',    '400–600 °C, pouco oxigênio'],
-  ['gases',       'recirculam como calor'],
-  ['biochar',     'carbono estável, seco'],
+  ['biomassa', 'pilha'], ['preparo', 'calor'], ['pirólise', 'reator'],
+  ['gases', 'gases'],    ['biochar', 'char'],
 ];
 
-module.exports = { LOCAL, COCO, PROCESSO, PEPSICO, EMBRAPA, MERCADO, CONDICOES, CAMINHOS, ETAPAS };
+/* --- As três propriedades do produto ------------------------------------- */
+const PRODUTO = [
+  ['seco',    'char'],
+  ['inerte',  'registro'],
+  ['séculos', 'removal'],
+];
+
+/* --- As metas que a PepsiCo já publicou, na ordem de proximidade com o coco */
+const METAS = [
+  [`−${PEPSICO.flagReducao}%`,        'escopo 3 agrícola',   'solo'],
+  [`${PEPSICO.acresRegenerativos} mi`, 'acres regenerativos', 'palmeira'],
+  [`−${PEPSICO.escopo3EI}%`,          'escopo 3 · energia',  'unidade'],
+  [`${PEPSICO.netZero}`,              'net-zero · SBTi',     'removal'],
+];
+
+module.exports = { LOCAL, COCO, PROCESSO, PEPSICO, EMBRAPA, MERCADO,
+                   CONDICOES, ETAPAS, PRODUTO, METAS };
