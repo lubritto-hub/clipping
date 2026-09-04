@@ -35,9 +35,9 @@ const PROCESSO = {
   sub: 'Um processo térmico converte a biomassa de coco em um sólido rico em carbono '
      + 'e permite recuperar parte da energia dos gases.',
   etapas: [
-    ['01', 'Biomassa de coco',   'matéria-prima local',       'pilha'],
-    ['02', 'Conversão térmica',  'calor + oxigênio limitado', 'reator'],
-    ['03', 'Biochar',            'produto rico em carbono',   'char'],
+    ['01', 'Biomassa de coco',  '(resíduo)',         'matéria-prima local',       'pilha'],
+    ['02', 'Conversão térmica', '(autossustentada)', 'calor + oxigênio limitado', 'reator'],
+    ['03', 'Biochar',           '(gera crédito)',    'produto rico em carbono',   'char'],
   ],
   circuito: ['Gases do processo', 'Calor / energia recuperável'],
   saidas: [['Produto físico', 'bloco'], ['Eficiência', 'calor'], ['Remoção de carbono', 'removal']],
@@ -47,11 +47,11 @@ const INTEGRACAO = {
   titulo: 'A solução ganha eficiência\nquando nasce integrada à planta.',
   legenda: 'Configuração ilustrativa — tecnologia a selecionar',
   itens: [
-    ['01', 'Matéria-prima local', 'O sistema parte do fluxo já gerado na unidade, '
-     + 'reduzindo etapas de manejo quando a logística permitir.', 'pilha'],
+    ['01', 'Matéria-prima', 'O sistema parte do fluxo já gerado na unidade, '
+     + 'reduzindo etapas de manejo, logística e disposição.', 'pilha'],
     ['02', 'Energia em circuito', 'Os gases do processo podem retornar como calor, '
      + 'elevando a eficiência e reduzindo demanda externa.', 'gases'],
-    ['03', 'Configuração sob medida', 'Escala, preparo e tecnologia seguem volume, '
+    ['03', 'Configuração sob demanda', 'Preparo e tecnologia se adequam à escala, '
      + 'umidade, granulometria e rotina operacional de Petrolina.', 'unidade'],
   ],
   fecho: 'Não é uma máquina isolada. É um sistema industrial.',
@@ -101,13 +101,13 @@ const PROXIMO = {
   titulo: 'Vamos construir o\nbusiness case de Petrolina.',
   sub: 'Um próximo passo simples para transformar a oportunidade em decisão.',
   entradas: [
-    ['01', 'Sessão técnica',  'Operações + Sustentabilidade',            'unidade'],
+    ['01', 'Visita técnica',  'Operações + Sustentabilidade',            'unidade'],
     ['02', 'Dados essenciais','fluxo · destinação · integração',         'registro'],
     ['03', 'Amostra',         'representativa · caracterização + teste', 'secao'],
   ],
   entrega: ['balanço preliminar', 'screening tecnológico', 'rotas de uso do biochar',
             'faixa econômica', 'recomendação de teste / piloto'],
-  cta: 'Próximo passo proposto: agendar a sessão técnica com a unidade.',
+  cta: 'Próximo passo: apresentação da viabilidade do projeto.',
 };
 
 module.exports = { MARCA, CAPA, PROCESSO, INTEGRACAO, ALAVANCAS, CARBONO, DADOS, PROXIMO };

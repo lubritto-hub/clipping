@@ -35,3 +35,6 @@ design-system/.preview/*
 !design-system/.preview/img/
 design-system/.preview/img/*
 !design-system/.preview/img/foto/
+
+# Saídas do renderizador de QA
+qa*.html

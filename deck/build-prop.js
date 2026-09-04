@@ -73,8 +73,8 @@ const corpo = (s, t, x, y, w, h, colour = CREME, size = 12) =>
   s.addText(t, { x, y, w, h, isTextBox: true, margin: 0, fontFace: 'Arial',
     fontSize: size, color: colour, lineSpacing: size * 1.5, valign: 'top' });
 
-const rotulo = (s, t, x, y, w, colour, align = 'left', size = 9.5) =>
-  s.addText(String(t), { x, y, w, h: 0.22, isTextBox: true, margin: 0, fontFace: 'Arial',
+const rotulo = (s, t, x, y, w, colour, align = 'left', size = 11) =>
+  s.addText(String(t), { x, y, w, h: 0.26, isTextBox: true, margin: 0, fontFace: 'Arial',
     fontSize: size, color: colour, align, valign: 'middle' });
 
 const micro = (s, t, x, y, w, colour, align = 'left', size = 8) =>
@@ -143,26 +143,27 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   corpo(s, P.PROCESSO.sub, M, 2.44, 6.4, 0.8, CREME, 12);
 
   // A cadeia. Três blocos e o circuito de calor por baixo.
-  P.PROCESSO.etapas.forEach(([idx, nome, nota, ic], i) => {
+  P.PROCESSO.etapas.forEach(([idx, nome, qualif, nota, ic], i) => {
     const x = M + i * 4.06, w = 3.72;
-    bloco(s, x, 3.46, w, 1.34, CARVAO, 0.06);
-    disco(s, ic, x + 0.52, 3.94, 0.3, i === 2 ? VERDE : MATA, i === 2 ? 'dark' : 'acid');
-    rotulo(s, idx, x + 1.02, 3.84, 0.5, VERDE, 'left', 12);
-    s.addText(nome, { x: x + 0.28, y: 4.32, w: w - 0.56, h: 0.3, isTextBox: true,
+    bloco(s, x, 3.34, w, 1.80, CARVAO, 0.06);
+    disco(s, ic, x + 0.52, 3.82, 0.3, i === 2 ? VERDE : MATA, i === 2 ? 'dark' : 'acid');
+    rotulo(s, idx, x + 1.02, 3.7, 0.5, VERDE, 'left', 12);
+    s.addText(nome, { x: x + 0.28, y: 4.2, w: w - 0.56, h: 0.3, isTextBox: true,
       margin: 0, fontFace: 'Arial', fontSize: 15, bold: true, color: BRANCO,
       charSpacing: -0.4, valign: 'top' });
-    rotulo(s, nota, x + 0.28, 4.68, w - 0.56, PRATA, 'left', 9.5);
+    rotulo(s, qualif, x + 0.28, 4.54, w - 0.56, VERDE, 'left', 12);
+    rotulo(s, nota, x + 0.28, 4.80, w - 0.56, PRATA, 'left', 11);
   });
 
-  fio(s, M + 1.9, 5.14, 8.4, 66);
-  icone(s, 'gases', M + 5.7, 5.24, 'acid', 0.3);
+  fio(s, M + 1.9, 5.48, 8.4, 66);
+  icone(s, 'gases', M + 5.7, 5.58, 'acid', 0.3);
   micro(s, `${P.PROCESSO.circuito[0]}  →  ${P.PROCESSO.circuito[1]}`,
-    M + 1.9, 5.66, 8.4, VERDE, 'center', 8.5);
+    M + 1.9, 6.02, 8.4, VERDE, 'center', 9);
 
   P.PROCESSO.saidas.forEach(([t, ic], i) => {
     const x = M + i * 2.7;
-    icone(s, ic, x, 6.34, 'acid', 0.28);
-    micro(s, t, x + 0.4, 6.42, 2.4, CREME, 'left', 8.5);
+    icone(s, ic, x, 6.58, 'acid', 0.3);
+    micro(s, t, x + 0.42, 6.67, 2.4, CREME, 'left', 9);
   });
 
   s.addNotes('Entra biomassa de coco, acontece conversão térmica com oxigênio limitado, '
@@ -190,7 +191,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
     s.addText(nome, { x: 6.86, y, w: 5.74, h: 0.28, isTextBox: true, margin: 0,
       fontFace: 'Arial', fontSize: 14, bold: true, color: BRANCO,
       charSpacing: -0.3, valign: 'top' });
-    corpo(s, nota, 6.86, y + 0.34, 5.6, 0.62, PRATA, 10.5);
+    corpo(s, nota, 6.86, y + 0.36, 5.6, 0.66, PRATA, 11.5);
     if (i < 2) fio(s, 5.9, y + 1.06, 6.7, 76);
   });
 
@@ -218,20 +219,20 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
 
   P.ALAVANCAS.itens.forEach(([idx, nome, nota, ic], i) => {
     const x = M + i * 3.02, w = 2.78;
-    bloco(s, x, 3.36, w, 1.44, i === 3 ? MATA : 'F4F2EC', 0.06);
+    bloco(s, x, 3.36, w, 1.64, i === 3 ? MATA : 'F4F2EC', 0.06);
     icone(s, ic, x + 0.26, 3.6, i === 3 ? 'acid' : 'dark', 0.3);
     rotulo(s, idx, x + 0.7, 3.61, 0.5, i === 3 ? VERDE : MARROM, 'left', 11);
     s.addText(nome, { x: x + 0.26, y: 4.06, w: w - 0.52, h: 0.3, isTextBox: true,
       margin: 0, fontFace: 'Arial', fontSize: 15, bold: true,
       color: i === 3 ? BRANCO : MATA, charSpacing: -0.4, valign: 'top' });
-    rotulo(s, nota, x + 0.26, 4.42, w - 0.52, i === 3 ? PRATA : MARROM, 'left', 9.5);
+    corpo(s, nota, x + 0.26, 4.44, w - 0.52, 0.52, i === 3 ? PRATA : MARROM, 11);
   });
 
-  micro(s, 'robustez econômica', M, 5.14, 4.0, MARROM, 'left', 8.5);
-  corpo(s, P.ALAVANCAS.robustez, M, 5.4, 7.6, 0.7, MATA, 11.5);
+  micro(s, 'robustez econômica', M, 5.30, 4.0, MARROM, 'left', 8.5);
+  corpo(s, P.ALAVANCAS.robustez, M, 5.56, 7.6, 0.7, MATA, 12);
 
-  bloco(s, 8.6, 5.06, 4.01, 1.1, MATA, 0.06);
-  s.addText(P.ALAVANCAS.fecho, { x: 8.86, y: 5.06, w: 3.5, h: 1.1, isTextBox: true,
+  bloco(s, 8.6, 5.24, 4.01, 1.1, MATA, 0.06);
+  s.addText(P.ALAVANCAS.fecho, { x: 8.86, y: 5.24, w: 3.5, h: 1.1, isTextBox: true,
     margin: 0, fontFace: 'Arial', fontSize: 14, bold: true, color: VERDE,
     lineSpacing: 19, charSpacing: -0.3, valign: 'middle' });
 
@@ -258,7 +259,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
     s.addText(nome, { x: 7.62, y, w: 2.3, h: 0.28, isTextBox: true, margin: 0,
       fontFace: 'Arial', fontSize: 13.5, bold: true, color: BRANCO,
       charSpacing: -0.3, valign: 'top' });
-    rotulo(s, nota, 10.0, y + 0.03, 2.6, PRATA, 'left', 9.5);
+    rotulo(s, nota, 10.0, y + 0.02, 2.62, PRATA, 'left', 11);
     if (i < 3) fio(s, 6.4, y + 0.62, 6.2, 80);
   });
 
@@ -282,18 +283,18 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   corpo(s, P.DADOS.sub, M, 2.34, 5.6, 0.5, MARROM, 12);
 
   P.DADOS.itens.forEach(([idx, nome, nota, ic], i) => {
-    const y = 3.16 + i * 0.86;
+    const y = 3.02 + i * 0.94;
     icone(s, ic, M, y + 0.02, 'dark', 0.3);
     rotulo(s, idx, M + 0.44, y + 0.03, 0.4, VERDE, 'left', 11);
-    s.addText(nome, { x: M + 0.9, y, w: 3.5, h: 0.28, isTextBox: true, margin: 0,
+    s.addText(nome, { x: M + 0.9, y, w: 5.6, h: 0.28, isTextBox: true, margin: 0,
       fontFace: 'Arial', fontSize: 14, bold: true, color: MATA,
       charSpacing: -0.3, valign: 'top' });
-    rotulo(s, nota, M + 4.5, y + 0.03, 2.9, MARROM, 'left', 9.5);
-    if (i < 3) fio(s, M, y + 0.64, 6.7, 62);
+    rotulo(s, nota, M + 0.9, y + 0.34, 5.6, MARROM, 'left', 11);
+    if (i < 3) fio(s, M, y + 0.72, 6.7, 62);
   });
 
-  bloco(s, M, 6.34, 6.7, 0.5, MATA, 0.06);
-  micro(s, P.DADOS.saida, M + 0.24, 6.34, 6.3, VERDE, 'left', 9);
+  bloco(s, M, 6.68, 6.7, 0.5, MATA, 0.06);
+  micro(s, P.DADOS.saida, M + 0.24, 6.68, 6.3, VERDE, 'left', 9);
 
   s.addNotes('O dimensionamento começa pelo fluxo real: volume e sazonalidade, umidade '
     + 'e propriedades, destinação e economia atual, espaço e energia. A saída é escala, '
@@ -320,15 +321,15 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
     s.addText(nome, { x: M + 0.9, y, w: 2.4, h: 0.28, isTextBox: true, margin: 0,
       fontFace: 'Arial', fontSize: 14, bold: true, color: BRANCO,
       charSpacing: -0.3, valign: 'top' });
-    rotulo(s, nota, M + 3.3, y + 0.03, 2.6, PRATA, 'left', 9.5);
+    rotulo(s, nota, M + 3.3, y + 0.02, 3.3, PRATA, 'left', 11);
     if (i < 2) fio(s, M, y + 0.64, 6.0, 78);
   });
 
-  bloco(s, 7.5, 3.06, 5.11, 2.62, CARVAO, 0.06);
+  bloco(s, 7.5, 3.06, 5.11, 2.72, CARVAO, 0.06);
   micro(s, 'case pronto para decisão', 7.78, 3.3, 4.5, VERDE, 'left', 8.5);
   P.PROXIMO.entrega.forEach((t, i) => {
-    icone(s, 'registro', 7.78, 3.74 + i * 0.38, 'steel', 0.2);
-    rotulo(s, t, 8.12, 3.77 + i * 0.38, 4.2, CREME, 'left', 10.5);
+    icone(s, 'registro', 7.78, 3.76 + i * 0.4, 'steel', 0.22);
+    rotulo(s, t, 8.14, 3.79 + i * 0.4, 4.2, CREME, 'left', 11.5);
   });
 
   // A faixa do pedido. É a única área verde do baralho inteiro.
