@@ -1,5 +1,5 @@
 /* ===========================================================================
-   PROPOSTA PEPSICO / PETROLINA — BIOCHAR
+   PROPOSTA PEPSICO / PETROLINA, BIOCHAR
    Formato largo: 13,333" × 7,5".
 
    O conteúdo é o do arquivo de origem. O que mudou é a execução, em quatro
@@ -8,7 +8,7 @@
    1. FOTOGRAFIA COM FADE DE VERDADE. As quatro fotos do arquivo original
       entram inteiras, mascaradas com uma curva de nove paradas, e somem
       dentro do quadro em vez de terminarem numa aresta. Isso não é possível
-      em pptxgenjs — não há máscara nem degradê — então a fotografia mora na
+      em pptxgenjs, não há máscara nem degradê, então a fotografia mora na
       chapa, composta no navegador, e só o texto fica vivo aqui.
 
    2. TOM. Preto, prata, marrom escuro, verde e branco. Verde nunca é campo
@@ -19,7 +19,7 @@
       apaga a silhueta das palavras e custa velocidade de leitura.
 
    4. RITMO CLARO/ESCURO. Cinco quadros escuros e dois brancos, e os brancos
-      caem onde o assunto é econômico — não por alternância decorativa.
+      caem onde o assunto é econômico, não por alternância decorativa.
    =========================================================================== */
 
 const pptxgen = require('pptxgenjs');
@@ -39,8 +39,8 @@ const CINZA  = '7C837D';
 
 const pres = new pptxgen();
 pres.layout = 'LAYOUT_WIDE';               // 13,333" × 7,5"
-pres.author = 'RECICLAR · EPA';
-pres.title  = 'Proposta PepsiCo Petrolina — Biochar';
+pres.author = 'RECICLAR, EPA';
+pres.title  = 'Proposta PepsiCo Petrolina, Biochar';
 
 /* --- A grade -------------------------------------------------------------
    Margem de 0,72", que é a mesma proporção de recuo do baralho de 10". */
@@ -62,7 +62,7 @@ function pilula(s, t, x, y, w, fill, colour, size = 9) {
     color: colour, align: 'center', valign: 'middle' });
 }
 
-/** MANCHETE — caixa de sentença, bold, tracking fechado. */
+/** MANCHETE, caixa de sentença, bold, tracking fechado. */
 const tituloH = (size, lines) => (size * 1.06 * lines) / 72;
 const titulo = (s, t, x, y, w, size, colour) =>
   s.addText(t, { x, y, w, h: tituloH(size, String(t).split('\n').length), isTextBox: true,
@@ -82,8 +82,8 @@ const micro = (s, t, x, y, w, colour, align = 'left', size = 8) =>
     fontFace: 'Arial', fontSize: size, charSpacing: 1.8, color: colour, align,
     valign: 'middle' });
 
-/** FIO DE PRATA — estrutural, nunca decorativo. */
-const fio = (s, x, y, w, transparency = 62) =>
+/** FIO DE PRATA, estrutural, nunca decorativo. */
+const fio = (s, x, y, w, transparency = 50) =>
   s.addShape(pres.ShapeType.rect, { x, y, w, h: 0.011,
     fill: { color: PRATA, transparency } });
 
@@ -97,18 +97,24 @@ function disco(s, name, cx, cy, r, fill, tone) {
   icone(s, name, cx - r * 0.55, cy - r * 0.55, tone, r * 1.1);
 }
 
-/** CABEÇALHO E RODAPÉ — idênticos nos sete quadros, como no original. */
+/** CABEÇALHO E RODAPÉ, idênticos nos sete quadros, como no original. */
 function moldura(s, n, escuro = true) {
   const c = escuro ? CINZA : MARROM;
-  micro(s, `${P.MARCA.cliente}  ·  ${P.MARCA.linha}`, M, 0.42, 4.2, c);
+  micro(s, `${P.MARCA.cliente}  /  ${P.MARCA.linha}`, M, 0.42, 4.2, c);
   micro(s, P.MARCA.ressalva, 5.1, 0.42, 6.9, c, 'right', 7.5);
   micro(s, n, DIR - 0.6, 0.42, 0.6, escuro ? PRATA : MATA, 'right', 9);
 }
 
+/** Um GIF animado. O PowerPoint anima GIF em modo apresentação, então a
+    transformação roda sozinha na tela e continua sendo uma imagem única no
+    arquivo, sem depender de animação de slide nem de vídeo embutido. */
+const gif = (s, nome, x, y, w, h) =>
+  s.addImage({ path: `${A}${nome}.gif`, x, y, w, h });
+
 const chapa = n => ({ path: A + `pr-${n}.jpg` });
 
 /* ===========================================================================
-   01 — CAPA
+   01, CAPA
    =========================================================================== */
 {
   const s = pres.addSlide();
@@ -128,42 +134,48 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
 
   s.addNotes('Abertura. A biomassa de coco já existe na unidade; a proposta é uma rota '
     + 'tecnológica que combina biochar, energia recuperável e carbono durável. '
-    + 'Conceito para discussão — a configuração é a validar.');
+    + 'Conceito para discussão, a configuração é a validar.');
 }
 
 /* ===========================================================================
-   02 — O PROCESSO
+   02, O PROCESSO
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = chapa('02');
   moldura(s, '02');
 
-  titulo(s, P.PROCESSO.titulo, M, 1.06, 8.0, 32, BRANCO);
-  corpo(s, P.PROCESSO.sub, M, 2.44, 6.4, 0.8, CREME, 12);
+  titulo(s, P.PROCESSO.titulo, M, 1.06, 6.1, 30, BRANCO);
+  corpo(s, P.PROCESSO.sub, M, 2.42, 5.8, 0.9, CREME, 12);
+
+  // A transformação, rodando. É a casca do cliente virando o char do cliente:
+  // as duas fotografias do arquivo original, com a frente térmica no meio.
+  gif(s, 'coco-biochar', 6.9, 1.06, 5.71, 3.21);
+  s.addShape(pres.ShapeType.rect, { x: 6.9, y: 1.06, w: 5.71, h: 3.21,
+    fill: { type: 'none' }, line: { color: PRATA, width: 0.75, transparency: 55 } });
+  micro(s, 'casca de coco  →  biochar', 6.9, 4.36, 3.4, PRATA, 'left', 8);
 
   // A cadeia. Três blocos e o circuito de calor por baixo.
   P.PROCESSO.etapas.forEach(([idx, nome, qualif, nota, ic], i) => {
     const x = M + i * 4.06, w = 3.72;
-    bloco(s, x, 3.34, w, 1.80, CARVAO, 0.06);
-    disco(s, ic, x + 0.52, 3.82, 0.3, i === 2 ? VERDE : MATA, i === 2 ? 'dark' : 'acid');
-    rotulo(s, idx, x + 1.02, 3.7, 0.5, VERDE, 'left', 12);
-    s.addText(nome, { x: x + 0.28, y: 4.2, w: w - 0.56, h: 0.3, isTextBox: true,
+    bloco(s, x, 4.72, w, 1.74, CARVAO, 0.06);
+    disco(s, ic, x + 0.52, 5.18, 0.3, i === 2 ? VERDE : MATA, i === 2 ? 'dark' : 'acid');
+    rotulo(s, idx, x + 1.02, 5.06, 0.5, VERDE, 'left', 12);
+    s.addText(nome, { x: x + 0.28, y: 5.56, w: w - 0.56, h: 0.3, isTextBox: true,
       margin: 0, fontFace: 'Arial', fontSize: 15, bold: true, color: BRANCO,
       charSpacing: -0.4, valign: 'top' });
-    rotulo(s, qualif, x + 0.28, 4.54, w - 0.56, VERDE, 'left', 12);
-    rotulo(s, nota, x + 0.28, 4.80, w - 0.56, PRATA, 'left', 11);
+    rotulo(s, qualif, x + 0.28, 5.88, w - 0.56, VERDE, 'left', 12);
+    rotulo(s, nota, x + 0.28, 6.14, w - 0.56, PRATA, 'left', 11);
   });
 
-  fio(s, M + 1.9, 5.48, 8.4, 66);
-  icone(s, 'gases', M + 5.7, 5.58, 'acid', 0.3);
+  fio(s, M, 6.72, 11.89, 58);
+  icone(s, 'gases', M, 6.84, 'acid', 0.28);
   micro(s, `${P.PROCESSO.circuito[0]}  →  ${P.PROCESSO.circuito[1]}`,
-    M + 1.9, 6.02, 8.4, VERDE, 'center', 9);
-
+    M + 0.4, 6.93, 5.0, VERDE, 'left', 9);
   P.PROCESSO.saidas.forEach(([t, ic], i) => {
-    const x = M + i * 2.7;
-    icone(s, ic, x, 6.58, 'acid', 0.3);
-    micro(s, t, x + 0.42, 6.67, 2.4, CREME, 'left', 9);
+    const x = 6.95 + i * 1.92;
+    icone(s, ic, x, 6.84, 'acid', 0.26);
+    micro(s, t, x + 0.32, 6.93, 1.78, CREME, 'left', 7.5);
   });
 
   s.addNotes('Entra biomassa de coco, acontece conversão térmica com oxigênio limitado, '
@@ -172,7 +184,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
 }
 
 /* ===========================================================================
-   03 — INTEGRAÇÃO
+   03, INTEGRAÇÃO
    A foto ocupa a esquerda; os três itens ficam à direita, fora dela.
    =========================================================================== */
 {
@@ -180,33 +192,40 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   s.background = chapa('03');
   moldura(s, '03');
 
-  micro(s, P.INTEGRACAO.legenda, M, 6.66, 5.0, PRATA, 'left', 7.5);
+  micro(s, P.INTEGRACAO.legenda, M, 7.04, 5.0, PRATA, 'left', 7.5);
 
   titulo(s, P.INTEGRACAO.titulo, 5.9, 1.06, 6.7, 27, BRANCO);
 
   P.INTEGRACAO.itens.forEach(([idx, nome, nota, ic], i) => {
-    const y = 2.62 + i * 1.24;
+    const y = 2.50 + i * 1.14;
     icone(s, ic, 5.9, y + 0.02, 'acid', 0.3);
     rotulo(s, idx, 6.34, y + 0.03, 0.5, VERDE, 'left', 11);
     s.addText(nome, { x: 6.86, y, w: 5.74, h: 0.28, isTextBox: true, margin: 0,
       fontFace: 'Arial', fontSize: 14, bold: true, color: BRANCO,
       charSpacing: -0.3, valign: 'top' });
     corpo(s, nota, 6.86, y + 0.36, 5.6, 0.66, PRATA, 11.5);
-    if (i < 2) fio(s, 5.9, y + 1.06, 6.7, 76);
+    if (i < 2) fio(s, 5.9, y + 0.98, 6.7, 70);
   });
 
-  bloco(s, 5.9, 6.36, 6.7, 0.56, MATA, 0.06);
-  s.addText(P.INTEGRACAO.fecho, { x: 6.14, y: 6.36, w: 6.3, h: 0.56, isTextBox: true,
+  micro(s, 'eixos de especificação', 5.9, 5.98, 4.0, PRATA, 'left', 8);
+  fio(s, 5.9, 6.20, 6.7, 40);
+  P.INTEGRACAO.eixos.forEach((t, i) => {
+    const x = 5.9 + (i % 3) * 2.26, y = 6.30 + Math.floor(i / 3) * 0.28;
+    micro(s, t, x, y, 2.2, i < 3 ? CREME : PRATA, 'left', 8.5);
+  });
+
+  bloco(s, 5.9, 6.90, 6.7, 0.5, MATA, 0.06);
+  s.addText(P.INTEGRACAO.fecho, { x: 6.14, y: 6.90, w: 6.3, h: 0.5, isTextBox: true,
     margin: 0, fontFace: 'Arial', fontSize: 13, bold: true, color: VERDE,
     charSpacing: -0.2, valign: 'middle' });
 
   s.addNotes('A eficiência vem da integração: matéria-prima local, energia em circuito '
-    + 'e configuração sob medida. A imagem é ilustrativa — a tecnologia ainda será '
+    + 'e configuração sob medida. A imagem é ilustrativa, a tecnologia ainda será '
     + 'selecionada.');
 }
 
 /* ===========================================================================
-   04 — AS ALAVANCAS
+   04, AS ALAVANCAS
    Quadro claro: o assunto é econômico.
    =========================================================================== */
 {
@@ -242,7 +261,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
 }
 
 /* ===========================================================================
-   05 — CARBONO DURÁVEL
+   05, CARBONO DURÁVEL
    =========================================================================== */
 {
   const s = pres.addSlide();
@@ -271,7 +290,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
 }
 
 /* ===========================================================================
-   06 — OS QUATRO DADOS
+   06, OS QUATRO DADOS
    Segundo quadro claro. A foto fica à direita; o conteúdo, à esquerda.
    =========================================================================== */
 {
@@ -302,7 +321,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
 }
 
 /* ===========================================================================
-   07 — O PRÓXIMO PASSO
+   07, O PRÓXIMO PASSO
    Duas colunas: o que entra e o que sai. E a única faixa verde do baralho.
    =========================================================================== */
 {

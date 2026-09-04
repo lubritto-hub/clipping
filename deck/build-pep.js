@@ -11,7 +11,7 @@ const A = '/home/user/clipping/design-system/.preview/deck-assets/';
         preenche uma única faixa no baralho inteiro: a do próximo passo. É
         exatamente por isso que essa faixa é a coisa mais visível do deck.
 
-   A prata é estrutural — fios e réguas — e o marrom vem quase todo da
+   A prata é estrutural, fios e réguas, e o marrom vem quase todo da
    própria matéria fotografada, não de blocos pintados. */
 const PRETO  = '0C0C0B';
 const CARVAO = '1B1C1A';   // cartão sobre o preto: um degrau, não um salto
@@ -25,8 +25,8 @@ const CINZA  = '8B928C';   // procedência
 
 const pres = new pptxgen();
 pres.layout = 'LAYOUT_16x9';               // 10" × 5.625"
-pres.author = 'RECICLAR · EPA';
-pres.title  = 'PepsiCo Petrolina — casca vira carbono';
+pres.author = 'RECICLAR, EPA';
+pres.title  = 'PepsiCo Petrolina, casca vira carbono';
 
 const num = (n, d = 0) => n.toLocaleString('pt-BR',
   { minimumFractionDigits: d, maximumFractionDigits: d });
@@ -36,12 +36,12 @@ const num = (n, d = 0) => n.toLocaleString('pt-BR',
    Seis, e o baralho inteiro é feito delas.
    =========================================================================== */
 
-/** BLOCO — retângulo de canto arredondado, chapado. A unidade de construção. */
+/** BLOCO, retângulo de canto arredondado, chapado. A unidade de construção. */
 const bloco = (s, x, y, w, h, fill, radius = 0.05) =>
   s.addShape(pres.ShapeType.roundRect, { x, y, w, h, rectRadius: radius,
     fill: { color: fill }, line: { color: fill, width: 0 } });
 
-/** PÍLULA — bloco baixo com rótulo dentro. O rótulo é sempre curto: se não
+/** PÍLULA, bloco baixo com rótulo dentro. O rótulo é sempre curto: se não
     couber em três palavras, não era uma pílula. */
 function pilula(s, t, x, y, w, fill, colour, size = 9) {
   s.addShape(pres.ShapeType.roundRect, { x, y, w, h: 0.30, rectRadius: 0.5,
@@ -51,7 +51,7 @@ function pilula(s, t, x, y, w, fill, colour, size = 9) {
     color: colour, align: 'center', valign: 'middle' });
 }
 
-/** NÚMERO — a peça mais pesada de qualquer quadro. Sempre bold, sempre com o
+/** NÚMERO, a peça mais pesada de qualquer quadro. Sempre bold, sempre com o
     tracking fechado, porque número grande com espaço largo lê como preço. */
 const numH = size => (size * 1.16) / 72;
 const numero = (s, t, x, y, w, size, colour, align = 'left') =>
@@ -59,25 +59,25 @@ const numero = (s, t, x, y, w, size, colour, align = 'left') =>
     fontSize: size, bold: true, color: colour, align, valign: 'top',
     charSpacing: size > 60 ? -3.4 : -1.8 });
 
-/** MANCHETE — no máximo quatro palavras. */
+/** MANCHETE, no máximo quatro palavras. */
 const tituloH = (size, lines) => (size * 1.04 * lines) / 72;
 const titulo = (s, t, x, y, w, size, colour) =>
   s.addText(t, { x, y, w, h: tituloH(size, String(t).split('\n').length), isTextBox: true,
     margin: 0, fontFace: 'Arial', fontSize: size, bold: true, color: colour,
     lineSpacing: size * 1.04, charSpacing: -1.4, valign: 'top' });
 
-/** RÓTULO — a única letra pequena do baralho. */
+/** RÓTULO, a única letra pequena do baralho. */
 const rotulo = (s, t, x, y, w, colour, align = 'left', size = 9) =>
   s.addText(String(t), { x, y, w, h: 0.2, isTextBox: true, margin: 0, fontFace: 'Arial',
     fontSize: size, color: colour, align, valign: 'middle' });
 
-/** ÍCONE — caixa fixa. Vinte ícones no mesmo tamanho leem como um sistema;
+/** ÍCONE, caixa fixa. Vinte ícones no mesmo tamanho leem como um sistema;
     vinte tamanhos leem como vinte desenhos. */
 const ICO = 0.34;
 const icone = (s, name, x, y, tone = 'dark', size = ICO) =>
   s.addImage({ path: `${A}ico/${name}-${tone}.png`, x, y, w: size, h: size });
 
-/** ÍCONE EM DISCO — o ícone dentro de um círculo de cor. É como ele aparece
+/** ÍCONE EM DISCO, o ícone dentro de um círculo de cor. É como ele aparece
     quando indexa uma etapa, e não uma linha. */
 function disco(s, name, cx, cy, r, fill, tone) {
   s.addShape(pres.ShapeType.ellipse, { x: cx - r, y: cy - r, w: r * 2, h: r * 2,
@@ -85,12 +85,12 @@ function disco(s, name, cx, cy, r, fill, tone) {
   icone(s, name, cx - r * 0.56, cy - r * 0.56, tone, r * 1.12);
 }
 
-/** FIO DE PRATA — a única linha do baralho. Estrutural, nunca decorativa. */
+/** FIO DE PRATA, a única linha do baralho. Estrutural, nunca decorativa. */
 const fio = (s, x, y, w, transparency = 52) =>
   s.addShape(pres.ShapeType.rect, { x, y, w, h: 0.01,
     fill: { color: PRATA, transparency } });
 
-/** PROCEDÊNCIA — uma linha, no pé, e só uma. */
+/** PROCEDÊNCIA, uma linha, no pé, e só uma. */
 const fonte = (s, t, colour = CINZA) =>
   s.addText(String(t), { x: 0.55, y: 5.10, w: 8.9, h: 0.22, isTextBox: true, margin: 0,
     fontFace: 'Arial', fontSize: 7.5, color: colour, valign: 'middle' });
@@ -98,28 +98,28 @@ const fonte = (s, t, colour = CINZA) =>
 const chapa = n => ({ path: A + `pep-${n}.jpg` });
 
 /* ===========================================================================
-   01 — CAPA
+   01, CAPA
    O pátio ocupa o quadro inteiro, rebaixado quase ao preto. Quatro palavras.
    =========================================================================== */
 {
   const s = pres.addSlide();
   s.background = chapa('01');
 
-  pilula(s, `${P.LOCAL.cidade} · ${P.LOCAL.uf}`, 0.55, 0.5, 1.8, VERDE, PRETO);
+  pilula(s, `${P.LOCAL.cidade}, ${P.LOCAL.uf}`, 0.55, 0.5, 1.8, VERDE, PRETO);
 
   titulo(s, 'Casca\nvira\ncarbono.', 0.55, 1.20, 5.2, 54, BRANCO);
 
   rotulo(s, 'Pirólise de casca de coco na unidade de Petrolina',
     0.55, 3.86, 4.6, CREME, 'left', 12);
-  rotulo(s, 'RECICLAR · EPA', 0.55, 4.80, 3.0, PRATA, 'left', 8.5);
+  rotulo(s, 'RECICLAR, EPA', 0.55, 4.80, 3.0, PRATA, 'left', 8.5);
 
   s.addNotes('Tese em uma frase: a casca de coco é boa biomassa para pirólise, e o '
     + 'biochar conversa com metas que a PepsiCo já publicou. O deck termina num '
-    + 'próximo passo objetivo — amostra, volume e destinação.');
+    + 'próximo passo objetivo, amostra, volume e destinação.');
 }
 
 /* ===========================================================================
-   02 — A BIOMASSA
+   02, A BIOMASSA
    O pátio em plano aberto à direita. À esquerda, o número da premissa.
    =========================================================================== */
 {
@@ -142,14 +142,14 @@ const chapa = n => ({ path: A + `pep-${n}.jpg` });
   icone(s, 'pilha', 2.85, 4.08, 'steel', 0.28);
   rotulo(s, 'perecível em pilha', 2.85, 4.48, 1.7, PRATA, 'left', 8);
 
-  fonte(s, `caracterização de casca e fibra · ${P.COCO.fonte}`);
+  fonte(s, `caracterização de casca e fibra, ${P.COCO.fonte}`);
   s.addNotes('80–85% da massa do fruto é casca. A biomassa já está no pátio, hoje, '
-    + 'nesta quantidade. A umidade de 30–70% as-received é o desafio conhecido — '
+    + 'nesta quantidade. A umidade de 30–70% as-received é o desafio conhecido, '
     + 'secagem integrada com calor do próprio processo.');
 }
 
 /* ===========================================================================
-   03 — O MATERIAL
+   03, O MATERIAL
    A secção grande à direita. Dois números, uma frase de leitura.
    =========================================================================== */
 {
@@ -173,13 +173,13 @@ const chapa = n => ({ path: A + `pep-${n}.jpg` });
   rotulo(s, 'Mais carbono fixo, e um char mais limpo.',
     0.55, 4.38, 4.2, CREME, 'left', 11);
 
-  fonte(s, `literatura técnica · ${P.COCO.fonte}`);
+  fonte(s, `literatura técnica, ${P.COCO.fonte}`);
   s.addNotes('Lignina alta e cinzas baixas favorecem rendimento e chars aromáticos '
     + 'estáveis. A secção ao lado mostra o argumento: o fruto é quase todo casca.');
 }
 
 /* ===========================================================================
-   04 — O PROCESSO
+   04, O PROCESSO
    A temperatura como número, cinco etapas sobre a régua de aço, e a matéria
    antes e depois nos dois painéis do pé.
    =========================================================================== */
@@ -204,14 +204,14 @@ const chapa = n => ({ path: A + `pep-${n}.jpg` });
   numero(s, `~${P.PROCESSO.rendimentoKgPorT} kg`, 5.60, 3.94, 2.6, 30, VERDE);
   rotulo(s, 'biochar sai', 5.60, 4.50, 2.2, VERDE, 'left', 9);
 
-  fonte(s, 'rendimento de benchmark de literatura para casca de coco — a validar com a biomassa da unidade');
+  fonte(s, 'rendimento de benchmark de literatura para casca de coco, a validar com a biomassa da unidade');
   s.addNotes('Entra casca, acontece calor com pouco oxigênio (400–600 °C), sai '
     + 'biochar e energia. Os gases recirculam como calor. ~300 kg/t é benchmark de '
     + 'literatura, a validar com a biomassa da unidade.');
 }
 
 /* ===========================================================================
-   05 — O PRODUTO
+   05, O PRODUTO
    O primeiro dos dois quadros brancos. O char sangra pela direita.
    =========================================================================== */
 {
@@ -232,16 +232,16 @@ const chapa = n => ({ path: A + `pep-${n}.jpg` });
   });
 
   // A linha inteira atravessava o painel de char e sumia na metade preta.
-  s.addText(`certificável em ${P.PROCESSO.certificacao} · metano evitado em pilhas úmidas: `
+  s.addText(`certificável em ${P.PROCESSO.certificacao}, metano evitado em pilhas úmidas: `
     + 'metodologia Puro.earth (2025)',
     { x: 0.55, y: 5.06, w: 3.5, h: 0.34, isTextBox: true, margin: 0, fontFace: 'Arial',
       fontSize: 7.5, color: MARROM, valign: 'top' });
   s.addNotes('Casca úmida é volumosa e perecível; biochar é seco, cerca de 30% da '
-    + 'massa, inerte e estável por séculos — não vira passivo.');
+    + 'massa, inerte e estável por séculos, não vira passivo.');
 }
 
 /* ===========================================================================
-   06 — AS METAS
+   06, AS METAS
    O segundo quadro branco. Quatro números publicados e a única evidência de
    campo, que é daqui.
    =========================================================================== */
@@ -267,7 +267,7 @@ const chapa = n => ({ path: A + `pep-${n}.jpg` });
     + `${P.EMBRAPA.sobrevivenciaSem}% → ${P.EMBRAPA.sobrevivenciaCom}%`,
     3.78, 3.56, 5.4, CREME, 'left', 12);
 
-  s.addText(`${P.EMBRAPA.local} · ${P.EMBRAPA.ano}   ·   ${P.PEPSICO.fonte}   ·   `
+  s.addText(`${P.EMBRAPA.local}, ${P.EMBRAPA.ano}   /   ${P.PEPSICO.fonte}   /   `
     + `${num(P.MERCADO.exomadMt, 2)} Mt já contratadas pela Microsoft (Exomad Green, ${P.MERCADO.registro})`,
     { x: 0.55, y: 4.38, w: 8.9, h: 0.22, isTextBox: true, margin: 0, fontFace: 'Arial',
       fontSize: 7.5, color: MARROM, valign: 'middle' });
@@ -278,8 +278,8 @@ const chapa = n => ({ path: A + `pep-${n}.jpg` });
 }
 
 /* ===========================================================================
-   07 — AS CONDIÇÕES E O PRÓXIMO PASSO
-   O char como chão. Três cartões e a única faixa verde do baralho — que é
+   07, AS CONDIÇÕES E O PRÓXIMO PASSO
+   O char como chão. Três cartões e a única faixa verde do baralho, que é
    verde justamente porque é o único lugar onde se pede alguma coisa.
    =========================================================================== */
 {
@@ -308,8 +308,8 @@ const chapa = n => ({ path: A + `pep-${n}.jpg` });
   P.PROXIMO.pede.forEach((t, i) =>
     rotulo(s, `${i + 1}.  ${t}`, 0.82 + i * 2.9, 4.48, 2.8, MATA, 'left', 10));
 
-  fonte(s, 'RECICLAR · EPA · Petrolina / PE', CINZA);
-  s.addNotes('As três condições são a aderência dita de forma indireta — deixar o '
+  fonte(s, 'RECICLAR, EPA, Petrolina / PE', CINZA);
+  s.addNotes('As três condições são a aderência dita de forma indireta, deixar o '
     + 'gerente reagir a cada uma. O pedido é único e objetivo: amostra, volume '
     + 'mensal e destinação atual. Nada disso exige trabalho novo do lado deles.');
 }

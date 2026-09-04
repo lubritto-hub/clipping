@@ -40,7 +40,8 @@ const foto = n => `./img/foto/${n}.jpg`;
 /* --- A paleta ------------------------------------------------------------
    A mesma do outro baralho: preto, prata, marrom escuro, verde e branco. Duas
    regras a governam — o campo é escuro, e verde nunca é campo grande. */
-const PRETO  = '#0c0c0b';
+const PRETO  = '#17100a';   // não é preto: é marrom muito escuro, quase carvão
+const TERRA  = '#241a10';   // o degrau acima dele, para cartão e faixa
 const VERDE  = '#8fb04e';
 const BRANCO = '#ffffff';
 
@@ -76,27 +77,32 @@ function fotografia(src, style, { to = 'r', from = 0.05, until = 1,
         transform-origin:${pos};
         filter:contrast(1.1) saturate(0.82) brightness(0.96) ${grade}">
       <div class="L" style="background:linear-gradient(180deg,
-        rgb(12 12 11 / 22%) 0%, rgb(12 12 11 / 0%) 34%, rgb(12 12 11 / 46%) 100%)"></div>
+        rgb(23 16 10 / 22%) 0%, rgb(23 16 10 / 0%) 34%, rgb(23 16 10 / 46%) 100%)"></div>
       <div class="L grain" style="opacity:.2;mix-blend-mode:overlay"></div>
     </div>`;
 }
 
-/** Duas máscaras não se somam — a segunda sobrescreve a primeira. Quando a foto
+/** Duas máscaras não se somam: a segunda sobrescreve a primeira. Quando a foto
     precisa sumir em duas direções, o segundo lado vira uma camada de cor com a
-    mesma curva, por cima e só ali. */
-const cortina = (style, dir = '180deg', cor = '12 12 11') => {
+    mesma curva. Ela é de SANGRIA, e não do tamanho da foto: limitada à caixa,
+    a sua aresta lateral aparecia como uma linha vertical sobre o chão. */
+const cortina = (dir = '180deg', cor = '23 16 10') => {
   const g = STOPS.map(([p, a]) =>
     `rgb(${cor} / ${((1 - a) * 100).toFixed(1)}%) ${(p * 100).toFixed(1)}%`).join(',');
-  return `<div style="position:absolute;${style};background:linear-gradient(${dir}, ${g})"></div>`;
+  return `<div class="L" style="background:linear-gradient(${dir}, ${g})"></div>`;
 };
+
+/** O datum: a régua de aço logo abaixo do cabeçalho, na MESMA altura nos sete
+    quadros. É a faixa que nunca tem texto, então a repetição sai de graça, e é
+    ela que dá ao conjunto a leitura de prancha industrial. */
+const datum = (op = 0.5) => aco('left:5.4%;top:10.9%;width:89.2%;height:3px', op)
+  + aco('left:88.5%;top:5.2%;width:6.1%;height:5px', op * 1.5);
 
 const luz = (spec) => `<div class="L" style="background:${spec}"></div>`;
 const grain = (o = 0.14) => `<div class="L grain" style="opacity:${o}"></div>`;
 
-/** Régua de aço escovado. Continua definida porque é a prata do sistema, mas
-    não é mais usada nestas chapas: posta às cegas, ela caía sobre linhas de
-    texto em três quadros. A estrutura de prata mora no .pptx, onde a posição
-    do texto é conhecida. */
+/** Régua de aço escovado. A prata do sistema é sempre esta chapa e nunca um
+    cinza chapado: metal é anisotrópico, e é a escovação que o denuncia. */
 const aco = (style, op = 0.85) =>
   `<div style="position:absolute;${style};overflow:hidden;opacity:${op}">
      <img src="./img/metal-plate.svg" style="width:100%;height:100%;object-fit:cover;display:block"></div>`;
@@ -110,15 +116,18 @@ const PLATES = {
   ${fotografia('coir', 'right:0;top:0;width:62%;height:100%',
     { to: 'l', from: 0.02, until: 0.86, zoom: 1.12, grade: 'brightness(0.9)' })}
   ${luz(`radial-gradient(52% 46% at 78% 22%, rgb(143 176 78 / 14%) 0%, transparent 68%)`)}
-  ${cortina('right:0;top:0;width:62%;height:100%', '0deg')}
+  ${cortina('0deg')}
+  ${datum()}
   ${grain(0.16)}`,
 
 /* 02 O PROCESSO — o char entra como faixa de rodapé e evapora para cima. */
 'pr-02': () => `
   <div class="L" style="background:${PRETO}"></div>
-  ${luz(`radial-gradient(64% 54% at 8% 6%, rgb(30 51 32 / 62%) 0%, transparent 68%)`)}
-  ${fotografia('char', 'left:0;bottom:0;width:100%;height:38%',
-    { to: 't', from: 0.0, until: 0.9, pos: '50% 40%', zoom: 1.15 })}
+  ${luz(`radial-gradient(64% 54% at 8% 6%, rgb(58 38 20 / 78%) 0%, transparent 68%)`)}
+  ${fotografia('coir', 'left:0;bottom:0;width:100%;height:26%',
+    { to: 't', from: 0.0, until: 0.92, pos: '50% 70%', zoom: 1.4,
+      grade: 'brightness(0.6)' })}
+  ${datum()}
   ${grain(0.16)}`,
 
 /* 03 INTEGRAÇÃO — a planta de pirólise. É a foto mais baixa de resolução do
@@ -130,8 +139,9 @@ const PLATES = {
   ${fotografia('planta', 'left:0;top:0;width:52%;height:100%',
     { to: 'r', from: 0.1, until: 0.98, pos: '56% 46%', zoom: 1.25,
       grade: 'brightness(0.82) contrast(1.16)' })}
-  ${cortina('left:0;top:0;width:52%;height:100%', '0deg')}
-  ${luz(`radial-gradient(56% 48% at 86% 18%, rgb(30 51 32 / 56%) 0%, transparent 70%)`)}
+  ${cortina('0deg')}
+  ${luz(`radial-gradient(56% 48% at 86% 18%, rgb(58 38 20 / 70%) 0%, transparent 70%)`)}
+  ${datum()}
   ${grain(0.18)}`,
 
 /* 04 AS ALAVANCAS — o quadro claro. Só a vista aérea, num rodapé que dissolve
@@ -145,6 +155,7 @@ const PLATES = {
   <div class="L" style="background:linear-gradient(0deg,
     rgb(255 255 255 / 0%) 0%, rgb(255 255 255 / 0%) 12%, rgb(255 255 255 / 74%) 22%,
     rgb(255 255 255 / 96%) 30%, #ffffff 34%)"></div>
+  ${datum(0.3)}
   ${grain(0.08)}`,
 
 /* 05 CARBONO DURÁVEL — o char de novo, agora inteiro à esquerda: é a matéria
@@ -153,8 +164,9 @@ const PLATES = {
   <div class="L" style="background:${PRETO}"></div>
   ${fotografia('char', 'left:0;top:0;width:56%;height:100%',
     { to: 'r', from: 0.06, until: 0.94, pos: '42% 50%', zoom: 1.3 })}
-  ${cortina('left:0;top:0;width:56%;height:100%', '0deg')}
-  ${luz(`radial-gradient(54% 46% at 88% 16%, rgb(30 51 32 / 52%) 0%, transparent 70%)`)}
+  ${cortina('0deg')}
+  ${luz(`radial-gradient(54% 46% at 88% 16%, rgb(58 38 20 / 66%) 0%, transparent 70%)`)}
+  ${datum()}
   ${grain(0.18)}`,
 
 /* 06 OS QUATRO DADOS — o segundo quadro claro. A vista aérea à direita: os
@@ -164,18 +176,20 @@ const PLATES = {
   ${fotografia('campo', 'right:0;top:0;width:46%;height:100%',
     { to: 'l', from: 0.02, until: 0.9, pos: '58% 50%', zoom: 1.35,
       grade: 'brightness(1.0) saturate(0.88)' })}
-  ${cortina('right:0;top:0;width:46%;height:100%', '0deg', '255 255 255')}
+  ${cortina('0deg', '255 255 255')}
   ${luz(`radial-gradient(46% 40% at 6% 6%, rgb(143 176 78 / 12%) 0%, transparent 68%)`)}
+  ${datum(0.3)}
   ${grain(0.08)}`,
 
 /* 07 O PRÓXIMO PASSO — o coir volta, agora como rodapé que evapora: fecha o
    baralho no mesmo material com que ele abriu. */
 'pr-07': () => `
   <div class="L" style="background:${PRETO}"></div>
-  ${luz(`radial-gradient(60% 52% at 10% 6%, rgb(30 51 32 / 58%) 0%, transparent 68%)`)}
+  ${luz(`radial-gradient(60% 52% at 10% 6%, rgb(58 38 20 / 72%) 0%, transparent 68%)`)}
   ${fotografia('coir', 'left:0;bottom:0;width:100%;height:30%',
     { to: 't', from: 0, until: 0.88, pos: '50% 60%', zoom: 1.3,
       grade: 'brightness(0.78)' })}
+  ${datum()}
   ${grain(0.18)}`,
 };
 

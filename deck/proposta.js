@@ -1,5 +1,5 @@
 /* ===========================================================================
-   PROPOSTA PEPSICO / PETROLINA — BIOCHAR
+   PROPOSTA PEPSICO / PETROLINA, BIOCHAR
    ---------------------------------------------------------------------------
    Modelo de conteúdo. O texto é o do arquivo de origem
    (Proposta_PepsiCo_Petrolina_Biochar_v4.pptx), preservado: o pedido foi
@@ -8,11 +8,11 @@
    Duas liberdades foram tomadas, e só estas:
    - Caixa alta virou caixa de sentença nas manchetes. VERSAL EM FRASE LONGA
      custa cerca de um quinto da velocidade de leitura, porque some a silhueta
-     das palavras — e aqui as manchetes têm oito a dez palavras.
+     das palavras, e aqui as manchetes têm oito a dez palavras.
    - Onde uma linha não cabia no bloco sem quebrar em quatro, ela foi cortada
      no ponto, nunca resumida.
 
-   O rodapé "CONCEITO PARA DISCUSSÃO · CONFIGURAÇÃO A VALIDAR" está em todos os
+   O rodapé "CONCEITO PARA DISCUSSÃO, CONFIGURAÇÃO A VALIDAR" está em todos os
    sete quadros no original e continua em todos: é uma ressalva, e ressalva que
    aparece só uma vez não é ressalva.
    =========================================================================== */
@@ -20,13 +20,13 @@
 const MARCA = {
   cliente: 'PepsiCo / Petrolina',
   linha: 'Biochar',
-  ressalva: 'Conceito para discussão · configuração a validar',
+  ressalva: 'Conceito para discussão, configuração a validar',
 };
 
 const CAPA = {
   titulo: 'A biomassa de coco\npode se tornar um\nnovo ativo industrial.',
   sub: 'Uma rota tecnológica para combinar biochar, energia recuperável e carbono '
-     + 'durável — desenhada a partir da realidade da unidade.',
+     + 'durável, desenhada a partir da realidade da unidade.',
   eixos: ['coco', 'tecnologia', 'valor'],
 };
 
@@ -45,7 +45,7 @@ const PROCESSO = {
 
 const INTEGRACAO = {
   titulo: 'A solução ganha eficiência\nquando nasce integrada à planta.',
-  legenda: 'Configuração ilustrativa — tecnologia a selecionar',
+  legenda: 'Configuração ilustrativa, tecnologia a selecionar',
   itens: [
     ['01', 'Matéria-prima', 'O sistema parte do fluxo já gerado na unidade, '
      + 'reduzindo etapas de manejo, logística e disposição.', 'pilha'],
@@ -55,6 +55,12 @@ const INTEGRACAO = {
      + 'umidade, granulometria e rotina operacional de Petrolina.', 'unidade'],
   ],
   fecho: 'Não é uma máquina isolada. É um sistema industrial.',
+  /* Os eixos sobre os quais o sistema é especificado. São EIXOS, não promessas:
+     o próprio deck diz que a tecnologia ainda será selecionada, então listar
+     desempenho aqui seria comprometer o que ainda não foi escolhido. O que
+     mostra robustez é o rigor da especificação, não um número inventado. */
+  eixos: ['escala', 'preparo', 'recuperação de calor', 'controle de processo',
+          'manutenção', 'segurança'],
 };
 
 const ALAVANCAS = {
@@ -68,7 +74,7 @@ const ALAVANCAS = {
     ['04', 'Carbono',     'remoção líquida certificável',      'removal'],
   ],
   robustez: 'O valor não precisa vir de uma única fonte. O desenho mais eficiente '
-     + 'captura o conjunto — e valida cada alavanca com dados reais.',
+     + 'captura o conjunto, e valida cada alavanca com dados reais.',
   fecho: 'A economia do projeto é resultado da integração.',
 };
 
@@ -94,7 +100,7 @@ const DADOS = {
     ['03', 'Destinação + economia atual',  'baseline real para o business case',      'registro'],
     ['04', 'Espaço + energia + operação',  'condições para integrar o sistema',       'unidade'],
   ],
-  saida: 'Saída:  escala · tecnologia · produto · economia',
+  saida: 'Saída:  escala, tecnologia, produto, economia',
 };
 
 const PROXIMO = {
@@ -102,8 +108,8 @@ const PROXIMO = {
   sub: 'Um próximo passo simples para transformar a oportunidade em decisão.',
   entradas: [
     ['01', 'Visita técnica',  'Operações + Sustentabilidade',            'unidade'],
-    ['02', 'Dados essenciais','fluxo · destinação · integração',         'registro'],
-    ['03', 'Amostra',         'representativa · caracterização + teste', 'secao'],
+    ['02', 'Dados essenciais','fluxo, destinação, integração',         'registro'],
+    ['03', 'Amostra',         'representativa, caracterização + teste', 'secao'],
   ],
   entrega: ['balanço preliminar', 'screening tecnológico', 'rotas de uso do biochar',
             'faixa econômica', 'recomendação de teste / piloto'],

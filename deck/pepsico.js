@@ -1,13 +1,13 @@
 /* ===========================================================================
-   PEPSICO · PETROLINA — "POR QUE O COCO"
+   PEPSICO, PETROLINA, "POR QUE O COCO"
    ---------------------------------------------------------------------------
    Modelo de conteúdo.
 
-   ESTE DECK NÃO PROMETE NADA — E PEDE UMA COISA SÓ.
+   ESTE DECK NÃO PROMETE NADA, E PEDE UMA COISA SÓ.
 
    A regra original, herdada do deck de origem, era não pedir nada. Ela mudou
    a pedido: o baralho agora termina num próximo passo concreto. O que ele
-   pede é o mínimo que permite sair da conversa para o laboratório — uma
+   pede é o mínimo que permite sair da conversa para o laboratório, uma
    amostra, o volume mensal e a destinação atual da casca. Nada além disso.
 
    O que continua valendo: nenhum preço, nenhuma TIR, nenhum número da POC
@@ -23,8 +23,8 @@
 
    Os números vêm do deck de origem (PepsiCo_Petrolina_v4_porque.pptx) e foram
    mantidos com as suas citações. Onde o projeto próprio tem número diferente
-   — o rendimento contratado da POC é >=20% em base seca, contra os ~30% de
-   benchmark de literatura aqui — os dois NÃO foram misturados: este deck fala
+  , o rendimento contratado da POC é >=20% em base seca, contra os ~30% de
+   benchmark de literatura aqui, os dois NÃO foram misturados: este deck fala
    de literatura, o outro fala de contrato.
    =========================================================================== */
 
@@ -40,7 +40,7 @@ const COCO = {
   cinzasMax: 4,                            // [LIT] Windeatt et al. 2014
   fracaoCascaMin: 80, fracaoCascaMax: 85,  // [LIT] Devens et al. 2018
   umidadeMin: 30, umidadeMax: 70,          // [LIT] as-received
-  fonte: 'Devens et al., 2018 · Windeatt et al., 2014',
+  fonte: 'Devens et al., 2018, Windeatt et al., 2014',
 };
 
 /* --- O processo ----------------------------------------------------------
@@ -52,7 +52,7 @@ const PROCESSO = {
   rendimentoKgPorT: 300,                   // [LIT] ~300 kg biochar / t seca
   perdaMassa: 70,                          // [LIT] derivado: 1 − 0,3
   co2PorTMin: 2.5, co2PorTMax: 3.0,        // [LIT] benchmark, a validar
-  certificacao: 'Puro.earth · EBC',
+  certificacao: 'Puro.earth, EBC',
 };
 
 /* --- O que a PepsiCo já publicou ---------------------------------------- */
@@ -64,7 +64,7 @@ const PEPSICO = {
   acresEntregues: 3.5,                     // [PEP] até 2024
   escopo12: 50,                            // [PEP] −50% Escopos 1+2 até 2030
   escopo3EI: 42,                           // [PEP] −42% Escopo 3 E&I até 2030
-  fonte: 'PepsiCo Climate Transition Plan, mai/2025 · metas validadas pela SBTi',
+  fonte: 'PepsiCo Climate Transition Plan, mai/2025, metas validadas pela SBTi',
 };
 
 /* --- Evidência local ----------------------------------------------------- */
@@ -86,7 +86,7 @@ const MERCADO = {
 };
 
 /* --- O próximo passo ------------------------------------------------------
-   Três coisas objetivas. Cada uma é um dado que a unidade já tem — não há
+   Três coisas objetivas. Cada uma é um dado que a unidade já tem, não há
    trabalho novo do lado deles para entregar nenhuma das três. */
 const PROXIMO = {
   acao: 'Caracterizar a casca da unidade em laboratório.',
@@ -96,7 +96,7 @@ const PROXIMO = {
 /* --- As três condições ---------------------------------------------------
    Reescritas curtas. A versão anterior trazia uma frase de explicação e uma
    de destravamento para cada condição; num quadro que agora vive de bloco,
-   número e ícone, essa prosa não cabia e, pior, não era necessária — o
+   número e ícone, essa prosa não cabia e, pior, não era necessária, o
    gerente reage ao nome da condição, não ao parágrafo sobre ela.
    Sem pedido, sem prazo. */
 const CONDICOES = [
@@ -123,8 +123,8 @@ const PRODUTO = [
 const METAS = [
   [`−${PEPSICO.flagReducao}%`,        'escopo 3 agrícola',   'solo'],
   [`${PEPSICO.acresRegenerativos} mi`, 'acres regenerativos', 'palmeira'],
-  [`−${PEPSICO.escopo3EI}%`,          'escopo 3 · energia',  'unidade'],
-  [`${PEPSICO.netZero}`,              'net-zero · SBTi',     'removal'],
+  [`−${PEPSICO.escopo3EI}%`,          'escopo 3, energia',  'unidade'],
+  [`${PEPSICO.netZero}`,              'net-zero, SBTi',     'removal'],
 ];
 
 module.exports = { LOCAL, COCO, PROCESSO, PEPSICO, EMBRAPA, MERCADO,
