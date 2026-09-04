@@ -151,8 +151,15 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   // A transformação, rodando. É a casca do cliente virando o char do cliente:
   // as duas fotografias do arquivo original, com a frente térmica no meio.
   gif(s, 'coco-biochar', 6.9, 1.06, 5.71, 3.21);
-  s.addShape(pres.ShapeType.rect, { x: 6.9, y: 1.06, w: 5.71, h: 3.21,
-    fill: { type: 'none' }, line: { color: PRATA, width: 0.75, transparency: 55 } });
+  // A moldura são QUATRO RÉGUAS, e não uma forma com contorno. Um retângulo
+  // com fill: {type:'none'} não escreve <a:noFill/>: a forma sai sem elemento
+  // de preenchimento nenhum e herda o do tema, o que lavou o painel inteiro
+  // por trás do GIF. Régua não tem preenchimento para herdar.
+  const gx = 6.9, gy = 1.06, gw = 5.71, gh = 3.21, gt = 0.012;
+  [[gx, gy, gw, gt], [gx, gy + gh - gt, gw, gt],
+   [gx, gy, gt, gh], [gx + gw - gt, gy, gt, gh]].forEach(([x, y, w, h]) =>
+    s.addShape(pres.ShapeType.rect, { x, y, w, h,
+      fill: { color: PRATA, transparency: 52 } }));
   micro(s, 'casca de coco  →  biochar', 6.9, 4.36, 3.4, PRATA, 'left', 8);
 
   // A cadeia. Três blocos e o circuito de calor por baixo.

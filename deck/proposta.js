@@ -92,7 +92,7 @@ const CARBONO = {
 };
 
 const DADOS = {
-  titulo: 'Quatro dados convertem\na ideia em projeto.',
+  titulo: 'O projeto começa\ncom quatro dados.',
   sub: 'O dimensionamento começa pelo fluxo real de Petrolina.',
   itens: [
     ['01', 'Volume + sazonalidade',        'massa crítica e perfil de geração',       'pilha'],

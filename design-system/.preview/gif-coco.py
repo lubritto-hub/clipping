@@ -1,4 +1,11 @@
-"""GIF: a casca de coco virando biochar.
+"""GIF fotográfico: a casca de coco virando biochar.
+
+É a VARIANTE, não a que está no baralho. O slide 02 usa a versão de painel de
+instrumento (gif-tech.mjs), que mostra a mesma conversão lida por leitura de
+temperatura, curva térmica e balanço de massa. Este arquivo continua aqui
+porque a leitura puramente material tem o seu lugar, e a troca é de um nome de
+arquivo. Os dois escrevem em caminhos diferentes de propósito: apontados para
+o mesmo, o último a rodar apagaria o outro.
 
 Feito com as DUAS FOTOGRAFIAS do próprio cliente, o coir e o char, e não com
 imagem de estoque. A transformação é uma dissolução cruzada com uma fase
@@ -21,7 +28,7 @@ import math, os
 
 W, H = 720, 405
 SRC = '.preview/img/foto'
-OUT = '.preview/deck-assets/coco-biochar.gif'
+OUT = '.preview/deck-assets/coco-biochar-foto.gif'
 
 
 def prep(path):
