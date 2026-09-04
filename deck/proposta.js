@@ -79,23 +79,19 @@ const ALAVANCAS = {
 };
 
 const CARBONO = {
-  titulo: 'Biochar transforma carbono\nbiogênico em produto durável.',
+  titulo: 'O carbono fecha\no ciclo.',
   sub: 'A biomassa capturou CO₂ durante o crescimento. A pirólise estabiliza uma '
-     + 'fração desse carbono no biochar.',
-  etapas: [
-    ['01', 'Biomassa',    'carbono de origem biogênica',    'muda'],
-    ['02', 'Pirólise',    'conversão sob controle',         'reator'],
-    ['03', 'Biochar',     'carbono em material estável',    'char'],
-    ['04', 'Uso elegível','armazenamento de longa duração', 'solo'],
-  ],
+     + 'fração desse carbono no biochar, e o produto devolve esse carbono ao solo '
+     + 'em forma estável.',
   fecho: 'Emissões do ciclo são medidas e descontadas.',
 };
 
 const DADOS = {
   titulo: 'O projeto começa\ncom quatro dados.',
-  sub: 'O dimensionamento começa pelo fluxo real de Petrolina.',
+  sub: 'Para modelar o projeto, o primeiro dado é a disponibilidade de biomassa '
+     + 'na unidade: quanto, com que regularidade e em que condição.',
   itens: [
-    ['01', 'Volume + sazonalidade',        'massa crítica e perfil de geração',       'pilha'],
+    ['01', 'Disponibilidade de biomassa',  'volume, sazonalidade e perfil de geração', 'pilha'],
     ['02', 'Umidade + propriedades',       'preparo necessário e comportamento em teste', 'secao'],
     ['03', 'Destinação + economia atual',  'baseline real para o business case',      'registro'],
     ['04', 'Espaço + energia + operação',  'condições para integrar o sistema',       'unidade'],

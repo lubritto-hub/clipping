@@ -30,7 +30,12 @@
 import { chromium } from 'playwright';
 import fs from 'node:fs';
 import path from 'node:path';
+import { createRequire } from 'node:module';
 import { CSS } from './devices.mjs';
+
+/* A geometria do diagrama de ciclo vem do mesmo arquivo que o .pptx lê. Duas
+   cópias das mesmas coordenadas divergiriam no primeiro ajuste. */
+const { CICLO } = createRequire(import.meta.url)('../../deck/ciclo.js');
 
 const W = 2400, H = 1350;
 const OUT = path.resolve('.preview/deck-assets');
@@ -107,6 +112,52 @@ const aco = (style, op = 0.85) =>
   `<div style="position:absolute;${style};overflow:hidden;opacity:${op}">
      <img src="./img/metal-plate.svg" style="width:100%;height:100%;object-fit:cover;display:block"></div>`;
 
+/* --- O CICLO FECHADO -----------------------------------------------------
+   Trilhos, nós e curvas, desenhados em POLEGADAS: o viewBox é o próprio quadro
+   de 13,333 x 7,5, então as coordenadas daqui são as mesmas que o .pptx usa
+   para pousar ícone e rótulo. Sem foto de equipamento: o diagrama é o ciclo do
+   carbono, não um catálogo de máquina. */
+function ciclo() {
+  const { eixoY: Y, retorno: RT, nos, saidas } = CICLO;
+  const TRILHO = 'rgb(174 183 185 / 26%)';
+  const g = [];
+
+  // O trilho principal, atravessando todos os nós.
+  g.push(`<path d="M${nos[0].x} ${Y} H${nos[nos.length - 1].x}"
+    stroke="${TRILHO}" stroke-width="0.17" fill="none" stroke-linecap="round"/>`);
+
+  // O retorno: sai do último nó, sobe, atravessa por cima e volta ao primeiro.
+  // É ele que transforma uma fila numa CICLO, e por isso é o traço mais longo.
+  const c = RT.curva;
+  g.push(`<path d="M${nos[nos.length - 1].x} ${Y}
+      H${RT.dir - c} Q${RT.dir} ${Y} ${RT.dir} ${Y - c}
+      V${RT.topo + c} Q${RT.dir} ${RT.topo} ${RT.dir - c} ${RT.topo}
+      H${RT.esq + c} Q${RT.esq} ${RT.topo} ${RT.esq} ${RT.topo + c}
+      V${Y - c} Q${RT.esq} ${Y} ${RT.esq + c} ${Y} H${nos[0].x}"
+    stroke="${TRILHO}" stroke-width="0.17" fill="none"/>`);
+
+  // As descidas para as saídas laterais.
+  saidas.forEach(sa => g.push(`<path d="M${sa.x} ${Y} V${sa.y}"
+    stroke="${TRILHO}" stroke-width="0.09" fill="none" stroke-dasharray="0.06 0.09"/>`));
+
+  // Os nós. Fundo escuro para o ícone pousar em cima, anel de prata, e o
+  // biochar com anel verde: é o único nó que é PRODUTO e não etapa.
+  nos.forEach(n => {
+    g.push(`<circle cx="${n.x}" cy="${Y}" r="${n.r}" fill="rgb(23 16 10 / 96%)"/>`);
+    g.push(`<circle cx="${n.x}" cy="${Y}" r="${n.r}" fill="none"
+      stroke="${n.acento ? 'rgb(143 176 78 / 88%)' : 'rgb(174 183 185 / 52%)'}"
+      stroke-width="${n.acento ? 0.035 : 0.022}"/>`);
+  });
+  saidas.forEach(sa => {
+    g.push(`<circle cx="${sa.x}" cy="${sa.y}" r="${sa.r}" fill="rgb(23 16 10 / 96%)"/>`);
+    g.push(`<circle cx="${sa.x}" cy="${sa.y}" r="${sa.r}" fill="none"
+      stroke="rgb(174 183 185 / 52%)" stroke-width="0.022"/>`);
+  });
+
+  return `<svg style="position:absolute;inset:0;width:100%;height:100%"
+    viewBox="0 0 13.333 7.5">${g.join('')}</svg>`;
+}
+
 const PLATES = {
 
 /* 01 CAPA — o coir ocupa a direita e desaparece para dentro do preto muito
@@ -162,12 +213,14 @@ const PLATES = {
    de que o slide fala, e o quadro é sobre permanência. */
 'pr-05': () => `
   <div class="L" style="background:${PRETO}"></div>
-  ${fotografia('char', 'left:0;top:0;width:56%;height:100%',
-    { to: 'r', from: 0.06, until: 0.94, pos: '42% 50%', zoom: 1.3 })}
-  ${cortina('0deg')}
-  ${luz(`radial-gradient(54% 46% at 88% 16%, rgb(58 38 20 / 66%) 0%, transparent 70%)`)}
+  ${fotografia('char', 'left:0;bottom:0;width:100%;height:34%',
+    { to: 't', from: 0, until: 0.94, pos: '50% 50%', zoom: 1.5,
+      grade: 'brightness(0.5)' })}
+  ${luz(`radial-gradient(58% 46% at 78% 12%, rgb(58 38 20 / 62%) 0%, transparent 70%)`)}
+  ${luz(`radial-gradient(40% 34% at 12% 88%, rgb(143 176 78 / 10%) 0%, transparent 70%)`)}
+  ${ciclo()}
   ${datum()}
-  ${grain(0.18)}`,
+  ${grain(0.16)}`,
 
 /* 06 OS QUATRO DADOS — o segundo quadro claro. A vista aérea à direita: os
    dados que o slide pede são os da unidade, e é essa a paisagem dela. */

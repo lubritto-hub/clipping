@@ -24,6 +24,7 @@
 
 const pptxgen = require('pptxgenjs');
 const P = require('./proposta.js');
+const { CICLO } = require('./ciclo.js');   // a mesma geometria que a chapa desenha
 const A = '/home/user/clipping/design-system/.preview/deck-assets/';
 
 /* --- Paleta. Sem '#': pptxgenjs corrompe o arquivo com ele. -------------- */
@@ -275,25 +276,39 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   s.background = chapa('05');
   moldura(s, '05');
 
-  titulo(s, P.CARBONO.titulo, 6.4, 1.18, 6.2, 27, BRANCO);
-  corpo(s, P.CARBONO.sub, 6.4, 2.5, 5.9, 0.8, CREME, 12);
+  titulo(s, P.CARBONO.titulo, M, 1.02, 5.4, 30, BRANCO);
+  corpo(s, P.CARBONO.sub, 6.9, 1.08, 5.7, 0.9, CREME, 12);
+  micro(s, P.CARBONO.fecho, 6.9, 2.10, 5.7, VERDE, 'left', 8.5);
 
-  P.CARBONO.etapas.forEach(([idx, nome, nota, ic], i) => {
-    const y = 3.52 + i * 0.84;
-    disco(s, ic, 6.66, y + 0.2, 0.26, i === 3 ? VERDE : MATA, i === 3 ? 'dark' : 'acid');
-    rotulo(s, idx, 7.1, y + 0.02, 0.5, VERDE, 'left', 10.5);
-    s.addText(nome, { x: 7.62, y, w: 2.3, h: 0.28, isTextBox: true, margin: 0,
-      fontFace: 'Arial', fontSize: 13.5, bold: true, color: BRANCO,
-      charSpacing: -0.3, valign: 'top' });
-    rotulo(s, nota, 10.0, y + 0.02, 2.62, PRATA, 'left', 11);
-    if (i < 3) fio(s, 6.4, y + 0.62, 6.2, 80);
+  // O diagrama: a chapa desenhou trilhos e nós, aqui entram ícone e rótulo.
+  // Os dois leem a mesma geometria de deck/ciclo.js.
+  const { eixoY: Y, nos, saidas, retorno: RT } = CICLO;
+  micro(s, CICLO.retornoRotulo, 3.4, RT.topo - 0.36, 6.5, PRATA, 'center', 8);
+
+  nos.forEach((n) => {
+    if (n.ic) icone(s, n.ic, n.x - 0.26, Y - 0.26, n.acento ? 'acid' : 'steel', 0.52);
+    else s.addText('CO₂', { x: n.x - 0.5, y: Y - 0.13, w: 1.0, h: 0.26, isTextBox: true,
+      margin: 0, fontFace: 'Arial', fontSize: 11, bold: true, color: PRATA,
+      align: 'center', valign: 'middle' });
+    if (!n.ic) return;                       // o CO₂ já se nomeia por dentro
+    s.addText(n.nome, { x: n.x - 1.25, y: Y - n.r - 0.42, w: 2.5, h: 0.3, isTextBox: true,
+      margin: 0, fontFace: 'Arial', fontSize: 13, bold: true,
+      color: n.acento ? VERDE : BRANCO, align: 'center', charSpacing: -0.2,
+      valign: 'bottom' });
   });
 
-  micro(s, P.CARBONO.fecho, 6.4, 6.72, 6.2, VERDE, 'left', 8.5);
+  saidas.forEach((sa) => {
+    icone(s, sa.ic, sa.x - 0.19, sa.y - 0.19, 'acid', 0.38);
+    micro(s, 'saída', sa.x - 1.0, sa.y + sa.r + 0.1, 2.0, VERDE, 'center', 7.5);
+    s.addText(sa.nome, { x: sa.x - 1.4, y: sa.y + sa.r + 0.3, w: 2.8, h: 0.28,
+      isTextBox: true, margin: 0, fontFace: 'Arial', fontSize: 12, bold: true,
+      color: CREME, align: 'center', charSpacing: -0.2, valign: 'top' });
+  });
 
-  s.addNotes('A biomassa capturou CO₂ ao crescer; a pirólise estabiliza parte desse '
-    + 'carbono no biochar, que é aplicado num uso elegível. As emissões do ciclo são '
-    + 'medidas e descontadas do resultado.');
+  s.addNotes('O ciclo: a planta captura CO₂, a biomassa vira casca, a carbonização '
+    + 'fixa o carbono no biochar e o biochar devolve esse carbono ao solo, onde a '
+    + 'planta recomeça. Duas saídas laterais: energia recuperável da carbonização e '
+    + 'certificado de CO₂ do biochar. As emissões do ciclo são medidas e descontadas.');
 }
 
 /* ===========================================================================
