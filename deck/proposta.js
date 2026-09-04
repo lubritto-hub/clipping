@@ -24,14 +24,14 @@ const MARCA = {
 };
 
 const CAPA = {
-  titulo: 'A biomassa de coco\npode se tornar um\nnovo ativo industrial.',
+  titulo: 'Um novo ativo\nindustrial.',
   sub: 'Uma rota tecnológica para combinar biochar, energia recuperável e carbono '
      + 'durável, desenhada a partir da realidade da unidade.',
   eixos: ['coco', 'tecnologia', 'valor'],
 };
 
 const PROCESSO = {
-  titulo: 'A pirólise concentra valor\nem um fluxo que já existe.',
+  titulo: 'Pirólise\nconcentra valor.',
   sub: 'Um processo térmico converte a biomassa de coco em um sólido rico em carbono '
      + 'e permite recuperar parte da energia dos gases.',
   etapas: [
@@ -44,7 +44,7 @@ const PROCESSO = {
 };
 
 const INTEGRACAO = {
-  titulo: 'A solução ganha eficiência\nquando nasce integrada à planta.',
+  titulo: 'Eficiência\npela integração.',
   legenda: 'Configuração ilustrativa, tecnologia a selecionar',
   itens: [
     ['01', 'Matéria-prima', 'O sistema parte do fluxo já gerado na unidade, '
@@ -64,7 +64,7 @@ const INTEGRACAO = {
 };
 
 const ALAVANCAS = {
-  titulo: 'O business case combina\nquatro alavancas de valor.',
+  titulo: 'Quatro alavancas\nde valor.',
   sub: 'A atratividade econômica aumenta quando a solução soma ganhos operacionais, '
      + 'produto, energia e carbono.',
   itens: [
@@ -87,7 +87,7 @@ const CARBONO = {
 };
 
 const DADOS = {
-  titulo: 'O projeto começa\ncom quatro dados.',
+  titulo: 'Quatro dados\npara modelar.',
   sub: 'Para modelar o projeto, o primeiro dado é a disponibilidade de biomassa '
      + 'na unidade: quanto, com que regularidade e em que condição.',
   itens: [
@@ -100,7 +100,7 @@ const DADOS = {
 };
 
 const PROXIMO = {
-  titulo: 'Vamos construir o\nbusiness case de Petrolina.',
+  titulo: 'Construir o\nbusiness case.',
   sub: 'Um próximo passo simples para transformar a oportunidade em decisão.',
   entradas: [
     ['01', 'Visita técnica',  'Operações + Sustentabilidade',            'unidade'],

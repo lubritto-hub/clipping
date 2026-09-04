@@ -29,6 +29,8 @@ design-system/.preview/*
 !design-system/.preview/gif-coco.py
 !design-system/.preview/gif-tech.mjs
 !design-system/.preview/gif-tech-mount.py
+!design-system/.preview/gif-ciclo.mjs
+!design-system/.preview/gif-ciclo-mount.py
 
 # As quatro fotografias da proposta vieram do arquivo do próprio cliente e não
 # são geráveis a partir de nada aqui: sem elas o baralho não reconstrói. Os SVG

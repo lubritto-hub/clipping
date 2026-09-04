@@ -24,7 +24,7 @@
 
 const pptxgen = require('pptxgenjs');
 const P = require('./proposta.js');
-const { CICLO } = require('./ciclo.js');   // a mesma geometria que a chapa desenha
+const { CICLO, PAINEL } = require('./ciclo.js');   // a geometria que a chapa e o GIF leem
 const A = '/home/user/clipping/design-system/.preview/deck-assets/';
 
 /* --- Paleta. Sem '#': pptxgenjs corrompe o arquivo com ele. -------------- */
@@ -123,15 +123,16 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   moldura(s, '01');
 
   pilula(s, 'Petrolina / PE', M, 1.18, 1.9, VERDE, PRETO);
-  titulo(s, P.CAPA.titulo, M, 1.94, 6.6, 44, BRANCO);
-  corpo(s, P.CAPA.sub, M, 4.36, 5.4, 0.9, CREME, 13);
+  titulo(s, P.CAPA.titulo, M, 1.80, 6.6, 56, BRANCO);
+  corpo(s, P.CAPA.sub, M, 3.62, 5.4, 0.9, CREME, 13);
 
   // A régua de prata volta aqui, onde a posição do texto é conhecida.
-  fio(s, M, 5.86, 5.0, 58);
+  fio(s, M, 5.02, 5.0, 58);
   P.CAPA.eixos.forEach((t, i) => {
     const x = M + i * 1.6;
-    micro(s, t, x, 6.06, 1.5, VERDE, 'left', 9);
+    micro(s, t, x, 5.22, 1.5, VERDE, 'left', 9);
   });
+  rotulo(s, 'RECICLAR / EPA', M, 6.42, 3.0, PRATA, 'left', 9);
 
   s.addNotes('Abertura. A biomassa de coco já existe na unidade; a proposta é uma rota '
     + 'tecnológica que combina biochar, energia recuperável e carbono durável. '
@@ -146,7 +147,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   s.background = chapa('02');
   moldura(s, '02');
 
-  titulo(s, P.PROCESSO.titulo, M, 1.06, 6.1, 30, BRANCO);
+  titulo(s, P.PROCESSO.titulo, M, 1.06, 6.1, 40, BRANCO);
   corpo(s, P.PROCESSO.sub, M, 2.42, 5.8, 0.9, CREME, 12);
 
   // A transformação, rodando. É a casca do cliente virando o char do cliente:
@@ -202,7 +203,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
 
   micro(s, P.INTEGRACAO.legenda, M, 7.04, 5.0, PRATA, 'left', 7.5);
 
-  titulo(s, P.INTEGRACAO.titulo, 5.9, 1.06, 6.7, 27, BRANCO);
+  titulo(s, P.INTEGRACAO.titulo, 5.9, 1.02, 6.7, 38, BRANCO);
 
   P.INTEGRACAO.itens.forEach(([idx, nome, nota, ic], i) => {
     const y = 2.50 + i * 1.14;
@@ -241,7 +242,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   s.background = chapa('04');
   moldura(s, '04', false);
 
-  titulo(s, P.ALAVANCAS.titulo, M, 1.06, 8.0, 32, MATA);
+  titulo(s, P.ALAVANCAS.titulo, M, 1.06, 8.0, 40, MATA);
   corpo(s, P.ALAVANCAS.sub, M, 2.44, 6.6, 0.8, MARROM, 12);
 
   P.ALAVANCAS.itens.forEach(([idx, nome, nota, ic], i) => {
@@ -276,12 +277,16 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   s.background = chapa('05');
   moldura(s, '05');
 
-  titulo(s, P.CARBONO.titulo, M, 1.02, 5.4, 30, BRANCO);
-  corpo(s, P.CARBONO.sub, 6.9, 1.08, 5.7, 0.9, CREME, 12);
-  micro(s, P.CARBONO.fecho, 6.9, 2.10, 5.7, VERDE, 'left', 8.5);
+  titulo(s, P.CARBONO.titulo, M, 1.02, 5.4, 38, BRANCO);
+  corpo(s, P.CARBONO.sub, 6.9, 1.06, 5.7, 0.9, CREME, 12);
+  micro(s, P.CARBONO.fecho, 6.9, 2.06, 5.7, VERDE, 'left', 8.5);
 
-  // O diagrama: a chapa desenhou trilhos e nós, aqui entram ícone e rótulo.
-  // Os dois leem a mesma geometria de deck/ciclo.js.
+  // O circuito, animado: trilhos, nós e a circulação correndo neles. Vem antes
+  // de tudo o que é texto, porque no .pptx a ordem de inserção é a ordem de
+  // empilhamento, e ícone atrás de imagem some.
+  gif(s, 'ciclo', PAINEL.x, PAINEL.y, PAINEL.w, PAINEL.h);
+
+  // Por cima do GIF, ícone e rótulo vivos. Todos leem a mesma geometria.
   const { eixoY: Y, nos, saidas, retorno: RT } = CICLO;
   micro(s, CICLO.retornoRotulo, 3.4, RT.topo - 0.36, 6.5, PRATA, 'center', 8);
 
@@ -299,8 +304,8 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
 
   saidas.forEach((sa) => {
     icone(s, sa.ic, sa.x - 0.19, sa.y - 0.19, 'acid', 0.38);
-    micro(s, 'saída', sa.x - 1.0, sa.y + sa.r + 0.1, 2.0, VERDE, 'center', 7.5);
-    s.addText(sa.nome, { x: sa.x - 1.4, y: sa.y + sa.r + 0.3, w: 2.8, h: 0.28,
+    micro(s, 'saída', sa.x - 1.0, sa.y + sa.r + 0.08, 2.0, VERDE, 'center', 7.5);
+    s.addText(sa.nome, { x: sa.x - 1.4, y: sa.y + sa.r + 0.28, w: 2.8, h: 0.28,
       isTextBox: true, margin: 0, fontFace: 'Arial', fontSize: 12, bold: true,
       color: CREME, align: 'center', charSpacing: -0.2, valign: 'top' });
   });
@@ -320,7 +325,7 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   s.background = chapa('06');
   moldura(s, '06', false);
 
-  titulo(s, P.DADOS.titulo, M, 1.06, 6.2, 30, MATA);
+  titulo(s, P.DADOS.titulo, M, 1.06, 6.2, 40, MATA);
   corpo(s, P.DADOS.sub, M, 2.34, 5.6, 0.5, MARROM, 12);
 
   P.DADOS.itens.forEach(([idx, nome, nota, ic], i) => {
@@ -351,8 +356,8 @@ const chapa = n => ({ path: A + `pr-${n}.jpg` });
   s.background = chapa('07');
   moldura(s, '07');
 
-  titulo(s, P.PROXIMO.titulo, M, 1.06, 7.4, 30, BRANCO);
-  corpo(s, P.PROXIMO.sub, M, 2.32, 6.4, 0.5, CREME, 12);
+  titulo(s, P.PROXIMO.titulo, M, 1.06, 7.4, 40, BRANCO);
+  corpo(s, P.PROXIMO.sub, M, 2.44, 6.4, 0.5, CREME, 12);
 
   micro(s, 'entradas para começar', M, 3.06, 4.0, VERDE, 'left', 8.5);
   P.PROXIMO.entradas.forEach(([idx, nome, nota, ic], i) => {

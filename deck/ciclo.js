@@ -35,12 +35,17 @@ const CICLO = {
   /* As duas saídas laterais. Penduradas nos nós de onde saem, e não no fim da
      fila: energia sai da carbonização, certificado sai do biochar. */
   saidas: [
-    { de: 3, x: 7.86,  y: 6.24, r: 0.40, nome: 'Energia recuperável', ic: 'calor' },
-    { de: 4, x: 10.56, y: 6.24, r: 0.40, nome: 'Certificado de CO₂',  ic: 'registro' },
+    { de: 3, x: 7.86,  y: 6.00, r: 0.40, nome: 'Energia recuperável', ic: 'calor' },
+    { de: 4, x: 10.56, y: 6.00, r: 0.40, nome: 'Certificado de CO₂',  ic: 'registro' },
   ],
 
   /* O que fecha o ciclo, dito no trilho de retorno. */
   retornoRotulo: 'o carbono volta ao solo e à planta',
 };
 
-module.exports = { CICLO };
+/* O painel do diagrama, em polegadas do slide. A chapa pinta este retângulo
+   com esta cor exata e o GIF usa a mesma como fundo: GIF só tem transparência
+   de um bit, então casar a cor evita borda serrilhada sem precisar dela. */
+const PAINEL = { x: 0.72, y: 2.46, w: 11.89, h: 4.60, cor: '#1a1209' };
+
+module.exports = { CICLO, PAINEL };
